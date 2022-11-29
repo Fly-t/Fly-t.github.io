@@ -3,14 +3,22 @@ project:
 
 website:
   title: "TengFei's Blog"
+  site-url: https://fly-t.github.io
+  description: "A great sample blog"
+
   navbar:
+    background: primary
     right:
       - article.qmd
       - icon: github
         href: https://github.com/fly-t
       - icon: qr-code-scan
         href: https://raw.githubusercontent.com/fly-t/images/main/blog/wechat-2022-11-27-16-30-56.png
+  
+
       
+
+
 format:
   html:
     theme: 
@@ -19,9 +27,6 @@ format:
       # theme switch:  https://quarto.org/docs/output-formats/html-themes.html
       dark: [quartz, theme-switch.scss]
     css: styles.css
-
-
-
 
 execute: 
   freeze: auto

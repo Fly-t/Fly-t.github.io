@@ -2,8 +2,7 @@
 title: "TengFei Zhang"
 about:
   template: jolla
-  image: profile.jpg
- 
+  image: me.jpg
   links:
     - icon: "qr-code-scan"
       text: wechat
@@ -11,20 +10,35 @@ about:
     - icon: github
       text: Github
       href: https://github.com/fly-t
+      
+sidebar: false
 ---
 
 Finley Malloc is the Chief Data Scientist at Wengo Analytics. When not innovating on data platforms, Finley enjoys spending  time unicycling and playing with her pet iguana.
 
 ## Education
 
-University of California, San Diego | San Diego, CA
-PhD in Mathematics | Sept 2011 - June 2015
+Suzhou University of Science and Technology | Jun 2022
 
-Macalester College | St. Paul MA
-B.A in Economics | Sept 2007 - June 2011
+
+## Experience at school
+
+Ranking: 5/45   |  GPA: 3.24  |  Teaching assistant | Scholarship x 3
+
+Qualification Certificate of Computer and Software Technology Proficiency Of Junior  
+
+
 
 ## Experience
 
-Wengo Analytics | Head Data Scientist | April 2018 - present
+Electric Vehicle Helmet Illegal Detection System(Yolo, Ocr, Spider.. ) | Graduation Project | Feb 2022
 
-GeoScynce | Chief Analyst | Spet 2012 - April 2018
+Video Capture Tools (Pyqt, OpenCv, Ftplib..) | Su Zhou HighWise | Oct 2021
+
+License Management Platform (Django, Vue, Mysql..) | Su Zhou HighWise | Jan 2021
+
+Human Detection (Yolo, Qt..) | Su Zhou Ravsense | Apr 2022
+
+Radar Raw ADC Data Capture(AWR6843, not DCA1000..) | Su Zhou Ravsense | Jul 2022
+
+VitalSign Algorithm Porting(RTOS, Matlab Coder, STM32H7..) | Su Zhou Ravsense | Oct 2022
