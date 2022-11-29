@@ -1,0 +1,106 @@
+---
+title: "Matlab Coder"
+author: "Fly-t"
+date: "2022-11-22"
+categories: [matlab]
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-11-29-16-55-18.png
+---
+
+# Matlab Coder
+> matlab Coder 可以将matlab脚本转换为`c` or `C++`代码, 极大程度让用户专注算法的设计
+> 
+> * 可以指定接口类型, 但是无法指定中间变量的类型
+> * 在转换后注意`tmwtypes.h`和`rtwtypes.h`的include
+> * 接口参数类型的指定
+
+## matlab代码
+```matlab
+function [data_MCA] = MultiChannelAverage(data_radar)
+% 输入data_radar: numADCSamples * 8
+% 输出data_MCA: numADCSamples * 1
+
+data_MCA = mean(data_radar,2);
+end
+```
+
+##  转换完成后的C语言代码
+```c
+/*
+ * File: MultiChannelAverage.c
+ *
+ * MATLAB Coder version            : 5.2
+ * C/C++ source code generated on  : 29-Nov-2022 14:55:50
+ */
+
+/* Include Files */
+#include "MultiChannelAverage.h"
+
+/* Function Definitions */
+/*
+ * 输入data_radar: numADCSamples * 8
+ *  输出data_MCA: numADCSamples * 1
+ *
+ * Arguments    : const cint16_T data_radar[1024]
+ *                creal_T data_MCA[128]
+ * Return Type  : void
+ */
+void MultiChannelAverage(const cint16_T data_radar[1024], creal_T data_MCA[128])
+{
+  double ai;
+  double im;
+  double re;
+  int data_radar_re_tmp;
+  int k;
+  int xj;
+  int xoffset;
+  for (xj = 0; xj < 128; xj++) {
+    data_MCA[xj].re = data_radar[xj].re;
+    data_MCA[xj].im = data_radar[xj].im;
+  }
+  for (k = 0; k < 7; k++) {
+    xoffset = (k + 1) << 7;
+    for (xj = 0; xj < 128; xj++) {
+      data_radar_re_tmp = xoffset + xj;
+      data_MCA[xj].re += (double)data_radar[data_radar_re_tmp].re;
+      data_MCA[xj].im += (double)data_radar[data_radar_re_tmp].im;
+    }
+  }
+  for (xj = 0; xj < 128; xj++) {
+    im = data_MCA[xj].re;
+    ai = data_MCA[xj].im;
+    if (ai == 0.0) {
+      re = im / 8.0;
+      im = 0.0;
+    } else if (im == 0.0) {
+      re = 0.0;
+      im = ai / 8.0;
+    } else {
+      re = im / 8.0;
+      im = ai / 8.0;
+    }
+    data_MCA[xj].re = re;
+    data_MCA[xj].im = im;
+  }
+}
+
+/*
+ * File trailer for MultiChannelAverage.c
+ *
+ * [EOF]
+ */
+```
+
+# 具体创建过程
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-11-29-18-05-19.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-11-29-18-06-38.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-11-29-18-07-52.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-11-29-18-08-23.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-11-29-18-09-24.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-11-29-18-10-43.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-11-29-18-11-08.png)
