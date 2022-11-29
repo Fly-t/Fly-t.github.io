@@ -14,7 +14,7 @@ about:
 sidebar: false
 ---
 
-Finley Malloc is the Chief Data Scientist at Wengo Analytics. When not innovating on data platforms, Finley enjoys spending  time unicycling and playing with her pet iguana.
+Fresh graduates majoring in computer science, love life and love coding.
 
 ## Education
 
@@ -42,3 +42,6 @@ Human Detection (Yolo, Qt..) | Su Zhou Ravsense | Apr 2022
 Radar Raw ADC Data Capture(AWR6843, not DCA1000..) | Su Zhou Ravsense | Jul 2022
 
 VitalSign Algorithm Porting(RTOS, Matlab Coder, STM32H7..) | Su Zhou Ravsense | Oct 2022
+
+
+E-mail: [izhangtengfei@163.com](izhangtengfei@163.com)

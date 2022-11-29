@@ -10,9 +10,9 @@ listing:
         sort-ui: false
         filter-ui: false
     
-    -   id: meeting-notes
-        contents: posts
-        type: table
+    # -   id: meeting-notes
+    #     contents: posts
+    #     type: table
 
 page-layout: full
 title-block-banner: true
@@ -23,10 +23,10 @@ sidebar: false
 ::: {#container-articles}
 :::
 
-Learn more about Quarto [here](https://www.quarto.com).
 
 
-## Meeting Notes
+
+<!-- ## Meeting Notes
 
 :::{#meeting-notes}
-:::
+::: -->
