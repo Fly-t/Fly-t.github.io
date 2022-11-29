@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://fly-t.github.io/posts/matlab-coder/index.html</loc>
+    <lastmod>2022-11-29T10:12:45.396Z</lastmod>
+  </url>
+  <url>
     <loc>https://fly-t.github.io/posts/post-with-code/index.html</loc>
-    <lastmod>2022-11-29T08:37:29.313Z</lastmod>
+    <lastmod>2022-11-29T10:12:47.424Z</lastmod>
   </url>
   <url>
     <loc>https://fly-t.github.io/posts/welcome/index.html</loc>
-    <lastmod>2022-11-29T08:37:31.425Z</lastmod>
+    <lastmod>2022-11-29T10:12:47.748Z</lastmod>
   </url>
   <url>
     <loc>https://fly-t.github.io/index.html</loc>
-    <lastmod>2022-11-29T08:37:31.777Z</lastmod>
+    <lastmod>2022-11-29T10:12:48.076Z</lastmod>
   </url>
   <url>
     <loc>https://fly-t.github.io/article.html</loc>
-    <lastmod>2022-11-29T08:37:32.157Z</lastmod>
+    <lastmod>2022-11-29T10:12:48.432Z</lastmod>
   </url>
 </urlset>

@@ -1,5 +1,12 @@
 [
   {
+    "objectID": "posts/matlab-coder/index.html",
+    "href": "posts/matlab-coder/index.html",
+    "title": "Matlab Coder",
+    "section": "",
+    "text": "matlab Coder 可以将matlab脚本转换为c or C++代码, 极大程度让用户专注算法的设计\n\n可以指定接口类型, 但是无法指定中间变量的类型\n在转换后注意tmwtypes.h和rtwtypes.h的include\n接口参数类型的指定\n\n\n\n\nfunction [data_MCA] = MultiChannelAverage(data_radar)\n% 输入data_radar: numADCSamples * 8\n% 输出data_MCA: numADCSamples * 1\n\ndata_MCA = mean(data_radar,2);\nend\n\n\n\n/*\n * File: MultiChannelAverage.c\n *\n * MATLAB Coder version            : 5.2\n * C/C++ source code generated on  : 29-Nov-2022 14:55:50\n */\n\n/* Include Files */\n#include \"MultiChannelAverage.h\"\n\n/* Function Definitions */\n/*\n * 输入data_radar: numADCSamples * 8\n *  输出data_MCA: numADCSamples * 1\n *\n * Arguments    : const cint16_T data_radar[1024]\n *                creal_T data_MCA[128]\n * Return Type  : void\n */\nvoid MultiChannelAverage(const cint16_T data_radar[1024], creal_T data_MCA[128])\n{\n  double ai;\n  double im;\n  double re;\n  int data_radar_re_tmp;\n  int k;\n  int xj;\n  int xoffset;\n  for (xj = 0; xj < 128; xj++) {\n    data_MCA[xj].re = data_radar[xj].re;\n    data_MCA[xj].im = data_radar[xj].im;\n  }\n  for (k = 0; k < 7; k++) {\n    xoffset = (k + 1) << 7;\n    for (xj = 0; xj < 128; xj++) {\n      data_radar_re_tmp = xoffset + xj;\n      data_MCA[xj].re += (double)data_radar[data_radar_re_tmp].re;\n      data_MCA[xj].im += (double)data_radar[data_radar_re_tmp].im;\n    }\n  }\n  for (xj = 0; xj < 128; xj++) {\n    im = data_MCA[xj].re;\n    ai = data_MCA[xj].im;\n    if (ai == 0.0) {\n      re = im / 8.0;\n      im = 0.0;\n    } else if (im == 0.0) {\n      re = 0.0;\n      im = ai / 8.0;\n    } else {\n      re = im / 8.0;\n      im = ai / 8.0;\n    }\n    data_MCA[xj].re = re;\n    data_MCA[xj].im = im;\n  }\n}\n\n/*\n * File trailer for MultiChannelAverage.c\n *\n * [EOF]\n */"
+  },
+  {
     "objectID": "posts/post-with-code/index.html",
     "href": "posts/post-with-code/index.html",
     "title": "Post With Code",
@@ -46,6 +53,6 @@
     "href": "article.html",
     "title": "Article",
     "section": "",
-    "text": "Post With Code\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nNov 25, 2022\n\n\nHarlow Malloc\n\n\n\n\n\n\n  \n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nNov 22, 2022\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+    "text": "Post With Code\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nNov 25, 2022\n\n\nHarlow Malloc\n\n\n\n\n\n\n  \n\n\n\n\nMatlab Coder\n\n\n\n\n\n\n\nmatlab\n\n\n\n\n\n\n\n\n\n\n\nNov 22, 2022\n\n\nFly-t\n\n\n\n\n\n\n  \n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nNov 22, 2022\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
   }
 ]

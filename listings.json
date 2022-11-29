@@ -3,6 +3,7 @@
     "listing": "/article.html",
     "items": [
       "/posts/post-with-code/index.html",
+      "/posts/matlab-coder/index.html",
       "/posts/welcome/index.html"
     ]
   }
