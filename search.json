@@ -25,20 +25,34 @@
     "href": "index.html#education",
     "title": "TengFei Zhang",
     "section": "Education",
-    "text": "Education\nUniversity of California, San Diego | San Diego, CA PhD in Mathematics | Sept 2011 - June 2015\nMacalester College | St. Paul MA B.A in Economics | Sept 2007 - June 2011"
+    "text": "Education\nSuzhou University of Science and Technology | Jun 2022"
+  },
+  {
+    "objectID": "index.html#experience-at-school",
+    "href": "index.html#experience-at-school",
+    "title": "TengFei Zhang",
+    "section": "Experience at school",
+    "text": "Experience at school\nRanking: 5/45 | GPA: 3.24 | Teaching assistant | Scholarship x 3\nQualification Certificate of Computer and Software Technology Proficiency Of Junior"
   },
   {
     "objectID": "index.html#experience",
     "href": "index.html#experience",
     "title": "TengFei Zhang",
     "section": "Experience",
-    "text": "Experience\nWengo Analytics | Head Data Scientist | April 2018 - present\nGeoScynce | Chief Analyst | Spet 2012 - April 2018"
+    "text": "Experience\nElectric Vehicle Helmet Illegal Detection System(Yolo, Ocr, Spider.. ) | Graduation Project | Feb 2022\nVideo Capture Tools (Pyqt, OpenCv, Ftplib..) | Su Zhou HighWise | Oct 2021\nLicense Management Platform (Django, Vue, Mysql..) | Su Zhou HighWise | Jan 2021\nHuman Detection (Yolo, Qt..) | Su Zhou Ravsense | Apr 2022\nRadar Raw ADC Data Capture(AWR6843, not DCA1000..) | Su Zhou Ravsense | Jul 2022\nVitalSign Algorithm Porting(RTOS, Matlab Coder, STM32H7..) | Su Zhou Ravsense | Oct 2022"
   },
   {
     "objectID": "article.html",
     "href": "article.html",
     "title": "Article",
     "section": "",
-    "text": "Post With Code\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nNov 25, 2022\n\n\nHarlow Malloc\n\n\n\n\n\n\n  \n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nNov 22, 2022\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+    "text": "news\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nNov 25, 2022\n\n\nHarlow Malloc\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nNov 22, 2022\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items\nLearn more about Quarto here."
+  },
+  {
+    "objectID": "article.html#meeting-notes",
+    "href": "article.html#meeting-notes",
+    "title": "Article",
+    "section": "Meeting Notes",
+    "text": "Meeting Notes\n\n\n   \n     \n     \n       Order By\n       Default\n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Title\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\nDate\n\n\nTitle\n\n\nAuthor\n\n\n\n\n\n\nNov 25, 2022\n\n\nPost With Code\n\n\nHarlow Malloc\n\n\n\n\nNov 22, 2022\n\n\nWelcome To My Blog\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
   }
 ]
