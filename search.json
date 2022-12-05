@@ -11,7 +11,7 @@
     "href": "posts/infineon_radar_init_env/index.html",
     "title": "Infineon Radar Env Init",
     "section": "",
-    "text": "Description\n搭建 infineon 60G 毫米波雷达开发环境\n\n\n资料准备\n\n\ninfineon 60G雷达相关下载资料\n下载资料需要先注册账号\n下载资料如下\n\n\n\n\n\ninfineon 60Ghz 毫米波雷达环境创建\n\n\n将上述两个工具安装好 打开development kit \n\n\n\n\n将会看到如下界面"
+    "text": "Description\n搭建 infineon 60G 毫米波雷达开发环境\n\n\n资料准备\n\n\ninfineon 60G雷达相关下载资料\n下载资料需要先注册账号\n下载资料如下\n\n\n\n\n\ninfineon 60Ghz 毫米波雷达环境创建\n\n\n将上述两个工具安装好 打开development kit \n\n\n\n\n将会看到如下界面\n\n\n\n开发框架代码在development kit 安装目录下，进入到安装目录，所需代码和文档都在该目录下。"
   },
   {
     "objectID": "posts/post-with-code/index.html",
