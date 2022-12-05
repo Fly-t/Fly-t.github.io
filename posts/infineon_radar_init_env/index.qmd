@@ -28,3 +28,4 @@ image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-05
 
 ![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-05-16-47-50.png)
 
+开发框架代码在development kit 安装目录下，进入到安装目录，所需代码和文档都在该目录下。
