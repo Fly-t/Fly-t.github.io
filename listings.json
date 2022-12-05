@@ -2,6 +2,7 @@
   {
     "listing": "/article.html",
     "items": [
+      "/posts/infineon_radar_init_env/index.html",
       "/posts/post-with-code/index.html",
       "/posts/matlab-coder/index.html",
       "/posts/welcome/index.html"
