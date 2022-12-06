@@ -1,0 +1,13 @@
+---
+title: "idea配置mapper.xml不提示解决方案"
+author: "dd21"
+date: "2022-12-05" 
+categories: [ide]
+image: ../csdn.png
+---
+
+
+1、确保ieda连接数据库
+2、ctrl+alt+s  进入设置
+![在这里插入图片描述](https://img-blog.csdnimg.cn/7a8b529057a0451f911caaea75be3ab3.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+

@@ -1,0 +1,36 @@
+---
+title: "Django-- 1_配置数据库(mysql8.0)"
+author: "dd21"
+date: "2022-12-05" 
+categories: [django]
+image: ../csdn.png
+---
+
+
+
+1.安装驱动
+```bash
+pip install mysqlclient
+```
+2.修改`settings.py`文件中`DATABASES`
+```python
+DATABASES = {
+ 'default':{
+          'ENGINE' :'django.db.backends.mysql',# 驱动
+          'NAME':'lice_management',# 数据库名
+          'USER':'root',# 用户名
+          'PASSWORD':'123321',# 密码
+          'HOST':'127.0.0.1',# 地址
+          'PORT':'3306',# 端口
+
+ }
+}
+```
+
+pycharm中的配置,Django不需要这个配置
+
+`3.注意mysql8.0开始连接要加上参数`
+```bash
+url: jdbc:mysql://localhost:3306/数据库名?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true 
+```
+

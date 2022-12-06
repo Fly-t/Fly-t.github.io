@@ -1,0 +1,475 @@
+---
+title: "CSS_基础"
+author: "dd21"
+date: "2022-12-05" 
+categories: [html]
+image: ../csdn.png
+---
+
+
+lz也是从知乎上看到这个这个网站，很不错，边学边敲。
+网址：[https://www.freecodecamp.one/](https://www.freecodecamp.one/)
+
+这个算是自己做个小笔记（cv大法）吧，看一点敲一点，cv一点。
+## 更改文本的颜色
+现在让我们来修改一下文本的颜色。
+
+我们通过修改`h2`元素的`style`属性的`color`值来改变文本颜色。
+
+以下是改变`h2`元素为蓝色的方法：
+
+```bash
+<h2 style="color: blue;">CatPhotoApp</h2>
+```
+
+请注意行内style最好以`;`来结束。
+
+## 使用元素选择器来设置元素的样式
+在 CSS 中，页面样式的属性有几百个，但常用的不过几十个。
+
+通过行内样式`<h2 style="color: red;">CatPhotoApp</h2>`，就可以修改`h2`元素的颜色为红色。
+
+当我们只需要改变元素的某个样式时，行内样式最简单直观。当我们需要同时改变元素的很多样式时，层叠样式表往往是一个更好的选择。
+
+在**代码的顶部**，创建一个`style`声明区域，如下方所示：
+
+```bash
+<style>
+</style>
+```
+在`style`样式声明区域内，可以创建一个元素选择器，应用于所有的`h2`元素。例如，如果你想所有`h2`元素变成红色，可以添加下方的样式规则：
+
+```bash
+<style>
+  h2 {color: red;}
+</style>
+```
+注意，在每个元素的样式声明区域里，左右花括号（`{`和 `}`）一定要写全。你需要确保所有样式规则位于花括号之间，并且每条样式规则都以分号结束。
+## 使用 class 选择器设置单个元素的样式
+CSS 的`class`具有可重用性，可应用于各种 HTML 元素。
+
+一个 `CSSclass`声明示例，如下所示：
+
+```css
+<style>
+  .blue-text {
+    color: blue;
+  }
+</style>
+```
+可以看到，我们在`<style>`样式声明区域里，创建了一个名为`blue-text`的`class选择器`。
+
+你可以将 `CSSclass选择器`应用到一个HTML元素里，如下所示：
+
+```bash
+<h2 class="blue-text">CatPhotoApp</h2>
+```
+
+注意：在`style`样式区域声明里，`class`需以`.`开头。而在 HTML 元素里，`class`属性的前面**不能**添加`.`。
+## 使用 class 选择器设置多个元素的样式
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200504222340656.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+## 更改元素的字体大小
+字体大小由`font-size`属性控制，如下所示：
+
+```css
+h1 {
+  font-size: 30px;
+}
+```
+## 设置元素的字体家族
+通过`font-family`属性，可以设置元素里面的字体样式。
+
+如果你想设置`h2`元素的字体为`sans-serif`，你可以用以下的 CSS 规则：
+
+```css
+h2 {
+  font-family: sans-serif;
+}
+```
+## 引入谷歌字体
+除了大多数系统提供的默认字体以外，我们也可以使用自定义字体。网络上有各种各样的字体，不过在这个例子中，我们将会尝试使用`Google`字体库。
+
+`Google` 字体是一个免费的字体库，可以通过在 `CSS` 里面设置字体的 `URL` 来引用。
+
+因此，下一步，我们将引入和使用`Google`字体。
+
+引入`Google`字体，你需要复制`Google`字体的 `URL`，并粘贴到你的 HTML 里面。在这个挑战中，我们需要引入`Lobster`字体。因此，请复制以下代码段，并粘贴到代码编辑器顶部，即放到`style`标签之前。
+
+```bash
+<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
+```
+现在你可以设置`font-family`属性为`Lobster`，来使用`Lobster`字体。例子如下：
+
+```css
+font-family: FAMILY_NAME, GENERIC_NAME;#第二个是备用字体
+```
+
+`GENERIC_NAME`是可选的，其他字体不可用时便作为后备字体，在下一个挑战中可以得到体现。
+
+字体名区分大小写，并且如果字体名含有空格，需要用引号括起来。例如，使用"`Open Sans`"字体需要添加引号，而`Lobster`字体则不需要。
+
+通过`id`属性，你可以做一些很酷的事情，例如，就像 `class` 一样，你可以使用 `CSS` 来设置他们的样式
+
+可是，`id`不可以重用，只应用于一个元素上。同时，在 `CSS` 里，`id`的优先级要高于`class`，如果一个元素同时应用了`class`和`id`，并设置样式有冲突，会优先应用`id`的样式。
+
+选择`id`为`cat-photo-element`的元素，并设置它的背景样式为`green`，可以在你的`style`标签里这样写：
+
+```css
+#cat-photo-element {
+  background-color: green;
+}
+```
+
+## CSS 基础：调整元素的内边距
+我们先暂时把猫咪图片放在一边，让我们去学习更多 `HTML` 相关样式。
+
+你可能已经注意到了，所有的 `HTML` 元素基本都是以矩形为基础。
+
+每个 `HTML` 元素周围的矩形空间由三个重要的属性来控制：`padding`（内边距），`margin`（外边距）和`border`（边框）。
+
+`padding`控制着元素内容与`border`之间的空隙大小。
+
+在这里，我们可以看到蓝色盒子和红色盒子都在黄色盒子里面。可以发现，红色盒子比蓝色盒子有着更多的`padding`填充空间。
+
+当你增加蓝色盒子的`padding`值，文本内容与边框的距离会逐渐拉大。
+
+```css
+  .red-box {
+    background-color: crimson;
+    color: #fff;
+    padding: 20px;
+  }
+```
+
+## CSS 基础：给元素添加负外边距
+**可设置为负值**
+元素的`margin`（外边距）控制元素边框与其他周围元素之间的距离大小。
+
+如果你设置元素`margin`为负值，元素会变得更大。
+
+```css
+.blue-box {
+    background-color: blue;
+    color: #fff;
+    padding: 20px;
+    margin: -15px;
+  }
+```
+
+## CSS 基础：给元素的每一侧添加不同的内边距
+有时候，你会想给一个元素每个方向的padding都设置成一个特定的值
+
+CSS 允许你使用padding-top，padding-right， padding-bottom和padding-left属性来设置四个不同方向的padding值。
+
+```css
+.blue-box {
+    background-color: blue;
+    color: #fff;
+    padding-top:40px;
+    padding-right:20px;
+    padding-left:40px;
+    padding-bottom:20px;
+    
+
+  }
+```
+## CSS 基础：给元素的每一侧添加不同的外边距
+有时候，你会想给一个元素每个方向的`margin`都设置成一个特定的值。
+
+`CSS` 允许你使用`margin-top`，`margin-right`，`margin-bottom`和`margin-left`属性来设置四个不同方向的`margin`值。
+
+```css
+.red-box {
+    background-color: crimson;
+    color: #fff;
+    margin-top: 40px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    margin-left: 40px;
+  }
+```
+## CSS 基础：使用顺时针方向指定元素的内边距
+如果不想每次都要分别声明`padding-top`，`padding-right`，`padding-bottom`和`padding-left`属性，可以把它们汇总在`padding`属性里面声明，如下：
+
+```css
+padding: 10px 20px 10px 20px;
+```
+
+这四个值按顺时针排序：`上，右，下，左`，并且设置的效果等同于特定声明每一个方向的`padding`。
+
+
+```css
+  .blue-box {
+    background-color: blue;
+    color: #fff;
+    margin: 40px 20px 20px 40px;
+  }
+```
+## CSS 基础：使用顺时针方向指定元素的外边距
+
+让我们再试一次，不过这一次轮到`margin`了。
+
+同样，每个方向的外边距值可以在margin属性里面汇总声明，来代替分别声明`margin-top`，`margin-right`，`margin-bottom`和`margin-left`属性的方式，代码如下：
+
+```css
+margin: 10px 20px 10px 20px;
+```
+
+这四个值按顺时针排序：上，右，下，左，并且设置的效果等同于特定声明每一个方向的`margin`。
+
+```css
+.blue-box {
+    background-color: blue;
+    color: #fff;
+    margin:40px 20px 20px 40px
+  }
+```
+## CSS 基础：使用属性选择器来设置元素的样式
+你已经通过设置元素的`id`和`class`，来显示你想要的样式，而它们也被分别叫做 `ID` 选择器和 `Class` 选择器。另外，也还有其他的 `CSS` 选择器，可以让我们给特定的元素设置样式。
+
+让我们再次通过猫咪图片项目来练习 `CSS` 选择器。
+
+在这个挑战里，你会使用`[attr=value]`属性选择器修改复选框的样式。这个选择器使用特定的属性值来匹配和设置元素样式。例如，下面的代码会改变所有`type`为`radio`的元素的外边距。
+
+
+
+```css
+[type='radio'] {
+  margin: 20px 0px 20px 0px;
+}
+```
+
+
+## CSS 基础：理解绝对单位与相对单位
+最近的几个挑战都是设置元素的内边距和外边距的`px`值。像素`px`是一种长度单位，来告诉浏览器应该如何调整元素大小和空间大小。其实除了像素，`CSS` 也有其他不同的长度单位供我们使用。
+
+`单位长度`的类型可以分成 `2 种`，一种是`相对`的，一种是`绝对`的。例如，`in`和`mm`分别代表着`英寸`和`毫米`。绝对长度单位会接近屏幕上的实际测量值，不过不同屏幕的分辨率会存在差异，可能会导致一些误差。
+
+相对单位长度，就像`em`和`rem`，它们会依赖其他长度的值。就好像`em`的大小基于元素的字体的`font-size`值，如果你使用`em`单位来设置`font-size`值，它的值会跟随父元素的`font-size`值来改变。
+
+注意：
+有些单位长度选项是相对视窗大小来改变值的，符合了响应式 web 的设计原则。
+
+## CSS 基础：现在让我们来讨论一下 CSS 继承。
+
+每一个 `HTML` 页面都含有一个`body`元素。
+
+
+我们可以通过设置`background-color`为`black`，来证明`body`元素的存在。
+
+添加以下的代码到`style`标签里面：
+
+```css
+body {
+  background-color: black;
+}
+```
+## CSS 基础：从 Body 元素继承样式
+我们已经证明每一个 `HTML` 页面都含有`body`元素，`body`元素也可以使用 `CSS` 样式。
+
+设置`body`元素的样式的方式跟设置其他 `HTML` 元素的样式一样，并且其他元素也会继承到`body`设置的样式。
+
+
+首先，创建一个文本内容为`Hello World`的`h1`标签元素。
+
+接着，在`bodyCSS` 规则里面添加一句`color: green;`，改变页面其他元素的字体颜色为`green`（绿色）。
+
+最后，同样在`bodyCSS` 规则里面添加`font-family: monospace;`，设置其他元素字体为`font-family: monospace;`。
+
+
+## CSS 基础：样式中的优先级有时候，你的 HTML 元素的样式会跟其他样式发生冲突。
+
+就像，你的`h1`元素也不能同时设置`green`和`pink`两种样式。
+
+让我们尝试创建一个字体颜色为`pink`的 `class`，并应于用其中一个元素中。猜一猜，它会覆盖`body`元素设置的`color: green;`CSS 属性吗？
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200527201447748.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+## CSS 基础：Class 选择器的优先级高于继承样式
+`"pink-text" `class 覆盖了`body`元素的 `CSS` 声明。
+
+我们刚刚证明了我们的 `class` 会覆盖`body`的 `CSS` 样式。那么，下一个问题是，我们要怎么样才能覆盖我们的`pink-textclass`？
+创建一个字体颜色为`blue`的`blue-text`CSS class，并确保它在`pink-text`下方声明。
+
+```bash
+在这里插入代码片
+```
+
+在含有`pink-textclass` 的`h1`元素里面，再添加一个`blue-textclass`，这时候，我们将能看到到底是谁获胜。
+
+`HTML` 同时应用多个 `class` 属性需以空格来间隔，例子如下:
+
+```bash
+class="class1 class2"
+```
+
+注意：`HTML` 元素里应用的 `class` 的先后顺序无关紧要。
+
+但是，在`<style>`标签里面声明的`class`顺序十分重要。第二个声明始终优于第一个声明。因为`.blue-text`在`.pink-text`的后面声明，所以`.blue-text`会覆盖`.pink-text`的样式。
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200527201801399.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+
+## CSS 基础：ID 选择器优先级高于 Class 选择器
+我们刚刚证明了浏览器读取 `CSS` 是`由上到下的`。这就意味着，如果发生冲突，浏览器将会应用最后声明的样式。
+
+不过我们还没结束，还有其他方法来覆盖 `CSS` 样式。你还记得 `id` 属性吗？
+
+通过给`h1`元素添加 `id` 属性，来覆盖 `class` 属性定义的同名样式。
+
+给`h1`元素添加 `id` 属性，属性值为`orange-text`。设置方式如下：
+
+```html
+<h1 id="orange-text">
+```
+
+`h1`元素继续保留`blue-text`和`pink-text`class。
+
+在`style`元素中创建名为`orange-text`的 `id` 选择器。例子如下：
+
+```css
+#orange-text {
+  color: orange;
+}
+```
+注意：无论在`pink-textclass` 的上面或者下面声明，`id` 选择器的优先级总是会`高于` `class` 选择器。
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200527202438784.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+## CSS 基础：内联样式的优先级高于 ID 选择器
+我们刚刚证明了，`id` 选择器无论在`style`标签哪里声明，都会覆盖 `class` 声明的样式，
+
+其实还有其他方法可以覆盖重写 `CSS` 样式。你还记得行内样式吗？
+
+使用行内样式尝试让`h1`的字体颜色变白。像下面这样使用：
+
+```html
+<h1 style="color: green">
+```
+
+你的`h1`元素需继续保留`blue-text`和`pink-text`class。
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200527202658532.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+## CSS 基础：Important 的优先级最高
+我们刚刚又证明了行内样式会覆盖`style`标签里面所有的 `CSS` 声明。
+
+不过，还有一种方式可以覆盖重新 `CSS` 样式。这是所有方法里面最强大的一个。在此之前，我们要考虑清楚，为什么我们需要覆盖 `CSS` 样式。
+
+在很多时候，你使用 `CSS` 库，有时候它们声明的样式会意外的覆盖你的 `CSS` 样式。当你需要保证你的 `CSS` 样式不受影响，你可以使用`!important`。
+
+让我们回到`pink-textclass` 声明之中，它已经被随其后的 `class` 声明，`id` 声明，以及行内样式所覆盖。
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200527202935393.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+
+## CSS 基础：使用十六进制编码获得指定颜色
+你知道在 `CSS` 里面还有其他方式来代表颜色吗？其中一个方法叫做十六进制编码，简称`hex`。
+
+我们日常使用最多的计数方法，基于十进制，使用 0 到 9 数字来表示。而十六进制编码（hex）基于 16 位数字，它含有 16 种不同字符。十六进制与十进制一样，0-9 表示着 0 到 9 的值，不同的是，`A，B，C，D，E，F` 表示着十六进制 10 到 15 的值。总的来说，0 到 F 在十六进制里代表着数字，提供了 16 种可能性。你可以在这里找到更多的相关信息。
+
+在 CSS 里面，我们可以用使用 6 个十六进制的数字来代表颜色，每两个数字控制一种颜色，分别是红（R），绿（G），蓝（B）。例如，`#000000代表着黑色`，同时也是最小的值。你可以在这里找到更多的相关信息。
+
+```css
+body {
+  color: #000000;
+}
+```
+## CSS 基础：使用十六进制编码混合颜色
+回顾一下，`hex`使用 6 个十六进制编码来表示颜色，2 个一组，分别代表着红（R），绿（G），蓝（B）。
+
+通过三原色，我们可以创建 1600 万种不同颜色！
+
+例如，橘色是纯红色混合一些绿色而成的，没有蓝色的参与。在十六进制编码里面，它被转译为`#FFA500`。
+
+0是十六进制里面最小的数字，表示着没有颜色。
+
+F是十六进制里面最大的数字，表示着最高的亮度。
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200527203855801.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200527203908155.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+
+## CSS 基础：使用缩写的十六进制编码
+
+许多人对超过 1600 万种颜色的可能性感到不知所措，并且很难记住十六进制编码。幸运的是，它也提供缩写的方法。
+
+例如，红色的#FF0000十六进制编码可以缩写成#F00。在这种缩写形式里，三个数字分别代表着红（R），绿（G），蓝（B）颜色。
+
+这样，颜色的可能性减少到了大约 4000 种。且在浏览器里#FF0000和#F00完全是同一种颜色。
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200527204011762.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200527204107865.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+## CSS 基础：使用 RGB 值为元素上色
+另一种可以在 `CSS` 中表示颜色的方法是使用 `RGB` 值。
+
+黑色的 RGB 值声明如下：
+
+```bash
+rgb(0, 0, 0)
+```
+
+白色的 RGB 值声明如下：
+
+```bash
+rgb(255, 255, 255)
+```
+
+RGB 不像十六进制编码，并不需要用到 6 位十六进制数字。在 RGB 里，你只需要指定每种颜色的亮度大小，从 0 到 255。
+
+在数学的角度来看，如果将十六进制的一种颜色的两位数字相乘，16 乘以 16 也等于 256。所以，从 0 到 255 计算的 RGB 值的具有十六进制编码相同的颜色可能性。
+
+下面是通过使用 RGB 值设置背景颜色为橘色的例子：
+
+```css
+body {
+  background-color: rgb(255, 165, 0);
+}
+```
+## CSS 基础：使用 RGB 混合颜色
+就像使用十六进制编码一样，你可以通过不同值的组合，来混合得到不同的 `RGB` 颜色。
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200527204426405.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200527204529601.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+## CSS 基础：使用 CSS 变量一次更改多个元素
+`CSS` 变量是一种仅更改一个值，来一次性更改多个 `CSS` 样式属性的强大方法。
+
+按照下面指示的来做，我们只需要改变三个值，多个样式将会同时被修改。
+## CSS 基础：创建一个自定义的 CSS 变量
+创建一个 `CSS` 变量，你只需要在变量名前添加两个破折号，并为其赋值，例子如下：
+
+```css
+--penguin-skin: gray;
+```
+
+这样会创建一个`--penguin-skin`变量并赋值为`gray`（灰色）。
+
+现在，其他元素可通过该变量来设置为`gray`（灰色）。
+
+## CSS 基础：引用一个自定义的 CSS 变量
+创建变量后，`CSS` 属性可以通过引用变量名来使用它的值。
+
+```css
+background: var(--penguin-skin);
+```
+
+因为引用了`--penguin-skin`变量的值，使用了这个样式的元素背景颜色会是灰色。
+
+注意：如果变量名不匹配，样式不会生效。
+
+## CSS 基础：给 CSS 变量附加回退值
+使用变量来作为 `CSS` 属性值的时候，可以设置一个备用值来防止由于某些原因导致变量不生效的情况。
+
+或许有些人正在使用着不支持 `CSS` 变量的旧浏览器，又或者，设备不支持你设置的变量值。为了防止这种情况出现，那么你可以这样写：
+
+```css
+background: var(--penguin-skin, black);
+```
+这样，当你的变量有问题的时候，它会设置你的背景颜色为黑色。
+
+提示：这对调试会很有帮助。
+
+
+
+
+
+
+
+
+
+
+
+
+
+未完成，学习ing
+

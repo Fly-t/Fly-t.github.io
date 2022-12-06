@@ -1,0 +1,263 @@
+---
+title: "darknet用公共数据集训练自己的模型"
+author: "dd21"
+date: "2022-12-05" 
+categories: [darknet]
+image: ../csdn.png
+---
+
+
+# 目录结构如下
+![在这里插入图片描述](https://img-blog.csdnimg.cn/733fbed006fc41a399339989caca5ea2.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2d742646e3da4fe99909b6d7816af34e.png)
+
+### `.txt`文件是由`train_label.py`文件生成的,其他的文件需要根据自己选定的版本yolo版本进行选择.(这里以yolov3-tiny为例)
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/d1d7a96044554940865f58f4bacae8f6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+### 修改配置`train_label.py`保修需要的类.然后执行
+
+```csharp
+python train_label.py # 执行后即可出线`.txt`文件,如果遇到报错请查看数据集的位置是否正确.
+```
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/ccdebc210e8448af9d6586de8a0c4c7f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+### 修改`v3_tiny_obj.names`文件
+![在这里插入图片描述](https://img-blog.csdnimg.cn/29c84bdcc3364fd184ba0b256f218ec4.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+### 修改`v3_tiny_obj.data`文件
+![在这里插入图片描述](https://img-blog.csdnimg.cn/d1cc7d12e648449f897b801c69c6ce97.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_17,color_FFFFFF,t_70,g_se,x_16)
+### 生成`yolov3-tiny.conv.15`文件 (预训练权重的提取)
+```csharp
+darknet partial data/voc/yolov3-tiny_obj.cfg data/voc/yolov3-tiny.weights data/voc/yolov3-tiny.conv.15 15
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/bec0d5a61dca4166877fb54aae2643b3.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+#### 修改`yolov3-tiny_obj.cfg`
+锚点计算,普通版本9, tiny 6
+```bash
+darknet detector calc_anchors data/voc/v3_tiny_obj.data -num_of_clusters 6 -width 416 -height 416
+```
+修改内容如下
+
+```csharp
+[net]
+# Testing
+#batch=1
+#subdivisions=1
+# Training
+# 根据电脑性能修改大小,  batch = 8*n
+batch=64
+# 根据电脑性能调整大小
+subdivisions=2    
+width=416
+height=416
+channels=3
+momentum=0.9
+decay=0.0005
+angle=0
+saturation = 1.5
+exposure = 1.5
+hue=.1
+
+learning_rate=0.001
+burn_in=1000
+#max_batches = 500200
+#steps=400000,450000
+# 训练步数
+max_batches = 10000
+policy=steps
+# 训练到相应次数后学习率变化
+steps=4000,8000
+scales=.1,.1
+
+[convolutional]
+batch_normalize=1
+filters=16
+size=3
+stride=1
+pad=1
+activation=leaky
+
+[maxpool]
+size=2
+stride=2
+
+[convolutional]
+batch_normalize=1
+filters=32
+size=3
+stride=1
+pad=1
+activation=leaky
+
+[maxpool]
+size=2
+stride=2
+
+[convolutional]
+batch_normalize=1
+filters=64
+size=3
+stride=1
+pad=1
+activation=leaky
+
+[maxpool]
+size=2
+stride=2
+
+[convolutional]
+batch_normalize=1
+filters=128
+size=3
+stride=1
+pad=1
+activation=leaky
+
+[maxpool]
+size=2
+stride=2
+
+[convolutional]
+batch_normalize=1
+filters=256
+size=3
+stride=1
+pad=1
+activation=leaky
+
+[maxpool]
+size=2
+stride=2
+
+[convolutional]
+batch_normalize=1
+filters=512
+size=3
+stride=1
+pad=1
+activation=leaky
+
+[maxpool]
+size=2
+stride=1
+
+[convolutional]
+batch_normalize=1
+filters=1024
+size=3
+stride=1
+pad=1
+activation=leaky
+
+###########
+
+[convolutional]
+batch_normalize=1
+filters=256
+size=1
+stride=1
+pad=1
+activation=leaky
+
+[convolutional]
+batch_normalize=1
+filters=512
+size=3
+stride=1
+pad=1
+activation=leaky
+
+[convolutional]
+size=1
+stride=1
+pad=1
+# classes:训练类别数:   filters=3*((classes+5)
+filters=18
+activation=linear
+
+
+
+[yolo]
+mask = 3,4,5
+# 锚点位置计算
+anchors = 23, 63,  57,138,  90,255, 160,179, 165,321, 310,361
+# 根据自己设定的类别数修改
+classes=1
+num=6
+jitter=.3
+ignore_thresh = .7
+truth_thresh = 1
+random=1
+
+[route]
+layers = -4
+
+[convolutional]
+batch_normalize=1
+filters=128
+size=1
+stride=1
+pad=1
+activation=leaky
+
+[upsample]
+stride=2
+
+[route]
+layers = -1, 8
+
+[convolutional]
+batch_normalize=1
+filters=256
+size=3
+stride=1
+pad=1
+activation=leaky
+
+[convolutional]
+size=1
+stride=1
+pad=1
+# classes:训练类别数:   filters=3*((classes+5)
+filters=18
+activation=linear
+
+[yolo]
+# mask = 0,1,2
+mask = 1,2,3
+# 锚点位置计算
+anchors = 23, 63,  57,138,  90,255, 160,179, 165,321, 310,361
+classes=1
+num=6
+jitter=.3
+ignore_thresh = .7
+truth_thresh = 1
+random=1
+
+```
+### 开始训练
+### `cpu训练`:
+## 在`darknet.exe`所在的路径下打开cmd执行一下命令!!!!!!!
+
+```csharp
+darknet_no_gpu detector train data/voc/v3_tiny_obj.data data/voc/yolov3-tiny_obj.cfg data/voc/yolov3-tiny.conv.15
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/1714db6257d341b0af7c4fc1097d2583.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+### `gpu训练`:
+修改工程文件中的`makeFile`文件
+![在这里插入图片描述](https://img-blog.csdnimg.cn/e687726503644566908446de37af0b13.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+#### `makeFile`中修改内容如下
+![在这里插入图片描述](https://img-blog.csdnimg.cn/608bec25dc234aff89ee060e9198960e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+### `开始训练`
+## 在`darknet.exe`所在的路径下打开cmd执行一下命令!!!!!!!
+```csharp
+darknet detector train data/voc/v3_tiny_obj.data data/voc/yolov3-tiny_obj.cfg data/voc/yolov3-tiny.conv.15
+```
+
+训练效果:
+![在这里插入图片描述](https://img-blog.csdnimg.cn/036a76717e6a4a108832f5210900c80c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/b0c67888920e4bd6ac1160af65791afb.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+### 训练完权重文件存放路径
+![在这里插入图片描述](https://img-blog.csdnimg.cn/010576c3442a4cd0bc797e52f2a2cc83.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/41e6e94f1ef64163a18e532f281e835c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+

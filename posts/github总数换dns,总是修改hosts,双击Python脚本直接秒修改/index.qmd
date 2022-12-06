@@ -1,0 +1,22 @@
+---
+title: "github总数换dns,总是修改hosts,双击Python脚本直接秒修改"
+author: "dd21"
+date: "2022-12-05" 
+categories: [git]
+image: ../csdn.png
+---
+
+
+## 国内访问github总是出问题
+带来的体验很不爽
+直接上[下载地址](https://jszhuanben.lanzoui.com/iBnG3vwht5e)
+
+## 大多数给出的解决方案
+每次无法访问就要去重新手动查询修改hosts文件,  烦的一批
+于是就到github上找到了个fastHost的项目,修改了一点点, 	`双击直接运行(前提是安装了python3)`,简直无脑,放到桌面上,爽的一批
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/4255862c72e548bb8931cc5dedd3e253.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+# 运行结果
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/6f589e74a4774787963291596e82573a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+

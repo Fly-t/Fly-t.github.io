@@ -1,0 +1,86 @@
+---
+title: "esp8266--03 按钮次数计数"
+author: "dd21"
+date: "2022-12-05" 
+categories: [esp]
+image: ../csdn.png
+---
+
+
+
+
+## 调试程序
+`按下容易出现抖动,也程序误以为按下开关,所以要避免Debounce`
+
+
+```c
+
+int buttonState = 0;         // 按钮状态
+int beforeState = 0;		// 按下前的状态	
+int counter = 0;			// 计数器
+
+void setup() {
+
+  Serial.begin(9600); 		// 频率设置
+ 
+  pinMode(LED_BUILTIN, OUTPUT);		// 设置点亮LED
+ 
+  pinMode(16, INPUT);				// D0针脚为信号监测
+}
+
+void loop() {
+  buttonState = digitalRead(16);		// 获取按钮状态
+
+  if (buttonState == HIGH) {			// 判断是否按下
+          digitalWrite(LED_BUILTIN,LOW );	//按下点亮
+      } else {
+          digitalWrite(LED_BUILTIN,HIGH );   // 否则关闭
+            }
+  
+  //Serial.println(buttonState); 
+  //Serial.println(beforeState); 
+  //Serial.println("------------------------");         
+  if(buttonState==HIGH and beforeState==LOW){
+      ++counter;
+      Serial.print("the press time is: ");
+      Serial.print(counter);
+      Serial.println();
+      //Serial.println("++++++++++++++++++++++++++++++++++");
+    }
+  //Serial.println(buttonState);
+  // 避免debounce
+  if(buttonState!=beforeState){
+    delay(50);
+    }
+  beforeState=buttonState;			// 将按钮当前状态传递回去
+  delay(1);
+}
+```
+
+## 精简程序
+
+```c
+int buttonState = 0;         // 按钮状态
+int beforeState = 0;		// 按下前的状态	
+int counter = 0;			// 计数器
+
+void setup() {
+  Serial.begin(9600); 		// 频率设置
+  pinMode(16, INPUT);				// D0针脚为信号监测
+}
+
+void loop() {       
+  if(buttonState==HIGH and beforeState==LOW){
+      ++counter;
+      Serial.print("the press time is: ");
+      Serial.print(counter);
+      Serial.println();
+    }
+  if(buttonState!=beforeState){
+    delay(50);
+    }
+  beforeState=buttonState;			// 将按钮当前状态传递回去
+  delay(1);
+}
+```
+

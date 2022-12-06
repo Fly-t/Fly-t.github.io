@@ -1,0 +1,101 @@
+---
+title: "Cisco思科交换机Vlan划分"
+author: "dd21"
+date: "2022-12-05" 
+categories: [network]
+image: ../csdn.png
+---
+
+
+## 0、vlan技术
+
+vlan技术是通过交换机上的端口进行划分不同的局域网，使得连接在同一个交换机的计算机实现计算机与计算机之间的隔离（不在同一个vlan中无法ping通），也可以使多个交换机进行网络划分。
+
+## 1、试验目的
+`**实现同颜色计算机之间可以访问，不同颜色之间无法访问。**`
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210428110741742.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+
+| 名称| 相连的端口 | ip地址|
+|--|--|---|
+|pc0 | F0/4 |172.1.1.2|
+|pc1|F0/5|172.1.1.3|
+| pc2 | F0/6 |172.1.1.4|
+|pc3 | F0/4 |172.1.1.12|
+|pc4|F0/5|172.1.1.13|
+| pc5 | F0/6 |172.1.1.14|
+
+
+## 2、创建vlan
+
+switchA
+```bash
+SwitchA>enable
+SwitchA#configure terminal 
+SwitchA(config)#vlan 5
+SwitchA(config-vlan)#name valan5
+SwitchA(config-vlan)#exit
+SwitchA#
+```
+switchB
+
+```bash
+SwitchB>enable
+SwitchB#configure terminal 
+	
+SwitchB(config)#vlan 5
+SwitchB(config-vlan)#name valan5
+SwitchB(config-vlan)#exit
+SwitchB#
+```
+
+## 3、把端口划分到vlan中
+
+`把交换机上的F0/5端口添加到vlan5中`
+switchA
+```bash
+switchA(config)#interface f0/5
+switchA(config-if)#switchport mode access 
+switchA(config-if)#switchport access vlan 5
+switchA(config-if)#exit
+switchA(config)#
+```
+switchB
+
+```bash
+switchB(config)#interface f0/5
+switchB(config-if)#switchport mode access 
+switchB(config-if)#switchport access vlan 5
+switchB(config-if)#exit
+switchB(config)#
+```
+`查看vlan划分情况`
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210428113214481.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+
+## 4、交换机配置
+
+vlan划分完成，需要将两个交换机所划分的网络进行`“拼接”`拼接成一个网络。
+将switchA的F0/1端口 `设置trunk`模式
+```bash
+switchA(config)#interface f0/1
+switchA(config-if)#switch mode trunk 
+switchA(config-if)#exit
+switchA(config)#
+
+```
+将switchB的F0/1端口  `设置trunk`模式
+
+```bash
+switchB(config)#interface f0/1
+switchB(config-if)#switch mode trunk 
+switchB(config-if)#exit
+switchB(config)#
+```
+
+## 5、配置ip
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210428114228698.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2021042811433917.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+测试连通性
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210428114455388.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+

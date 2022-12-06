@@ -1,0 +1,162 @@
+---
+title: "darknet--使用yolo算法进行目标检测（保姆教程）"
+author: "dd21"
+date: "2022-12-05" 
+categories: [darknet]
+image: ../csdn.png
+---
+
+
+# 0.最终效果
+![在这里插入图片描述](https://img-blog.csdnimg.cn/899e432de8a84353a4dde8514e7106e0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+# 1.原始项目代码准备
+
+### `相同的标题号只选一个操作即可，相同的效果!!!!!`
+### `相同的标题号只选一个操作即可，相同的效果!!!!!`
+### `相同的标题号只选一个操作即可，相同的效果!!!!!`
+### 1.1 git方式下载代码
+选择自己想存放的位置执行一下代码
+![在这里插入图片描述](https://img-blog.csdnimg.cn/fe21d3c21810410ab614534e73503f97.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/17ac78146b404ee88a9ffa56e06325cf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+```bash
+git clone https://github.91chi.fun/https://github.com/AlexeyAB/darknet.git
+```
+### 1.1 下载zip方式下载代码（srart）
+
+AB大神的代码地址：[https://github.com/AlexeyAB/darknet](https://github.com/AlexeyAB/darknet)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/0bbc5f13da2d40f19073b149f6a522b6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+### 1.1 解压下载的zip
+![在这里插入图片描述](https://img-blog.csdnimg.cn/1f0ace98491f495499cfa1c2ad22a62e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+### 1.2 执行完以上步骤将会得到一下代码
+![在这里插入图片描述](https://img-blog.csdnimg.cn/3c5a9a9aa1f54a999db2870bfe80e818.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+
+# 2.环境搭建
+需要准备的安装包：
+|所需安装包| 版本 |
+|--|--|
+| 显卡（硬件） | 3060  |
+| CUDA | 511.65  |
+| CUDNN | 8.3.2.44 |
+| OpenCv | 4.5.3 |
+| CMake | 3.23.0 |
+|  VS Studio | 2022 |
+
+(没有gpu可以跳过cudnn和cuda的安装，只安装OPenCv和CMake即可)
+### 2.1 CUDA安装
+#### 根据自己的显卡型号来选择自己`cuda`和`cudnn`的版本！！！！！
+`win(键盘上微软的标志的那个按键)+x`  -- >设备管理器
+![在这里插入图片描述](https://img-blog.csdnimg.cn/38dee60f33e849cf9370d712e9f42491.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+cuda驱动版本选择：[https://www.nvidia.cn/Download/index.aspx?lang=cn](https://www.nvidia.cn/Download/index.aspx?lang=cn)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/67b392a7be824477973581b77cdb2cdb.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/3b4d84a32e774ab8930ac5a074da7f7a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+#### 下载完成，双击安装，全部默认，一直下一步，直到安装结束。
+![在这里插入图片描述](https://img-blog.csdnimg.cn/0caccb3f23ef4d57ba7230a99bd5ce88.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/9397fb959fe44759a8d494263233ce4a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+安装（更新）好了显卡驱动以后。win+R组合键，打开cmd命令窗口。输入如下的命令
+
+```csharp
+nvidia-smi
+```
+显示如下即表示安装成功
+![在这里插入图片描述](https://img-blog.csdnimg.cn/0f50113a4aec429ca5df79d8598c6d4a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+### 2.2 CUDNN安装
+这里需要登录账号才能下载，下载靠近的版本即可。
+cudnn下载地址：[https://developer.nvidia.com/rdp/cudnn-download](https://developer.nvidia.com/rdp/cudnn-download)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/53b44e93c1a24041a9b0d0db79106e3e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/db62f33a6a2d40daab281c14d63d5a24.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+解压缩，进入到`cudnn-windows-x86_64-8.3.2.44_cuda11.5-archive`文件夹
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/dd22fecb340e49eab39ae2100ba61f02.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+cuda位置（默认安装位置，版本号可能存在差别，根据自己的版本来）
+```csharp
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.6
+```
+复制途中如果弹出窗口，点全部替换即可。
+![在这里插入图片描述](https://img-blog.csdnimg.cn/6eb3378c29c645bbbe5d5ce66f9c9a24.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+查看环境变量：
+此电脑 -- >右键 -- >属性 -- >高级设置 -- >环境变量
+![在这里插入图片描述](https://img-blog.csdnimg.cn/7653a3fa079047f0b40be1eb200fb265.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_13,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/f1a85b0c69024610aa92c977718c22bb.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+这时候的环境变量中应该如图：
+如果没有手动指定即可。
+![在这里插入图片描述](https://img-blog.csdnimg.cn/23d76f686e9441e388610e44c7792d84.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+### 2.3 OpenCv安装
+地址：[https://github.com/opencv/opencv/releases](https://github.com/opencv/opencv/releases)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/e9788a7c6c814a57a6c77bf9d8a05d1e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/78883947e2734b5b859c949d0190eb6a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/16ba8403193c4478b6f3a7fc62a6e971.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/799065c1fa534c208f3ee2f86e92cf57.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/a9b7fa68933c4566815a081c4ebc7f19.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+结束后进到自己的opencv安装目录，复制目录进行配置环境变量
+![在这里插入图片描述](https://img-blog.csdnimg.cn/b02dbfcf1b8f4cfcb7120d88b8da7989.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+打开环境变量配置页面
+![在这里插入图片描述](https://img-blog.csdnimg.cn/91e5c763127241ddb8c7acae8d27ffc5.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+创建如下环境变量
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/c9e578a4edfa4170b13d5bc112a33ae5.png)
+接下来在path中添加如下opencv的bin目录和lib目录
+![在这里插入图片描述](https://img-blog.csdnimg.cn/8c2d0307f2794a24afa2ab6f31b0c69a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/f2e08f3dc5b940b78c1ffbf02d45083d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+opencv配置结束
+### 2.4 VS Studio安装
+这里安装的2022版本
+![在这里插入图片描述](https://img-blog.csdnimg.cn/f135139e1e6b4dafac9c8763f40bbc01.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+### 2.5Cmake安装
+cmake下载地址：[https://cmake.org/download/](https://cmake.org/download/)
+下载完成双击全部默认安装。
+![在这里插入图片描述](https://img-blog.csdnimg.cn/d67e8a32a7164d47a991d648a3ddbe4f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/244420d836214603a50ebd16fa474388.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/c6d9bcef28ae4a2bb00be764d3accf99.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/72067af170d549c08e534812ef92c8ff.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/b860d2250a2242f1a4e61e325263c07c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+根据自己的vs studio版本来
+![在这里插入图片描述](https://img-blog.csdnimg.cn/0bb02bc4931c4abbb3726be2c147847e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+可能会遇到如下错误：
+![在这里插入图片描述](https://img-blog.csdnimg.cn/1f1ea91079d2495c9d27a9785e3690c4.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/6c681f8c7d0e4c97a3f31fec06073c08.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+一劳永逸的做法是：修改环境变量中的OpenCV_DIR的路径。
+我们这里直接修改的是cmake的OpenCV_DIR的路径。
+![在这里插入图片描述](https://img-blog.csdnimg.cn/14a556081b7b495fb9656dd94ae92af1.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+delete cache -- >重新再来一遍。
+![在这里插入图片描述](https://img-blog.csdnimg.cn/0dfb52af97f8477b958e213107ffa471.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/db68e4455a6f4086a46deab18e5192ea.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/5e54beed6f804493b59832f64f86bd45.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+[vs下载地址](https://visualstudio.microsoft.com/zh-hans/thank-you-downloading-visual-studio/?sku=Professional&channel=Release&version=VS2022&source=VSLandingPage&cid=2030&passive=false)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/28558e31ae2741bbb2c9425f540267b5.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+生成解决方案
+![在这里插入图片描述](https://img-blog.csdnimg.cn/111d2bad174f43318a2f5ff94f8c3fa4.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_19,color_FFFFFF,t_70,g_se,x_16)
+打开项目文件夹 —>Release
+![在这里插入图片描述](https://img-blog.csdnimg.cn/c2a59d04fe434aebbca125a3df41b80c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/b6dfb633b5f548199bef4a8bbca83dd2.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/531e6d46744947daa8dd1042214c0849.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+把`.cfg` he `weight`文件放到`darknet.exe`同级目录
+![在这里插入图片描述](https://img-blog.csdnimg.cn/36abbbe2d7484152ba4e86eef50e3613.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+# 3.运行
+执行以下命令
+
+```bash
+# 图片预测命令
+darknet detect yolov3-tiny.cfg yolov3-tiny.weights dog.jpg
+# 视频命令
+darknet detector demo data/coco.data yolov3-tiny.cfg yolov3-tiny.weights test.flv
+# 摄像头命令
+darknet detector demo data/coco.data yolov3-tiny.cfg yolov3-tiny.weights -i 0
+```
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/6681df153882404f86823ebd43d932d1.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/62221add95c7467db1fcc0df825c77d5.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+

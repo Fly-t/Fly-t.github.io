@@ -1,0 +1,40 @@
+---
+title: "C语言边界问题"
+author: "dd21"
+date: "2022-12-05" 
+categories: [c]
+image: ../csdn.png
+---
+
+
+> int 的除法
+
+```csharp
+int a = 10/12; 			// 0
+int a = 13/12; 			// 1
+int a = 23/12; 			// 1
+int a = 0/12;  			// 0
+int a = -1/12; 			// 0	
+```
+> % 边界
+```c
+ 0%10			// 0
+ 1%10			// 1
+-1%10			// -1 
+```
+> while的边界问题
+
+```csharp
+while(0){}		// false
+while(1){}		// true
+while(-1){}		// true
+```
+>if的边界问题
+
+```csharp
+if( 0){} 		// false
+if(-1){} 		// true
+if( 1){} 		// true
+```
+
+

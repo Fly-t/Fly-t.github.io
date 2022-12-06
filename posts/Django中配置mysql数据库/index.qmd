@@ -1,0 +1,75 @@
+---
+title: "Django中配置mysql数据库"
+author: "dd21"
+date: "2022-12-05" 
+categories: [django]
+image: ../csdn.png
+---
+
+
+## 一、mysqlclient的安装和配置
+
+```bash
+pip install mysqlclient -i https://pypi.doubanio.com/simple
+```
+**方法一**：修改settings配置文件
+
+```python
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',           # 数据库引擎
+        'NAME': 'first_project',                        # 数据库名
+        'USER': 'fly',                                  # 用户名
+        'PASSWORD': '123456',                           # 密码
+        'HOST': '127.0.0.1',                            # 主机IP
+        'PORT': 3306                                    # 端口
+    }
+}
+```
+**方法二**：
+
+	创建utils工具文件夹，存放工具
+	
+	将数据库配置信息存到一个文件，在settings文件中将其引入。修改起来方便（推荐）
+	
+	新建数据库配置文件db.cnf(名字随意)
+
+```python
+[client]
+database = first_project
+user = fly
+password = 123456
+host = 127.0.0.1
+port = 3306
+default-character-set = utf8
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200502174046655.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+
+## 二、pymysql的使用（推荐mysqlclient，安全）
+	安装pymysql
+```bash
+pip install pymysql -i https://pypi.doubanio.com/simple
+```
+	__init__文件配置信息：
+
+```python
+import pymysql
+pymysql.install_as_MySQLdb()
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200502175050943.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+
+	最后修改settings文件中的数据库配置信息
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200502180517680.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME':'库名',
+        'USER':'用户名',
+        'PASSWORD':'密码',
+        'HOST':'主机地址',
+        'PORT':3306,
+    }
+}
+```

@@ -1,0 +1,44 @@
+---
+title: "Eclipse中配置Tomcat"
+author: "dd21"
+date: "2022-12-05" 
+categories: [clutter]
+image: ../csdn.png
+---
+
+
+## 1、【Window】—>【Preferences】
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210301162702348.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+
+## 2、【Server】—>【Runtime Environments】—>【Add】
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210301162911339.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+`选择对应版本的Tomcat`
+
+## 3、【Apache Tomcat v`X.x`】—>【Next】
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210301163247972.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+
+## 4、【Browse】------>选择Tomcat安装位置（根目录）
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210301163635557.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+
+## 5、Servers----->双击Tomcat vX.x Server at localhost...
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210301164641723.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+
+## 6、选择`Use Tomcat installation`，并将【Deploy path】文本框内容修改为`webapps`
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210301164349796.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+
+## 7、启动Tomcat----->ok
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210301164823231.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+
+
+
+
+
+
+

@@ -1,0 +1,46 @@
+---
+title: "darknet--训练"
+author: "dd21"
+date: "2022-12-05" 
+categories: [darknet]
+image: ../csdn.png
+---
+
+
+# 训练目标：
+person detection
+# 准备数据集
+voc数据集：
+[http://pjreddie.com/media/files/VOCtrainval_11-May-2012.tar](http://pjreddie.com/media/files/VOCtrainval_11-May-2012.tar)
+[http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar](http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar)
+[http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar](http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar)
+
+存放位置如下：--->执行python voc_label.py  会生成 txt文档
+![在这里插入图片描述](https://img-blog.csdnimg.cn/6c6654e4ca8e44079961c6af73296c57.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)![在这里插入图片描述](https://img-blog.csdnimg.cn/aea646fe35d247678560f0e0c482779c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+# 准备预训练权重文件
+这里我们用yolov3-tiny版本的预训练权重文件：
+`yolov3-tiny.conv.11`： [https://jszhuanben.lanzouf.com/iKuPK01mxl5i](https://jszhuanben.lanzouf.com/iKuPK01mxl5i)
+放到：`D:\project\c\train_demo\build\darknet\x64`中
+# 复制一个cfg文件
+`yolov3-tiny.cfg`改名为：`yolov3-tiny-obj.cfg`
+### 下面的配置根据个人电脑来配置
+修改`yolov3-tiny.cfg`文件中 batch=64
+修改`yolov3-tiny.cfg`文件中 batch=64
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2e95b2a4664f49e3be37a8e1ec69e03d.png)
+
+
+4 计算锚点
+
+```csharp
+darknet detector calc_anchors data/voc/v3_tiny_obj.data -num_of_clusters 6 -width 416 -height 416
+```
+# 提取初始化权重
+
+```csharp
+darknet partial data/voc/yolov3-tiny_obj.cfg data/voc/yolov3-tiny.weights data/voc/yolov3-tiny.conv.15 15
+```
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/97a62bb3e82a4fed83002c8365df78cd.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+
