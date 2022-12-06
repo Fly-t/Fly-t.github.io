@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="dd21">
+<meta name="dcterms.date" content="2022-12-05">
+
+<title>TengFei’s Blog - HTML基础</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">TengFei’s Blog</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../article.html">
+ <span class="menu-text">Article</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/fly-t"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://raw.githubusercontent.com/fly-t/images/main/blog/wechat-2022-11-27-16-30-56.png"><i class="bi bi-qr-code-scan" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">HTML基础</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">html</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>dd21 </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 5, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>lz也是从知乎上看到这个这个网站，很不错，边学边敲。 网址：<a href="https://www.freecodecamp.one/">https://www.freecodecamp.one/</a> 这个算是自己做个小笔记（cv大法）吧，看一点敲一点，cv一点。</p>
+<section id="标题标签" class="level2">
+<h2 class="anchored" data-anchor-id="标题标签">标题标签</h2>
+<p>HTML 是英文 Hyper Text Markup Language（超文本标记语言）的缩写。</p>
+<pre><code>大部分 HTML 元素都有一个开始标记和一个结束标记。
+
+开始标记像这样：&lt;h1&gt;
+
+结束标记像这样：&lt;/h1&gt;
+
+开始标记和结束标记的唯一区别就是结束标记多了一个/。</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>h1<span class="op">&gt;</span>Hello <span class="ex">World</span><span class="op">&lt;</span>/h1<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>这些元素用来告诉浏览器，网站的结构是什么样子。h1元素通常被用作主标题，h2元素通常被用作副标题，还有h3、h4、h5、h6元素，它们分别用作不同级别的标题。</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>h2<span class="op">&gt;</span>Hello <span class="ex">World</span><span class="op">&lt;</span>/h2<span class="op">&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>h3<span class="op">&gt;</span>Hello <span class="ex">World</span><span class="op">&lt;</span>/h3<span class="op">&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>h4<span class="op">&gt;</span>Hello <span class="ex">World</span><span class="op">&lt;</span>/h4<span class="op">&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>h5<span class="op">&gt;</span>Hello <span class="ex">World</span><span class="op">&lt;</span>/h5<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="段落标签" class="level2">
+<h2 class="anchored" data-anchor-id="段落标签">段落标签</h2>
+<p>p是paragraph的缩写，通常被用来创建一个段落，就和你写作文一样。</p>
+<p>你可以像这样创建一个段落：</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>p<span class="op">&gt;</span>I<span class="st">'m a p tag!&lt;/p&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="占位符" class="level2">
+<h2 class="anchored" data-anchor-id="占位符">占位符</h2>
+<p>Web 开发者通常用lorem ipsum text来做占位符，占位符就是占着位置的一些文字，没有实际意义。</p>
+<p>为什么叫lorem ipsum text呢?是因为lorem ipsum是古罗马西塞罗谚语的前两个单词。</p>
+<p>从公元16世纪开始lorem ipsum text就被当做占位符了，这种传统延续到了互联网时代。与此同时，孙悟空也在五指山下被压了500年，然后就进化成程序猿了，是不是很巧合。^_^</p>
+</section>
+<section id="给-html-添加注释" class="level2">
+<h2 class="anchored" data-anchor-id="给-html-添加注释">给 HTML 添加注释</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">注释的开始标记是</span><span class="op">&lt;</span>!--，结束标记是--<span class="op">&gt;</span>。</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!--我是注释的内容，代码不执行--<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="html5-元素介绍" class="level2">
+<h2 class="anchored" data-anchor-id="html5-元素介绍">HTML5 元素介绍</h2>
+<p>HTML5 引入了很多更具描述性的 HTML 元素，例如：header、footer、nav、video、article、section等等。</p>
+<p>这些元素让 HTML 更易读，同时有助于搜索引擎优化和无障碍访问。</p>
+<p>main元素让搜索引擎和开发者瞬间就能找到网页的主要内容。</p>
+</section>
+<section id="给网站添加图片img标签" class="level2">
+<h2 class="anchored" data-anchor-id="给网站添加图片img标签">给网站添加图片：img标签</h2>
+<p>用img元素来为你的网站添加图片，其中src属性指向一个图片的地址。</p>
+<p>例如：</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>img <span class="va">src</span><span class="op">=</span><span class="st">"https://www.your-image-source.com/your-image.jpg"</span><span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>注意：img元素是没有结束标记的。</p>
+<p>所有的img元素必须有alt属性，alt属性的文本是当图片无法加载时显示的替代文本，这对于通过屏幕阅读器来浏览网页的用户非常重要。</p>
+<p>注意：如果图片是纯装饰性的，用一个空的alt是最佳实践。</p>
+<p>理想情况下，alt属性不应该包含特殊字符，除非需要。</p>
+</section>
+<section id="用锚点实现网页间的跳转" class="level2">
+<h2 class="anchored" data-anchor-id="用锚点实现网页间的跳转">用锚点实现网页间的跳转</h2>
+<p>你可以用a锚点（Anchor，简写 a）来实现网页间的跳转。</p>
+<p>锚点需要一个href属性指向目的地，它还需要有锚点文本，例如：</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>a <span class="va">href</span><span class="op">=</span><span class="st">"https://freecodecamp.one"</span><span class="op">&gt;</span>传送至 <span class="ex">freecodecamp.one</span><span class="op">&lt;</span>/a<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>然后你的浏览器会显示一个可以点击的文本，点击该文本就会跳转到https://freecodecamp.one。</p>
+</section>
+<section id="用锚点实现网页内部跳转" class="level2">
+<h2 class="anchored" data-anchor-id="用锚点实现网页内部跳转">用锚点实现网页内部跳转</h2>
+<p>锚点同样也可以用来在网页内不同区域的跳转。</p>
+<p>设置锚点的href属性值为井号#加上想跳转区域对应的id属性值，这样就可以创建一个内部跳转。id是用来描述网页元素的一个属性，它的值在整个页面中唯一。</p>
+<p>下面是用来创建内部锚点的例子：</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>a <span class="va">href</span><span class="op">=</span><span class="st">"#contacts-header"</span><span class="op">&gt;</span>Contacts<span class="op">&lt;</span>/a<span class="op">&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>h2 <span class="va">id</span><span class="op">=</span><span class="st">"contacts-header"</span><span class="op">&gt;</span>Contacts<span class="op">&lt;</span>/h2<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>当用户点击了<em>Contacts</em>链接，页面就会跳转到网页的Contacts区域。</p>
+</section>
+<section id="将锚点嵌套在段落中" class="level2">
+<h2 class="anchored" data-anchor-id="将锚点嵌套在段落中">将锚点嵌套在段落中</h2>
+<p>你可以在其他文本元素内嵌套链接。</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>p<span class="op">&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Here</span><span class="st">'s a &lt;a target="_blank" href="http://freecodecamp.one"&gt; link to freecodecamp.one&lt;/a&gt; for you to follow.</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/p&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>让我们来分解这个例子： 通常，文本是被包裹在p段落内：</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>p<span class="op">&gt;</span> Here<span class="st">'s a ... for you to follow. &lt;/p&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">接下来是anchor锚点</span><span class="op">&lt;</span>a<span class="op">&gt;</span>（需要结束标记 <span class="op">&lt;</span>/a<span class="op">&gt;</span>）:</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>a<span class="op">&gt;</span> ... <span class="op">&lt;</span>/a<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>target</strong> 是锚点的一个属性，它指定了会以什么方式来打开链接，属性值 **“_blank”<strong>的意思是链接会在</strong>新元素页打开**。</p>
+<p>href是锚点的另一个属性：它指定了链接的 URL 地址：</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>a <span class="va">href</span><span class="op">=</span><span class="st">"http://freecodecamp.one"</span><span class="op">&gt;</span> ... <span class="op">&lt;</span>/a<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>锚点元素内的文本：“link to freecodecamp.one”，会显示为一个可以点击的链接：</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>a <span class="va">href</span><span class="op">=</span><span class="st">" ... "</span><span class="op">&gt;</span>link <span class="ex">to</span> freecodecamp.one<span class="op">&lt;</span>/a<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="用-号来创建固定链接" class="level2">
+<h2 class="anchored" data-anchor-id="用-号来创建固定链接">用 # 号来创建固定链接</h2>
+<p>有时你想为网站添加一个锚点，但如果你还不确定要将它链接到哪儿，这时可以使用固定链接。</p>
+<p>href属性的当前值是指向 “http://freecatphotoapp.com”，将href属性的值替换为#，也称为井号，就可以创建固定链接。</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">例如:</span> href=<span class="st">"#"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="给图片添加链接" class="level2">
+<h2 class="anchored" data-anchor-id="给图片添加链接">给图片添加链接</h2>
+<p>你可以通过把元素嵌套进锚点里使其变成一个链接。</p>
+<p>把你的图片嵌套进锚点。举例如下：</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>a <span class="va">href</span><span class="op">=</span><span class="st">"#"</span><span class="op">&gt;&lt;</span>img <span class="va">src</span><span class="op">=</span><span class="st">"http://cdn.chenzhicheng.com/running-cats.jpg"</span> <span class="va">alt</span><span class="op">=</span><span class="st">"三只萌萌的小猫"</span><span class="op">&gt;&lt;</span>/a<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>把锚点的href属性设置为#，就可以创建固定链接。</p>
+</section>
+<section id="创建一个无序列表" class="level2">
+<h2 class="anchored" data-anchor-id="创建一个无序列表">创建一个无序列表</h2>
+<p>HTML 有一个特定的元素用于创建无序列表unordered lists（缩写 ul）。</p>
+<p>无序列表以<code>&lt;ul&gt;</code>开始，中间包含一个或多个<code>&lt;li&gt;</code>元素，最后以<code>&lt;/ul&gt;</code>结尾。</p>
+<p>例如:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>ul<span class="op">&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span>li<span class="op">&gt;</span>牛奶<span class="op">&lt;</span>/li<span class="op">&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span>li<span class="op">&gt;</span>奶酪<span class="op">&lt;</span>/li<span class="op">&gt;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>/ul<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>将会创建一个包含牛奶和奶酪的无序列表。 ## 创建一个有序列表</p>
+<p>HTML 有一个特定的元素用于创建有序列表<code>ordered lists</code>（缩写 ol）。</p>
+<p>有序列表以<code>&lt;ol&gt;</code>开始，中间包含一个或多个<code>&lt;li&gt;</code>元素，最后以<code>&lt;/ol&gt;</code>结尾。</p>
+<p>例如:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>ol<span class="op">&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span>li<span class="op">&gt;</span>加菲猫<span class="op">&lt;</span>/li<span class="op">&gt;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span>li<span class="op">&gt;</span>哆啦A梦<span class="op">&lt;</span>/li<span class="op">&gt;</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>/ol<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="创建一个输入框" class="level2">
+<h2 class="anchored" data-anchor-id="创建一个输入框">创建一个输入框</h2>
+<p>现在让我们来创建一个form表单。</p>
+<p>input输入框可以让你轻松获得用户的输入。</p>
+<p>你可以像这样创建一个文本输入框：</p>
+<p><code>&lt;input type="text"&gt;</code></p>
+<p>注意：input输入框是<code>没有结束标记的</code> ## 给输入框添加占位符文本(在输入框位置显示提示信息) Placeholder占位符是用户在input输入框中输入任何东西前的预定义文本。</p>
+<p>你可以像这样创建一个占位符：<code>&lt;input type="text" placeholder="this is placeholder text"&gt;</code> <strong>效果：</strong> <img src="https://img-blog.csdnimg.cn/20200504163853807.png" class="img-fluid" alt="在这里插入图片描述"></p>
+</section>
+<section id="创建一个表单" class="level2">
+<h2 class="anchored" data-anchor-id="创建一个表单">创建一个表单</h2>
+<p>通过给form表单添加一个action属性，你可以使用纯 HTML 来构建向服务器提交数据的 Web 表单。</p>
+<p>例如: <code>&lt;form action="/url-where-you-want-to-submit-form-data"&gt;&lt;/form&gt;</code> 在input输入框外层创建一个form表单，然后设置表单的action属性为<code>"/submit-cat-photo"</code>。 ## 给表单添加提交按钮</p>
+<p>让我们来给表单添加一个submit提交按钮，当点击提交按钮时，表单中的数据将会被发送到action属性指定的地址上。</p>
+<p>例如： <code>&lt;button type="submit"&gt;this button submits the form&lt;/button&gt;</code> <strong>效果：</strong> <img src="https://img-blog.csdnimg.cn/20200504164539912.png" class="img-fluid" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/20200504164559898.png" class="img-fluid" alt="在这里插入图片描述"> ## 给表单添加一个必填字段</p>
+<p>当你设计表单时，你可以指定某些字段为必填项(required)，只有当用户填写了该字段后，才可以提交表单。</p>
+<p>如果你想把文本输入框设置为必填项，在input元素中加上<code>required</code>属性就可以了，例如：<code>&lt;input type="text" required&gt;</code></p>
+</section>
+<section id="创建一组单选按钮" class="level2">
+<h2 class="anchored" data-anchor-id="创建一组单选按钮">创建一组单选按钮</h2>
+<p><code>radio buttons</code>（单选按钮）就好比单项选择题，正确答案只有一个。</p>
+<p>单选按钮只是<code>input</code>输入框的一种类型。</p>
+<p>每一个单选按钮都应该嵌套在它自己的<code>label</code>（标签）元素中。</p>
+<p>所有关联的单选按钮应该拥有相同的<code>name</code>属性。</p>
+<p>下面是一个单选按钮的例子：</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>label<span class="op">&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span>input <span class="va">type</span><span class="op">=</span><span class="st">"radio"</span> <span class="va">name</span><span class="op">=</span><span class="st">"indoor-outdoor"</span><span class="op">&gt;</span>Indoor</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>/label<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>最佳实践是在<code>label</code>元素上设置<code>for</code>属性，让其值与单选按钮的<code>id</code>属性值相等，这样就在<code>label</code>元素和它的子元素单选按钮之间创建了一种链接关系。例如：</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>label <span class="va">for</span><span class="op">=</span><span class="st">"indoor"</span><span class="op">&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span>input <span class="va">id</span><span class="op">=</span><span class="st">"indoor"</span> <span class="va">type</span><span class="op">=</span><span class="st">"radio"</span> <span class="va">name</span><span class="op">=</span><span class="st">"indoor-outdoor"</span><span class="op">&gt;</span>Indoor</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>/label<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>效果：</strong> <img src="https://img-blog.csdnimg.cn/20200504170129953.png" class="img-fluid" alt="在这里插入图片描述"></p>
+</section>
+<section id="创建一组复选框" class="level2">
+<h2 class="anchored" data-anchor-id="创建一组复选框">创建一组复选框</h2>
+<p><code>heckboxes</code>（复选框）就好比多项选择题，正确答案有多个。</p>
+<p>复选框是<code>input</code>输入框的另一种类型。</p>
+<p>每一个复选框都应该嵌套在它自己的<code>label</code>（标签）元素中。</p>
+<p>所有关联的复选框应该拥有相同的<code>name</code>属性。</p>
+<p>最佳实践是在<code>label</code>元素上设置<code>for</code>属性，让其值与复选框的id属性值相等，这样就在label元素和它的子元素复选框之间创建了一种链接关系。例如：</p>
+<p>下面是一个复选框的例子： <code>&lt;label for="loving"&gt;&lt;input id="loving" type="checkbox" name="personality"&gt; Loving&lt;/label&gt;</code></p>
+<p><strong>效果：</strong> <img src="https://img-blog.csdnimg.cn/20200504170716604.png" class="img-fluid" alt="在这里插入图片描述"> ## 给单选按钮和复选框添加默认选中项 通过添加<code>checked</code>属性，你可以设置某个单选按钮或多选按钮被默认选中。</p>
+<p>为此，只需给<code>input</code>元素添加 “<code>checked</code>” 属性。 例如:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>input <span class="va">type</span><span class="op">=</span><span class="st">"radio"</span> <span class="va">name</span><span class="op">=</span><span class="st">"test-name"</span> <span class="ex">checked</span><span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>效果：</strong> <img src="https://img-blog.csdnimg.cn/20200504171024563.png" class="img-fluid" alt="在这里插入图片描述"> ## 元素嵌套 <strong>将其他元素都包含在内，形成一个大整体</strong></p>
+<p><code>div</code>元素，也叫<code>division（层）</code>元素，是一个盛装其他元素的通用容器。</p>
+<p>它也是 HTML 中出现频率最高的元素。</p>
+<p>和其他普通元素一样，你可以用<code>&lt;div&gt;</code>来标记一个div元素的开始，用<code>&lt;/div&gt;</code>来标记一个div元素的结束。</p>
+</section>
+<section id="声明-html-文档的文档类型" class="level2">
+<h2 class="anchored" data-anchor-id="声明-html-文档的文档类型">声明 HTML 文档的文档类型</h2>
+<p>到目前为止，我们学习了一些特定的 <code>HTML</code> 标签，还有一些标签是用来组成网页的总体结构，并且它们在每个 <code>HTML</code> 文档中都能看到。</p>
+<p>在文档的顶部，你需要告诉浏览器你的网页用的 <code>HTML</code> 哪个版本。 <code>HTML</code> 是一个不停进化的语言，大部分浏览器都支持 <code>HTML</code> 的最新标准，也就是 <code>HTML5</code>。但是一些陈旧的网页可能使用的是 <code>HTML</code> 的旧版本。</p>
+<p>你可以通过<code>&lt;!DOCTYPE ...&gt;</code>来告诉浏览器你使用的是 <code>HTML</code> 的哪个版本，“<code>...</code>” 部分就是版本的数字信息。<code>&lt;!DOCTYPE html&gt;</code>对应的就是 <code>HTML5</code>。</p>
+<p><code>!</code>和大写的<code>DOCTYPE</code>是很重要的，特别是对于老的浏览器。但<code>html</code>大写小写都可以。</p>
+接下来，所有的 <code>HTML</code> 代码都必须位于<code>html</code>标签中。其中<code>&lt;html&gt;</code>位于&lt;!DOCTYPE html&gt;的后面，
+
+<p>位于网页的结尾。</p>
+<p>这是网页结构一个例子：</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!DOCTYPE <span class="ex">html</span><span class="op">&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>html<span class="op">&gt;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span>!-- <span class="ex">Your</span> HTML code goes here <span class="at">--</span><span class="op">&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>/html<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="定义-html-文档的标题和正文" class="level2">
+<h2 class="anchored" data-anchor-id="定义-html-文档的标题和正文">定义 HTML 文档的标题和正文</h2>
+<p><code>html</code>的结构主要分为两大部分：<code>head</code>、<code>body</code>。关于网页的描述都应该放入<code>head</code>标签，网页的内容都应该放入<code>body</code>标签。</p>
+<p>比如<code>link</code>、<code>meta</code>、<code>title</code>和<code>style</code>都应该放入head标签。</p>
+<p>这是网页布局的一个例子：</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!DOCTYPE <span class="ex">html</span><span class="op">&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>html<span class="op">&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span>head<span class="op">&gt;</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>!-- <span class="ex">metadata</span> elements <span class="at">--</span><span class="op">&gt;</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span>/head<span class="op">&gt;</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span>body<span class="op">&gt;</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>!-- <span class="ex">page</span> contents <span class="at">--</span><span class="op">&gt;</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span>/body<span class="op">&gt;</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>/html<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

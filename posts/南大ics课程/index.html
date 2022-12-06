@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="dd21">
+<meta name="dcterms.date" content="2022-12-05">
+
+<title>TengFei’s Blog - 南大ics课程</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">TengFei’s Blog</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../article.html">
+ <span class="menu-text">Article</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/fly-t"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://raw.githubusercontent.com/fly-t/images/main/blog/wechat-2022-11-27-16-30-56.png"><i class="bi bi-qr-code-scan" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">南大ics课程</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">cs</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>dd21 </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 5, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="p1--课程介绍" class="level1">
+<h1>P1- 课程介绍</h1>
+<p><a href="http://jyywiki.cn/">http://jyywiki.cn/</a> 该课程主要是通过手把手编写一个模拟器, 来了解计算机底层原理(编译,链接….) # P2-C语言拾遗 &gt;总结: &gt; - 编译链接过程 &gt; - 预编译指令 &gt; - 宏的使用 &gt; - 内存模型 &gt;<br>
+<img src="https://img-blog.csdnimg.cn/df2d84bc0668421c90b22d6028fc1a4b.png" class="img-fluid" alt="在这里插入图片描述"></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gcc</span> hello.c                             // complier c file</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">vim</span> a.out                               // see the bin file</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">:%!xxd</span>                                  // show with hex</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>we can see <code>.ELF</code> at the begin, this tell us this is an executeable file 我们可以看到开头的<code>.ELF</code>, 这表示这是一个(linux中)可执行文件 <img src="https://img-blog.csdnimg.cn/bfbda313b44747779265ee1767067eb8.png" class="img-fluid" alt="在这里插入图片描述"> &gt;可执行文件可以通过<code>file打开</code></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file</span> a.out</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://img-blog.csdnimg.cn/c548f79be5294c6b8f6715593e0b5c26.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">在这里插入图片描述</figcaption><p></p>
+</figure>
+</div>
+<blockquote class="blockquote">
+<p>上述过程直接通过<code>gcc</code> 实现了从<code>.c</code>到<code>.out</code> 的过程 上述过程拆解: - <code>gcc -S hello.c</code> =&gt; 生成<code>.s</code>汇编文件 - <code>gcc -c hello.c</code> =&gt; 生成<code>.o文件</code>,但是没有链接 - <code>objdump -d hello.o</code> =&gt; 将<code>.o</code>文件反汇编成我们可以看的懂的文件</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://img-blog.csdnimg.cn/25e745a843bd4372871b500601c0e085.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">在这里插入图片描述</figcaption><p></p>
+</figure>
+</div>
+</blockquote>
+<section id="预编译指令" class="level2">
+<h2 class="anchored" data-anchor-id="预编译指令">预编译指令<code>#</code></h2>
+<blockquote class="blockquote">
+<p><code>#include</code> 表示将代码复制粘贴进来</p>
+</blockquote>
+</section>
+<section id="eg1" class="level2">
+<h2 class="anchored" data-anchor-id="eg1"><code>eg1</code></h2>
+<ul>
+<li>hello.inc</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>printf<span class="op">(</span><span class="st">"hello world</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>hello.c</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span><span class="pp">    </span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span><span class="op">*</span> argv<span class="op">[])</span>    </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span>    </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="pp">#include </span><span class="im">"hello.inc"</span><span class="pp">    </span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span>    </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>gcc -E hello.c</code></p>
+<p><img src="https://img-blog.csdnimg.cn/62c27c2ff9da4067a8af901c5257dda4.png" class="img-fluid" alt="在这里插入图片描述"> <code>gcc --verbose hello.c</code> 查看include文件是否在包含的目录中</p>
+<p>可以看到<code>#include "xxx"</code>和<code>#include &lt;xxx&gt;"</code>的位置 <img src="https://img-blog.csdnimg.cn/ca8a8d97359b46dabb3998d9f279ed1a.png" class="img-fluid" alt="在这里插入图片描述"> &gt;使用<code>#include &lt;xxx&gt;"</code>进行包含文件挥发现找不到这个文件, 系统目录中没有包含该文件. &gt; 可以使用<code>gcc -I./</code>进行将目录添加到系统目录中</p>
+<p>问题演示 <img src="https://img-blog.csdnimg.cn/64439c3130ba48c086377f1734e23996.png" class="img-fluid" alt="在这里插入图片描述"> 解决方案 <img src="https://img-blog.csdnimg.cn/4037201963f249fb9f5829723198b772.png" class="img-fluid" alt="在这里插入图片描述"> <code>gcc -I. --verbose hello.c</code>查看日志中是否包含目录 <img src="https://img-blog.csdnimg.cn/54f0aa2081ed499c9292b25bd1af791d.png" class="img-fluid" alt="在这里插入图片描述"> <code>gcc -m32 hello.c</code> 将项目编译为32位机器的目标文件</p>
+<blockquote class="blockquote">
+<p>有趣的预编译, 因为aa和bb都没有定义所以都是NULL, NULL==NULL 得到True,所以输出yes</p>
+</blockquote>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span><span class="pp">      </span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                                                                             </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span><span class="op">*</span> argv<span class="op">[])</span>                                             </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span>                                                                            </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="pp">#if aa == bb                                                             </span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    ¦   printf<span class="op">(</span><span class="st">"yes</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span>                     </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="pp">#else                                                                                                                     </span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    ¦   printf<span class="op">(</span><span class="st">"no</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span>                            </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="pp">#endif                                                                                                                                                                       </span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span>  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="https://img-blog.csdnimg.cn/1d4bcc320eab4ac4b952bd85524d968b.png" class="img-fluid" alt="在这里插入图片描述"> <code>gcc -E aabb.c</code> 查看预编译后的代码. <img src="https://img-blog.csdnimg.cn/17ef76c52ee249d5be1bbda779c0e022.png" class="img-fluid" alt="在这里插入图片描述"> 直接放入<code>extern int printf (const char *__restrict __format, ...);</code>不用全部include也是可以的</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">extern</span> <span class="dt">int</span> printf <span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>__restrict __format<span class="op">,</span> <span class="op">...);</span>     </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span><span class="op">*</span> argv<span class="op">[])</span>    </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span>                  </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="pp">#if aa == bb    </span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    ¦   printf<span class="op">(</span><span class="st">"yes</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span>    </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="pp">#else    </span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    ¦   printf<span class="op">(</span><span class="st">"no</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span>    </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="pp">#endif    </span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>编译32位项目,出现报错:<a href="https://blog.csdn.net/wzzushx/article/details/119453099">https://blog.csdn.net/wzzushx/article/details/119453099</a></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sudo apt<span class="op">-</span>get install build<span class="op">-</span>essential module<span class="op">-</span>assistant  </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>sudo apt<span class="op">-</span>get install gcc<span class="op">-</span>multilib g<span class="op">++-</span>multilib  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>预编译参数依旧添加进去了</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">extern</span> <span class="dt">int</span> printf <span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>__restrict __format<span class="op">,</span> <span class="op">...);</span>    </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span><span class="op">*</span> argv<span class="op">[])</span>    </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span>    </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="pp">#ifdef __x86_64__     </span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    ¦   printf<span class="op">(</span><span class="st">"__x86_64__</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span>    </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="pp">#else    </span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    ¦   printf<span class="op">(</span><span class="st">"__x86__</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span>    </span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="pp">#endif    </span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="pp">#if aa == bb    </span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    ¦   printf<span class="op">(</span><span class="st">"yes</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span>    </span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="pp">#else    </span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    ¦   printf<span class="op">(</span><span class="st">"no</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span>    </span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="pp">#endif    </span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span>  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="调用系统接口" class="level2">
+<h2 class="anchored" data-anchor-id="调用系统接口">调用系统接口</h2>
+<p><code>system.c</code></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>  <span class="pp">#define SYSTEM sys ## tem      </span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                     </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> main<span class="op">(){</span>        </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>     SYSTEM<span class="op">(</span><span class="st">"echo hello world</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span>    </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gcc</span> system.c                        // 虽然这会报错， 但是没有影响</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./a.out</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="ex">hello</span> world</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="宏定义的展开" class="level2">
+<h2 class="anchored" data-anchor-id="宏定义的展开">宏定义的展开</h2>
+<div class="sourceCode" id="cb11"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 奇数行输出ture</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define true    (__LINE__%2!=0)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="x-macros" class="level2">
+<h2 class="anchored" data-anchor-id="x-macros">X-Macros</h2>
+<p><code>names.c</code></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span><span class="pp">    </span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define NAMES(X) X(TOM) X(Jerry) X(Lcc) X(Hig) X(lcu)    </span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#define HELLO(M) M(Hello) M(world) M(\n)    </span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span><span class="op">*</span> argv<span class="op">[])</span>    </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="op">{</span>    </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="pp">#define PRINT(x) puts("hello," #x "!");    </span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    NAMES<span class="op">(</span>PRINT<span class="op">)</span>    </span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    HELLO<span class="op">(</span>PRINT<span class="op">)</span>    </span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span>    </span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>gcc -E names.c</code> 使用gcc -E 进行查看预编译的代码。</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 5 "namex.c"</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">int</span> main<span class="er">(</span><span class="ex">int</span> argc, char<span class="pp">*</span> argv[]<span class="kw">)</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">puts</span><span class="er">(</span><span class="st">"hello,"</span> <span class="st">"TOM"</span> <span class="st">"!"</span><span class="kw">);</span> <span class="ex">puts</span><span class="er">(</span><span class="st">"hello,"</span> <span class="st">"Jerry"</span> <span class="st">"!"</span><span class="kw">);</span> <span class="ex">puts</span><span class="er">(</span><span class="st">"hello,"</span> <span class="st">"Lcc"</span> <span class="st">"!"</span><span class="kw">);</span> <span class="ex">puts</span><span class="er">(</span><span class="st">"hello,"</span> <span class="st">"Hig"</span> <span class="st">"!"</span><span class="kw">);</span> <span class="ex">puts</span><span class="er">(</span><span class="st">"hello,"</span> <span class="st">"lcu"</span> <span class="st">"!"</span><span class="kw">);</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">puts</span><span class="er">(</span><span class="st">"hello,"</span> <span class="st">"Hello"</span> <span class="st">"!"</span><span class="kw">);</span> <span class="ex">puts</span><span class="er">(</span><span class="st">"hello,"</span> <span class="st">"world"</span> <span class="st">"!"</span><span class="kw">);</span> <span class="ex">puts</span><span class="er">(</span><span class="st">"hello,"</span> <span class="st">"\n"</span> <span class="st">"!"</span><span class="kw">);</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="kw">;</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="编译链接" class="level2">
+<h2 class="anchored" data-anchor-id="编译链接">编译&amp;链接</h2>
+<p>连个函数文件，一个<code>sum.c</code>和<code>main.c</code>先对这两个文件进行编译，没有链接， 然后手动指定链接，最后运行<code>a.out</code>同样产生相同结果。</p>
+<p><code>sum.c</code></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> foo<span class="op">(</span><span class="dt">int</span> n<span class="op">){</span>                                                             </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> sum <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>                                                                                   </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;=</span>n<span class="op">;</span>i<span class="op">++){</span>                                                                         </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    ¦   sum<span class="op">+=</span>i<span class="op">;</span>                                                                                     </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span>                                                                                               </span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sum<span class="op">;</span>                                                                                     </span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>main.c</code></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span><span class="pp">    </span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> foo<span class="op">(</span><span class="dt">int</span> n<span class="op">);</span>    </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span><span class="op">*</span> argv<span class="op">[])</span>    </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="op">{</span>    </span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"%d</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span>foo<span class="op">(</span><span class="dv">100</span><span class="op">));</span>    </span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span>    </span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="https://img-blog.csdnimg.cn/926a9aa4a67e4ef28a03e8bf9ed6acd4.png" class="img-fluid" alt="在这里插入图片描述"> ### 链接</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a> gcc <span class="op">{</span>main<span class="op">,</span>sum<span class="op">}.</span>o <span class="op">-</span><span class="dt">static</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="https://img-blog.csdnimg.cn/120b613c3f8644c7b15b42a4b2ead199.png" class="img-fluid" alt="在这里插入图片描述"> ## 内存 &gt;总结 &gt; - 代码存储的位置最低, 然后是只读变量(<code>const</code>修饰的变量), RO上面就是非零的变量, RW上边就是0变量和为被初始化的变量.上面就是堆栈. &gt; <img src="https://img-blog.csdnimg.cn/27372dee9a724a6cad4405b79881488a.png" class="img-fluid" alt="在这里插入图片描述"> &gt; 参考代码</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> printptr<span class="op">(</span><span class="dt">void</span> <span class="op">*</span>p<span class="op">){</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"p = %p; *p = %016lx</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span>p<span class="op">,</span> <span class="op">*(</span><span class="dt">long</span> <span class="op">*)</span>p<span class="op">);</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> bss_1<span class="op">[</span><span class="dv">10</span><span class="op">];</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> <span class="dt">int</span> _static_1<span class="op">=</span><span class="dv">65535</span><span class="op">;</span><span class="co">// ffff</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> <span class="dt">int</span> _static_2<span class="op">;</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> glab_1<span class="op">=</span><span class="dv">65535</span><span class="op">;</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> glab_2<span class="op">;</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> glab_3<span class="op">=</span><span class="dv">0</span><span class="op">;</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="dt">const</span> <span class="dt">char</span> _const <span class="op">=</span> <span class="ch">'a'</span><span class="op">;</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span><span class="dt">char</span> <span class="op">*</span>argv<span class="op">[]){</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> b<span class="op">;</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    <span class="dt">static</span> <span class="dt">int</span> _static_3<span class="op">=</span><span class="dv">65535</span><span class="op">;</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    <span class="dt">static</span> <span class="dt">int</span> _static_4<span class="op">=</span><span class="dv">0</span><span class="op">;</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"------- [code] ------</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"main:</span><span class="sc">\t</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>    printptr<span class="op">(</span>main<span class="op">);</span> <span class="co">// 代码</span></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"main:</span><span class="sc">\t</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>    printptr<span class="op">(&amp;</span>main<span class="op">);</span></span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"------- [data] ------</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"_____________[data-RO]_____________</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"&amp;const:</span><span class="sc">\t</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"p = %p;</span><span class="sc">\n</span><span class="st">"</span><span class="op">,&amp;</span>_const<span class="op">);</span></span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"_____________[data-RW]_____________</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"stac_1:</span><span class="sc">\t</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>    printptr<span class="op">(&amp;</span>_static_1<span class="op">);</span></span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"stac_2:</span><span class="sc">\t</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>    printptr<span class="op">(&amp;</span>_static_2<span class="op">);</span></span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"stac_3:</span><span class="sc">\t</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a>    printptr<span class="op">(&amp;</span>_static_3<span class="op">);</span></span>
+<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"stac_4:</span><span class="sc">\t</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a>    printptr<span class="op">(&amp;</span>_static_4<span class="op">);</span></span>
+<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"glab_1:</span><span class="sc">\t</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a>    printptr<span class="op">(&amp;</span>glab_1<span class="op">);</span> <span class="co">// 数据</span></span>
+<span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"glab_2:</span><span class="sc">\t</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a>    printptr<span class="op">(&amp;</span>glab_2<span class="op">);</span> <span class="co">// 数据</span></span>
+<span id="cb17-45"><a href="#cb17-45" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"glab_3:</span><span class="sc">\t</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb17-46"><a href="#cb17-46" aria-hidden="true" tabindex="-1"></a>    printptr<span class="op">(&amp;</span>glab_3<span class="op">);</span></span>
+<span id="cb17-47"><a href="#cb17-47" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"&amp;bss_1:</span><span class="sc">\t</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb17-48"><a href="#cb17-48" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"p = %p;</span><span class="sc">\n</span><span class="st">"</span><span class="op">,&amp;</span>bss_1<span class="op">);</span></span>
+<span id="cb17-49"><a href="#cb17-49" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"b:</span><span class="sc">\t</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb17-50"><a href="#cb17-50" aria-hidden="true" tabindex="-1"></a>    printptr<span class="op">(&amp;</span>b<span class="op">);</span></span>
+<span id="cb17-51"><a href="#cb17-51" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"------- [heap] ------</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb17-52"><a href="#cb17-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-53"><a href="#cb17-53" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb17-54"><a href="#cb17-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-55"><a href="#cb17-55" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"------- [stack] ------</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb17-56"><a href="#cb17-56" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"argc:</span><span class="sc">\t</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb17-57"><a href="#cb17-57" aria-hidden="true" tabindex="-1"></a>    printptr<span class="op">(&amp;</span>argc<span class="op">);</span> <span class="co">// 堆栈</span></span>
+<span id="cb17-58"><a href="#cb17-58" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"argv</span><span class="sc">\t</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb17-59"><a href="#cb17-59" aria-hidden="true" tabindex="-1"></a>    printptr<span class="op">(</span>argv<span class="op">);</span> </span>
+<span id="cb17-60"><a href="#cb17-60" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"&amp;argv:</span><span class="sc">\t</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb17-61"><a href="#cb17-61" aria-hidden="true" tabindex="-1"></a>    printptr<span class="op">(&amp;</span>argv<span class="op">);</span> </span>
+<span id="cb17-62"><a href="#cb17-62" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"argv[0:</span><span class="sc">\t</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb17-63"><a href="#cb17-63" aria-hidden="true" tabindex="-1"></a>    printptr<span class="op">(</span>argv<span class="op">[</span><span class="dv">0</span><span class="op">]);</span></span>
+<span id="cb17-64"><a href="#cb17-64" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="https://img-blog.csdnimg.cn/278b015cfa864f52befb66801cab4eb1.png" class="img-fluid" alt="在这里插入图片描述"> # p3- C 语言拾遗(2): 编程实践 &gt; 总结: &gt; - 提升代码的可读性(Readable),明确代码的可维护性 &gt; - 函数指针 &gt; - 实战yemu(计算机系统运行原理)</p>
+<blockquote class="blockquote">
+<h2 id="代码的可读性和可维护性" class="anchored">代码的可读性和可维护性</h2>
+</blockquote>
+<p>通过signal的例子来说明如何提升代码的可读性.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 这样的代码可读性就比较差(顺时针螺旋法则)</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> <span class="op">(*</span>signal <span class="op">(</span><span class="dt">int</span> sig<span class="op">,</span> <span class="dt">void</span> <span class="op">(*</span>func<span class="op">)(</span><span class="dt">int</span><span class="op">)))(</span><span class="dt">int</span><span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>优化后的代码, 大大提升了代码的可阅读性</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 定义一个函数指针类型 sighandler_t, 表示他是一个接收参数数int的函数</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="dt">void</span> <span class="op">(*</span>sighandler_t<span class="op">)(</span><span class="dt">int</span><span class="op">);</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">// 返回值是sighandler_t类型(返回函数类型),接收参数为一个int和一个接收为int的一个函数.</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>sighandler_t signal<span class="op">(</span><span class="dt">int</span><span class="op">,</span> sighandler_t<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<h2 id="yemu的原理" class="anchored">YEMU的原理</h2>
+<p>NEMU就是YEMU的增强.(通过YEMU的案例进一步说明代码的可读性和可维护性的重要性)</p>
+</blockquote>
+<ul>
+<li>第2,3位表示 rt -&gt; register target(猜测)目标寄存器,</li>
+<li>第0,1位表示 rs -&gt; register source (猜测)源寄存器</li>
+<li>0123 表示的是指令的位置(第0,1,2,3位,4567类似)</li>
+<li>0000 表示mov</li>
+<li>0001 表示add</li>
+<li>1110 表示load(默认加载到RA(R0)寄存器)</li>
+<li>1111 表示store(默认将RA(R0)中的数据存储到制定地址)</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/689b3f293da64da5b251b4c6fd0713ae.png" class="img-fluid" alt="在这里插入图片描述"> &gt; ## extern 将一个文件内的变量扩展到其他文件也可以使用</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="op">.</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>├── a<span class="op">.</span>c    <span class="co">// 变量所在位置</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>├── a<span class="op">.</span>h</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>├── a<span class="op">.</span>out</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>└── main<span class="op">.</span>c  <span class="co">// 将要使用的位置</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<h3 id="method-1" class="anchored">method-1</h3>
+<p><code>a.h</code></p>
+</blockquote>
+<div class="sourceCode" id="cb21"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> hello<span class="op">(</span><span class="dt">int</span> num<span class="op">);</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">extern</span> <span class="dt">int</span> num<span class="op">;</span>  <span class="co">// 添加外部变量</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>a.c</code></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> num <span class="op">=</span> <span class="dv">100</span><span class="op">;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> hello<span class="op">(</span><span class="dt">int</span> num<span class="op">){</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"%d</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span>num<span class="op">);</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>main.c</code></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">"a.h"</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">){</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// method 2:在头文件中声明exter所需变量 </span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">// method 1: 解除下面的注释.</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">//    extern int num;</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> a <span class="op">=</span> num<span class="op">;</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    hello<span class="op">(</span>a<span class="op">);</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<h3 id="method-2" class="anchored">method-2</h3>
+<p><code>a.h</code></p>
+</blockquote>
+<div class="sourceCode" id="cb24"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> hello<span class="op">(</span><span class="dt">int</span> num<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>a.c</code></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> num <span class="op">=</span> <span class="dv">100</span><span class="op">;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> hello<span class="op">(</span><span class="dt">int</span> num<span class="op">){</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"%d</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span>num<span class="op">);</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>main.c</code></p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">"a.h"</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">){</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">extern</span> <span class="dt">int</span> num<span class="op">;</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> a <span class="op">=</span> num<span class="op">;</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    hello<span class="op">(</span>a<span class="op">);</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<h2 id="union" class="anchored">union</h2>
+<p>将变量类型组合, 公用一个结构,个人感觉有点像是一个大的结构体(但是其所占用的大小是最大的那个变量的大小),将所有类型进行组合,大大提升代码的可阅读性和可维护性.</p>
+</blockquote>
+<div class="sourceCode" id="cb27"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="kw">union</span> data<span class="op">{</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">long</span> age<span class="op">;</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">char</span> ch<span class="op">;</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span><span class="op">*</span> argv<span class="op">[])</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">union</span> data stu1<span class="op">;</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>    stu1<span class="op">.</span>age <span class="op">=</span> <span class="dv">18</span><span class="op">;</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>    stu1<span class="op">.</span>ch <span class="op">=</span> <span class="ch">'a'</span><span class="op">;</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"union.age:%ld,sizeof:%ld</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span>stu1<span class="op">.</span>age<span class="op">,</span><span class="kw">sizeof</span><span class="op">(</span>stu1<span class="op">));</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"union.ch:%d,sizeof:%ld</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span>stu1<span class="op">.</span>ch<span class="op">,</span><span class="kw">sizeof</span><span class="op">(</span>stu1<span class="op">));</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>对bit位进行操作,</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="kw">union</span> inst<span class="op">{</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">//  type(int is 16bit)  part1:size, part2:size</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> <span class="op">{</span><span class="dt">int</span> a<span class="op">:</span><span class="dv">8</span><span class="op">,</span> b<span class="op">:</span><span class="dv">8</span><span class="op">;</span> <span class="op">}</span> atype<span class="op">;</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> <span class="op">{</span><span class="dt">int</span> a<span class="op">:</span><span class="dv">8</span><span class="op">,</span> b<span class="op">:</span><span class="dv">8</span><span class="op">;</span> <span class="op">}</span> btype<span class="op">;</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span>intst_t<span class="op">;</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> <span class="op">{</span><span class="dt">int</span> a<span class="op">:</span><span class="dv">8</span><span class="op">,</span> b<span class="op">:</span><span class="dv">8</span><span class="op">;</span> <span class="op">}</span> ctype<span class="op">;</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span><span class="op">*</span> argv<span class="op">[])</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    ctype<span class="op">.</span>a <span class="op">=</span> <span class="bn">0b01111111</span><span class="op">;</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    ctype<span class="op">.</span>b <span class="op">=</span> <span class="bn">0b10000011</span><span class="op">;</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"%d %d size:%ld</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span>ctype<span class="op">.</span>a<span class="op">,</span>ctype<span class="op">.</span>b<span class="op">,</span><span class="kw">sizeof</span><span class="op">(</span>ctype<span class="op">));</span>   </span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<h2 id="makefile" class="anchored">MakeFile</h2>
+<p>使用makefile进行文件的构建对整个项目进行托管, 提升开发效率</p>
+</blockquote>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">.PHONY:</span> run clean test</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="ex">CFLAGS</span> = <span class="at">-Wall</span> <span class="at">-Werror</span> <span class="at">-std</span><span class="op">=</span>c11 <span class="at">-O2</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="ex">CC</span> = gcc</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="ex">LD</span> = gcc</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 构建yemu所需要yemu.o 和idex.o</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="ex">yemu:</span> yemu.o idex.o</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 使用的命令为:gcc -Wall -Werror -std=c11 -O2 -o yemu yemu.o idex.o</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="va">$(</span><span class="ex">LD</span><span class="va">)</span> <span class="va">$(</span><span class="ex">LDFLAGS</span><span class="va">)</span> <span class="at">-o</span> yemu yemu.o idex.o</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="ex">yemu.o:</span> yemu.c yemu.h</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>    <span class="va">$(</span><span class="ex">CC</span><span class="va">)</span> <span class="va">$(</span><span class="ex">CFLAGS</span><span class="va">)</span> <span class="at">-c</span> <span class="at">-o</span> yemu.o yemu.c</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="ex">idex.o:</span> idex.c yemu.h</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>    <span class="va">$(</span><span class="ex">CC</span><span class="va">)</span> <span class="va">$(</span><span class="ex">CFLAGS</span><span class="va">)</span> <span class="at">-c</span> <span class="at">-o</span> idex.o idex.c</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a><span class="co"># make run</span></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a><span class="ex">run:</span> yemu</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># @表示将该cmd不输出到终端</span></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>    <span class="ex">@./yemu</span></span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a><span class="co"># make clean</span></span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a><span class="ex">clean:</span></span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 使用make clean所执行的命令</span></span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rm</span> <span class="at">-f</span> test yemu <span class="pp">*</span>.o</span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a><span class="co"># make test</span></span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a><span class="ex">test:</span> yemu</span>
+<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a>    <span class="va">$(</span><span class="ex">CC</span><span class="va">)</span> <span class="va">$(</span><span class="ex">CFLAGS</span><span class="va">)</span> <span class="at">-o</span> test idex.o test.c <span class="kw">&amp;&amp;</span> <span class="ex">./test</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="p4---nemu框架选讲1-编译运行" class="level1">
+<h1>p4 - NEMU框架选讲(1): 编译运行</h1>
+<blockquote class="blockquote">
+<p>总结: - unix 的优劣 - git的使用 一本说unix优劣书:<a href="https://web.mit.edu/~simsong/www/ugh.pdf">https://web.mit.edu/~simsong/www/ugh.pdf</a></p>
+</blockquote>
+<blockquote class="blockquote">
+<h2 id="unix的关键字作为参数的问题" class="anchored" data-anchor-id="p4---nemu框架选讲1-编译运行">unix的关键字作为参数的问题</h2>
+<p>例如<code>rm -rf xxxx</code>如果该命令删除一个名为<code>-rf</code>的文件该如何解决. 为了解决这个问题, linux的命令中出现了<code>-- xxx</code> - 尽管unix有些问题, 但是还是给我们带来了更多的便利</p>
+</blockquote>
+<div class="sourceCode" id="cb30"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>rm <span class="op">-</span>rf <span class="op">--</span> <span class="op">-</span>rf               <span class="co">// 后续在linux上无法创建-开头的文件</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<h2 id="git的使用" class="anchored">git的使用</h2>
+<p>git的出现正是由于程序员的工作需求诞生, 需要对代码进行版本管理,以及社区的维护都有非常好的管理能力. git学习地址(对git有一定了解提升下理解):<a href="https://marklodato.github.io/visual-git-guide/index-en.html">https://marklodato.github.io/visual-git-guide/index-en.html</a> <a href="http://onlywei.github.io/explain-git-with-d3/">可视化git</a> <img src="https://img-blog.csdnimg.cn/6b454ec5a18644f4bfd65bce8a8a48cf.png" class="img-fluid" alt="在这里插入图片描述"> 工作区: 编辑代码的时候 暂存区: 执行git add 后的区域 仓库区: 执行git commit 后的区域</p>
+</blockquote>
+<p>每次修改代码后可直接使用<code>git diff</code> 查看修改的地方, 如果使用<code>git add</code> 后则表示提交暂存区该代码保留, 此时再执行<code>git diff</code> 就没有任何不同了. <code>git commit</code> 将代码提交到了仓库, 表示作为一个版本.</p>
+<p><code>交互模式</code></p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>git <span class="op">{</span>reset<span class="op">,</span>checkout<span class="op">,</span>add<span class="op">}</span> <span class="op">-</span>p     <span class="co">// y(es), n(o), a(ll), q(quit),</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<h3 id="git-diff" class="anchored">git diff</h3>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/552388af271b493b9d714e32df374b1f.png" class="img-fluid" alt="在这里插入图片描述"> &gt;### git commit git会使用与当前提交相同的父节点进行一次新提交，旧的提交会被替换。</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a> git commit <span class="op">--</span>amend</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a> git commit <span class="op">--</span>allow<span class="op">-</span>empty</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<h3 id="git-checkout" class="anchored">git checkout</h3>
+<p>checkout切换分支，切换文件。</p>
+</blockquote>
+<p>将HEAD指到HEAD的前一个分支(前1个：<code>^/~</code>,前2个：<code>^^/~~</code>)，但是没有创建分支，如果直接切换到其他分支，当前所指位置的文件修改将会丢失，如果需要保存，则需要进行创建新的分支（<code>git checkout -b xxx</code>）</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout HEAD^    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>不保存</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> restore </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>分离指针如果想要保存就需要进行创建新的分支。</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> test</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<h3 id="git-merge" class="anchored">git merge</h3>
+<p>git merge 就是进行连个分支间进行迁移， 将当前的分支指向需要合并的分支。</p>
+</blockquote>
+<div class="sourceCode" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout master</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge test              // 将test分支的内容迁移到master分支</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://img-blog.csdnimg.cn/8ad7c36fe08c4028a6ac6c6c2dd93dba.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">在这里插入图片描述</figcaption><p></p>
+</figure>
+</div>
+<blockquote class="blockquote">
+<h3 id="git-rebase" class="anchored">git rebase</h3>
+<p>rebase 就是将数据分支进行统一为线性，merge是将修改结果迁移，rebase是将所有的版本进行迁移。</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/058c6b8bbcdc46789157862f790ab25a.png" class="img-fluid" alt="在这里插入图片描述"> &gt;### git redo &gt;- git reset 回到xxx节点 &gt;- git revert 将xxx节点新建为后一个节点</p>
+<blockquote class="blockquote">
+<h2 id="makefile的使用和解读" class="anchored">Makefile的使用和解读</h2>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="多线程编译" class="anchored">多线程编译</h3>
+<p>多个线程同时编译，大大多段时间</p>
+</blockquote>
+<div class="sourceCode" id="cb37"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 8线程同时编译</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> <span class="at">-j8</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<h3 id="强制编译" class="anchored">强制编译</h3>
+<ul>
+<li>没有新的文件修改或产生也执行编译</li>
+<li>多线程并行编译，加速编译</li>
+</ul>
+</blockquote>
+<div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 8线程同时编译</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> <span class="at">-B</span> </span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> <span class="at">-B</span> <span class="at">-j8</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 计算时间，强制执行，8线程</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="bu">time</span> make <span class="at">-B</span> <span class="at">-j8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<h3 id="basename" class="anchored">basename</h3>
+<p>获取当前文件名（获取路径的最后一个参数）</p>
+</blockquote>
+<div class="sourceCode" id="cb39"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">basename</span> <span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<h3 id="vi内置的bash" class="anchored">vi内置的bash</h3>
+<p>使用方法<code>！</code></p>
+</blockquote>
+<div class="sourceCode" id="cb40"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="bu">:</span>!echo hello</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<h3 id="make--n" class="anchored">make -n</h3>
+<p>打印执行的命令</p>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="make--b" class="anchored">make -B</h3>
+<p>强制执行</p>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="解读nemu的makefile" class="anchored">解读NEMU的Makefile</h3>
+<ul>
+<li>查看make执行的命令</li>
+<li>逐行解读</li>
+<li><a href="http://c.biancheng.net/linux/grep.html">grep参考地址</a></li>
+</ul>
+</blockquote>
+<p><code>make -nB | greap -ve '^(\#\|echo\mkdir\)' | vim -</code> <img src="https://img-blog.csdnimg.cn/aaa2daf82e70460f9be71375c59f97c8.png" class="img-fluid" alt="在这里插入图片描述"> &gt; ### 筛选数据</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># -n 表示打印执行的命令</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="co"># -B always make</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> <span class="at">-nB</span> <span class="dt">\</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="co"># grep 筛选      </span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="co">#  ^   行首</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="co"># -e   扩展正则</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="co"># -v   不包含</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="fu">grep</span> <span class="at">-ve</span> <span class="st">'^\(\#\|echo\|mkdir\)'</span> <span class="dt">\ </span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="co"># vim 从标准输出获取数据</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">vim</span> <span class="at">-</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<h3 id="调整格式" class="anchored">调整格式</h3>
+<ul>
+<li>set nowrap(不折叠)</li>
+</ul>
+</blockquote>
+<p>将选中的部分:空格替换成换行 <img src="https://img-blog.csdnimg.cn/2d1cb4cd41de496298958c07f5af1057.png" class="img-fluid" alt="在这里插入图片描述"></p>
+<blockquote class="blockquote">
+<h3 id="处理完格式" class="anchored">处理完格式</h3>
+<ul>
+<li>-D (definition) 就是在编译的过程中加上的宏</li>
+</ul>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/ecf5af01332548cba909034c6c625080.png" class="img-fluid" alt="在这里插入图片描述"> &gt;### <code>链接</code></p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gcc</span>                                                                                                                                                                </span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a> <span class="ex">-O2</span>               <span class="co"># 编译优化选项                                            </span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a> <span class="ex">-rdynamic</span>         <span class="co"># 动态链接                                      </span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>                                                  </span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a> <span class="ex">-o</span> build/x86-nemu-interpreter   <span class="co"># 最后输出到                         </span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a> <span class="ex">build/obj-x86-interpreter/device/audio.o</span>         </span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a> <span class="ex">build/obj-x86-interpreter/device/io/map.o</span>        </span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a> <span class="ex">build/obj-x86-interpreter/device/io/port-io.o</span>    </span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a> <span class="ex">build/obj-x86-interpreter/device/io/mmio.o</span></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a> <span class="ex">....</span></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a> <span class="ex">-lSDL2</span>             <span class="co"># 图形库</span></span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a> <span class="ex">-lreadline</span>         <span class="co"># 读行库</span></span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a> <span class="ex">-ldl</span>               <span class="co"># 动态链接库</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<h3 id="makefile转换成文档" class="anchored">Makefile转换成文档</h3>
+<p>doxygen</p>
+</blockquote>
+<blockquote class="blockquote">
+<h1 id="p5---框架代码选讲-2代码导读">P5 - 框架代码选讲 (2)：代码导读</h1>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="查看文件树" class="anchored">查看文件树</h3>
+</blockquote>
+<div class="sourceCode" id="cb43"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>tree <span class="op">.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="op">.</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>├── build</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>│   ├── obj<span class="op">-</span>x86<span class="op">-</span>interpreter</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>│   │   ├── device</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>│   │   │   ├── alarm<span class="op">.</span>d</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>│   │   │   ├── alarm<span class="op">.</span>o</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>│   │   │   ├── audio<span class="op">.</span>d</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>│   │   │   ├── audio<span class="op">.</span>o</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>│   │   │   ├── device<span class="op">.</span>d</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>│   │   │   ├── device<span class="op">.</span>o</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>│   │   │   ├── intr<span class="op">.</span>d</span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>│   │   │   ├── intr<span class="op">.</span>o</span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>│   │   │   ├── io</span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>│   │   │   │   ├── map<span class="op">.</span>d</span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>│   │   │   │   ├── map<span class="op">.</span>o</span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>│   │   │   │   ├── mmio<span class="op">.</span>d</span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>│   │   │   │   ├── mmio<span class="op">.</span>o</span>
+<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>│   │   │   │   ├── port<span class="op">-</span>io<span class="op">.</span>d</span>
+<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>│   │   │   │   └── port<span class="op">-</span>io<span class="op">.</span>o</span>
+<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>│   │   │   ├── keyboard<span class="op">.</span>d</span>
+<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>│   │   │   ├── keyboard<span class="op">.</span>o</span>
+<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a>│   │   │   ├── serial<span class="op">.</span>d</span>
+<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a><span class="op">....</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<h3 id="查找.c和.h文件" class="anchored">查找<code>.c</code>和<code>.h</code>文件</h3>
+</blockquote>
+<div class="sourceCode" id="cb45"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> . <span class="at">-name</span> <span class="st">"*.c"</span> <span class="at">-o</span> <span class="at">-name</span> <span class="st">"*.h"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<h3 id="统计代码行数" class="anchored">统计代码行数</h3>
+<ul>
+<li>xargs cat 将前面的参数传递xargs然后作为cat的输入</li>
+<li>wc -l 统计行数</li>
+</ul>
+</blockquote>
+<div class="sourceCode" id="cb46"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># xargs cat 将前面的参数传递xargs然后作为cat的输入 </span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> . <span class="at">-name</span> <span class="st">"*.c"</span> <span class="at">-o</span> <span class="at">-name</span> <span class="st">"*.h"</span> <span class="kw">|</span> <span class="fu">xargs</span> cat <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<h3 id="找到main函数" class="anchored">找到main函数</h3>
+<ul>
+<li>grep -n [ with line num ]</li>
+<li>grep -e [ re ]</li>
+<li>grep -s [ no messge ]</li>
+</ul>
+</blockquote>
+<p>查找main函数位置</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>find <span class="op">.</span> <span class="op">-</span>name <span class="st">"*.c"</span> <span class="op">-</span>o <span class="op">-</span>name <span class="st">"*.h"</span><span class="op">|</span> xargs grep <span class="op">--</span>color <span class="op">-</span>nse '\<span class="op">&lt;</span>main\<span class="op">&gt;</span>'</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="https://img-blog.csdnimg.cn/f4d414f5dce544e9b5144acc8fd38cc4.png" class="img-fluid" alt="在这里插入图片描述"> &gt; ### fzf 查找( 奈斯 ) &gt; - 可以配合其他命令使用</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="ex">vim</span> <span class="va">$(</span><span class="ex">fzf</span><span class="va">)</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="va">$(</span><span class="ex">fzf</span><span class="va">)</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<h3 id="static-解读" class="anchored">static 解读</h3>
+<ul>
+<li>static 所修饰的变量和函数作用域scope是当前的文件， 不可以跨越文件， 所以实现了可以重名的函数，和变量。</li>
+</ul>
+</blockquote>
+<p>如下的案例，加深static 修饰时， f函数只能够调用到当前文件中的变量，或函数，无调用到b.c中的函数或者是static修饰的变量。所以能加上static修饰的函数尽量加上static进行修饰，否则实现跨文件的调用比较麻烦。</p>
+<p><img src="https://img-blog.csdnimg.cn/448a9fcb1c094c27a201c01e8fcb01ce.png" class="img-fluid" alt="在这里插入图片描述"> &gt;### gcc -Wall -Werror &gt; - 将warning转换为error 每一个报错都有意义， 身为合格的cser需要解决掉所有的warning和error</p>
+<p>这里之所以会报错， 是因为在b.c中和函数没有使用，原本应该是warning这里因为<code>加上了Werror</code>所以<code>将warning转换成了error</code></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://img-blog.csdnimg.cn/18f3b31a9c8b44d198ab30167cbcdf6d.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">在这里插入图片描述</figcaption><p></p>
+</figure>
+</div>
+<blockquote class="blockquote">
+<h3 id="inline-解读" class="anchored">inline 解读</h3>
+<p>可以直接定义在头文件中，编译的时候后直接将代码粘贴过去，对性能需求有较高要求的应用比较适合。空间换时间</p>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="项目框架解读" class="anchored">项目框架解读</h3>
+<p>进入到nemu的<code>src/main.c</code></p>
+</blockquote>
+<div class="sourceCode" id="cb49"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>init_monitor<span class="op">(</span>argc<span class="op">,</span> argv<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>随后进入到<code>init_monitor</code>里面的<code>parse_args</code></p>
+<ul>
+<li>这里调用了getopt这个库, 需要查看getopt这个手册–&gt; <code>man getopt</code>后详细信息查看<code>man getopt.3</code>或者<code>man 3 getopt</code></li>
+</ul>
+<div class="sourceCode" id="cb50"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> <span class="kw">inline</span> <span class="dt">void</span> parse_args<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span> <span class="op">*</span>argv<span class="op">[])</span> <span class="op">{</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">const</span> <span class="kw">struct</span> option table<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="st">"batch"</span>    <span class="op">,</span> no_argument      <span class="op">,</span> NULL<span class="op">,</span> <span class="ch">'b'</span><span class="op">},</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="st">"log"</span>      <span class="op">,</span> required_argument<span class="op">,</span> NULL<span class="op">,</span> <span class="ch">'l'</span><span class="op">},</span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="st">"diff"</span>     <span class="op">,</span> required_argument<span class="op">,</span> NULL<span class="op">,</span> <span class="ch">'d'</span><span class="op">},</span></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="st">"port"</span>     <span class="op">,</span> required_argument<span class="op">,</span> NULL<span class="op">,</span> <span class="ch">'p'</span><span class="op">},</span></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="st">"help"</span>     <span class="op">,</span> no_argument      <span class="op">,</span> NULL<span class="op">,</span> <span class="ch">'h'</span><span class="op">},</span></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dv">0</span>          <span class="op">,</span> <span class="dv">0</span>                <span class="op">,</span> NULL<span class="op">,</span>  <span class="dv">0</span> <span class="op">},</span></span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>  <span class="op">};</span></span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> o<span class="op">;</span></span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span> <span class="op">(</span>o <span class="op">=</span> getopt_long<span class="op">(</span>argc<span class="op">,</span> argv<span class="op">,</span> <span class="st">"-bhl:d:p:"</span><span class="op">,</span> table<span class="op">,</span> NULL<span class="op">))</span> <span class="op">!=</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">switch</span> <span class="op">(</span>o<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a>      <span class="cf">case</span> <span class="ch">'b'</span><span class="op">:</span> batch_mode <span class="op">=</span> true<span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a>      <span class="cf">case</span> <span class="ch">'p'</span><span class="op">:</span> sscanf<span class="op">(</span>optarg<span class="op">,</span> <span class="st">"%d"</span><span class="op">,</span> <span class="op">&amp;</span>difftest_port<span class="op">);</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a>      <span class="cf">case</span> <span class="ch">'l'</span><span class="op">:</span> log_file <span class="op">=</span> optarg<span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a>      <span class="cf">case</span> <span class="ch">'d'</span><span class="op">:</span> diff_so_file <span class="op">=</span> optarg<span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a>      <span class="cf">case</span> <span class="dv">1</span><span class="op">:</span></span>
+<span id="cb50-20"><a href="#cb50-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>img_file <span class="op">!=</span> NULL<span class="op">)</span> Log<span class="op">(</span><span class="st">"too much argument '%s', ignored"</span><span class="op">,</span> optarg<span class="op">);</span></span>
+<span id="cb50-21"><a href="#cb50-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span> img_file <span class="op">=</span> optarg<span class="op">;</span></span>
+<span id="cb50-22"><a href="#cb50-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb50-23"><a href="#cb50-23" aria-hidden="true" tabindex="-1"></a>      <span class="cf">default</span><span class="op">:</span></span>
+<span id="cb50-24"><a href="#cb50-24" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"Usage: %s [OPTION...] IMAGE</span><span class="sc">\n\n</span><span class="st">"</span><span class="op">,</span> argv<span class="op">[</span><span class="dv">0</span><span class="op">]);</span></span>
+<span id="cb50-25"><a href="#cb50-25" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"</span><span class="sc">\t</span><span class="st">-b,--batch              run with batch mode</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb50-26"><a href="#cb50-26" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"</span><span class="sc">\t</span><span class="st">-l,--log=FILE           output log to FILE</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb50-27"><a href="#cb50-27" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"</span><span class="sc">\t</span><span class="st">-d,--diff=REF_SO        run DiffTest with reference REF_SO</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb50-28"><a href="#cb50-28" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"</span><span class="sc">\t</span><span class="st">-p,--port=PORT          run DiffTest with port PORT</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb50-29"><a href="#cb50-29" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb50-30"><a href="#cb50-30" aria-hidden="true" tabindex="-1"></a>        exit<span class="op">(</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb50-31"><a href="#cb50-31" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb50-32"><a href="#cb50-32" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb50-33"><a href="#cb50-33" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<h3 id="make-run" class="anchored">make run</h3>
+<p>第一次运行大多会遇到<code>x86-nemu-interpreter: src/isa/x86/reg.c:20: reg_test: Assertion reg_w(i) == (sample[i] &amp; 0xffff)' failed.</code></p>
+</blockquote>
+<p>解决方法： 查看报错位置代码</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

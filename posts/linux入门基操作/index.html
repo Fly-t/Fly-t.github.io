@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="dd21">
+<meta name="dcterms.date" content="2022-12-05">
+
+<title>TengFei’s Blog - linux入门基操作</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">TengFei’s Blog</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../article.html">
+ <span class="menu-text">Article</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/fly-t"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://raw.githubusercontent.com/fly-t/images/main/blog/wechat-2022-11-27-16-30-56.png"><i class="bi bi-qr-code-scan" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">linux入门基操作</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">linux</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>dd21 </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 5, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="基础操作" class="level1">
+<h1>基础操作</h1>
+<section id="学会使用命令帮助" class="level2">
+<h2 class="anchored" data-anchor-id="学会使用命令帮助">1. 学会使用命令帮助</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>man <span class="op">-</span>k xxx          <span class="co">// 忘记具体命令 </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>whatis xxx          <span class="co">// 查看具体信息,info也可</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>whatis <span class="op">-</span>w <span class="st">"ca*"</span>     <span class="co">// 正则表达式查找</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>info xxx            <span class="co">// 同whatis</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>man xxx             <span class="co">// 查看具体参数 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Linux分</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">(</span><span class="dv">1</span><span class="op">)</span>、用户可以操作的命令或者是可执行文件</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">(</span><span class="dv">2</span><span class="op">)</span>、系统核心可调用的函数与工具等</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">(</span><span class="dv">3</span><span class="op">)</span>、一些常用的函数与数据库</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">(</span><span class="dv">4</span><span class="op">)</span>、设备文件的说明</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="op">(</span><span class="dv">5</span><span class="op">)</span>、设置文件或者某些文件的格式</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="op">(</span><span class="dv">6</span><span class="op">)</span>、游戏</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="op">(</span><span class="dv">7</span><span class="op">)</span>、惯例与协议等。例如Linux标准文件系统、网络协议、ASCⅡ，码等说明内容</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="op">(</span><span class="dv">8</span><span class="op">)</span>、系统管理员可用的管理条令</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="op">(</span><span class="dv">9</span><span class="op">)</span>、与内核有关的文件</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>查找程序的bin文件夹所在位置</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>which xxxx</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>查看程序的搜索路径(查看执行的是哪一个程序)</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>whereis xxx</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="文件及目录管理" class="level2">
+<h2 class="anchored" data-anchor-id="文件及目录管理">2. 文件及目录管理</h2>
+<p>文件,文件夹基本操作</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ls                          <span class="co">// 列出当前目录下的所有文件</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>touch xx<span class="op">.</span>x                  <span class="co">// 创建一个文件</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>mkdir xxx                   <span class="co">// 创建一个文件夹</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>mv <span class="dt">FILE</span> PATH                <span class="co">// 移动文件到指定位置</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>cp SRC  DESC                <span class="co">// 复制文件到那个文件(可以写路径)</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>cp <span class="op">-</span>r <span class="op">./</span>aaa <span class="op">./</span>bbb           <span class="co">// 复制文件夹</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>rm <span class="op">-</span>rf                      <span class="co">// 删除(加单粗暴的删除)          </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>查看文件个数</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>find <span class="op">./</span> <span class="op">|</span>wc <span class="op">-</span>l              <span class="co">// 官方写法,个人觉得不太方便记忆</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ls <span class="op">|</span> cat <span class="op">-</span>n                 <span class="co">// 文件前面加序号</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>目录切换</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>cd xxx                      <span class="co">// 进入到xx目录</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>cd <span class="op">-</span>                        <span class="co">// 进入到场次的路径</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>cd <span class="op">~</span>                        <span class="co">// 进入到家目录</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>cd <span class="op">/</span>                        <span class="co">// 记入到根目录</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>pwd                         <span class="co">// 显示当前路径</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>列出文件</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ls                          <span class="co">// 列出所有文件</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>ll                          <span class="co">// 列出详细信息</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>ls <span class="op">-</span>lrt                     <span class="co">// 时间排序</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>别名修改</code> 修改家目录下的<code>bachrc</code>文件设置命令别名,想当于快捷方式</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>alias lt<span class="op">=</span>'ls <span class="op">-</span>lrt'          <span class="co">// 修改别名为lt </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>文件查找</code></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>find <span class="op">./</span> <span class="op">-</span>name <span class="st">"xxx"</span>         <span class="co">// 在当前目录查找xxx, xxx可以是正则表达式</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>文件内容查看</code></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>cat</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>vim</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>head</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>head <span class="op">-</span><span class="dv">10</span> xxx                <span class="co">// 看前10行</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>tail <span class="op">-</span><span class="dv">10</span> xxx                <span class="co">// 看倒数10行</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>tail <span class="op">-</span>f xxx                 <span class="co">// 动态显示文本最新信息</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>diff xx<span class="op">-</span><span class="dv">1</span> xx<span class="op">-</span><span class="dv">2</span>              <span class="co">// 文件对比</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>查找文件内容</code></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>egrep 'str' file            <span class="co">// 查找文件内容</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>egrep 'str' file <span class="op">&gt;</span> outFile  <span class="co">// 将查找到的内容输出到outFile</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>权限修改</code></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>chown user file             <span class="co">// 修改文件拥有者</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>chmod a<span class="op">+</span>x  file             <span class="co">// 所用用户添加可执行权限a(all) u(user) g(group) o(other)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>文件创建别名(快捷方式)</code></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ln file<span class="op">-</span><span class="dv">1</span> file<span class="op">-</span><span class="dv">2</span>            <span class="co">// 硬连接, 相当于复制</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>ln <span class="op">-</span>s file1 file2           <span class="co">// 软连接, 相当于快捷方式</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>管道和重定向</code> 批处理命令连接执行，使用 | 串联: 使用分号 ; 前面成功，则执行后面一条，否则，不执行:&amp;&amp; 前面失败，则后一条执行: ||</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ls <span class="op">./</span> <span class="op">&amp;&amp;</span> echo ok <span class="op">||</span> echo failed</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> ls <span class="op">./;</span>then echo ok<span class="op">;</span> <span class="cf">else</span> echo failed<span class="op">;</span>fi          <span class="co">// 和上面等同</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="op">:&gt;</span> a<span class="op">.</span>txt                                            <span class="co">// 清空文件</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>ls a<span class="op">.</span>text <span class="op">&gt;&gt;</span> a<span class="op">.</span>out                                  <span class="co">// 重定向, 就是将原本输出到控制台的信息, 重新输出到别的地方</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>环境变量设置</code> bashrc: 系统启动时执行的文件 profile: 用户登陆后执行的文件</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>vim <span class="op">~/.</span>bashrc</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>vim <span class="op">/</span>etc<span class="op">/</span>profile</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">//修改其中的PATH变量</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>PATH<span class="op">=</span>$APPDIR<span class="op">:/</span>opt<span class="op">/</span>app<span class="op">/</span>soft<span class="op">/</span>bin<span class="op">:</span>$PATH<span class="op">:/</span>usr<span class="op">/</span>local<span class="op">/</span>bin<span class="op">:</span>$TUXDIR<span class="op">/</span>bin<span class="op">:</span>$ORACLE_HOME<span class="op">/</span>bin<span class="op">;</span>export PATH</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>bash快捷键</code></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Ctl<span class="op">-</span>U   删除光标到行首的所有字符<span class="op">,</span>在某些设置下<span class="op">,</span>删除全行</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>Ctl<span class="op">-</span>K   删除光标到行尾的所有字符</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>Ctl<span class="op">-</span>W   删除当前光标到前边的最近一个空格之间的字符</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>Ctl<span class="op">-</span>H   backspace<span class="op">,</span>删除光标前边的字符</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>Ctl<span class="op">-</span>R   匹配最相近的一个执行过的命令，然后输出</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>Ctl<span class="op">-</span>J   回车</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>Ctl<span class="op">-</span>B   左移一个字符</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>alt<span class="op">-</span>B   左移一个单词<span class="op">(</span>ubuntu失败<span class="op">)</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>Ctl<span class="op">-</span>F   右移一个字符</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>alt<span class="op">-</span>F   右移一个单词<span class="op">(</span>ubuntu失败<span class="op">)</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>Ctl<span class="op">-</span>A   移动到最前面</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>Ctl<span class="op">-</span>E   移动到最后面</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>Ctl<span class="op">-</span>P   上一条指令</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>Ctl<span class="op">-</span>N   下一条指令<span class="op">(</span>执行过的指令中上翻下翻<span class="op">,==&gt;</span>上<span class="op">/</span>下 键<span class="op">:</span> 终于不用按上下了<span class="op">,</span> 太爽了<span class="op">!!!)</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>Ctl<span class="op">-</span>L   清屏<span class="op">(</span>不用clear了<span class="op">,</span> 解决痛点<span class="op">+</span><span class="dv">1</span><span class="op">,</span>爽<span class="op">+</span><span class="dv">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>综合应用</code> 查找record.log中包含AAA，但不包含BBB的记录的总数:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>cat <span class="op">-</span>v record<span class="op">.</span>log <span class="op">|</span> grep AAA <span class="op">|</span> grep <span class="op">-</span>v BBB <span class="op">|</span> wc <span class="op">-</span>l <span class="co">// cat -v 显示文件原本在中的数据, 对中文字符有影响 直接翻译成acsii字符</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="文本处理" class="level2">
+<h2 class="anchored" data-anchor-id="文本处理">3. 文本处理</h2>
+<p><code>文件查找</code></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>find <span class="op">./</span> <span class="op">-</span>name <span class="st">"*.txt"</span>               <span class="co">// 文件名查找</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>find <span class="op">./</span> <span class="op">-</span>regex <span class="st">".*?.txt"</span>            <span class="co">// 正则表达式查找</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>find <span class="op">./</span> <span class="op">!</span> <span class="op">-</span>name <span class="st">"*.txt"</span>             <span class="co">// 文件名反向查找</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>find <span class="op">.</span> <span class="op">-</span>maxdepth <span class="dv">1</span> <span class="op">-</span>type f          <span class="co">// 指定深度查找, 深度为1 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>文件操作时间查询</code> -atime 访问时间 (单位是天，分钟单位则是-amin，以下类似） -mtime 修改时间 （内容被修改） -ctime 变化时间 （元数据或权限变化）</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>find <span class="op">./</span> <span class="op">-</span>atime <span class="dv">7</span> <span class="op">-</span>type f            <span class="co">// 查找最近第7天修改的文件 f(file)</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>find <span class="op">./</span> <span class="op">-</span>atime <span class="op">-</span><span class="dv">7</span> <span class="op">-</span>type f           <span class="co">// 最近7天内</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>find <span class="op">./</span> <span class="op">-</span>atime <span class="op">+</span><span class="dv">7</span> <span class="op">-</span>type f           <span class="co">// 最近7天前 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>按照大小查询文件</code></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>find <span class="op">./</span> <span class="op">-</span>type f <span class="op">-</span>size <span class="op">+</span><span class="dv">2</span>            <span class="co">// 查找大于2k的文件</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>find <span class="op">./</span> <span class="op">-</span>type f <span class="op">-</span>size <span class="op">-</span><span class="dv">2</span>            <span class="co">// 查找小于2k的文件</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>按照文件创建用户查找</code></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>find <span class="op">./</span> <span class="op">-</span>type f <span class="op">-</span>user root          <span class="co">// root用户创建的文件</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>删除指定条件的文件</code></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>find <span class="op">./</span> <span class="op">-</span>type f <span class="op">-</span>name <span class="st">"*.txt"</span> <span class="op">-</span>delete                       <span class="co">// 删除当前目录下的xxx.txt文件</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>动作执行</code> exec后面可以跟执行的命令, {}代表符合条件的所有文件</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>find <span class="op">./</span> <span class="op">-</span>type f <span class="op">-</span>name <span class="st">"*.txt"</span> <span class="op">-</span>exec cp <span class="op">{}</span> <span class="op">./</span>OtherDir \ <span class="op">;</span>    <span class="co">// 将当前文件夹中的所有txt文件复制到当前目录下的OtherDir中 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>结合多个命令</code> 如果需要后续执行多个命令，可以将多个命令写成一个脚本。然后 -exec 调用时执行脚本即可:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="op">-</span>exec <span class="op">./</span>commands<span class="op">.</span>sh <span class="op">{}</span> \<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>-print的定界符</code> 默认使用’’作为文件的定界符； -print0 使用’\0’作为文件的定界符，这样就可以搜索包含空格的文件；</p>
+<p><code>grep文本搜索</code> -o 只输出匹配的文本行 -v 只输出没有匹配的文本行 -c 统计文件中包含文本的次数 grep -c “text” filename -n 打印匹配的行号 -i 搜索时忽略大小写 -l 只打印文件名</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>grep <span class="op">-</span>i <span class="op">-</span>n 'hello' a<span class="op">.</span>txt                        <span class="co">// 查找文本中hello的位置, 忽略大小写</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>在多级目录中对文本递归搜索(程序员搜代码的最爱）:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>grep <span class="st">"class"</span> <span class="op">.</span> <span class="op">-</span>R <span class="op">-</span>n</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>xargs命令行参数转换</code></p>
+<p>-d 定义定界符 （默认为空格 多行的定界符为 n） -n 指定输出为多行 -I {} 指定替换字符串，这个字符串在xargs扩展时会被替换掉,用于待执行的命令需要多个参数时 -0：指定0为输入定界</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>cat xxx<span class="op">.</span>txt <span class="op">|</span> xargs <span class="op">-</span>n <span class="dv">3</span>                        <span class="co">// 将内容三行在一行显示</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>cat xxx<span class="op">.</span>txt <span class="op">|</span> xargs <span class="op">-</span>i echo <span class="op">-{}</span>                 <span class="co">// 将xx.txt中的数据按行读取,通过echo输出,并在前加 - </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>sort</code>排序 -n 按数字进行排序 VS -d 按字典序进行排序 -r 逆序排序 -k N 指定按第N列排序</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>sort <span class="op">-</span>n xxx<span class="op">.</span>txt                                 <span class="co">// 默认n排序</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>sort <span class="op">-</span>r xxx<span class="op">.</span>txt                                 <span class="co">// 逆序</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>sort <span class="op">-</span>d xxx<span class="op">.</span>txt                                 <span class="co">// 字典排序</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>sort xxx<span class="op">.</span>txt <span class="op">|</span> uniq                             <span class="co">// 去重</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>sort xxx<span class="op">.</span>txt <span class="op">|</span> uniq <span class="op">-</span>c                          <span class="co">// 每行出现次数</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>sort xxx<span class="op">.</span>txt <span class="op">|</span> uniq <span class="op">-</span>d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>文本拼接</code></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>paste F1 F2                                     <span class="co">// F1和F2进行拼接, 是对应行进行拼接,不知直接拼到下面, 默认分割是以tab进行分割的</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>past F1 F2 <span class="op">-</span>d <span class="st">","</span>                               <span class="co">// 使用","进行分割</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>字数统计</code></p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>wc <span class="op">-</span>l xxxx                                      <span class="co">// 统计行数</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>wc <span class="op">-</span>w xxxx                                      <span class="co">// 统计单词数</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>wc <span class="op">-</span>c xxxx                                      <span class="co">// 统计字符数</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>wc xxx                                          <span class="co">// 返回[行数, 单词数, 字符数]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>文本替换 - sed</code></p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>sed 's<span class="op">/</span>xxx<span class="co">/***/</span>' <span class="dt">FILE</span>                           <span class="co">// 替换每行第一个匹配的字符[将FILE中的xxx替换为***]</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>sed 's<span class="op">/</span>xxx<span class="co">/***/</span>g' <span class="dt">FILE</span>                          <span class="co">// 替换匹配到的所有的字符</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>sed <span class="op">-</span>i 's<span class="op">/</span>xxx<span class="co">/***/</span>' <span class="dt">FILE</span>                        <span class="co">// 直接修改原文[上面的写法需要将修改后的内容重定位输出到新的文件才可以保存]</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>sed <span class="op">-</span>i '<span class="op">/^</span>$<span class="op">/</span>d' <span class="dt">FILE</span>                             <span class="co">// 直接将文件中的空白行删除[文本末尾的空白行没有删除]                   </span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>str <span class="op">=</span> <span class="dv">9999</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>sed  <span class="st">"s/xx/$str/"</span> <span class="dt">FILE</span>                          <span class="co">// 双引号会替换变量的值, 单引号不会, 会将str替换为9999</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>awk数据流处理</code> awk脚本结构</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>awk ' BEGIN<span class="op">{</span> statements <span class="op">}</span> statements2 END<span class="op">{</span> statements <span class="op">}</span> '</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>工作方式 1.执行begin中语句块； 2.从文件或stdin中读入一行，然后执行statements2，重复这个过程，直到文件全部被读取完毕； 3.执行end语句块；</li>
+</ul>
+<div class="sourceCode" id="cb34"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>echo <span class="dv">123</span> <span class="op">|</span> awk 'BEGIN <span class="op">{</span>print <span class="st">"Start"</span><span class="op">}{</span> print <span class="op">}</span> END<span class="op">{</span>print <span class="st">"END"</span><span class="op">}</span>'    <span class="co">// 格式很关键,标点,大小写</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="https://img-blog.csdnimg.cn/ed7afe6f1f3840e6a93b8ea34a35e0d6.png" class="img-fluid" alt="在这里插入图片描述"> print 以逗号分割时，参数以空格定界;</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>echo<span class="op">|</span>awk '<span class="op">{</span>a<span class="op">=</span><span class="dv">1</span><span class="op">;</span>b<span class="op">=</span><span class="dv">2</span><span class="op">;</span>c<span class="op">=</span><span class="st">"dasdsa"</span><span class="op">;</span>print a<span class="op">,</span>b<span class="op">,</span>c<span class="op">;}</span>'</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="https://img-blog.csdnimg.cn/11a941c25ebb42d0b50b63fe037813b0.png" class="img-fluid" alt="在这里插入图片描述"> print字符串拼接</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>echo<span class="op">|</span>awk '<span class="op">{</span>a<span class="op">=</span><span class="dv">1</span><span class="op">;</span>b<span class="op">=</span><span class="dv">2</span><span class="op">;</span>c<span class="op">=</span><span class="st">"dasdsa"</span><span class="op">;</span>print a<span class="st">" ----***"</span> b<span class="st">"----**   "</span> c<span class="op">;}</span>'</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="co">// 输出</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="op">----***</span><span class="dv">2</span><span class="op">----**</span>   dasdsa</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>awk - 特殊变量： NR NF $0 $1 $2</code> NR:表示记录数量，在执行过程中对应当前行号；</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>cat xxx<span class="op">.</span>txt <span class="op">|</span> awk '<span class="op">{</span>print NR<span class="op">}</span>'                          <span class="co">// 输出执行到的行数</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>cat xxx<span class="op">.</span>txt <span class="op">|</span> awk '<span class="op">{</span>print NF<span class="op">}</span>'                          <span class="co">// 输出执行的当前行的单词数</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>cat xxx<span class="op">.</span>txt <span class="op">|</span> awk '<span class="op">{</span>print $<span class="dv">2</span><span class="op">}</span>'                          <span class="co">// 输出当前行的第2个单词</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>NF:表示字段数量，在执行过程总对应当前行的字段数；</p>
+<p>$0:这个变量包含执行过程中当前行的文本内容；</p>
+<p>$1:第一个字段的文本内容；</p>
+<p>$2:第二个字段的文本内容；</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 每行求和 -e是将转移字符输出出来</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>echo <span class="op">-</span>e <span class="st">"1</span><span class="sc">\n</span><span class="st"> 2</span><span class="sc">\n</span><span class="st"> 3</span><span class="sc">\n</span><span class="st"> 4</span><span class="sc">\n</span><span class="st">"</span> <span class="op">|</span>awk 'BEGIN<span class="op">{</span>sum<span class="op">=</span><span class="dv">0</span><span class="op">;}{</span>sum<span class="op">+=</span>$<span class="dv">1</span><span class="op">;}</span>END<span class="op">{</span>print sum<span class="op">}</span>'          <span class="co">// 输出10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>awk - 传递外部变量</code></p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>var <span class="op">=</span> <span class="dv">9999</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>echo <span class="op">|</span> awk vara<span class="op">=</span>$var '<span class="op">{</span>print vara<span class="op">}</span>'                     <span class="co">// 传递外部变量, 变量放前后都行,但是不能加括号, 默认来自输入</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>echo <span class="op">|</span> awk vara<span class="op">=</span>$var '<span class="op">{</span>print vara<span class="op">}</span>' <span class="dt">FILE</span>                <span class="co">// 个人使用失败,可能是语法哪里写错了</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>用样式对awk处理的行进行过滤</code></p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>awk 'NR <span class="op">&lt;</span> <span class="dv">5</span><span class="er">'</span> #行号小于<span class="dv">5</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>awk 'NR<span class="op">==</span><span class="dv">1</span><span class="op">,</span>NR<span class="op">==</span><span class="dv">4</span> <span class="op">{</span>print<span class="op">}</span>' file #行号等于<span class="dv">1</span>和<span class="dv">4</span>的打印出来</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>awk '<span class="op">/</span>linux<span class="op">/</span>' #包含linux文本的行（可以用正则表达式来指定，超级强大）</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>awk '<span class="op">!/</span>linux<span class="op">/</span>' #不包含linux文本的行</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>使用-F来设置定界符（默认为空格）</code></p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>awk <span class="op">-</span>F<span class="op">:</span> '<span class="op">{</span>print $NF<span class="op">}</span>' <span class="op">/</span>etc<span class="op">/</span>passwd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="磁盘管理" class="level2">
+<h2 class="anchored" data-anchor-id="磁盘管理">4. 磁盘管理</h2>
+<p><code>查看磁盘大小以及使用情况</code> -h: human缩写，以易读的方式显示结果（即带单位：比如M/G，如果不加这个参数，显示的数字以B为单位</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">-</span>h                                               <span class="co">// 查看磁盘信息</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>当前目录所占大小</code> -h 人性化显示 -s 递归整个目录的大小</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>du <span class="op">-</span>sh                                              <span class="co">// 当前文件夹占用磁盘大小</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>查看当前目录下所有子文件夹排序后的大小:</code></p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>du <span class="op">-</span>sh `ls`<span class="op">|</span> sort                                   <span class="co">// 当前文件夹中的文件按照大小排序</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>打包,压缩,解压缩</code> tar -cvf example.tar example -&gt;将example文件夹归档变成了example.tar - c: create创建档案 - v: verbose显示详情 - f: file表示文件</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>tar <span class="op">-</span>cvf example<span class="op">.</span>tar example                        <span class="co">// 只打包不压缩</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>gzip xxx<span class="op">.</span>tar                                        <span class="co">// 压缩后生成-&gt; xxx.tar.gz</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>gunzip xxx<span class="op">.</span>tar<span class="op">.</span>gz                                   <span class="co">// 解压后-&gt; xxx.tar</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>tar <span class="op">-</span>xvf xxx<span class="op">.</span>tar<span class="op">.</span>gz                                 <span class="co">// 解压后-&gt; xxx</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>tar 解压参数</code> -z 解压gz文件 -j 解压bz2文件 -J 解压xz文件</p>
+</section>
+<section id="进程管理工具" class="level2">
+<h2 class="anchored" data-anchor-id="进程管理工具">5. 进程管理工具</h2>
+<p><code>查询正在运行的进程</code></p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>ps <span class="op">-</span>ef                                  <span class="co">// 查询所有进程</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>ps <span class="op">-</span>ef<span class="op">|</span>prep root                        <span class="co">// 查询root用户的进程</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>pgrep <span class="op">-</span>l ba                             <span class="co">// 查询含有ba关键字的进程-&gt;查询进程ID（适合只记得部分进程字段）</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>ps <span class="op">-</span>ajx                                 <span class="co">// 查看所有信息的完整信息</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>top                                     <span class="co">// 实时查看进程信息 实时更新</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>查看端口占用情况</code></p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>lsof <span class="op">-</span>i<span class="op">:</span><span class="dv">3306</span>                            <span class="co">// 查看3306的端口占用情况</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>查看用户username的进程所打开的文件</code></p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>lsof -u username</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>利用进程名 查看进程使用的文件</code></p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>lsof <span class="op">-</span>c mysql                           <span class="co">// 查看mysql进程占用的文件</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>利用pid 查看进程使用的文件</code></p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>ls <span class="op">-</span>i <span class="dv">22</span>                                <span class="co">// 查询占用22号端口的进程</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>lsof <span class="op">-</span>p <span class="dv">774</span>                             <span class="co">// 根据进程pid号774查询 文件使用情况</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>查询制定文件夹内文件夹的使用进程</code></p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>lsof <span class="op">+</span>d <span class="op">./</span>                              <span class="co">// 查询当前文件夹内的文件使用情况(进程信息)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>结束进程</code></p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>lsof <span class="op">-</span>c NAME                            <span class="co">// 查询进程的pid</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>kill PID                                <span class="co">// 结束PID进程</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol type="1">
+<li>CTRL+Z挂起进程并放入后台</li>
+<li>jobs 显示当前暂停的进程</li>
+<li>bg %N 使第N个任务在后台运行(%前有空格)</li>
+<li>fg %N 使第N个任务在前台运行 默认bg,fg不带%N时表示对最后一个进程操作! <code>动态查看-top</code> P：根据CPU使用百分比大小进行排序。 M：根据驻留内存大小进行排序。 i：使top不显示任何闲置或者僵死进程。</li>
+</ol>
+<div class="sourceCode" id="cb53"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>top                                     <span class="co">// top之后按下p/m/i</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="性能监控" class="level2">
+<h2 class="anchored" data-anchor-id="性能监控">6. 性能监控</h2>
+<p><code>监控cpu</code></p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>sat <span class="op">-</span>u <span class="dv">1</span> <span class="dv">2</span>                              <span class="co">// 查看cpu使用情况, 一秒钟采样两次, ubuntu没有sar需要安装</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>vmstart <span class="dv">1</span> <span class="dv">2</span>                             <span class="co">// 和上面等效</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>查看内存</code></p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>free                                    <span class="co">// 硬盘使用情况</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>free <span class="op">-</span>m                                 <span class="co">// 内存使用情况</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="网络工具" class="level2">
+<h2 class="anchored" data-anchor-id="网络工具">7. 网络工具</h2>
+<p><code>查询网络服务和端口</code></p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>netstat <span class="op">-</span>a                              <span class="co">// 查看所有端口</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>netstat <span class="op">-</span>at                             <span class="co">// 列出所有tcp端口</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>netstat <span class="op">-</span>au                             <span class="co">// 列出所有udp端口</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>列出所有监听的服务 - netstat -x</code> [ netstat ] -a 显示所有连接和侦听端口，默认不显示LISTEN相关 -b 显示在创建每个连接或侦听端口时涉及的可执行程序。在某些情况下，已知可执行程序承载多个独立的组件，这些情况下，显示创建连接或侦听端口时涉及的组件序列。在此情况下，可执行程序的名称位于底部 [] 中，它调用的组件位于顶部，直至达到 TCP/IP。注意，此选项可能很耗时，并且在你没有足够权限时可能失败。 -e 显示以太网统计信息。此选项可以与 -s 选项结合使用。</p>
+<p>-i 显示网络接口列表 -n 以数字形式显示地址和端口号。 -o 显示拥有的与每个连接关联的进程 ID。 -p proto 显示 proto 指定的协议的连接；proto可以是下列任何一个: TCP、UDP、TCPv6 或 UDPv6。如果与 -s选项一起用来显示每个协议的统计信息，proto 可以是下列任何一个:IP、IPv6、ICMP、ICMPv6、TCP、TCPv6、UDP 或 UDPv6。 -q 显示所有连接、侦听端口和绑定的非侦听 TCP 端口。绑定的非侦听端口不一定与活动连接相关联。 -r 显示路由表。 -s 显示每个协议的统计信息。默认情况下，显示 IP、IPv6、ICMP、ICMPv6、TCP、TCPv6、UDP 和 UDPv6 的统计信息;-p 选项可用于指定默认的子网。 interval 重新显示选定的统计信息，各个显示间暂停的间隔秒数。按 CTRL+C 停止重新显示统计信息。如果省略，则 netstat 将打印当前的配置信息一次。 -t (tcp)仅显示tcp相关选项 -u (udp)仅显示udp相关选项 -c 每隔一个固定时间，执行该netstat命令，netstat 将每隔一秒输出网络信息。</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>netstat <span class="op">-</span>l                              <span class="co">// 列出所有监听的服务</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="用户管理工具" class="level2">
+<h2 class="anchored" data-anchor-id="用户管理工具">8. 用户管理工具</h2>
+<p><code>添加用户</code></p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>useradd <span class="op">-</span>m xxx                          <span class="co">// 添加xxx用户, 单独的添加,没有任何权限 以及密码</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>用户切换</code></p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>su xxx                                  <span class="co">// 切换xxx用户</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>su root                                 <span class="co">// 切换root用户</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>删除用户</code></p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>userdel <span class="op">-</span>r xxx                          <span class="co">// 删除用户xxx</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>lsof <span class="op">-</span>u xxx                             <span class="co">// 查询xxx用户PID </span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>kill <span class="op">-</span><span class="dv">9</span> PID                             <span class="co">// 用户无法删除,显示进程占用, 先结束进程, 然后重新删除用户</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>权限管理</code> 使用chmod命令更改文件的读写权限，更改读写权限有两种方法，一种是字母方式，一种是数字方式</p>
+<p>分组 - u：用户 - g：组 - o：其它用户 - a：所有用户</p>
+<p>权限 - r:读 - w：写 - x：执行 数字方式：</p>
+<p>数字方式直接设置所有权限，相比字母方式，更加简洁方便；</p>
+<p>使用三位八进制数字的形式来表示权限，第一位指定属主的权限，第二位指定组权限，第三位指定其他用户的权限，每位通过4(读)、2(写)、1(执行)三种数值的和来确定权限。如6(4+2)代表有读写权，7(4+2+1)有读、写和执行的权限。</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>chmod a<span class="op">+</span>x <span class="dt">FILE</span>                          <span class="co">// 对FILE文件的所用户添加可执行程序</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>chmod g<span class="op">+</span>x <span class="dt">FILE</span>                          <span class="co">// 对组用户添加可执行权限</span></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>chmod <span class="dv">777</span> <span class="dt">FILE</span>                          <span class="co">// 所有权限打开</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>修改拥有者</code></p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>chown USER File                         <span class="co">// 修改拥有者</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>chown <span class="op">-</span>R USER <span class="dt">FILE</span>                      <span class="co">// 递归所有文件夹修改拥有者</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>环境变量</code></p>
+<p>bashrc与profile都用于保存用户的环境信息，bashrc用于交互式non-loginshell，而profile用于交互式login shell。</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>全局</th>
+<th>用户</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>bashrc(不登录) / profile(登录)</td>
+<td>bashrc (不登录) / profile (登录)</td>
+</tr>
+</tbody>
+</table>
+<p>/etc/profile，/etc/bashrc 是系统全局环境变量设定 ~/.profile ~/.bashrc用户目录下的私有环境变量设定</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>全局</th>
+<th>用户</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>/etc/profile，/etc/bashrc</td>
+<td>~/.profile ~/.bashrc</td>
+</tr>
+</tbody>
+</table>
+<p>当登入系统获得一个shell进程时，其读取环境设置脚本分为三步:</p>
+<p>首先读入的是全局环境变量设置文件/etc/profile，然后根据其内容读取额外的文档，如/etc/profile.d和/etc/inputrc 读取当前登录用户Home目录下的文件<sub>/.bash_profile，其次读取</sub>/.bash_login，最后读取~/.profile，这三个文档设定基本上是一样的，读取有优先关系 读取~/.bashrc <sub>/.profile与</sub>/.bashrc的区别:</p>
+<p>这两者都具有个性化定制功能 ~/.profile可以设定本用户专有的路径，环境变量，等，它只能登入的时候执行一次 ~/.bashrc也是某用户专有设定文档，可以设定路径，命令别名，每次shell script的执行都会使用它一次</p>
+</section>
+<section id="系统管理及ipc资源管理" class="level2">
+<h2 class="anchored" data-anchor-id="系统管理及ipc资源管理">9. 系统管理及IPC资源管理</h2>
+<p><code>查看cpu信息</code></p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>cat <span class="op">/</span>etc<span class="op">/</span>cpuinfo                            <span class="co">// 查看cpu信息</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>查看内存信息</code></p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>cat <span class="op">/</span>etc<span class="op">/</span>meminfo                            <span class="co">// 查看内存信息</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>查看cpu架构</code></p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>arch                                        <span class="co">// 查案CPU架构</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>ipcs资源查询</code></p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>ipcs    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>参考: https://linuxtools-rst.readthedocs.io/zh_CN/latest/base/03_text_processing.html</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

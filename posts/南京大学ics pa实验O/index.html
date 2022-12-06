@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="dd21">
+<meta name="dcterms.date" content="2022-12-05">
+
+<title>TengFei’s Blog - 南京大学ics pa实验O</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">TengFei’s Blog</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../article.html">
+ <span class="menu-text">Article</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/fly-t"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://raw.githubusercontent.com/fly-t/images/main/blog/wechat-2022-11-27-16-30-56.png"><i class="bi bi-qr-code-scan" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">南京大学ics pa实验O</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">cs</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>dd21 </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 5, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p><a href="https://github.com/GeeeekExplorer/NJU-ICS/blob/master/pa2018_fall/nemu/src/monitor/expr.c">https://github.com/GeeeekExplorer/NJU-ICS/blob/master/pa2018_fall/nemu/src/monitor/expr.c</a> &gt;# PA0 编译NEMU</p>
+<ul>
+<li>把项目拉下来，</li>
+<li>修改学号，姓名</li>
+<li><code>bug：</code>llvm的TargetRegister.h的位置（/src/utils/distasm.cc）， 使用文件搜索locate xxx， 然后修改为查找到的位置</li>
+<li>make clean –&gt; make</li>
+</ul>
+<section id="fatal-error-readlinereadline.h-no-such-file-or-directory" class="level5">
+<h5 class="anchored" data-anchor-id="fatal-error-readlinereadline.h-no-such-file-or-directory"><code>fatal error: readline/readline.h: No such file or directory</code></h5>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>sudo apt<span class="op">-</span>get install libreadline<span class="op">-</span>dev</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>安装的工具</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>apt<span class="op">-</span>get install build<span class="op">-</span>essential    # build<span class="op">-</span>essential packages<span class="op">,</span> include binary utilities<span class="op">,</span> gcc<span class="op">,</span> make<span class="op">,</span> and so on</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>apt<span class="op">-</span>get install man                # on<span class="op">-</span>line reference manual</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>apt<span class="op">-</span>get install gcc<span class="op">-</span>doc            # on<span class="op">-</span>line reference manual <span class="cf">for</span> gcc</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>apt<span class="op">-</span>get install gdb                # GNU debugger</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>apt<span class="op">-</span>get install git                # revision control system</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>apt<span class="op">-</span>get install libreadline<span class="op">-</span>dev    # a library used later</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>apt<span class="op">-</span>get install libsdl2<span class="op">-</span>dev        # a library used later</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>apt<span class="op">-</span>get install llvm               # llvm project<span class="op">,</span> which contains libraries used later</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="error-class-llvmmcinstprinter-has-no-member-named-setprintbranchimmasaddress" class="level5">
+<h5 class="anchored"><code>: error: ‘class llvm::MCInstPrinter’ has no member named ‘setPrintBranchImmAsAddress’</code></h5>
+<p>修改llvm的版本</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sudo apt autoremove llvm<span class="op">-</span><span class="dv">10</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>sudo apt install llvm<span class="op">-</span><span class="dv">12</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>cd <span class="op">/</span>usr<span class="op">/</span>bin</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>sudo ln <span class="op">-</span>s <span class="op">/</span>usr<span class="op">/</span>lib<span class="op">/</span>llvm<span class="op">-</span><span class="dv">12</span><span class="op">/</span>bin<span class="op">/</span>llvm<span class="op">-</span>config  llvm<span class="op">-</span>config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<h1 id="pa1-深入了解代码框架">PA1 深入了解代码框架</h1>
+<ul>
+<li>这里的pa是<code>2020的isa-x86</code>的pa</li>
+<li>首先是编译项目</li>
+<li>运行项目</li>
+<li>哦豁,不出意外是出意外了assert….(问题不大, 只有有报错信息问题就不大)</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h2 id="尝试解决assert报错" class="anchored" data-anchor-id="error-class-llvmmcinstprinter-has-no-member-named-setprintbranchimmasaddress">尝试解决<code>assert</code>报错</h2>
+</blockquote>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 编译</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>ubuntu@VM<span class="op">-</span><span class="dv">12</span><span class="op">-</span><span class="dv">14</span><span class="op">-</span>ubuntu<span class="op">:~/</span>ics<span class="op">/</span>ics2020<span class="op">/</span>nemu$ make <span class="op">-</span>B</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>Building x86<span class="op">-</span>nemu<span class="op">-</span>interpreter</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="op">+</span> CC src<span class="op">/</span>device<span class="op">/</span>audio<span class="op">.</span>c</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="op">+</span> CC src<span class="op">/</span>device<span class="op">/</span>io<span class="op">/</span>map<span class="op">.</span>c</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="op">+</span> CC src<span class="op">/</span>device<span class="op">/</span>io<span class="op">/</span>port<span class="op">-</span>io<span class="op">.</span>c</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="op">+</span> CC src<span class="op">/</span>device<span class="op">/</span>io<span class="op">/</span>mmio<span class="op">.</span>c</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="op">+</span> CC src<span class="op">/</span>device<span class="op">/</span>device<span class="op">.</span>c</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="op">+</span> CC src<span class="op">/</span>device<span class="op">/</span>timer<span class="op">.</span>c</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="op">+</span> CC src<span class="op">/</span>device<span class="op">/</span>serial<span class="op">.</span>c</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="op">+</span> CC src<span class="op">/</span>device<span class="op">/</span>intr<span class="op">.</span>c</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="op">....</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="op">+</span> LD build<span class="op">/</span>x86<span class="op">-</span>nemu<span class="op">-</span>interpreter</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">// 运行</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>ubuntu@VM<span class="op">-</span><span class="dv">12</span><span class="op">-</span><span class="dv">14</span><span class="op">-</span>ubuntu<span class="op">:~/</span>ics<span class="op">/</span>ics2020<span class="op">/</span>nemu$ make run</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">// 报错</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>Building x86<span class="op">-</span>nemu<span class="op">-</span>interpreter</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>make <span class="op">-</span>C <span class="op">/</span>home<span class="op">/</span>ubuntu<span class="op">/</span>ics<span class="op">/</span>ics2020<span class="op">/</span>nemu<span class="op">/</span>tools<span class="op">/</span>kvm<span class="op">-</span>diff </span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>make<span class="op">[</span><span class="dv">1</span><span class="op">]:</span> Entering directory '<span class="op">/</span>home<span class="op">/</span>ubuntu<span class="op">/</span>ics<span class="op">/</span>ics2020<span class="op">/</span>nemu<span class="op">/</span>tools<span class="op">/</span>kvm<span class="op">-</span>diff'</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>make<span class="op">[</span><span class="dv">1</span><span class="op">]:</span> Nothing to be done <span class="cf">for</span> 'app'<span class="op">.</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>make<span class="op">[</span><span class="dv">1</span><span class="op">]:</span> Leaving directory '<span class="op">/</span>home<span class="op">/</span>ubuntu<span class="op">/</span>ics<span class="op">/</span>ics2020<span class="op">/</span>nemu<span class="op">/</span>tools<span class="op">/</span>kvm<span class="op">-</span>diff'</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="op">./</span>build<span class="op">/</span>x86<span class="op">-</span>nemu<span class="op">-</span>interpreter <span class="op">--</span>log<span class="op">=./</span>build<span class="op">/</span>nemu<span class="op">-</span>log<span class="op">.</span>txt <span class="op">--</span>diff<span class="op">=/</span>home<span class="op">/</span>ubuntu<span class="op">/</span>ics<span class="op">/</span>ics2020<span class="op">/</span>nemu<span class="op">/</span>tools<span class="op">/</span>kvm<span class="op">-</span>diff<span class="op">/</span>build<span class="op">/</span>x86<span class="op">-</span>kvm<span class="op">-</span>so </span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>x86<span class="op">-</span>nemu<span class="op">-</span>interpreter<span class="op">:</span> src<span class="op">/</span>isa<span class="op">/</span>x86<span class="op">/</span>reg<span class="op">.</span>c<span class="op">:</span><span class="dv">20</span><span class="op">:</span> reg_test<span class="op">:</span> Assertion `reg_w<span class="op">(</span>i<span class="op">)</span> <span class="op">==</span> <span class="op">(</span>sample<span class="op">[</span>i<span class="op">]</span> <span class="op">&amp;</span> <span class="bn">0xffff</span><span class="op">)</span>' failed<span class="op">.</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>make<span class="op">:</span> <span class="op">***</span> <span class="op">[</span>Makefile<span class="op">:</span><span class="dv">108</span><span class="op">:</span> run<span class="op">]</span> Aborted <span class="op">(</span>core dumped<span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>查看<code>src/isa/x86/reg.c:20:</code></li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> #include <span class="op">&lt;</span>isa<span class="op">.</span>h<span class="op">&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span> #include <span class="op">&lt;</span>stdlib<span class="op">.</span>h<span class="op">&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span> #include <span class="op">&lt;</span>time<span class="op">.</span>h<span class="op">&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span> #include <span class="st">"local-include/reg.h"</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span> <span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>regsl<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span><span class="st">"eax"</span><span class="op">,</span> <span class="st">"ecx"</span><span class="op">,</span> <span class="st">"edx"</span><span class="op">,</span> <span class="st">"ebx"</span><span class="op">,</span> <span class="st">"esp"</span><span class="op">,</span> <span class="st">"ebp"</span><span class="op">,</span> <span class="st">"esi"</span><span class="op">,</span> <span class="st">"edi"</span><span class="op">};</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span> <span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>regsw<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span><span class="st">"ax"</span><span class="op">,</span> <span class="st">"cx"</span><span class="op">,</span> <span class="st">"dx"</span><span class="op">,</span> <span class="st">"bx"</span><span class="op">,</span> <span class="st">"sp"</span><span class="op">,</span> <span class="st">"bp"</span><span class="op">,</span> <span class="st">"si"</span><span class="op">,</span> <span class="st">"di"</span><span class="op">};</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span> <span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>regsb<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span><span class="st">"al"</span><span class="op">,</span> <span class="st">"cl"</span><span class="op">,</span> <span class="st">"dl"</span><span class="op">,</span> <span class="st">"bl"</span><span class="op">,</span> <span class="st">"ah"</span><span class="op">,</span> <span class="st">"ch"</span><span class="op">,</span> <span class="st">"dh"</span><span class="op">,</span> <span class="st">"bh"</span><span class="op">};</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span> </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">10</span> <span class="dt">void</span> reg_test<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a> <span class="dv">11</span>   srand<span class="op">(</span>time<span class="op">(</span><span class="dv">0</span><span class="op">));</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a> <span class="dv">12</span>   word_t sample<span class="op">[</span><span class="dv">8</span><span class="op">];</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a> <span class="dv">13</span>   word_t pc_sample <span class="op">=</span> rand<span class="op">();</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a> <span class="dv">14</span>   cpu<span class="op">.</span>pc <span class="op">=</span> pc_sample<span class="op">;</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a> <span class="dv">15</span> </span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a> <span class="dv">16</span>   <span class="dt">int</span> i<span class="op">;</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a> <span class="dv">17</span>   <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> R_EAX<span class="op">;</span> i <span class="op">&lt;=</span> R_EDI<span class="op">;</span> i <span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a> <span class="dv">18</span>     sample<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> rand<span class="op">();</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a> <span class="dv">19</span>     reg_l<span class="op">(</span>i<span class="op">)</span> <span class="op">=</span> sample<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a> <span class="co">// 问题出在这里, 可是这几个宏有点折磨了, 盲猜是不是数据越界了</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a> <span class="op">[</span><span class="dv">20</span><span class="op">]</span>     assert<span class="op">(</span>reg_w<span class="op">(</span>i<span class="op">)</span> <span class="op">==</span> <span class="op">(</span>sample<span class="op">[</span>i<span class="op">]</span> <span class="op">&amp;</span> <span class="bn">0xffff</span><span class="op">));</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a> <span class="dv">21</span>   <span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>看到这宏定义有点折磨, 无从下手, 想起来一个好东西<code>gcc -E</code>, 嘿嘿, 这下人肉展开是不可能的, 直接安排</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ubuntu@VM-12-14-ubuntu:~/ics/ics2020/nemu$</span> gcc <span class="at">-E</span> ./src/isa/x86/reg.c </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1 "./src/isa/x86/reg.c"</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 1 "&lt;built-in&gt;"</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 1 "&lt;command-line&gt;"</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 31 "&lt;command-line&gt;"</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 1 "/usr/include/stdc-predef.h" 1 3 4</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 32 "&lt;command-line&gt;" 2</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 1 "./src/isa/x86/reg.c"</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="ex">./src/isa/x86/reg.c:1:10:</span> fatal error: isa.h: No such file or directory</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="ex">1</span> <span class="kw">|</span> <span class="co">#include &lt;isa.h&gt;</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>      <span class="kw">|</span>          <span class="ex">^~~~~~~</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="ex">compilation</span> terminated.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>啊这, 我又麻了, 果然没有这么简单, 单独<code>gcc -E</code>是不行了, 依赖的文件都得加上才行, 可是这个脚本命令有点不会写啊, 来cat一下jyy的<code>Makefile</code></li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">// -E 我们都懂的, 可是-MF是什么,google一下,这里我是废物, 我又被google到的中文结果吸引进去了</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>@$<span class="op">(</span>CC<span class="op">)</span> $<span class="op">(</span>CFLAGS<span class="op">)</span> <span class="op">-</span>E <span class="op">-</span>MF <span class="op">/</span>dev<span class="op">/</span>null $<span class="op">&lt;</span> <span class="op">|</span> \</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    grep <span class="op">-</span>ve '<span class="op">^</span>#' <span class="op">|</span> \</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    clang<span class="op">-</span>format <span class="op">-</span> <span class="op">&gt;</span> $<span class="op">(</span>basename $@<span class="op">).</span>i</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://blog.csdn.net/eydwyz/article/details/90296048">gcc -MF</a> <a href="https://blog.csdn.net/weixin_42615308/article/details/82996779">$&lt;</a> - 看完之后我又行了, 不就是建立个文件夹, 然后把每个<code>.c</code>的文件都预编译成<code>.i</code>文件, 我又拿捏了, 走着</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ubuntu@VM<span class="op">-</span><span class="dv">12</span><span class="op">-</span><span class="dv">14</span><span class="op">-</span>ubuntu<span class="op">:~/</span>ics<span class="op">/</span>ics2020<span class="op">/</span>nemu$ make <span class="op">-</span>B</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>Building x86<span class="op">-</span>nemu<span class="op">-</span>interpreter</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="op">+</span> CC src<span class="op">/</span>device<span class="op">/</span>audio<span class="op">.</span>c</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="op">/</span>bin<span class="op">/</span>sh<span class="op">:</span> <span class="dv">3</span><span class="op">:</span> clang<span class="op">-</span>format<span class="op">:</span> Permission denied</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>make<span class="op">:</span> <span class="op">***</span> <span class="op">[</span>Makefile<span class="op">:</span><span class="dv">81</span><span class="op">:</span> build<span class="op">/</span>obj<span class="op">-</span>x86<span class="op">-</span>interpreter<span class="op">/</span>device<span class="op">/</span>audio<span class="op">.</span>o<span class="op">]</span> Error <span class="dv">127</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>啊这,啊这. 怎么直接都无法编译了, 定睛一看, <code>Permission denied</code>, 这我熟, 直接掏出祖传<code>sudo</code></li>
+<li><code>sudo make -B</code></li>
+</ul>
+<div class="sourceCode" id="cb9"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ubuntu@VM<span class="op">-</span><span class="dv">12</span><span class="op">-</span><span class="dv">14</span><span class="op">-</span>ubuntu<span class="op">:~/</span>ics<span class="op">/</span>ics2020<span class="op">/</span>nemu$ sudo make <span class="op">-</span>B</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>Building x86<span class="op">-</span>nemu<span class="op">-</span>interpreter</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="op">+</span> CC src<span class="op">/</span>device<span class="op">/</span>audio<span class="op">.</span>c</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="op">/</span>bin<span class="op">/</span>sh<span class="op">:</span> <span class="dv">3</span><span class="op">:</span> clang<span class="op">-</span>format<span class="op">:</span> not found</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>make<span class="op">:</span> <span class="op">***</span> <span class="op">[</span>Makefile<span class="op">:</span><span class="dv">81</span><span class="op">:</span> build<span class="op">/</span>obj<span class="op">-</span>x86<span class="op">-</span>interpreter<span class="op">/</span>device<span class="op">/</span>audio<span class="op">.</span>o<span class="op">]</span> Error <span class="dv">127</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>通往pa1完成的道路上充满了坎坷, 说到底还是太菜了, 好在linux的报错信息太perfect了, <code>clang-format: not found</code>, easy, 这种小问题还是可以的直接<code>sudo apt-get install clang-format</code></li>
+</ul>
+<div class="sourceCode" id="cb10"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ubuntu@VM<span class="op">-</span><span class="dv">12</span><span class="op">-</span><span class="dv">14</span><span class="op">-</span>ubuntu<span class="op">:~/</span>ics<span class="op">/</span>ics2020<span class="op">/</span>nemu$ sudo apt<span class="op">-</span>get install clang<span class="op">-</span>format</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>Reading package lists<span class="op">...</span> Done</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>Building dependency tree       </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>Reading state information<span class="op">...</span> Done</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>The following NEW packages will be installed<span class="op">:</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  clang<span class="op">-</span>format</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> upgraded<span class="op">,</span> <span class="dv">1</span> newly installed<span class="op">,</span> <span class="dv">0</span> to remove and <span class="dv">251</span> not upgraded<span class="op">.</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>Need to get <span class="dv">0</span> B<span class="op">/</span><span class="dv">3</span><span class="op">,</span><span class="dv">272</span> B of archives<span class="op">.</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>After this operation<span class="op">,</span> <span class="fl">29.7</span> kB of additional disk space will be used<span class="op">.</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>Selecting previously unselected package clang<span class="op">-</span>format<span class="op">.</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="op">(</span>Reading database <span class="op">...</span> <span class="dv">143254</span> files and directories currently installed<span class="op">.)</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>Preparing to unpack <span class="op">.../</span>clang<span class="op">-</span>format_1<span class="op">%</span><span class="dv">3</span><span class="er">a10</span><span class="fl">.0</span><span class="op">-</span><span class="dv">50</span><span class="op">~</span>exp1_amd64<span class="op">.</span>deb <span class="op">...</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>Unpacking clang<span class="op">-</span>format <span class="op">(</span><span class="dv">1</span><span class="op">:</span><span class="fl">10.0</span><span class="op">-</span><span class="dv">50</span><span class="op">~</span>exp1<span class="op">)</span> <span class="op">...</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>Setting up clang<span class="op">-</span>format <span class="op">(</span><span class="dv">1</span><span class="op">:</span><span class="fl">10.0</span><span class="op">-</span><span class="dv">50</span><span class="op">~</span>exp1<span class="op">)</span> <span class="op">...</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>Processing triggers <span class="cf">for</span> man<span class="op">-</span>db <span class="op">(</span><span class="fl">2.9</span><span class="er">.1</span><span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="op">...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>冲冲冲…</li>
+<li>sudo make -B</li>
+<li>又看到了熟悉的命令行信息+cc…, 奶思情况好转起来了</li>
+<li>直接冲到<code>reg.i</code>里面看看到底是个啥情况</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 找到reg.i</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>vim $<span class="op">(</span>fzf<span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>reg.i</code></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>   <span class="dv">1</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>   <span class="dv">2</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>   <span class="dv">3</span> <span class="kw">typedef</span> <span class="dt">unsigned</span> <span class="dt">char</span> __u_char<span class="op">;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>   <span class="dv">4</span> <span class="kw">typedef</span> <span class="dt">unsigned</span> <span class="dt">short</span> <span class="dt">int</span> __u_short<span class="op">;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>   <span class="dv">5</span> <span class="kw">typedef</span> <span class="dt">unsigned</span> <span class="dt">int</span> __u_int<span class="op">;</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>   <span class="dv">6</span> <span class="kw">typedef</span> <span class="dt">unsigned</span> <span class="dt">long</span> <span class="dt">int</span> __u_long<span class="op">;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">46</span> <span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">int</span> __clock_t<span class="op">;</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="dv">47</span> <span class="kw">typedef</span> <span class="dt">unsigned</span> <span class="dt">long</span> <span class="dt">int</span> __rlim_t<span class="op">;</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="dv">48</span> <span class="kw">typedef</span> <span class="dt">unsigned</span> <span class="dt">long</span> <span class="dt">int</span> __rlim64_t<span class="op">;</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="dv">49</span> <span class="kw">typedef</span> <span class="dt">unsigned</span> <span class="dt">int</span> __id_t<span class="op">;</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="dv">50</span> <span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">int</span> __time_t<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>诶,窝草,怎么满屏的定义, 不慌不慌, 直接搜索函数<code>reg_test</code> , 嘿嘿好起来了.又看到了熟悉的代码</li>
+</ul>
+<div class="sourceCode" id="cb13"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2066</span> <span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>regsl<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span><span class="st">"eax"</span><span class="op">,</span> <span class="st">"ecx"</span><span class="op">,</span> <span class="st">"edx"</span><span class="op">,</span> <span class="st">"ebx"</span><span class="op">,</span> <span class="st">"esp"</span><span class="op">,</span> <span class="st">"ebp"</span><span class="op">,</span> <span class="st">"esi"</span><span class="op">,</span> <span class="st">"edi"</span><span class="op">};</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="dv">2067</span> <span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>regsw<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span><span class="st">"ax"</span><span class="op">,</span> <span class="st">"cx"</span><span class="op">,</span> <span class="st">"dx"</span><span class="op">,</span> <span class="st">"bx"</span><span class="op">,</span> <span class="st">"sp"</span><span class="op">,</span> <span class="st">"bp"</span><span class="op">,</span> <span class="st">"si"</span><span class="op">,</span> <span class="st">"di"</span><span class="op">};</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="dv">2068</span> <span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>regsb<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span><span class="st">"al"</span><span class="op">,</span> <span class="st">"cl"</span><span class="op">,</span> <span class="st">"dl"</span><span class="op">,</span> <span class="st">"bl"</span><span class="op">,</span> <span class="st">"ah"</span><span class="op">,</span> <span class="st">"ch"</span><span class="op">,</span> <span class="st">"dh"</span><span class="op">,</span> <span class="st">"bh"</span><span class="op">};</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="dv">2069</span> </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="dv">2070</span> <span class="dt">void</span> reg_test<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="dv">2071</span>   srand<span class="op">(</span>time<span class="op">(</span><span class="dv">0</span><span class="op">));</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="dv">2072</span>   word_t sample<span class="op">[</span><span class="dv">8</span><span class="op">];</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="dv">2073</span>   word_t pc_sample <span class="op">=</span> rand<span class="op">();</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="dv">2074</span>   cpu<span class="op">.</span>pc <span class="op">=</span> pc_sample<span class="op">;</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="dv">2075</span> </span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="dv">2076</span>   <span class="dt">int</span> i<span class="op">;</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="dv">2077</span>   <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> R_EAX<span class="op">;</span> i <span class="op">&lt;=</span> R_EDI<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="dv">2078</span>     sample<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> rand<span class="op">();</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="dv">2079</span>     <span class="op">(</span>cpu<span class="op">.</span>gpr<span class="op">[</span>check_reg_index<span class="op">(</span>i<span class="op">)].</span>_32<span class="op">)</span> <span class="op">=</span> sample<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="dv">2080</span> </span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="dv">2081</span>     <span class="op">((</span><span class="dt">void</span><span class="op">)</span><span class="kw">sizeof</span><span class="op">(</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="dv">2082</span>          <span class="op">((</span>cpu<span class="op">.</span>gpr<span class="op">[</span>check_reg_index<span class="op">(</span>i<span class="op">)].</span>_16<span class="op">)</span> <span class="op">==</span> <span class="op">(</span>sample<span class="op">[</span>i<span class="op">]</span> <span class="op">&amp;</span> <span class="bn">0xffff</span><span class="op">))</span> <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> <span class="dv">0</span><span class="op">),</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="dv">2083</span>      __extension__<span class="op">({</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="dv">2084</span>        <span class="cf">if</span> <span class="op">((</span>cpu<span class="op">.</span>gpr<span class="op">[</span>check_reg_index<span class="op">(</span>i<span class="op">)].</span>_16<span class="op">)</span> <span class="op">==</span> <span class="op">(</span>sample<span class="op">[</span>i<span class="op">]</span> <span class="op">&amp;</span> <span class="bn">0xffff</span><span class="op">))</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="dv">2085</span>          <span class="op">;</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="dv">2086</span>        <span class="cf">else</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="dv">2087</span>          __assert_fail<span class="op">(</span><span class="st">"reg_w(i) == (sample[i] &amp; 0xffff)"</span><span class="op">,</span> <span class="st">"src/isa/x86/reg.c"</span><span class="op">,</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="dv">2088</span>                        <span class="dv">20</span><span class="op">,</span> __extension__ __PRETTY_FUNCTION__<span class="op">);</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="dv">2089</span>      <span class="op">}));</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="dv">2090</span>   <span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>我擦, 我在搞什么飞机, 胡乱分析系统, 好家伙, jyy老师直接给出了ans. 强行分析一波. 唉, 这波说明在操作前看README的重要性. <img src="https://img-blog.csdnimg.cn/0f84491ad9b444768a2c1ef3bd89fc99.png" class="img-fluid" alt="在这里插入图片描述"> - 好家伙， 我是真的服了我了，没有困难制造困难，代码就这么几行，我愣是没看到，只需要重新修改下就行， 我还在苦思冥想该怎么写， 怎么老是测试不过， 原来贴心的jyy老是早就猜到了我的水平，让我改改代码就完事了，大意了。</p>
+<p><code>x86.h</code>修改如下</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="kw">struct</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">union</span><span class="op">{</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">union</span> <span class="op">{</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">uint32_t</span> _32<span class="op">;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">uint16_t</span> _16<span class="op">;</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">uint8_t</span> _8<span class="op">[</span><span class="dv">2</span><span class="op">];</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> gpr<span class="op">[</span><span class="dv">8</span><span class="op">];</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span><span class="op">{</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>      rtlreg_t eax<span class="op">,</span> ecx<span class="op">,</span> edx<span class="op">,</span> ebx<span class="op">,</span> esp<span class="op">,</span> ebp<span class="op">,</span> esi<span class="op">,</span> edi<span class="op">;</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">};</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">};</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  vaddr_t pc<span class="op">;</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> x86_CPU_state<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>接着冲冲冲</li>
+<li>make -B -j8 <img src="https://img-blog.csdnimg.cn/c0e7f18311254ce1bc4d2b14a22963fd.png" class="img-fluid" alt="在这里插入图片描述"></li>
+<li>oh oh oh oh oh….</li>
+</ul>
+<blockquote class="blockquote">
+<h2 id="运行第一个客户程序" class="anchored">运行第一个客户程序</h2>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="单步执行" class="anchored">单步执行：</h3>
+<ul>
+<li>si [N]</li>
+<li>让程序单步执行, 这里有个小bug，不过也不算小bug，需要打开调试的宏<code>DEBUG</code> 在<code>common.h</code>中， 否则无法查看单步执行后的几寄存器的效果 <img src="https://img-blog.csdnimg.cn/6ee38f76394646689e7a34b50ad48dd8.png" class="img-fluid" alt="在这里插入图片描述"></li>
+</ul>
+</blockquote>
+<p><code>ui.c</code></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> <span class="dt">int</span> cmd_si<span class="op">(</span><span class="dt">char</span> <span class="op">*</span>args<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// strtok is split string with specify symbol </span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">// strtok(args,"")</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> step<span class="op">;</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span><span class="op">(</span>args <span class="op">==</span> NULL<span class="op">)</span> step<span class="op">=</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">// format string and move to a new vable  </span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> sscanf<span class="op">(</span>args<span class="op">,</span><span class="st">"%d"</span><span class="op">,&amp;</span>step<span class="op">);</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">// excute num</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  cpu_exec<span class="op">(</span>step<span class="op">);</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>ui.c</code>&gt; <code>cmd_table</code></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a> <span class="op">{</span> <span class="st">"si"</span><span class="op">,</span> <span class="st">"Debug by step NEMU"</span><span class="op">,</span> cmd_si <span class="op">},</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>这个单步调试很关键哦， 后续的内存扫描需要用到这里作为校验，刚开始自己直接忽略了，吃了大亏，出来混还是的还的。 <img src="https://img-blog.csdnimg.cn/36f7ddc46a20467b8ba79eccd86a9b34.png" class="img-fluid" alt="在这里插入图片描述"> &gt; ### 打印程序（寄存器）状态 &gt; - 就是打印寄存器中的数据 &gt; - 仿照上面的案例，修改<code>cmd_table</code>, 建立<code>cmd_info</code>函数</li>
+</ul>
+<p>这里调用了<code>reg.c</code>中的<code>isa_reg_display</code>记得导入头文件</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include  </span><span class="im">"memory/vaddr.h"</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> isa_reg_display<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> R_EAX<span class="op">;</span> i <span class="op">&lt;</span> R_EDI<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">{</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"$%s</span><span class="sc">\t</span><span class="st">0x%08x</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> regsl<span class="op">[</span>i<span class="op">]</span> <span class="op">,</span>reg_l<span class="op">(</span>i<span class="op">));</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"$pc</span><span class="sc">\t</span><span class="st">0x%08x</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span>cpu<span class="op">.</span>pc<span class="op">);</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>ui.c</code></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> <span class="dt">int</span> cmd_info<span class="op">(</span><span class="dt">char</span><span class="op">*</span> args<span class="op">){</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">// show register </span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>args<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">==</span> <span class="ch">'r'</span><span class="op">)</span> isa_reg_display<span class="op">();</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">// show watch pointer</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> <span class="cf">if</span><span class="op">(</span>args<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">==</span> <span class="ch">'w'</span><span class="op">)</span> TODO<span class="op">();</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>ui.c</code>&gt; <code>cmd_table</code></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a> <span class="op">{</span> <span class="st">"info"</span><span class="op">,</span> <span class="st">"info r--&gt;show reg</span><span class="sc">\n</span><span class="st">info w--&gt;show watch pointer memory"</span><span class="op">,</span> cmd_info <span class="op">},</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>注意这里的<code>info</code>是使用的<code>info r</code>进行测试，后面的<code>info w</code>暂时先搁置，先搞后面的扫描内存 <img src="https://img-blog.csdnimg.cn/4a5434f78369464eb4cded272011c42b.png" class="img-fluid" alt="在这里插入图片描述"> &gt;### 扫描内存(2)</li>
+<li>这里可有点弯弯绕，我最初的想法是通过传递进来的地址，然后直接按照16进制数进行数据的解析，好家伙， 我想的是真复杂了（好吧，我承认我又没有认真看手册，手册里面都说了，前面我们都看了内存是怎么设计的。。。。），<code>vaddr_read</code> 害。。</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/00b4cf1b4b854396af7f0683012d02ee.png" class="img-fluid" alt="在这里插入图片描述"> - 还是熟悉的套路：</p>
+<p><code>ui.c</code>&gt; <code>cmd_table</code></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="op">{</span> <span class="st">"x"</span><span class="op">,</span> <span class="st">"show memory from 0xxxx"</span><span class="op">,</span> cmd_x <span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>ui.c</code> - 第一个参数是扫描的长度， 第二个参数是起始位置</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> <span class="dt">int</span> cmd_x<span class="op">(</span><span class="dt">char</span><span class="op">*</span> args<span class="op">){</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">uint32_t</span> len<span class="op">;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">uint32_t</span> addr<span class="op">;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span><span class="op">*</span> N    <span class="op">=</span>  strtok<span class="op">(</span>NULL<span class="op">,</span><span class="st">" "</span><span class="op">);</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span><span class="op">*</span> EXPR <span class="op">=</span>  strtok<span class="op">(</span>NULL<span class="op">,</span><span class="st">" "</span><span class="op">);</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  sscanf<span class="op">(</span>N<span class="op">,</span><span class="st">"%d"</span><span class="op">,&amp;</span>len<span class="op">);</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  sscanf<span class="op">(</span>EXPR<span class="op">,</span><span class="st">"%x"</span><span class="op">,&amp;</span>addr<span class="op">);</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i<span class="op">=</span>addr<span class="op">;</span>i<span class="op">&lt;</span>addr<span class="op">+(</span>len<span class="op">*</span><span class="dv">4</span><span class="op">);</span>i<span class="op">+=</span><span class="dv">4</span><span class="op">){</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    word_t value <span class="op">=</span> vaddr_read<span class="op">(</span>i<span class="op">,</span><span class="dv">4</span><span class="op">);</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"$0x%08x:</span><span class="sc">\t</span><span class="st">0x%08x</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> i<span class="op">,</span>value<span class="op">);</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>测试：</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://img-blog.csdnimg.cn/09e4bcdc0c5e465daa7ba1b0b401a452.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">在这里插入图片描述</figcaption><p></p>
+</figure>
+</div>
+<p>gdb中文参考：<a href="https://wizardforcel.gitbooks.io/100-gdb-tips/content/examine-memory.html">https://wizardforcel.gitbooks.io/100-gdb-tips/content/examine-memory.html</a></p>
+<blockquote class="blockquote">
+<h3 id="表达式求值" class="anchored">表达式求值</h3>
+<ul>
+<li>正则表达式</li>
+<li><code>expr.h</code> &amp;<code>expr.c</code></li>
+<li>正则表达式的C语言使用</li>
+</ul>
+</blockquote>
+<p>正则表达式在线测试： <a href="https://c.runoob.com/front-end/854/">https://c.runoob.com/front-end/854/</a></p>
+<p>正则表达式代码参考地址: <a href="https://www.ibm.com/docs/en/i/7.4?topic=functions-regcomp-compile-regular-expression">https://www.ibm.com/docs/en/i/7.4?topic=functions-regcomp-compile-regular-expression</a> - 正则表达式的基本使用 <code>regcomp()</code></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;regex.h&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> regcomp<span class="op">(</span>regex_t <span class="op">*</span>preg<span class="op">,</span> <span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>pattern<span class="op">,</span> <span class="dt">int</span> cflags<span class="op">);</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>regexec()</code></p>
+<p>参考链接： https://blog.csdn.net/weixin_46499713/article/details/125154268 https://blog.csdn.net/weixin_43877657/article/details/109068930?spm=1001.2014.3001.5502</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
