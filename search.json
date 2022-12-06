@@ -133,6 +133,13 @@
     "text": "创建用户\nadduser amdin\n修改密码\nbash-4.2# passwd admin\nChanging password for user admin.\nNew password: \nBAD PASSWORD: The password is a palindrome\nRetype new password: \npasswd: all authentication tokens updated successfully.\n注销\nlogout\n创建用户,并分配组\nadduser -g 组名 用户名\npasswd 用户名\n创建组\ngroupadd 组名\n例子\n修改a.txt从root组分到b组\ntouch a.txt\ngroupadd b\nchgrp b a.txt"
   },
   {
+    "objectID": "posts/设置Caps_Lock和Esc交换/index.html",
+    "href": "posts/设置Caps_Lock和Esc交换/index.html",
+    "title": "设置Caps_Lock和Esc交换",
+    "section": "",
+    "text": "设置Caps_Lock和Esc交换\nxmodmap xmodmap 的wiki\n\n\narch上直接在设置中就有, arch使用xmodmap还会冲突"
+  },
+  {
     "objectID": "posts/javaArrayList作业二/index.html",
     "href": "posts/javaArrayList作业二/index.html",
     "title": "javaArrayList作业二",
@@ -154,6 +161,13 @@
     "text": "matlab Coder 可以将matlab脚本转换为c or C++代码, 极大程度让用户专注算法的设计\n\n可以指定接口类型, 但是无法指定中间变量的类型\n在转换后注意tmwtypes.h和rtwtypes.h的include\n接口参数类型的指定\n\n\n\n\nfunction [data_MCA] = MultiChannelAverage(data_radar)\n% 输入data_radar: numADCSamples * 8\n% 输出data_MCA: numADCSamples * 1\n\ndata_MCA = mean(data_radar,2);\nend\n\n\n\n/*\n * File: MultiChannelAverage.c\n *\n * MATLAB Coder version            : 5.2\n * C/C++ source code generated on  : 29-Nov-2022 14:55:50\n */\n\n/* Include Files */\n#include \"MultiChannelAverage.h\"\n\n/* Function Definitions */\n/*\n * 输入data_radar: numADCSamples * 8\n *  输出data_MCA: numADCSamples * 1\n *\n * Arguments    : const cint16_T data_radar[1024]\n *                creal_T data_MCA[128]\n * Return Type  : void\n */\nvoid MultiChannelAverage(const cint16_T data_radar[1024], creal_T data_MCA[128])\n{\n  double ai;\n  double im;\n  double re;\n  int data_radar_re_tmp;\n  int k;\n  int xj;\n  int xoffset;\n  for (xj = 0; xj < 128; xj++) {\n    data_MCA[xj].re = data_radar[xj].re;\n    data_MCA[xj].im = data_radar[xj].im;\n  }\n  for (k = 0; k < 7; k++) {\n    xoffset = (k + 1) << 7;\n    for (xj = 0; xj < 128; xj++) {\n      data_radar_re_tmp = xoffset + xj;\n      data_MCA[xj].re += (double)data_radar[data_radar_re_tmp].re;\n      data_MCA[xj].im += (double)data_radar[data_radar_re_tmp].im;\n    }\n  }\n  for (xj = 0; xj < 128; xj++) {\n    im = data_MCA[xj].re;\n    ai = data_MCA[xj].im;\n    if (ai == 0.0) {\n      re = im / 8.0;\n      im = 0.0;\n    } else if (im == 0.0) {\n      re = 0.0;\n      im = ai / 8.0;\n    } else {\n      re = im / 8.0;\n      im = ai / 8.0;\n    }\n    data_MCA[xj].re = re;\n    data_MCA[xj].im = im;\n  }\n}\n\n/*\n * File trailer for MultiChannelAverage.c\n *\n * [EOF]\n */"
   },
   {
+    "objectID": "posts/中科大源/index.html",
+    "href": "posts/中科大源/index.html",
+    "title": "中科大源",
+    "section": "",
+    "text": "地址\nhttps://mirrors.ustc.edu.cn/\n\n\n使用帮助文档\nhttps://mirrors.ustc.edu.cn/help/debian.html"
+  },
+  {
     "objectID": "posts/java EE请求转发（转发和重定向）/index.html",
     "href": "posts/java EE请求转发（转发和重定向）/index.html",
     "title": "java EE请求转发（转发和重定向）",
@@ -166,6 +180,13 @@
     "title": "java多线程– 线程休眠(sleep)",
     "section": "",
     "text": "模拟延时,放大问题\n\n\n\n\n在这里插入图片描述\n\n\npackage cn.usts.edu.lesson06;\n\n/**\n * 模拟延时,放大问题\n * */\npublic class ThreadSleepDemo implements Runnable{\n    private int tickets =10; // 设置10张票\n\n    @Override\n    public void run() {\n        while (true){\n            if (tickets>0){\n                System.out.println(Thread.currentThread().getName()+\"拿到了票号-----+\"+tickets--);\n            }\n            else {\n                break;\n            }\n            try {\n                Thread.sleep(200);//模拟网络延迟200ms\n            } catch (InterruptedException e) {\n                e.printStackTrace();\n            }\n        }\n\n\n\n    }\n\n    // 模拟三个人抢票\n    public static void main(String[] args) {\n        ThreadSleepDemo t = new ThreadSleepDemo();\n        new Thread(t,\"小红\").start();\n        new Thread(t,\"小明\").start();\n        new Thread(t,\"黄牛\").start();\n    }\n\n\n}"
+  },
+  {
+    "objectID": "posts/arch没有wifi/index.html",
+    "href": "posts/arch没有wifi/index.html",
+    "title": "arch没有wifi",
+    "section": "",
+    "text": "确定自己安装了plasma-nm 1 #pacman -S networkmanager plasma-nm 2 #systemctl start NetworkManager 3 #systemctl enable NetworkManager"
   },
   {
     "objectID": "posts/pyqt5 --01简单继承关系/index.html",
@@ -224,6 +245,34 @@
     "text": "echo 0 | sudo tee /sys/module/hid_apple/parameters/fnmode\n\necho \"options hid_apple fnmode=0\" | sudo tee -a /etc/modprobe.d/hid_apple.conf\n\nsudo update-initramfs -u    //Ubuntu\nsudo mkinitcpio -P          //ArchLinux\n参考：https://www.cnblogs.com/orochihuang/p/15193699.html"
   },
   {
+    "objectID": "posts/三步简单解决3306端口占用问题（windows）/index.html",
+    "href": "posts/三步简单解决3306端口占用问题（windows）/index.html",
+    "title": "三步简单解决3306端口占用问题（windows）",
+    "section": "",
+    "text": "一、查看占用3306端口的进程\n其他端口参照3306\nnetstat  -aon|findstr 3306\n二、记住这个pid号 三、ctrl +shift+esc调出任务管理器\n\n\n\n在这里插入图片描述"
+  },
+  {
+    "objectID": "posts/算法 --0_算法是什么/index.html",
+    "href": "posts/算法 --0_算法是什么/index.html",
+    "title": "算法 –0_算法是什么",
+    "section": "",
+    "text": "算法听起来很神秘(高级),其实算法就是去做一件事情的方法,顺序,一个问题按照什么顺序(方法)去求解是最优的"
+  },
+  {
+    "objectID": "posts/算法 --0_算法是什么/index.html#例子1",
+    "href": "posts/算法 --0_算法是什么/index.html#例子1",
+    "title": "算法 –0_算法是什么",
+    "section": "例子1:",
+    "text": "例子1:\n外面下雨了,房间里的水开了,电话响了,衣服还没收\n遇到这些事情怎么做才是最优解,每个人都有不同的答案,取决于每个人的需求"
+  },
+  {
+    "objectID": "posts/算法 --0_算法是什么/index.html#例子2",
+    "href": "posts/算法 --0_算法是什么/index.html#例子2",
+    "title": "算法 –0_算法是什么",
+    "section": "例子2:",
+    "text": "例子2:\n淘米,切菜,蒸饭,炒菜 这些事情怎么安排\n大多数人的选怎是:  淘米-->蒸饭\n                        -->切菜\n                        -->炒菜\n因为在蒸饭的同是我们可以切菜炒菜,所以这样的顺序是一个大多数的情况,这就叫算法"
+  },
+  {
     "objectID": "posts/java多线程-- thread.setDaemon(true) 守护线程简单实现/index.html",
     "href": "posts/java多线程-- thread.setDaemon(true) 守护线程简单实现/index.html",
     "title": "java多线程– thread.setDaemon(true) 守护线程简单实现",
@@ -257,6 +306,13 @@
     "title": "java EE 一行代码实现定时刷新，定时跳转",
     "section": "2、定时刷新",
     "text": "2、定时刷新\nresponse.addHeader(\"Refresh\",\"【刷新时间】\")\n// 每5秒钟刷新一下页面\nresponse.addHeader(\"Refresh\",'5')"
+  },
+  {
+    "objectID": "posts/树莓派开箱点亮(无屏幕)/index.html",
+    "href": "posts/树莓派开箱点亮(无屏幕)/index.html",
+    "title": "树莓派开箱点亮(无屏幕)",
+    "section": "",
+    "text": "树莓派4B\n系统下载连接(64bit):https://downloads.raspberrypi.org/raspios_arm64_latest # 解压下载的系统: 得到xxx.img  # 打开写盘工具 win32disk: https://www.onlinedown.net/iopdfbhjl/110173?module=download&t=website 选中解压好的img文件  # 配置wifi信息  ### 进入到boot分区: 右键新建文件: wpa_supplicant.conf\ncountry=CN\nctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev\nupdate_config=1\n \nnetwork={\nssid=\"WIFI名字\"\npsk=\"密码\"\n}\n\n\n配置ssh:(可以使用功能ssh连接树莓派)\n右键ssh文件: ssh # 查看树莓派ip地址: 进入到路由器里面看192.168.0.1或者192.168.1.1(通常)根据品牌而定义 # 使用windows的ssh连接 ****打开cmd**** 输入 ssh pi@树莓派的ip地址\nssh pi@192.168.0.111\n输入密码"
   },
   {
     "objectID": "posts/java多线程--ReentrantLock ( Lock上锁 _ 解锁 )/index.html",
@@ -343,6 +399,13 @@
     "text": "在这里插入图片描述\n\n\n ## 2.在这里输入init = /bin/sh 进入单用户状态  ## 3.按ctrl+x进入单用户模式 接着，在光标闪烁的位置中输入: mount -o remount,rw /(注意:各个单词间有空格,中间的逗号)，完成后按键盘的回车键(Enter)。  ## 4.在新的一行最后面输入: passwd 完成后按键盘的回车键（Enter)。输入密码，然后再次确认密码即可(密码长度最好8位以上,但不是必须的)。密码修改成功后，会显示passw…..的样式，说明密码修改成功\n\n\n\n(注意: touch与 /后面有一个空格)，完成后按键盘的回车键 ## 7.继续在光标闪烁的位置中，输入：exec /sbin/init(注意：exec与/后面有一个空格)，完成后按键盘的回车键(Enter)， 等待系统自动修改密码(这个过程时间可能有点长，耐心等待)，完成后，系统会自动重启,新的密码生效了"
   },
   {
+    "objectID": "posts/清除html和css标签自带的默认样式/index.html",
+    "href": "posts/清除html和css标签自带的默认样式/index.html",
+    "title": "清除html和css标签自带的默认样式",
+    "section": "",
+    "text": "在我们编写前端页面的时候，html和css标签有时候会自带一些格式，我们一般习惯性把自带格式全部清除，在需要的时候再自己写上，这样代码的可读性更加的高，也不会把自己搞混淆。\nhtml{color:#000;background:#FFF;} \nbody,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td { \nmargin:0; \npadding:0; \n} \ntable { \nborder-collapse:collapse; \nborder-spacing:0; \n} \nfieldset,img { \nborder:0; \n} \naddress,caption,cite,code,dfn,em,strong,th,var { \nfont-style:normal; \nfont-weight:normal; \n} \nol,ul { \nlist-style:none; \n} \ncaption,th { \ntext-align:left; \n} \nh1,h2,h3,h4,h5,h6 { \nfont-size:100%; \nfont-weight:normal; \n} \nq:before,q:after { \ncontent:''; \n} \nabbr,acronym { border:0; \n}"
+  },
+  {
     "objectID": "posts/pip加速/index.html",
     "href": "posts/pip加速/index.html",
     "title": "pip加速",
@@ -362,6 +425,20 @@
     "title": "stm32F103-RT-Thread线程管理",
     "section": "",
     "text": "系统总共支持 256 个优先 (0 ~ 255，数值越小的优先级越高，0 为最高优先级，255 分配给空闲线程使用,默认优先级32个，一般用户不使用)。\n\n在一些资源比较紧张的系统中，可以根据实,际情况选择只支持 8 个或 32 个优先级的系统配置。\n\n\n在系统中，当有比当前线程优先级更高的线程就绪时，当前线程将立刻被换出，高优先级线程抢占处理器运行\n\n\nRT-Thread 内核中也允许创建相同优先级的线程。相同优先级的线程采用时间片轮转方式进行调 度（也就是通常说的分时调度器），时间片轮转调度仅在当前系统中无更高优先级就绪线程存在 的情况下才有效。\n\n\n\n/*********************key1挂起线程,key2恢复线程*********************/\n#include \"board.h\"\n#include \"rtthread.h\"\n\n//static struct rt_thread led1_thread;\nstatic rt_thread_t led1_thread = RT_NULL;               // thread1 control block\nstatic rt_thread_t led2_thread = RT_NULL;               // thread2 control block\nstatic rt_thread_t pause_thread = RT_NULL;              // thread3 control block\n\nstatic rt_thread_t send_thread = RT_NULL;               // message queue send thread\nstatic rt_thread_t receive_thread = RT_NULL;            // messge queue receive thread\n\nint count = 0;\n\n\n\n\n\n\n\nstatic void led1_thread_entry(void *parameter);\nstatic void led2_thread_entry(void *parameter);\nstatic void pause_thread_entry(void *parameter);\n\n/*\n*************************************************************************\n*                             main ����\n*************************************************************************\n*/\n/**\n * @brief  ������\n * @param  ��\n * @retval ��\n */\nint main(void)\n{\n    \n    // if (led1_thread != RT_NULL)\n    //  rt_thread_startup(led1_thread);\n    // else\n    //  return -1;\n\n\n\n    // thread 2\n    // led2_thread = rt_thread_create(\"led2\", led2_thread_entry, RT_NULL, 512, 3, 20);\n\n    // if (led2_thread != RT_NULL)\n    //  rt_thread_startup(led2_thread);\n    // else\n    //  return -1;\n\n    // thread 3 [pause thread]\n    pause_thread = rt_thread_create(\"pause\", pause_thread_entry,RT_NULL,512,2,20);\n    if(pause_thread != RT_NULL){\n        rt_thread_startup(pause_thread);\n    }\n    else{\n        return -1;\n    }\n    \n\n\nstatic void led1_thread_entry(void *parameter){\n    while (1)\n    {\n        LED1_ON;\n        rt_thread_delay(500); /* ��ʱ 500 �� tick */\n        LED1_OFF;\n        rt_thread_delay(500); /* ��ʱ 500 �� tick */\n        rt_kprintf(\"thread --[1], Red  --count[%d]\\r\\n\",count);\n    }\n}\n\nstatic void led2_thread_entry(void *parameter)\n{\n    while (1)\n    {\n        LED2_ON;\n        rt_thread_delay(500); /* ��ʱ 500 �� tick */\n        LED2_OFF;\n        rt_thread_delay(500); /* ��ʱ 500 �� tick */\n        rt_kprintf(\"thread --[2], Green --count[%d]\\r\\n\",count);\n    }\n}\n\nstatic void pause_thread_entry(void *parameter)\n{\n    rt_err_t uwRet_1 = RT_EOK; // monitor the status\n\n    while (1)\n    {\n        \n        if (Key_Scan(KEY1_GPIO_PORT, KEY1_GPIO_PIN) == KEY_ON) /* K1 ���0�3��0�7�0�3�0�0 */\n        {\n            \n            uwRet_1 = rt_thread_suspend(led1_thread); /* �0�1�0�6�0�4�0�8LED1�0�3�0�8�0�6�0�0 */\n            if (RT_EOK == uwRet_1)\n            {\n                rt_kprintf(\"[suspend-][succes] led1\\n\");\n            }\n            else\n            {\n                rt_kprintf(\"[suspend-][faild] led1 Error Code is :%lx\\n\", uwRet_1);\n            }\n        }\n\n        \n\n        if (Key_Scan(KEY2_GPIO_PORT, KEY2_GPIO_PIN) == KEY_ON) /* K1 ���0�3��0�7�0�3�0�0 */\n        {\n            \n            uwRet_1 = rt_thread_resume(led1_thread); /* �0�3�0�0�0�0�0�7LED1�0�3�0�8�0�6�0�0�0�5�0�3 */\n            if (RT_EOK == uwRet_1)\n            {\n                rt_kprintf(\"[resume-][succes] led1\\n\");\n            }\n            else\n            {\n                rt_kprintf(\"[resume-][faild] led1 Error Code is :%lx\\n\", uwRet_1);\n            }\n        }\n      rt_thread_delay(20);\n    }\n}"
+  },
+  {
+    "objectID": "posts/算法-- 1_递归/index.html",
+    "href": "posts/算法-- 1_递归/index.html",
+    "title": "算法– 1_递归",
+    "section": "",
+    "text": "递归就是所谓的套娃但是这个套娃是有前提的,要有终止的条件,不能无尽的套娃"
+  },
+  {
+    "objectID": "posts/算法-- 1_递归/index.html#递归的例子",
+    "href": "posts/算法-- 1_递归/index.html#递归的例子",
+    "title": "算法– 1_递归",
+    "section": "递归的例子",
+    "text": "递归的例子\n# -*- coding: utf-8 -*-\n# @Time : 2021/11/28 16:08\n\n\ndef r1(n):\n    if n > 0:\n        r1(n - 1)\n        print(n)\n\n\ndef r2(n):\n    if n > 0:\n        print(n)\n        r1(n - 1)\n\n\nr1(3)\nprint('-------------')\nr2(3)\n\n\n\n在这里插入图片描述"
   },
   {
     "objectID": "posts/TI_js脚本自动调试/index.html",
@@ -418,6 +495,48 @@
     "title": "java网络编程– URL（基本用法）",
     "section": "",
     "text": "package cn.usts.edu.lesson06;\n\nimport java.net.MalformedURLException;\nimport java.net.URL;\n\n/**\n * URL 统一资源定位符\n * 定位到网络中的资源\n * */\npublic class URLDemo {\n\n    public static void main(String[] args) throws MalformedURLException {\n        URL url = new URL(\"https://img-home.csdnimg.cn/images/20211019040101.gif?name=123\");\n        System.out.println(\"协议=\"+url.getProtocol());// 协议\n        System.out.println(\"主机ip=\"+url.getHost());// 主机ip\n        System.out.println(\"文件=\"+url.getPath());// 文件\n        System.out.println(\"全路径=\"+url.getFile());// 全路径\n        System.out.println(\"参数=\"+url.getQuery());// 参数\n\n    }\n}"
+  },
+  {
+    "objectID": "posts/电动车头盔检测系统(毕设)/index.html",
+    "href": "posts/电动车头盔检测系统(毕设)/index.html",
+    "title": "电动车头盔检测系统(毕设)",
+    "section": "",
+    "text": "技术选型:\nyolov5+pyqt+mysql"
+  },
+  {
+    "objectID": "posts/电动车头盔检测系统(毕设)/index.html#信息采集",
+    "href": "posts/电动车头盔检测系统(毕设)/index.html#信息采集",
+    "title": "电动车头盔检测系统(毕设)",
+    "section": "1.1信息采集",
+    "text": "1.1信息采集\n字段\n录入\n展示\n修改\n删除"
+  },
+  {
+    "objectID": "posts/电动车头盔检测系统(毕设)/index.html#实时检测报警",
+    "href": "posts/电动车头盔检测系统(毕设)/index.html#实时检测报警",
+    "title": "电动车头盔检测系统(毕设)",
+    "section": "1.2实时检测报警",
+    "text": "1.2实时检测报警\n实时画面\n违章信息"
+  },
+  {
+    "objectID": "posts/电动车头盔检测系统(毕设)/index.html#视频留存管理模块",
+    "href": "posts/电动车头盔检测系统(毕设)/index.html#视频留存管理模块",
+    "title": "电动车头盔检测系统(毕设)",
+    "section": "1.3视频留存管理模块",
+    "text": "1.3视频留存管理模块\n视频保存\n视频列表\n时间查询"
+  },
+  {
+    "objectID": "posts/电动车头盔检测系统(毕设)/index.html#工作人员管理模块",
+    "href": "posts/电动车头盔检测系统(毕设)/index.html#工作人员管理模块",
+    "title": "电动车头盔检测系统(毕设)",
+    "section": "2.1工作人员管理模块",
+    "text": "2.1工作人员管理模块\n登陆面板\n人员管理:CRUD"
+  },
+  {
+    "objectID": "posts/电动车头盔检测系统(毕设)/index.html#违法信息管理模块",
+    "href": "posts/电动车头盔检测系统(毕设)/index.html#违法信息管理模块",
+    "title": "电动车头盔检测系统(毕设)",
+    "section": "2.2违法信息管理模块",
+    "text": "2.2违法信息管理模块\n发送违章信息[ 时间, 地点, 原因 ]\n(违法信息通过电动车车牌追踪到人并打印通知单)\n方案1:邮件通知\n方案2:短信通知(推荐)"
   },
   {
     "objectID": "posts/stm32F103-RT-Thread定时器/index.html",
@@ -518,6 +637,13 @@
     "text": "效果: \npackage cn.usts.edu.lesson01;\n\nimport java.awt.*;\n\npublic class Ex01 {\n\n    public static void main(String[] args) {\n        Frame frame = new Frame(\"练习\");\n        // 大小\n        frame.setSize(900,600);\n        frame.setBackground(Color.orange);\n        // 位置\n        frame.setLocation(500,500);\n        // 可见\n        frame.setVisible(true);\n        // 2*1\n        frame.setLayout(new GridLayout(2,1));\n\n        // ------------------------------------上半部分----------------------------------\n        Panel pup =new Panel(new BorderLayout());\n        Panel pup_in =new Panel(new GridLayout(2,1));\n\n        pup.add(new Button(\"up-west\"),BorderLayout.WEST);\n        pup.add(new Button(\"up-east\"),BorderLayout.EAST);\n\n        pup_in.add(new Button(\"up-center-01\"));\n        pup_in.add(new Button(\"up-center-02\"));\n\n        pup.add(pup_in,BorderLayout.CENTER);\n\n        frame.add(pup);\n\n        // ------------------------------------下半部分----------------------------------\n        Panel pdown = new Panel();\n        pdown.setLayout(new BorderLayout());\n        pdown.add(new Button(\"down-left-01\"),BorderLayout.WEST);\n        pdown.add(new Button(\"down-left-02\"),BorderLayout.EAST);\n\n        Panel pdwon_in = new Panel();\n        pdwon_in.setLayout(new GridLayout(2,2));\n        pdwon_in.add(new Button(\"down-center-01\"));\n        pdwon_in.add(new Button(\"down-center-02\"));\n        pdwon_in.add(new Button(\"down-center-03\"));\n        pdwon_in.add(new Button(\"down-center-04\"));\n\n        pdown.add(pdwon_in);\n\n        frame.add(pdown);\n    }\n}"
   },
   {
+    "objectID": "posts/模仿网易严选(vant)/index.html",
+    "href": "posts/模仿网易严选(vant)/index.html",
+    "title": "模仿网易严选(vant)",
+    "section": "",
+    "text": "vue2+vant2+express\n简单使用(模仿网易严选) 地址:https://gitee.com/itengfei/you-163 \n \n\n\n\n在这里插入图片描述"
+  },
+  {
     "objectID": "posts/javaGUI--滚动条JScrollPane/index.html",
     "href": "posts/javaGUI--滚动条JScrollPane/index.html",
     "title": "javaGUI–滚动条JScrollPane",
@@ -595,6 +721,13 @@
     "text": "没有控制的并发会导致数据的不一致 \npackage cn.usts.edu.lesson02;\n\n/**\n * 并发会导致对数据的访问有问题\n * */\npublic class ThreadProblem implements Runnable{\n    private int tickets=10;\n\n    @Override\n\n    public void run() {\n        String threadName = Thread.currentThread().getName(); // 获取当前线程的名字\n        while (true){\n            if (tickets<=0){\n                break;\n            }\n            System.out.println(\"【\"+threadName+\"】\"+tickets--);\n\n        }\n    }\n\n    public static void main(String[] args) {\n        ThreadProblem ticket = new ThreadProblem();\n        new Thread(ticket,\"小明\").start();\n        new Thread(ticket,\"小红\").start();\n        new Thread(ticket,\"黄牛\").start();\n    }\n\n\n}"
   },
   {
+    "objectID": "posts/腾讯云简单使用-Python/index.html",
+    "href": "posts/腾讯云简单使用-Python/index.html",
+    "title": "腾讯云简单使用-Python",
+    "section": "",
+    "text": "腾讯云使用踩坑\nssh无法连接: 修改sshd文件 :PermitRootLogin=yes, PasswordAuthentication 改成yes reboot\n\n\nPython虚拟环境:\npip intall virtualenv之后命令无效,not fund command 修改:vim ~/.bashrc 重启: sudo service ssh restart 最后添加:\nexport WORKON_HOME=$HOME/.virtualenvs\nexport PROJECT_HOME=$HOME/workspace\nsource /usr/local/bin/virtualenvwrapper.sh\n生效:\nsource ~/.bashrc\n指定版本创建:\nmkvirtualenv py39 --python==python3.9\n\n\nAnnaconda环境\n配置环境变量:\nsudo vim /etc/profile\n\nexport PATH=$PATH:/root/anaconda3/bin #conda安装路径\n\nsource /etc/profile"
+  },
+  {
     "objectID": "posts/Navicat中 int(0)表示什么【init（0）是什么意思】/index.html",
     "href": "posts/Navicat中 int(0)表示什么【init（0）是什么意思】/index.html",
     "title": "Navicat中 int(0)表示什么【init（0）是什么意思】",
@@ -649,6 +782,13 @@
     "title": "java网络编程– Tcp聊天",
     "section": "",
     "text": "客户端\npackage cn.usts.edu.lesson02;\n\nimport java.io.IOException;\nimport java.io.OutputStream;\nimport java.net.InetAddress;\nimport java.net.Socket;\n\npublic class TcpClientDemo01 {\n    public static void main(String[] args) {\n        Socket socket=null;\n        OutputStream os = null;\n\n        // 1*要知道服务器的地址\n        try {\n            InetAddress ServerIP = InetAddress.getByName(\"127.0.0.1\");\n            int port=9999;\n            socket = new Socket(ServerIP, port);//建立一个插座\n            os = socket.getOutputStream();\n            os.write(\"第一个tcp聊天室\".getBytes());\n\n        } catch (IOException e) {\n            e.printStackTrace();\n        }\n\n\n        if (socket!=null){\n            try {\n                socket.close();\n            } catch (IOException e) {\n                e.printStackTrace();\n            }\n        }\n        if (os!=null){\n            try {\n                os.close();\n            } catch (IOException e) {\n                e.printStackTrace();\n            }\n        }\n    }\n}\n服务端\npackage cn.usts.edu.lesson02;\n\n\nimport java.io.ByteArrayOutputStream;\nimport java.io.IOException;\nimport java.io.InputStream;\nimport java.net.ServerSocket;\nimport java.net.Socket;\n\npublic class TcpServerDemo01 {\n    public static void main(String[] args) {\n        ServerSocket serverSocket = null;\n        Socket socket = null;\n        InputStream inputStream = null;\n        ByteArrayOutputStream byteArrayOutputStream = null;\n\n        // 1*首先得先有一个地址,让被人连过来\n        try {\n            // serverSocket默认开启服务的主机,当前的ip地址为服务器地址,所以只需要个端口号\n            serverSocket = new ServerSocket(9999);\n            while (true){\n                socket = serverSocket.accept();// 监听  监听接受到socket就是连接上来的socket\n                inputStream = socket.getInputStream();\n                // 读取消息\n            /*  获取超过1024个字节的中文就容易产生乱码\n            InputStream inputStream = socket.getInputStream();\n            byte[] buffer =new byte[1024];\n            int len;\n            // 从输入流读取一些字节数，并将它们存储到缓冲区b 。 实际读取的字节数作为整数返回。\n            while ((len=inputStream.read(buffer))!=-1){\n                String msg = new String(buffer, 0, len);\n                System.out.println(msg);\n            }  */\n                byteArrayOutputStream = new ByteArrayOutputStream();\n                int len;\n                byte[] buffer = new byte[1024];\n                while ((len=inputStream.read(buffer))!=-1){\n                    byteArrayOutputStream.write(buffer,0,len);\n                }\n                System.out.println(byteArrayOutputStream.toString());\n            }\n\n        } catch (IOException e) {\n            e.printStackTrace();\n        }\n\n        if (byteArrayOutputStream!=null){\n            try {\n                byteArrayOutputStream.close();\n            } catch (IOException e) {\n                e.printStackTrace();\n            }\n        }\n        if (inputStream!=null){\n            try {\n                inputStream.close();\n            } catch (IOException e) {\n                e.printStackTrace();\n            }\n        }\n        if (socket!=null){\n            try {\n                socket.close();\n            } catch (IOException e) {\n                e.printStackTrace();\n            }\n        }\n        if (serverSocket!=null){\n            try {\n                serverSocket.close();\n            } catch (IOException e) {\n                e.printStackTrace();\n            }\n        }\n    }\n}"
+  },
+  {
+    "objectID": "posts/毫米波雷达/index.html",
+    "href": "posts/毫米波雷达/index.html",
+    "title": "毫米波雷达",
+    "section": "",
+    "text": "参考\n知乎: https://zhuanlan.zhihu.com/p/416269210 TI官方:https://training.ti.com/intro-mmwave-sensing-fmcw-radars-module-1-range-estimation?context=1128486-1139153-1128542\n\n\n单目标测距原理\n\n中频信号 = 斜率 x 时延.\nIF = S*τ\nIF = S*(2d/c) d:传播距离 c:光速\nd = IF*c/2S\n\n\n\n距离分辨率, 区分多目标\n\n通过FFT将时域信号转换为频域信号, 所表现出来的是多个目标的频域信号会出现多个峰, 两个脉冲相差小于一个周期则无法很明显观察到峰, 观测时间越长, 峰越清晰\n观察时长为T的一个观察窗可以分离相隔超过1/T Hz的频率分量(个人理解应该是带宽B/T的频率分量)????\n观察窗口长度为 的 IF 信号能将间距为 的谱峰分开。故通过增加 IF 信号的长度（观察期）来可以改善距离分辨率。而信号长度的增加会使信号带宽 随之变宽，因此，也可以说增加 IF 信号的带宽可以改善距离分辨率。\n\n\n > ## 相关应用的个人推测 > - 因为观察窗时间加长, 所以带宽B也线性增加. > - 所以斜率对于应用的影响非常关键 > - 如果是短距离的目标距离分辨, 那合理推测斜率应该是比较大, 这样可以区分出近距离的不同目标, 且可以使得观察窗T的周期尽可能缩短. > - 如果是远距离的物体, 那斜率应该尽可能的小,这样可以检测到远处目标的反射信号, > - 那这样的话, ti的vitalSign的项目就是斜率比较高的配置\n\n区分多个目标–总结\n\n区分多个目标的原理,就是将两个相距为△d的目标映射到频率差为△f的两个峰\n最小分辨率: c/2B\n\n\n推导:\n\\[\n{△f>}{1\\over T }\n\\]\n\\[\n{2△dS\\over c}>{1\\over T }\n\\] \\[\n{△d}>{c\\over 2ST }\n\\] 又因为: B=ST \\[\n{△d}>{c\\over 2B }\n\\]"
   },
   {
     "objectID": "posts/win11-删除账户导致输入正确密码也无法卡机（windows无法进入系统）/index.html",
@@ -721,6 +861,13 @@
     "text": "3、mvc框架解决中文乱码-方法2：\n修改springmvc-servlet.xml\n<!--    json 编码过滤器-->\n    <mvc:annotation-driven>\n        <mvc:message-converters register-defaults=\"true\">\n            <bean class=\"org.springframework.http.converter.StringHttpMessageConverter\">\n                <constructor-arg value=\"UTF-8\"/>\n            </bean>\n            <bean class=\"org.springframework.http.converter.json.MappingJackson2HttpMessageConverter\">\n                <property name=\"objectMapper\">\n                    <bean class=\"org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean\">\n                        <property name=\"failOnEmptyBeans\" value=\"false\"/>\n                    </bean>\n                </property>\n            </bean>\n        </mvc:message-converters>\n    </mvc:annotation-driven>"
   },
   {
+    "objectID": "posts/中断-轮询/index.html",
+    "href": "posts/中断-轮询/index.html",
+    "title": "中断-轮询",
+    "section": "",
+    "text": "阻塞: 等待处理完再处理别的事情\n\n\n轮询: 每隔一段时间查看是否满足处理条件\n- 优点: 实时性较好\n- 缺点: 占用cpu性能\n\n\n中断: 收到信号后处理\n- 优点: cpu利用率高\n- 缺点: 并行处理的中断容易导致cpu无法响应,缓冲区数据较多的时候,cpu会消耗大量时间处理."
+  },
+  {
     "objectID": "posts/java多线程-- Runnable简单实现(例子)/index.html",
     "href": "posts/java多线程-- Runnable简单实现(例子)/index.html",
     "title": "java多线程– Runnable简单实现(例子)",
@@ -754,6 +901,13 @@
     "title": "java集合– HashSet小练习",
     "section": "",
     "text": "Employee类有name sal birthday(MyDate[year,moth,day]) 三个属性你 * 如果name+birthday相同判断为统一个对象\n注意点 * birthday的不同取决于MyDate的不同,所以要先重写MyDate的hashcode()和equals()方法 \npackage cn.usts.edu.hashSet;\n\nimport java.util.HashSet;\nimport java.util.Objects;\n\n/**\n * @author ：fly\n * @description: Employee类有name sal birthday(MyDate[year,moth,day]) 三个属性你\n *                 如果name+birthday相同判断为统一个对象\n *                 \n *               注意点:\n *                     birthday的不同取决于MyDate的不同,所以要先重写MyDate的hashcode()和equals()方法\n *                 \n * @date ：2021/11/2 15:24\n */\npublic class Employee {\n    private String name;\n    private float sal;\n    private MyDate birthday;\n\n    public static void main(String[] args) {\n        Employee jack = new Employee(\"jack\", 4500.22f, new MyDate(1999, 10, 5));\n        Employee jack1 = new Employee(\"jack\", 5500.22f, new MyDate(1999, 10, 5));// sal 不同\n        Employee jack2 = new Employee(\"jack\", 5500.22f, new MyDate(1999, 10, 6));// day不同\n        Employee jack3 = new Employee(\"jack\", 5500.22f, new MyDate(1999, 11, 5));// month不同\n        Employee jack4 = new Employee(\"jack\", 3500.22f, new MyDate(1998, 10, 5));// year不同\n\n        Employee luck = new Employee(\"luck\", 5500.22f, new MyDate(1999, 10, 5));\n        Employee luck2 = new Employee(\"luck2\", 5500.22f, new MyDate(1999, 10, 5));\n\n        HashSet set = new HashSet();\n        set.add(jack);\n        set.add(jack1);\n        set.add(jack2);\n        set.add(jack3);\n        set.add(jack4);\n        set.add(luck);\n        set.add(luck2);\n        set.forEach(obj-> System.out.println(obj));\n\n    }\n\n\n    public Employee() {\n    }\n\n    public Employee(String name, float sal, MyDate birthday) {\n        this.name = name;\n        this.sal = sal;\n        this.birthday = birthday;\n    }\n\n    public String getName() {\n        return name;\n    }\n\n    public void setName(String name) {\n        this.name = name;\n    }\n\n    public float getSal() {\n        return sal;\n    }\n\n    public void setSal(float sal) {\n        this.sal = sal;\n    }\n\n    public MyDate getBirthday() {\n        return birthday;\n    }\n\n    public void setBirthday(MyDate birthday) {\n        this.birthday = birthday;\n    }\n\n    @Override\n    public String toString() {\n        return \"Employee{\" +\n                \"name='\" + name + '\\'' +\n                \", sal=\" + sal +\n                \", date=\" + birthday +\n                '}';\n    }\n\n    @Override\n    public boolean equals(Object o) {\n        if (this == o) return true;\n        if (o == null || getClass() != o.getClass()) return false;\n        Employee employee = (Employee) o;\n        return Objects.equals(name, employee.name) && Objects.equals(birthday, employee.birthday);\n    }\n\n    @Override\n    public int hashCode() {\n        return Objects.hash(name, birthday);\n    }\n}\n\nclass MyDate{\n    private int year;\n    private int moth;\n    private int day;\n\n    public MyDate(int year, int moth, int day) {\n        this.year = year;\n        this.moth = moth;\n        this.day = day;\n    }\n\n    public MyDate() {\n    }\n\n    public int getYear() {\n        return year;\n    }\n\n    public void setYear(int year) {\n        this.year = year;\n    }\n\n    public int getMoth() {\n        return moth;\n    }\n\n    public void setMoth(int moth) {\n        this.moth = moth;\n    }\n\n    public int getDay() {\n        return day;\n    }\n\n    public void setDay(int day) {\n        this.day = day;\n    }\n\n\n    @Override\n    public String toString() {\n        return \"MyDate{\" +\n                \"year=\" + year +\n                \", moth=\" + moth +\n                \", day=\" + day +\n                '}';\n    }\n\n\n    @Override\n    public boolean equals(Object o) {\n        if (this == o) return true;\n        if (o == null || getClass() != o.getClass()) return false;\n        MyDate myDate = (MyDate) o;\n        return year == myDate.year && moth == myDate.moth && day == myDate.day;\n    }\n\n    @Override\n    public int hashCode() {\n        return Objects.hash(year, moth, day);\n    }\n}"
+  },
+  {
+    "objectID": "posts/安卓7以上安装系统证书(system分区没有权限)/index.html",
+    "href": "posts/安卓7以上安装系统证书(system分区没有权限)/index.html",
+    "title": "安卓7以上安装系统证书(system分区没有权限)",
+    "section": "",
+    "text": "试验环境 小米8 已root 安卓9 system分区没有修改权限大概率是没有remount\n\n\n下载安装openssl https://jszhuanben.lanzouy.com/iPxBM0bb6gni 添加及环境变量(openssl所在目录)\n\n\n获取系统证书 - 从抓包软件中获取证书(charles,fiddler等)\n\n >- 将证书文件重新命名为hash.0\nopenssl x509 -subject_hash_old -in Charles.pem\n \n\n将文件放入系统证书目录中\n\n\n利用adb的shell进行操作\n\n# 修改system分区为可读写\nmount -o remount,rw /system\n\n# 移动文件到系统证书目录(文件已经通过拖拉放到手机上了anlink)\nmv 0c454880.0 /system/etc/security/cacerts\n \n# 修改文件权限\nchmod 644 /system/etc/security/cacerts/0c454880.0\n\n查看证书 - 可以查看到证书才算成功\n\n \n\n后续的操作就是正常的charles代理的设置, 设置wifi代理ip和端口,就不叙述了"
   },
   {
     "objectID": "posts/java多线程-- Callable接口简单应用/index.html",
@@ -889,6 +1043,13 @@
     "text": "18、 index.jsp\n在这里插入代码片"
   },
   {
+    "objectID": "posts/二分查找/index.html",
+    "href": "posts/二分查找/index.html",
+    "title": "二分查找",
+    "section": "",
+    "text": "二分查找的边界问题:\n\n[ left, right ) 左闭右开的情况 1.注意起始的右指针的位置, 因为右指针不包括, 所以是数组长度 2.指针的移动, 虽然不会影响结果, 但是有重复的区间, 所以还是尽量避开重复区间\n\nint  Search_Bin(int arr[], int length,int target){\n    int L=0;\n    int R=length;\n   \n    while(L<R){\n        int mid = (L+R)/2;                      // 获取中间元素的索引\n        if(target>arr[mid]){                    // 如果target大于mid\n           l=mid+1;                             // 将左指针右移动到mid+1的位置, 因为刚才左区已经查找过了, 所以要mid+1\n        }\n        else if(target<arr[mid]){               // 如果target小于mid\n           r=mid;                               // 将右指针左移到mid的位置, 因为右边是一个开区间,不包含,所以直接是mid的位置.\n        }\n        else{\n            return mid;                         // mid的数据为targe直接返回当前mid.\n        }\n    }\n    \n    return 0;\n}\n\n[ left, right ] 左闭右闭的情况 1.注意起始的右指针的位置, 因为右指针的位置也包括在内, 所以是数组长度-1 2.注意左右指针移动区间\n\nint  Search_Bin(int arr[], int length,int target){\n    int L=0;\n    int R=length-1;\n   \n    while(L<=R){\n        int mid = (L+R)/2;                      \n        if(target>arr[mid]){                    \n           l=mid+1;                             // 将左指针右移动到mid+1的位置, 因为刚才左区已经查找过了, 所以要mid+1\n        }\n        else if(target<arr[mid]){               \n           r=mid-1;                             // 因为右指针的位置也包含了, 所以需要将右指针移动到mid-1\n        }\n        else{\n            return mid;                         \n        }\n    }\n    \n    return 0;\n}"
+  },
+  {
     "objectID": "posts/java EE 会话和会话技术 -cookie/index.html",
     "href": "posts/java EE 会话和会话技术 -cookie/index.html",
     "title": "java EE 会话和会话技术 -cookie",
@@ -973,6 +1134,20 @@
     "text": "session是一种会话赶礼技术，seession，用来保存会话过程中的数据，保存的数据存储到服务器端。\n\n\n\nsession是基于cookie实现的. 当session被创建时，会在服务器端开辟一块session空间，并把该空间的秘钥(JESSIONID)返回给浏览器， 用户拿到钥匙后对页面进行请求，将秘钥携带在请求头中（set-Cookie:JSEEIONID=111） ## 1.3 HttpSession API\nsession 常用方法：\n①得到session的id（JESSIONID对应的值）：getId();\n② 设置session的生命时长：setMaxInactiveInterval(int interval)\n③销毁session: invalidate();\n③得到session：HttpSession session = getSession();\nsession域对象：作用范围  一次完整的会话（包含多个请求）\n①存值：setAttribute(String key,Object obj);\n②取值：Object obj = getAttribute(String key);\n③移除值：removeAttribute(String key)\n总结域对象：\nrequest对象，session，servletContext对象，作用范围依次变大。\nrequest域对象：再用用范围是一次请求，通常和转发操作配合使用\nsession域对象：作用范围一次会话，通常和重定向配合使用\nservletContext域预想：作用范围整个项目，和重定向、转发操作、都可以配合使用。\n1.4 session超时 session对象有生命时长，他的默认存活时间是30分钟， 具体配置套tomcat软件中的conf下的文件，\n<session-timeout>30</session-timeout>\n立即销毁session对象：invalidate"
   },
   {
+    "objectID": "posts/小米刷机/index.html",
+    "href": "posts/小米刷机/index.html",
+    "title": "小米刷机",
+    "section": "",
+    "text": "https://miuiver.com/how-to-flash-xiaomi-phone/"
+  },
+  {
+    "objectID": "posts/小米刷机/index.html#右下角注意别选择第三项重新上bl锁",
+    "href": "posts/小米刷机/index.html#右下角注意别选择第三项重新上bl锁",
+    "title": "小米刷机",
+    "section": "右下角注意别选择第三项(重新上BL锁)",
+    "text": "右下角注意别选择第三项(重新上BL锁)\n # bilibili视频地址 https://www.bilibili.com/video/BV1BY4y1H7Mc?spm_id_from=333.337.search-card.all.click&vd_source=c0157a4afd2e47c7662431fd9d2739fb"
+  },
+  {
     "objectID": "posts/javaGUI--icon/index.html",
     "href": "posts/javaGUI--icon/index.html",
     "title": "javaGUI–icon",
@@ -980,11 +1155,25 @@
     "text": "在maven项目中,将图片文件放入classes文件夹下才有效!!!!!\nURL url = ImageIconDemo.class.getResource(\"csdn.png\");获取不到图片的原因.   button.setToolTipText(\"图片按钮\");// 鼠标悬停上面会提示的文字\npackage cn.usts.edu.lesson04;\n\nimport javax.swing.*;\nimport java.awt.*;\nimport java.net.URL;\n\npublic class ImageIconDemo extends JFrame {\n\n    public ImageIconDemo() {\n        JLabel label01 = new JLabel(\"图片icon\");\n        JButton button = new JButton();\n\n        URL url = ImageIconDemo.class.getResource(\"csdn.png\");// 获取图片位置\n        ImageIcon imageIcon = new ImageIcon(url);// 实例化新的图片icon\n\n        label01.setIcon(imageIcon);\n        label01.setHorizontalAlignment(SwingConstants.CENTER);\n\n        button.setIcon(imageIcon);\n        button.setBounds(100,100,200,100);\n        button.setToolTipText(\"图片按钮\");// 鼠标悬停上面会提示的文字\n\n        Container container = this.getContentPane();\n        container.add(button);\n        container.add(label01);\n\n        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);\n        this.setBounds(100,100,600,600);\n        this.setVisible(true);\n    }\n\n    public static void main(String[] args) {\n        new ImageIconDemo();\n    }\n}\n\n解决方案 修改pom.xml文件\n<!--所有文件复制到classes下-->\n    <build>\n        <resources>\n            <resource>\n                <directory>src/main/java</directory>\n                <excludes>\n                    <exclude>**/*.java</exclude>\n                </excludes>\n            </resource>\n        </resources>\n    </build>"
   },
   {
+    "objectID": "posts/南大ics基础课/index.html",
+    "href": "posts/南大ics基础课/index.html",
+    "title": "南大ics基础课",
+    "section": "",
+    "text": "视频地址: https://www.bilibili.com/video/BV1Z541127RJ/?p=2&vd_source=c0157a4afd2e47c7662431fd9d2739fb\ngitbook:https://nju-projectn.github.io/ics-pa-gitbook/ics2021/0.2.html\npdf:所在位置:http://www.why.ink:8080/ICS/2022/Main_Page"
+  },
+  {
     "objectID": "posts/java网络编程-- 端口/index.html",
     "href": "posts/java网络编程-- 端口/index.html",
     "title": "java网络编程– 端口",
     "section": "",
     "text": "端口是为了定位到计算机内的软件所在位置\nnetstat -an  # 查看素有端口\nnetstat -an|findstr \"5900\"  # 查看指定的端口\ntasklist|findstr \"8696\"     # 查看指定端口的进程\npackage cn.usts.edu.lesson01;\n\nimport java.net.InetSocketAddress;\n\npublic class TestSocketAddress {\n    public static void main(String[] args) {\n        InetSocketAddress socketAddress = new InetSocketAddress(\"127.0.0.1\", 8080);\n        System.out.println(socketAddress);\n        System.out.println(socketAddress.getAddress());// 地址\n        System.out.println(socketAddress.getPort());    // 端口\n        System.out.println(socketAddress.getHostName());  // 域名//C:\\Windows\\System32\\drivers\\etc\\hosts文件中\n    }\n}"
+  },
+  {
+    "objectID": "posts/南大ics课程/index.html",
+    "href": "posts/南大ics课程/index.html",
+    "title": "南大ics课程",
+    "section": "",
+    "text": "http://jyywiki.cn/ 该课程主要是通过手把手编写一个模拟器, 来了解计算机底层原理(编译,链接….) # P2-C语言拾遗 >总结: > - 编译链接过程 > - 预编译指令 > - 宏的使用 > - 内存模型 >\n\ngcc hello.c                             // complier c file\nvim a.out                               // see the bin file\n:%!xxd                                  // show with hex\nwe can see .ELF at the begin, this tell us this is an executeable file 我们可以看到开头的.ELF, 这表示这是一个(linux中)可执行文件  >可执行文件可以通过file打开\nfile a.out\n\n\n\n在这里插入图片描述\n\n\n\n上述过程直接通过gcc 实现了从.c到.out 的过程 上述过程拆解: - gcc -S hello.c => 生成.s汇编文件 - gcc -c hello.c => 生成.o文件,但是没有链接 - objdump -d hello.o => 将.o文件反汇编成我们可以看的懂的文件\n\n\n\n在这里插入图片描述\n\n\n\n\n\n\n#include 表示将代码复制粘贴进来\n\n\n\n\n\nhello.inc\n\nprintf(\"hello world\\n\");\n\nhello.c\n\n#include <stdio.h>    \n    \nint main(int argc, char* argv[])    \n{    \n    \n    #include \"hello.inc\"    \n    return 0;    \n} \ngcc -E hello.c\n gcc --verbose hello.c 查看include文件是否在包含的目录中\n可以看到#include \"xxx\"和#include <xxx>\"的位置  >使用#include <xxx>\"进行包含文件挥发现找不到这个文件, 系统目录中没有包含该文件. > 可以使用gcc -I./进行将目录添加到系统目录中\n问题演示  解决方案  gcc -I. --verbose hello.c查看日志中是否包含目录  gcc -m32 hello.c 将项目编译为32位机器的目标文件\n\n有趣的预编译, 因为aa和bb都没有定义所以都是NULL, NULL==NULL 得到True,所以输出yes\n\n#include <stdio.h>      \n                                                                             \nint main(int argc, char* argv[])                                             \n{                                                                            \n    #if aa == bb                                                             \n    ¦   printf(\"yes\\n\");                     \n    #else                                                                                                                     \n    ¦   printf(\"no\\n\");                            \n    #endif                                                                                                                                                                       \n}  \n gcc -E aabb.c 查看预编译后的代码.  直接放入extern int printf (const char *__restrict __format, ...);不用全部include也是可以的\nextern int printf (const char *__restrict __format, ...);     \nint main(int argc, char* argv[])    \n{                  \n    #if aa == bb    \n    ¦   printf(\"yes\\n\");    \n    #else    \n    ¦   printf(\"no\\n\");    \n    #endif    \n} \n编译32位项目,出现报错:https://blog.csdn.net/wzzushx/article/details/119453099\nsudo apt-get install build-essential module-assistant  \nsudo apt-get install gcc-multilib g++-multilib  \n预编译参数依旧添加进去了\nextern int printf (const char *__restrict __format, ...);    \n    \nint main(int argc, char* argv[])    \n{    \n    #ifdef __x86_64__     \n    ¦   printf(\"__x86_64__\\n\");    \n    #else    \n    ¦   printf(\"__x86__\\n\");    \n    #endif    \n    \n    \n    #if aa == bb    \n    ¦   printf(\"yes\\n\");    \n    #else    \n    ¦   printf(\"no\\n\");    \n    #endif    \n}  \n\n\n\nsystem.c\n  #define SYSTEM sys ## tem      \n                     \n  int main(){        \n     SYSTEM(\"echo hello world\\n\");    \n  }\ngcc system.c                        // 虽然这会报错， 但是没有影响\n./a.out\n\nhello world\n\n\n\n// 奇数行输出ture\n#define true    (__LINE__%2!=0)\n\n\n\nnames.c\n#include <stdio.h>    \n#define NAMES(X) X(TOM) X(Jerry) X(Lcc) X(Hig) X(lcu)    \n#define HELLO(M) M(Hello) M(world) M(\\n)    \n    \nint main(int argc, char* argv[])    \n{    \n    #define PRINT(x) puts(\"hello,\" #x \"!\");    \n    NAMES(PRINT)    \n    HELLO(PRINT)    \n    return 0;    \n} \ngcc -E names.c 使用gcc -E 进行查看预编译的代码。\n# 5 \"namex.c\"\nint main(int argc, char* argv[])\n{\n\n    puts(\"hello,\" \"TOM\" \"!\"); puts(\"hello,\" \"Jerry\" \"!\"); puts(\"hello,\" \"Lcc\" \"!\"); puts(\"hello,\" \"Hig\" \"!\"); puts(\"hello,\" \"lcu\" \"!\");\n    puts(\"hello,\" \"Hello\" \"!\"); puts(\"hello,\" \"world\" \"!\"); puts(\"hello,\" \"\\n\" \"!\");\n    return 0;\n}\n\n\n\n连个函数文件，一个sum.c和main.c先对这两个文件进行编译，没有链接， 然后手动指定链接，最后运行a.out同样产生相同结果。\nsum.c\nint foo(int n){                                                             \n    int sum = 0;                                                                                   \n    for(int i=0;i<=n;i++){                                                                         \n    ¦   sum+=i;                                                                                     \n    }                                                                                               \n    return sum;                                                                                     \n}\nmain.c\n#include <stdio.h>    \n    \nint foo(int n);    \n    \n    \nint main(int argc, char* argv[])    \n{    \n    printf(\"%d\\n\",foo(100));    \n    return 0;    \n}\n ### 链接\n gcc {main,sum}.o -static\n ## 内存 >总结 > - 代码存储的位置最低, 然后是只读变量(const修饰的变量), RO上面就是非零的变量, RW上边就是0变量和为被初始化的变量.上面就是堆栈. >  > 参考代码\n#include <stdio.h>\nvoid printptr(void *p){\n    printf(\"p = %p; *p = %016lx\\n\",p, *(long *)p);\n}\n \nchar bss_1[10];\n \nstatic int _static_1=65535;// ffff\nstatic int _static_2;\n \nint glab_1=65535;\nint glab_2;\nint glab_3=0;\n \nconst char _const = 'a';\nint main(int argc,char *argv[]){\n    int b;\n    static int _static_3=65535;\n    static int _static_4=0;\n    \n    printf(\"------- [code] ------\\n\");\n    printf(\"main:\\t\");\n    printptr(main); // 代码\n    printf(\"main:\\t\");\n    printptr(&main);\n \n    printf(\"------- [data] ------\\n\");\n    printf(\"_____________[data-RO]_____________\\n\");\n    printf(\"&const:\\t\");\n    printf(\"p = %p;\\n\",&_const);\n    printf(\"_____________[data-RW]_____________\\n\");\n    printf(\"stac_1:\\t\");\n    printptr(&_static_1);\n    printf(\"stac_2:\\t\");\n    printptr(&_static_2);\n    printf(\"stac_3:\\t\");\n    printptr(&_static_3);\n    printf(\"stac_4:\\t\");\n    printptr(&_static_4);\n \n    printf(\"glab_1:\\t\");\n    printptr(&glab_1); // 数据\n    printf(\"glab_2:\\t\");\n    printptr(&glab_2); // 数据\n    printf(\"glab_3:\\t\");\n    printptr(&glab_3);\n    printf(\"&bss_1:\\t\");\n    printf(\"p = %p;\\n\",&bss_1);\n    printf(\"b:\\t\");\n    printptr(&b);\n    printf(\"------- [heap] ------\\n\");\n\n    printf(\"\\n\");\n\n    printf(\"------- [stack] ------\\n\");\n    printf(\"argc:\\t\");\n    printptr(&argc); // 堆栈\n    printf(\"argv\\t\");\n    printptr(argv); \n    printf(\"&argv:\\t\");\n    printptr(&argv); \n    printf(\"argv[0:\\t\");\n    printptr(argv[0]);\n}\n # p3- C 语言拾遗(2): 编程实践 > 总结: > - 提升代码的可读性(Readable),明确代码的可维护性 > - 函数指针 > - 实战yemu(计算机系统运行原理)\n\n\n\n通过signal的例子来说明如何提升代码的可读性.\n// 这样的代码可读性就比较差(顺时针螺旋法则)\nvoid (*signal (int sig, void (*func)(int)))(int);\n优化后的代码, 大大提升了代码的可阅读性\n// 定义一个函数指针类型 sighandler_t, 表示他是一个接收参数数int的函数\ntypedef void (*sighandler_t)(int);\n// 返回值是sighandler_t类型(返回函数类型),接收参数为一个int和一个接收为int的一个函数.\nsighandler_t signal(int, sighandler_t);\n\n\nNEMU就是YEMU的增强.(通过YEMU的案例进一步说明代码的可读性和可维护性的重要性)\n\n\n第2,3位表示 rt -> register target(猜测)目标寄存器,\n第0,1位表示 rs -> register source (猜测)源寄存器\n0123 表示的是指令的位置(第0,1,2,3位,4567类似)\n0000 表示mov\n0001 表示add\n1110 表示load(默认加载到RA(R0)寄存器)\n1111 表示store(默认将RA(R0)中的数据存储到制定地址)\n\n > ## extern 将一个文件内的变量扩展到其他文件也可以使用\n.\n├── a.c    // 变量所在位置\n├── a.h\n├── a.out\n└── main.c  // 将要使用的位置\n\n\na.h\n\nvoid hello(int num);\nextern int num;  // 添加外部变量\na.c\n#include <stdio.h>\n\nint num = 100;\n\nvoid hello(int num){\n    printf(\"%d\\n\",num);\n}\nmain.c\n#include \"a.h\"\n\n\nint main(void){\n    // method 2:在头文件中声明exter所需变量 \n    // method 1: 解除下面的注释.\n    //    extern int num;\n    int a = num;\n    hello(a);\n    return 0;\n}\n\n\na.h\n\nvoid hello(int num);\na.c\n#include <stdio.h>\n\nint num = 100;\n\nvoid hello(int num){\n    printf(\"%d\\n\",num);\n}\nmain.c\n#include \"a.h\"\n\nint main(void){\n    extern int num;\n    int a = num;\n    hello(a);\n    return 0;\n}\n\n\n将变量类型组合, 公用一个结构,个人感觉有点像是一个大的结构体(但是其所占用的大小是最大的那个变量的大小),将所有类型进行组合,大大提升代码的可阅读性和可维护性.\n\n#include <stdio.h>\n\nunion data{\n    long age;\n    char ch;\n};\n\nint main(int argc, char* argv[])\n{\n      \n    union data stu1;\n    stu1.age = 18;\n    stu1.ch = 'a';\n    printf(\"union.age:%ld,sizeof:%ld\\n\",stu1.age,sizeof(stu1));\n    printf(\"union.ch:%d,sizeof:%ld\\n\",stu1.ch,sizeof(stu1));\n    return 0;\n}\n对bit位进行操作,\n#include <stdio.h>\n\ntypedef union inst{\n    //  type(int is 16bit)  part1:size, part2:size\n    struct {int a:8, b:8; } atype;\n    struct {int a:8, b:8; } btype;\n}intst_t;\n\nstruct {int a:8, b:8; } ctype;\n\nint main(int argc, char* argv[])\n{\n    ctype.a = 0b01111111;\n    ctype.b = 0b10000011;\n    printf(\"%d %d size:%ld\\n\",ctype.a,ctype.b,sizeof(ctype));   \n    return 0;\n}\n\n\n使用makefile进行文件的构建对整个项目进行托管, 提升开发效率\n\n.PHONY: run clean test\n\nCFLAGS = -Wall -Werror -std=c11 -O2\nCC = gcc\nLD = gcc\n\n# 构建yemu所需要yemu.o 和idex.o\nyemu: yemu.o idex.o\n    # 使用的命令为:gcc -Wall -Werror -std=c11 -O2 -o yemu yemu.o idex.o\n    $(LD) $(LDFLAGS) -o yemu yemu.o idex.o\n\nyemu.o: yemu.c yemu.h\n    $(CC) $(CFLAGS) -c -o yemu.o yemu.c\n\nidex.o: idex.c yemu.h\n    $(CC) $(CFLAGS) -c -o idex.o idex.c\n\n# make run\nrun: yemu\n    # @表示将该cmd不输出到终端\n    @./yemu\n# make clean\nclean:\n    # 使用make clean所执行的命令\n    rm -f test yemu *.o\n\n# make test\ntest: yemu\n    $(CC) $(CFLAGS) -o test idex.o test.c && ./test"
   },
   {
     "objectID": "posts/map作业三(集合)韩顺平/index.html",
@@ -1055,6 +1244,34 @@
     "title": "webSocket-node – 01简单跑通",
     "section": "",
     "text": "简单实现架构图\n\n\n\n在这里插入图片描述\n\n\n安装webSocket\nnpm install websocket\n启动程序前配置package.json\n{\n  \"scripts\": {\n    \"start\": \"node index.js 8080\"\n  },\n  \"dependencies\": {\n    \"websocket\": \"^1.0.34\"\n  }\n}\n服务端程序: serverClient.js\nvar WebSocket = require('websocket').server\nvar http = require('http')\n\n// 创建httpServer\nvar httpServer = http.createServer().listen(8080,function (){\n    console.log('http://127.0.0.1:8080')\n})\n\n// 创建webSocketServer\nvar wsServer = new WebSocket({\n    httpServer:httpServer,\n    autoAcceptConnections:false\n})\n\nwsServer.on('request',function (request){\n    var connection = request.accept()\n    connection.on('message',function (msg){\n        console.log(msg)\n\n        // 发送给客户端\n        connection.send(msg.utf8Data)\n    })\n})\n客户端程序: Client.html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Title</title>\n</head>\n<body>\n    <div id=\"msg\"></div>\n    <input type=\"text\" id=\"text\">\n    <input type=\"submit\" value=\"发送\" onclick=\"send()\">\n\n    <script>\n        var websocket = new WebSocket('ws://localhost:8080');\n        // ws ---> http\n        // wss ---> https\n\n        websocket.readyState\n        // 0 链接还没有建立\n        // 1 连接建立成功\n        // 2 连接正在关闭\n        // 3 连接已经关闭\n        websocket.onopen = function () {\n            console.log(websocket.readyState)\n        }\n        \n        function send() {\n            var text = document.getElementById('text').value\n            websocket.send(text)\n        }\n\n        websocket.onmessage = function (backMsg){\n            console.log(backMsg.data)\n        }\n    </script>\n\n</body>\n</html>\n客户端： 服务端："
+  },
+  {
+    "objectID": "posts/arch安装/index.html",
+    "href": "posts/arch安装/index.html",
+    "title": "arch安装",
+    "section": "",
+    "text": "参考地址:https://wiki.archlinux.org/title/Locale_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E7%B3%BB%E7%BB%9F%E5%8C%BA%E5%9F%9F%E8%AE%BE%E7%BD%AE"
+  },
+  {
+    "objectID": "posts/arch安装/index.html#进入fdisk",
+    "href": "posts/arch安装/index.html#进入fdisk",
+    "title": "arch安装",
+    "section": "进入fdisk",
+    "text": "进入fdisk\np       // 打印信息\ng       // 设置disk类型为GPT\nn       // 创建一个新的分区\n设置引导分区(boot分区), > 开始位置(直接回车,从开头), 设置分区编号(1-128):默认为1 // 直接回车表示默认 > 结束位置(+512M) 如果有提示覆盖,输入Y\nn           // 创建分区\n回车          // 默认编号为1\n回车          // 默认从头开始\n+512M       // 向后512M\n设置swap分区 > 休眠, 虚拟内存 > 位置从刚才的512MB开始向后1G\nn// 创建swap分区\n3// 编号为3\n回车// 默认从头开始\n+1G // 向后1G\n设置主分区 >存储系统数据\nn       // 创建swap分区\n2       // 编号为3\n回车      // 默认从头开始\n回车      // 向后所有\n分区完成  保存设置!!!!\nw       // 保存设置\n修改文件系统格式\nmkfs.fat -F32 引导分区          // 引导分区支持fat32,\nmkfs.ext4 主分区                   // linux主分区是ext4格式 \nmkswap swap分区                   // swap分区\nswapon swap分区                   // inux swapon命令用于激活Linux系统中交换空间，Linux系统的内存管理必须使用交换区来建立虚拟内存。"
+  },
+  {
+    "objectID": "posts/计算机组成原理--大端模式,小端模式/index.html",
+    "href": "posts/计算机组成原理--大端模式,小端模式/index.html",
+    "title": "计算机组成原理 – 大端模式,小端模式",
+    "section": "",
+    "text": "小端模式:低数据位存到低位地址 大端模式:高数据位存到低位地址 ## 小端模式 | 数值|地址 | |–|–| | 05 |0x0001\n| 06 |0x0002\n| 07 |0x0003\n| 08 |0x0004"
+  },
+  {
+    "objectID": "posts/计算机组成原理--大端模式,小端模式/index.html#大端模式",
+    "href": "posts/计算机组成原理--大端模式,小端模式/index.html#大端模式",
+    "title": "计算机组成原理 – 大端模式,小端模式",
+    "section": "大端模式",
+    "text": "大端模式\n\n\n\n数值\n地址\n\n\n\n\n05\n0x0004\n\n\n06\n0x0003\n\n\n07\n0x0002\n\n\n08\n0x0001"
   },
   {
     "objectID": "posts/linux入门基操作/index.html",
@@ -1141,6 +1358,41 @@
     "text": "0. 所需材料\n\n\n\n材料\n数量\n\n\n\n\nST-Link V2\n1\n\n\n战舰扩展板\n1\n\n\nstm32H743核心板\n1\n\n\n\n\n\n1. 安装仿真器驱动程序\n # 1. 安装芯片包 \n\n\n\n在这里插入图片描述\n\n\n\n\n1. 使用MX-Cube配置工程\n时钟配置  串口设置:"
   },
   {
+    "objectID": "posts/arch yay安装qq/index.html",
+    "href": "posts/arch yay安装qq/index.html",
+    "title": "arch yay安装qq",
+    "section": "",
+    "text": "arch yay安装qq\n还原后再文件末尾添加!!!!!, making xxxx 需要安装base-devel"
+  },
+  {
+    "objectID": "posts/在Ubuntu下配置C语言编辑环境【gcc】,【gdb】，【build-essential】/index.html",
+    "href": "posts/在Ubuntu下配置C语言编辑环境【gcc】,【gdb】，【build-essential】/index.html",
+    "title": "在Ubuntu下配置C语言编辑环境【gcc】,【gdb】，【build-essential】",
+    "section": "",
+    "text": "【无法安装的问题大多是源没换好的问题导致的，注意Ubuntu版本和源地址要匹配！！！！！重要的事情说三遍】 【无法安装的问题大多是源没换好的问题导致的，注意Ubuntu版本和源地址要匹配！！！！！重要的事情说三遍】 【无法安装的问题大多是源没换好的问题导致的，注意Ubuntu版本和源地址要匹配！！！！！重要的事情说三遍】\n不正确的源会导致找不到依赖的问题\nUbuntu18.4换阿里源参考：Ubuntu18.4换阿里源 ## 1.安装build-essential 如果安装中出现资源占用参考：解决资源占用\nsudo apt-get install build-essential"
+  },
+  {
+    "objectID": "posts/在Ubuntu下配置C语言编辑环境【gcc】,【gdb】，【build-essential】/index.html#安装gcc",
+    "href": "posts/在Ubuntu下配置C语言编辑环境【gcc】,【gdb】，【build-essential】/index.html#安装gcc",
+    "title": "在Ubuntu下配置C语言编辑环境【gcc】,【gdb】，【build-essential】",
+    "section": "2.安装gcc",
+    "text": "2.安装gcc\nsudo apt-get install gcc"
+  },
+  {
+    "objectID": "posts/在Ubuntu下配置C语言编辑环境【gcc】,【gdb】，【build-essential】/index.html#安装gdb",
+    "href": "posts/在Ubuntu下配置C语言编辑环境【gcc】,【gdb】，【build-essential】/index.html#安装gdb",
+    "title": "在Ubuntu下配置C语言编辑环境【gcc】,【gdb】，【build-essential】",
+    "section": "3.安装gdb",
+    "text": "3.安装gdb\nsudo apt-get install gdb"
+  },
+  {
+    "objectID": "posts/在Ubuntu下配置C语言编辑环境【gcc】,【gdb】，【build-essential】/index.html#安装vim编辑器",
+    "href": "posts/在Ubuntu下配置C语言编辑环境【gcc】,【gdb】，【build-essential】/index.html#安装vim编辑器",
+    "title": "在Ubuntu下配置C语言编辑环境【gcc】,【gdb】，【build-essential】",
+    "section": "4.安装vim编辑器",
+    "text": "4.安装vim编辑器\nsudo apt-get install vim"
+  },
+  {
     "objectID": "posts/java多线程-- Runnable接口实现多线程网图下载/index.html",
     "href": "posts/java多线程-- Runnable接口实现多线程网图下载/index.html",
     "title": "java多线程– Runnable接口实现多线程网图下载",
@@ -1169,11 +1421,25 @@
     "text": "cat /etc/group/ | grep 查询字段\n\n\n\nadduser a\ngroupadd GroupName\nusermod -g GroupName a\n\n\n\n# 默认初始位置位改为/home/test/\nusermod -d /home/test/\n\n\n\nid 用户名"
   },
   {
+    "objectID": "posts/alu整数加法_减法/index.html",
+    "href": "posts/alu整数加法_减法/index.html",
+    "title": "alu整数加法_减法",
+    "section": "",
+    "text": "加法:\n无符号: - cf 最高进位和sub位, 异或\n有符号: - of: 最高为是否相同, 符号位溢出 - 最高位进位和次高位进位 异或 1溢出,0不溢出 \n\n\n总结:\n有符号看of: 看最高位进位和次高位进行异或(相异为1)结果 为1溢出 无符号看cf: 看最高位进位和sub位(被+数是否为负的那个位), 进行异或, 结果 为1溢出"
+  },
+  {
     "objectID": "posts/java--gui_简单计算器/index.html",
     "href": "posts/java--gui_简单计算器/index.html",
     "title": "java–gui_简单计算器",
     "section": "",
     "text": "在这里插入图片描述\n\n\npackage cn.usts.edu.lesson02;\n\nimport java.awt.*;\nimport java.awt.event.*;\n\npublic class Calculator {\n\n    public static void main(String[] args) {\n        // 开始\n        new MyFrame01();\n    }\n}\n\nclass MyFrame01 extends Frame{\n    public MyFrame01(){\n        setLocation(400,400);\n        setVisible(true);\n        // 设置布局\n        setLayout(new FlowLayout());\n        // 设置文本框\n        TextField first = new TextField(10);    // 设置框的大小\n        TextField second = new TextField(10);\n        TextField result = new TextField(10);\n        // 按钮\n        Button button = new Button(\"=\");\n        button.addActionListener(new CalculatorActionListener(first,second,result));\n        // 添加进frame\n        add(first);\n        add(second);\n        add(button);\n        add(result);\n\n        pack();\n\n        // 点击关闭\n        addWindowListener(new WindowAdapter() {\n            @Override\n            public void windowClosing(WindowEvent e) {\n                System.exit(0);\n            }\n        });\n\n    }\n}\n\n\n// 监听器\nclass  CalculatorActionListener implements ActionListener {\n    private TextField first,second,result;\n    public CalculatorActionListener(TextField first,TextField second,TextField result) {\n        this.first = first;\n        this.second = second;\n        this.result =result;\n    }\n\n    @Override\n    public void actionPerformed(ActionEvent e) {\n        // 获取字符值\n        int num1 = Integer.parseInt(first.getText());\n        int num2 = Integer.parseInt(second.getText());\n        // 进行运算\n        result.setText(\"\"+(num1+num2));\n        // 返回结果\n        first.setText(\"\");\n        second.setText(\"\");\n\n\n    }\n}"
+  },
+  {
+    "objectID": "posts/汇编--00安装dosBox/index.html",
+    "href": "posts/汇编--00安装dosBox/index.html",
+    "title": "汇编–00安装dosBox",
+    "section": "",
+    "text": "官网下载dosBox软件后无法debug\n缺少asmtools,创建好asm文件夹,将下载的文件都放入创建的文件夹中. https://jszhuanben.lanzoui.com/i2H5dtq5qab\n配置启动时执行的命令:\n1# dosBox配置文件路径\nC:\\Users\\msi\\AppData\\Local\\DOSBox\n2# 在最后添加\nmount C: F:\\asm\nC:\n\n\n\n在这里插入图片描述"
   },
   {
     "objectID": "posts/nodejs安装--（npm安装）/index.html",
@@ -1232,6 +1498,27 @@
     "text": "注意动态写入和静态写入\n\n\n\n在这里插入图片描述\n\n\npackage cn.usts.edu.lesson06;\n\nimport javax.swing.*;\nimport java.awt.*;\nimport java.util.Vector;\n\npublic class JComboBoxDemo02 extends JFrame {\n    public JComboBoxDemo02() {\n        this.setBounds(100,100,400,200);\n        this.setVisible(true);\n        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);\n\n        //String[] contents = {\"1\",\"2\",\"3\"}; // 静态的写入\n        Vector<Object> contents = new Vector<>();//动态写入\n        contents.add(\"tom\");\n        contents.add(\"jack\");\n        contents.add(\"lili\");\n        contents.add(\"加载完成\");\n\n\n        JList<Object> list = new JList<>(contents);\n        Container container = this.getContentPane();\n        container.add(list);\n\n    }\n\n    public static void main(String[] args)  {\n        new JComboBoxDemo02();\n    }\n\n}"
   },
   {
+    "objectID": "posts/app爬虫--持续更新/index.html",
+    "href": "posts/app爬虫--持续更新/index.html",
+    "title": "app爬虫–持续更新",
+    "section": "",
+    "text": "今天开始自己一直想做的项目:\n    - 之前稀里糊涂学了些爬虫的技术\n    - 一直没有做过像样的项目\n    - 现开始做一个可视化的项目\n# 项目技术栈\n    - qt\n    - httpx\n    - 安卓逆向\n    -"
+  },
+  {
+    "objectID": "posts/app爬虫--持续更新/index.html#charles手机代理抓包配置",
+    "href": "posts/app爬虫--持续更新/index.html#charles手机代理抓包配置",
+    "title": "app爬虫–持续更新",
+    "section": "charles手机代理抓包配置",
+    "text": "charles手机代理抓包配置\n配置手机代理抓包参考: https://www.jianshu.com/p/551711c121f0\n存在问题:开启手机代理后, pc无法上网, 后期修复  ## 出现的原因是因为电脑没有信任charles的代理,需要为电脑安装证书\nhelp->ssl pinning root\nwin+r->mmc->添加或删除->证书->中间机构颁发->charles proxy->复制->信任证书->粘贴->重启"
+  },
+  {
+    "objectID": "posts/南京大学ics pa实验O/index.html",
+    "href": "posts/南京大学ics pa实验O/index.html",
+    "title": "南京大学ics pa实验O",
+    "section": "",
+    "text": "https://github.com/GeeeekExplorer/NJU-ICS/blob/master/pa2018_fall/nemu/src/monitor/expr.c ># PA0 编译NEMU\n\n把项目拉下来，\n修改学号，姓名\nbug：llvm的TargetRegister.h的位置（/src/utils/distasm.cc）， 使用文件搜索locate xxx， 然后修改为查找到的位置\nmake clean –> make\n\n\nfatal error: readline/readline.h: No such file or directory\nsudo apt-get install libreadline-dev\n安装的工具\napt-get install build-essential    # build-essential packages, include binary utilities, gcc, make, and so on\napt-get install man                # on-line reference manual\napt-get install gcc-doc            # on-line reference manual for gcc\napt-get install gdb                # GNU debugger\napt-get install git                # revision control system\napt-get install libreadline-dev    # a library used later\napt-get install libsdl2-dev        # a library used later\napt-get install llvm               # llvm project, which contains libraries used later\n\n\n: error: ‘class llvm::MCInstPrinter’ has no member named ‘setPrintBranchImmAsAddress’\n修改llvm的版本\nsudo apt autoremove llvm-10\nsudo apt install llvm-12\ncd /usr/bin\nsudo ln -s /usr/lib/llvm-12/bin/llvm-config  llvm-config\n\nPA1 深入了解代码框架\n\n这里的pa是2020的isa-x86的pa\n首先是编译项目\n运行项目\n哦豁,不出意外是出意外了assert….(问题不大, 只有有报错信息问题就不大)\n\n\n\n尝试解决assert报错\n\n// 编译\nubuntu@VM-12-14-ubuntu:~/ics/ics2020/nemu$ make -B\n\n\nBuilding x86-nemu-interpreter\n+ CC src/device/audio.c\n+ CC src/device/io/map.c\n+ CC src/device/io/port-io.c\n+ CC src/device/io/mmio.c\n+ CC src/device/device.c\n+ CC src/device/timer.c\n+ CC src/device/serial.c\n+ CC src/device/intr.c\n....\n+ LD build/x86-nemu-interpreter\n\n\n// 运行\nubuntu@VM-12-14-ubuntu:~/ics/ics2020/nemu$ make run\n\n// 报错\nBuilding x86-nemu-interpreter\nmake -C /home/ubuntu/ics/ics2020/nemu/tools/kvm-diff \nmake[1]: Entering directory '/home/ubuntu/ics/ics2020/nemu/tools/kvm-diff'\nmake[1]: Nothing to be done for 'app'.\nmake[1]: Leaving directory '/home/ubuntu/ics/ics2020/nemu/tools/kvm-diff'\n./build/x86-nemu-interpreter --log=./build/nemu-log.txt --diff=/home/ubuntu/ics/ics2020/nemu/tools/kvm-diff/build/x86-kvm-so \nx86-nemu-interpreter: src/isa/x86/reg.c:20: reg_test: Assertion `reg_w(i) == (sample[i] & 0xffff)' failed.\nmake: *** [Makefile:108: run] Aborted (core dumped)\n\n查看src/isa/x86/reg.c:20:\n\n  1 #include <isa.h>\n  2 #include <stdlib.h>\n  3 #include <time.h>\n  4 #include \"local-include/reg.h\"\n  5 \n  6 const char *regsl[] = {\"eax\", \"ecx\", \"edx\", \"ebx\", \"esp\", \"ebp\", \"esi\", \"edi\"};\n  7 const char *regsw[] = {\"ax\", \"cx\", \"dx\", \"bx\", \"sp\", \"bp\", \"si\", \"di\"};\n  8 const char *regsb[] = {\"al\", \"cl\", \"dl\", \"bl\", \"ah\", \"ch\", \"dh\", \"bh\"};\n  9 \n 10 void reg_test() {\n 11   srand(time(0));\n 12   word_t sample[8];\n 13   word_t pc_sample = rand();\n 14   cpu.pc = pc_sample;\n 15 \n 16   int i;\n 17   for (i = R_EAX; i <= R_EDI; i ++) {\n 18     sample[i] = rand();\n 19     reg_l(i) = sample[i];\n // 问题出在这里, 可是这几个宏有点折磨了, 盲猜是不是数据越界了\n [20]     assert(reg_w(i) == (sample[i] & 0xffff));\n 21   }\n\n看到这宏定义有点折磨, 无从下手, 想起来一个好东西gcc -E, 嘿嘿, 这下人肉展开是不可能的, 直接安排\n\nubuntu@VM-12-14-ubuntu:~/ics/ics2020/nemu$ gcc -E ./src/isa/x86/reg.c \n\n# 1 \"./src/isa/x86/reg.c\"\n# 1 \"<built-in>\"\n# 1 \"<command-line>\"\n# 31 \"<command-line>\"\n# 1 \"/usr/include/stdc-predef.h\" 1 3 4\n# 32 \"<command-line>\" 2\n# 1 \"./src/isa/x86/reg.c\"\n./src/isa/x86/reg.c:1:10: fatal error: isa.h: No such file or directory\n    1 | #include <isa.h>\n      |          ^~~~~~~\ncompilation terminated.\n\n啊这, 我又麻了, 果然没有这么简单, 单独gcc -E是不行了, 依赖的文件都得加上才行, 可是这个脚本命令有点不会写啊, 来cat一下jyy的Makefile\n\n// -E 我们都懂的, 可是-MF是什么,google一下,这里我是废物, 我又被google到的中文结果吸引进去了\n@$(CC) $(CFLAGS) -E -MF /dev/null $< | \\\n    grep -ve '^#' | \\\n    clang-format - > $(basename $@).i\ngcc -MF $< - 看完之后我又行了, 不就是建立个文件夹, 然后把每个.c的文件都预编译成.i文件, 我又拿捏了, 走着\nubuntu@VM-12-14-ubuntu:~/ics/ics2020/nemu$ make -B\n\nBuilding x86-nemu-interpreter\n+ CC src/device/audio.c\n/bin/sh: 3: clang-format: Permission denied\nmake: *** [Makefile:81: build/obj-x86-interpreter/device/audio.o] Error 127\n\n啊这,啊这. 怎么直接都无法编译了, 定睛一看, Permission denied, 这我熟, 直接掏出祖传sudo\nsudo make -B\n\nubuntu@VM-12-14-ubuntu:~/ics/ics2020/nemu$ sudo make -B\n\nBuilding x86-nemu-interpreter\n+ CC src/device/audio.c\n/bin/sh: 3: clang-format: not found\nmake: *** [Makefile:81: build/obj-x86-interpreter/device/audio.o] Error 127\n\n通往pa1完成的道路上充满了坎坷, 说到底还是太菜了, 好在linux的报错信息太perfect了, clang-format: not found, easy, 这种小问题还是可以的直接sudo apt-get install clang-format\n\nubuntu@VM-12-14-ubuntu:~/ics/ics2020/nemu$ sudo apt-get install clang-format\n\n\nReading package lists... Done\nBuilding dependency tree       \nReading state information... Done\nThe following NEW packages will be installed:\n  clang-format\n0 upgraded, 1 newly installed, 0 to remove and 251 not upgraded.\nNeed to get 0 B/3,272 B of archives.\nAfter this operation, 29.7 kB of additional disk space will be used.\nSelecting previously unselected package clang-format.\n(Reading database ... 143254 files and directories currently installed.)\nPreparing to unpack .../clang-format_1%3a10.0-50~exp1_amd64.deb ...\nUnpacking clang-format (1:10.0-50~exp1) ...\nSetting up clang-format (1:10.0-50~exp1) ...\nProcessing triggers for man-db (2.9.1-1) ...\n\n冲冲冲…\nsudo make -B\n又看到了熟悉的命令行信息+cc…, 奶思情况好转起来了\n直接冲到reg.i里面看看到底是个啥情况\n\n// 找到reg.i\nvim $(fzf)\nreg.i\n   1 \n   2 \n   3 typedef unsigned char __u_char;\n   4 typedef unsigned short int __u_short;\n   5 typedef unsigned int __u_int;\n   6 typedef unsigned long int __u_long;\n    ...\n  46 typedef long int __clock_t;\n  47 typedef unsigned long int __rlim_t;\n  48 typedef unsigned long int __rlim64_t;\n  49 typedef unsigned int __id_t;\n  50 typedef long int __time_t;\n\n诶,窝草,怎么满屏的定义, 不慌不慌, 直接搜索函数reg_test , 嘿嘿好起来了.又看到了熟悉的代码\n\n2066 const char *regsl[] = {\"eax\", \"ecx\", \"edx\", \"ebx\", \"esp\", \"ebp\", \"esi\", \"edi\"};\n2067 const char *regsw[] = {\"ax\", \"cx\", \"dx\", \"bx\", \"sp\", \"bp\", \"si\", \"di\"};\n2068 const char *regsb[] = {\"al\", \"cl\", \"dl\", \"bl\", \"ah\", \"ch\", \"dh\", \"bh\"};\n2069 \n2070 void reg_test() {\n2071   srand(time(0));\n2072   word_t sample[8];\n2073   word_t pc_sample = rand();\n2074   cpu.pc = pc_sample;\n2075 \n2076   int i;\n2077   for (i = R_EAX; i <= R_EDI; i++) {\n2078     sample[i] = rand();\n2079     (cpu.gpr[check_reg_index(i)]._32) = sample[i];\n2080 \n2081     ((void)sizeof(\n2082          ((cpu.gpr[check_reg_index(i)]._16) == (sample[i] & 0xffff)) ? 1 : 0),\n2083      __extension__({\n2084        if ((cpu.gpr[check_reg_index(i)]._16) == (sample[i] & 0xffff))\n2085          ;\n2086        else\n2087          __assert_fail(\"reg_w(i) == (sample[i] & 0xffff)\", \"src/isa/x86/reg.c\",\n2088                        20, __extension__ __PRETTY_FUNCTION__);\n2089      }));\n2090   }\n我擦, 我在搞什么飞机, 胡乱分析系统, 好家伙, jyy老师直接给出了ans. 强行分析一波. 唉, 这波说明在操作前看README的重要性.  - 好家伙， 我是真的服了我了，没有困难制造困难，代码就这么几行，我愣是没看到，只需要重新修改下就行， 我还在苦思冥想该怎么写， 怎么老是测试不过， 原来贴心的jyy老是早就猜到了我的水平，让我改改代码就完事了，大意了。\nx86.h修改如下\ntypedef struct\n{\n  union{\n    union {\n      uint32_t _32;\n      uint16_t _16;\n      uint8_t _8[2];\n    } gpr[8];\n    \n    struct{\n      rtlreg_t eax, ecx, edx, ebx, esp, ebp, esi, edi;\n    };\n  };\n  vaddr_t pc;\n} x86_CPU_state;\n\n接着冲冲冲\nmake -B -j8 \noh oh oh oh oh….\n\n\n运行第一个客户程序\n\n\n单步执行：\n\nsi [N]\n让程序单步执行, 这里有个小bug，不过也不算小bug，需要打开调试的宏DEBUG 在common.h中， 否则无法查看单步执行后的几寄存器的效果 \n\n\nui.c\nstatic int cmd_si(char *args) {\n  // strtok is split string with specify symbol \n  // strtok(args,\"\")\n  int step;\n  \n  if(args == NULL) step=1;\n  // format string and move to a new vable  \n  else sscanf(args,\"%d\",&step);\n  \n  // excute num\n  cpu_exec(step);\n  return 0;\n}\nui.c> cmd_table\n { \"si\", \"Debug by step NEMU\", cmd_si },\n\n这个单步调试很关键哦， 后续的内存扫描需要用到这里作为校验，刚开始自己直接忽略了，吃了大亏，出来混还是的还的。  > ### 打印程序（寄存器）状态 > - 就是打印寄存器中的数据 > - 仿照上面的案例，修改cmd_table, 建立cmd_info函数\n\n这里调用了reg.c中的isa_reg_display记得导入头文件\n#include  \"memory/vaddr.h\"\n\nvoid isa_reg_display() {\n  for (int i = R_EAX; i < R_EDI; i++)\n  {\n    printf(\"$%s\\t0x%08x\\n\", regsl[i] ,reg_l(i));\n  }\n  printf(\"$pc\\t0x%08x\\n\",cpu.pc);\n}\nui.c\nstatic int cmd_info(char* args){\n  \n  // show register \n  if (args[0] == 'r') isa_reg_display();\n  \n  // show watch pointer\n  else if(args[0] == 'w') TODO();\n \n  return 0;\n}\nui.c> cmd_table\n { \"info\", \"info r-->show reg\\ninfo w-->show watch pointer memory\", cmd_info },\n\n注意这里的info是使用的info r进行测试，后面的info w暂时先搁置，先搞后面的扫描内存  >### 扫描内存(2)\n这里可有点弯弯绕，我最初的想法是通过传递进来的地址，然后直接按照16进制数进行数据的解析，好家伙， 我想的是真复杂了（好吧，我承认我又没有认真看手册，手册里面都说了，前面我们都看了内存是怎么设计的。。。。），vaddr_read 害。。\n\n - 还是熟悉的套路：\nui.c> cmd_table\n{ \"x\", \"show memory from 0xxxx\", cmd_x }\nui.c - 第一个参数是扫描的长度， 第二个参数是起始位置\nstatic int cmd_x(char* args){\n  uint32_t len;\n  uint32_t addr;\n\n  char* N    =  strtok(NULL,\" \");\n  char* EXPR =  strtok(NULL,\" \");\n\n  sscanf(N,\"%d\",&len);\n  sscanf(EXPR,\"%x\",&addr);\n\n  for(int i=addr;i<addr+(len*4);i+=4){\n    word_t value = vaddr_read(i,4);\n    printf(\"$0x%08x:\\t0x%08x\\n\", i,value);\n  }\n  \n  return 0;\n}\n\n测试：\n\n\n\n\n在这里插入图片描述\n\n\ngdb中文参考：https://wizardforcel.gitbooks.io/100-gdb-tips/content/examine-memory.html\n\n表达式求值\n\n正则表达式\nexpr.h &expr.c\n正则表达式的C语言使用\n\n\n正则表达式在线测试： https://c.runoob.com/front-end/854/\n正则表达式代码参考地址: https://www.ibm.com/docs/en/i/7.4?topic=functions-regcomp-compile-regular-expression - 正则表达式的基本使用 regcomp()\n#include <regex.h>\nint regcomp(regex_t *preg, const char *pattern, int cflags);\n\nregexec()\n参考链接： https://blog.csdn.net/weixin_46499713/article/details/125154268 https://blog.csdn.net/weixin_43877657/article/details/109068930?spm=1001.2014.3001.5502"
+  },
+  {
     "objectID": "posts/java和-- Collections工具类/index.html",
     "href": "posts/java和-- Collections工具类/index.html",
     "title": "java和– Collections工具类",
@@ -1265,6 +1552,286 @@
     "title": "qt–vs2022+qt5.15.2",
     "section": "",
     "text": "最终效果\n项目结构 \n # demo的搭建 \n          \n\n\n\n在这里插入图片描述"
+  },
+  {
+    "objectID": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html",
+    "href": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html",
+    "title": "简单的创建一个DHCP服务器（WinServ2008-2R）【图文】",
+    "section": "",
+    "text": "在这里插入图片描述"
+  },
+  {
+    "objectID": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#点击角色-添加角色",
+    "href": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#点击角色-添加角色",
+    "title": "简单的创建一个DHCP服务器（WinServ2008-2R）【图文】",
+    "section": "2、点击角色—->添加角色",
+    "text": "2、点击角色—->添加角色\n\n\n\n在这里插入图片描述"
+  },
+  {
+    "objectID": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#点击-下一步",
+    "href": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#点击-下一步",
+    "title": "简单的创建一个DHCP服务器（WinServ2008-2R）【图文】",
+    "section": "3、点击 【下一步】",
+    "text": "3、点击 【下一步】\n\n\n\n在这里插入图片描述"
+  },
+  {
+    "objectID": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#勾选dhcp",
+    "href": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#勾选dhcp",
+    "title": "简单的创建一个DHCP服务器（WinServ2008-2R）【图文】",
+    "section": "4、勾选DHCP",
+    "text": "4、勾选DHCP\n\n\n\n在这里插入图片描述"
+  },
+  {
+    "objectID": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#如果出现此情况点击取消",
+    "href": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#如果出现此情况点击取消",
+    "title": "简单的创建一个DHCP服务器（WinServ2008-2R）【图文】",
+    "section": "（5、如果出现此情况点击取消）",
+    "text": "（5、如果出现此情况点击取消）\n\n\n\n在这里插入图片描述"
+  },
+  {
+    "objectID": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#执行以下操作",
+    "href": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#执行以下操作",
+    "title": "简单的创建一个DHCP服务器（WinServ2008-2R）【图文】",
+    "section": "（5.1执行以下操作）",
+    "text": "（5.1执行以下操作）\n静态ip配置如下 静态ip配置如下 静态ip配置如下\n\n\n\n在这里插入图片描述"
+  },
+  {
+    "objectID": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#本地连接",
+    "href": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#本地连接",
+    "title": "简单的创建一个DHCP服务器（WinServ2008-2R）【图文】",
+    "section": "（5.2本地连接）",
+    "text": "（5.2本地连接）\n\n\n\n在这里插入图片描述"
+  },
+  {
+    "objectID": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#属性",
+    "href": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#属性",
+    "title": "简单的创建一个DHCP服务器（WinServ2008-2R）【图文】",
+    "section": "（5.3属性）",
+    "text": "（5.3属性）\n\n\n\n在这里插入图片描述"
+  },
+  {
+    "objectID": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#双击ipv4",
+    "href": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#双击ipv4",
+    "title": "简单的创建一个DHCP服务器（WinServ2008-2R）【图文】",
+    "section": "（5.4双击iPv4）",
+    "text": "（5.4双击iPv4）\n\n\n\n在这里插入图片描述"
+  },
+  {
+    "objectID": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#根据需求设置",
+    "href": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#根据需求设置",
+    "title": "简单的创建一个DHCP服务器（WinServ2008-2R）【图文】",
+    "section": "（5.5根据需求设置）",
+    "text": "（5.5根据需求设置）\n设置完确定关闭窗口，回到刚刚的DHCP安装页面\n\n\n\n在这里插入图片描述"
+  },
+  {
+    "objectID": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#再次点击添加角色",
+    "href": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#再次点击添加角色",
+    "title": "简单的创建一个DHCP服务器（WinServ2008-2R）【图文】",
+    "section": "6、再次点击添加角色",
+    "text": "6、再次点击添加角色\n\n\n\n在这里插入图片描述"
+  },
+  {
+    "objectID": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#勾选dhcp-1",
+    "href": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#勾选dhcp-1",
+    "title": "简单的创建一个DHCP服务器（WinServ2008-2R）【图文】",
+    "section": "7、勾选DHCP",
+    "text": "7、勾选DHCP\n\n\n\n在这里插入图片描述"
+  },
+  {
+    "objectID": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#下一步",
+    "href": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#下一步",
+    "title": "简单的创建一个DHCP服务器（WinServ2008-2R）【图文】",
+    "section": "8、下一步",
+    "text": "8、下一步\n\n\n\n在这里插入图片描述"
+  },
+  {
+    "objectID": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#下一步-1",
+    "href": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#下一步-1",
+    "title": "简单的创建一个DHCP服务器（WinServ2008-2R）【图文】",
+    "section": "9、下一步",
+    "text": "9、下一步\n\n\n\n在这里插入图片描述"
+  },
+  {
+    "objectID": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#根据需求设置-1",
+    "href": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#根据需求设置-1",
+    "title": "简单的创建一个DHCP服务器（WinServ2008-2R）【图文】",
+    "section": "10、根据需求设置",
+    "text": "10、根据需求设置\n\n\n\n在这里插入图片描述"
+  },
+  {
+    "objectID": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#下一步-2",
+    "href": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#下一步-2",
+    "title": "简单的创建一个DHCP服务器（WinServ2008-2R）【图文】",
+    "section": "11、下一步",
+    "text": "11、下一步\n\n\n\n在这里插入图片描述"
+  },
+  {
+    "objectID": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#添加作用域",
+    "href": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#添加作用域",
+    "title": "简单的创建一个DHCP服务器（WinServ2008-2R）【图文】",
+    "section": "12、添加作用域",
+    "text": "12、添加作用域\n\n\n\n在这里插入图片描述"
+  },
+  {
+    "objectID": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#设置起始地址",
+    "href": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#设置起始地址",
+    "title": "简单的创建一个DHCP服务器（WinServ2008-2R）【图文】",
+    "section": "13、设置起始地址",
+    "text": "13、设置起始地址\n 13.1下一步"
+  },
+  {
+    "objectID": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#禁用ipv6",
+    "href": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#禁用ipv6",
+    "title": "简单的创建一个DHCP服务器（WinServ2008-2R）【图文】",
+    "section": "14、禁用ipv6",
+    "text": "14、禁用ipv6\n\n\n\n在这里插入图片描述"
+  },
+  {
+    "objectID": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#安装",
+    "href": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#安装",
+    "title": "简单的创建一个DHCP服务器（WinServ2008-2R）【图文】",
+    "section": "15、安装",
+    "text": "15、安装\n\n\n\n在这里插入图片描述"
+  },
+  {
+    "objectID": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#测试",
+    "href": "posts/简单的创建一个DHCP服务器（WinServ2008-2R）【图文】/index.html#测试",
+    "title": "简单的创建一个DHCP服务器（WinServ2008-2R）【图文】",
+    "section": "16、测试",
+    "text": "16、测试\n\n\n\n在这里插入图片描述\n\n\n\n\n\n在这里插入图片描述"
+  },
+  {
+    "objectID": "posts/应用视觉设计/index.html",
+    "href": "posts/应用视觉设计/index.html",
+    "title": "应用视觉设计",
+    "section": "",
+    "text": "这部分课程主要关于应用视觉设计。开始的挑战展示了一些核心的原则，代码基于一个指定的卡片布局。\nweb 内容大部分都是文本。CSS 里面的text-align属性可以控制文本的对齐方式。\ntext-align: justify;可以让除最后一行之外的文字两端对齐，即每行的左右两端都紧贴行的边缘。\ntext-align: center;可以让文本居中对齐。\ntext-align: right;可以让文本右对齐。\ntext-align: left;是text-align的默认值，它可以让文本左对齐"
+  },
+  {
+    "objectID": "posts/应用视觉设计/index.html#使用-width-属性调整元素的宽度",
+    "href": "posts/应用视觉设计/index.html#使用-width-属性调整元素的宽度",
+    "title": "应用视觉设计",
+    "section": "使用 width 属性调整元素的宽度",
+    "text": "使用 width 属性调整元素的宽度\n你可以使用 CSS 里面的width属性来指定元素的宽度。属性值可以是相对单位（比如 em），绝对单位（比如 px），或者包含块（父元素）宽度的百分比。下面这个例子把图片的宽度设置为 220px：\nimg { width: 220px; } ## 使用 height 属性调整元素的高度 和width属性类似，你可以使用 CSS 里面的height属性来指定元素的高度。下面这个例子把图片的高度设置为 20px：\nimg { height: 20px; }"
+  },
+  {
+    "objectID": "posts/应用视觉设计/index.html#使用-strong-标签加粗文本",
+    "href": "posts/应用视觉设计/index.html#使用-strong-标签加粗文本",
+    "title": "应用视觉设计",
+    "section": "使用 strong 标签加粗文本",
+    "text": "使用 strong 标签加粗文本\n术语：Strong => s => 加粗。\n你可以使用strong标签来加粗文字。添加了strong标签后，浏览器会自动给元素应用font-weight:bold;。"
+  },
+  {
+    "objectID": "posts/应用视觉设计/index.html#使用-u-标签给文本添加下划线",
+    "href": "posts/应用视觉设计/index.html#使用-u-标签给文本添加下划线",
+    "title": "应用视觉设计",
+    "section": "使用 u 标签给文本添加下划线",
+    "text": "使用 u 标签给文本添加下划线\n术语：Underline => u => 下划线。\n你可以使用u标签来给文字添加下划线。添加了u标签后，浏览器会自动给元素应用text-decoration: underline;。 ## 使用 em 标签强调文本 术语：emphasis => em => 强调。\n你可以使用em标签来强调文本。由于浏览器会自动给元素应用font-style: italic;，所以文本会显示为斜体 ## 使用 s 标签给文本添加删除线 术语：Strikethrough => s => 删除线。\n你可以用s标签来给文字添加删除线，我是明晃晃的删除线，它代表着这段文字不再有效。添加了s标签后，浏览器会自动给元素应用text-decoration: line-through;。"
+  },
+  {
+    "objectID": "posts/应用视觉设计/index.html#使用-hr-标签创建水平线",
+    "href": "posts/应用视觉设计/index.html#使用-hr-标签创建水平线",
+    "title": "应用视觉设计",
+    "section": "使用 hr 标签创建水平线",
+    "text": "使用 hr 标签创建水平线\n术语：Horizontal Rule => hr => 水平线。\n你可以用hr标签来创建一条宽度撑满父元素的水平线。它一般用来表示文档主题的改变，在视觉上将文档分隔成几个部分 ## 调整文本的背景色 为了让页面更美观，除了设置整个页面的背景色以及文字颜色外，你还可以单独设置文字的背景色，即在文字的父元素上添加background-color属性。在本挑战里我们将使用rgba()颜色，而不是之前学到的hex编码或者rgb()颜色。\nrgba 代表： r = red 红色 g = green 绿色 b = blue 蓝色 a = alpha 透明度 RGB 值可以在 0 到 255 之间。alpha 值可以在 0 到 1 之间，其中 0 代表完全透明，1 代表完全不透明。rgba()非常棒，因为你可以设置颜色的透明度，这意味着你可以做出一些很漂亮的半透明效果。 ## 调整标题与段落的大小 标题（h1到h6）的文字应该比的段落的文字大，这样可以让用户更直观的看到页面的布局，同时能区别出不同元素的重要程度，更方便用户捕捉关键的信息。你可以使用font-size属性来设置元素内文字的大小。 ## 给卡片元素添加 box-shadow box-shadow属性用来给元素添加阴影，该属性值是由逗号分隔的一个或多个阴影列表。\nbox-shadow属性的每个阴影依次由下面这些值描述： offset-x阴影的水平偏移量； offset-y阴影的垂直偏移量; blur-radius模糊距离； spread-radius阴影尺寸； 颜色。 其中blur-raduis和spread-raduis是可选的。\n下面是创建了多个阴影的 CSS 例子，阴影加了模糊效果，颜色是透明度很高的黑色:\nbox-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23); ## 降低元素的 opactiy CSS 里的opacity属性用来设置元素的透明度。\n值 1 代表完全不透明。 值 0.5 代表半透明。 值 0 代表完全透明。 透明度会应用到元素内的所有内容，不论是图片，还是文本，或是背景色。"
+  },
+  {
+    "objectID": "posts/应用视觉设计/index.html#使用-text-transform-属性给文本添加大写效果",
+    "href": "posts/应用视觉设计/index.html#使用-text-transform-属性给文本添加大写效果",
+    "title": "应用视觉设计",
+    "section": "使用 text-transform 属性给文本添加大写效果",
+    "text": "使用 text-transform 属性给文本添加大写效果\nCSS 里面的text-transform属性来改变英文中字母的大小写。它通常用来统一页面里英文的显示，且无需直接改变 HTML 元素中的文本。\n下面的表格展示了text-transform的不同值对文字 “Transform me” 的影响。  ## 设置多个标题元素的 font-size 在上一个挑战里你已经设置了每个标题的font-size，接下来你将设置font-weight。\nfont-weight属性用于设置文本中所用的字体的粗细。 ## 设置段落文本的 font-size CSS 里面的font-size属性不只限于标题，它可以应用于任何包含文字的元素内。"
+  },
+  {
+    "objectID": "posts/应用视觉设计/index.html#设置段落的-line-height",
+    "href": "posts/应用视觉设计/index.html#设置段落的-line-height",
+    "title": "应用视觉设计",
+    "section": "设置段落的 line-height",
+    "text": "设置段落的 line-height\nCSS 提供line-height属性来设置行间的距离。行高，顾名思义，用来设置每行文字所占据的垂直空间。"
+  },
+  {
+    "objectID": "posts/应用视觉设计/index.html#调整锚点的悬停状态",
+    "href": "posts/应用视觉设计/index.html#调整锚点的悬停状态",
+    "title": "应用视觉设计",
+    "section": "调整锚点的悬停状态",
+    "text": "调整锚点的悬停状态\n本挑战将要涉及到伪类。伪类是可以添加到选择器上的关键字，用来选择元素的指定状态。\n比如，超链接可以使用:hover伪类选择器定义它的悬停状态样式。下面是悬停超链接时改变超链接颜色的 CSS：\na:hover { color: red; } ## 更改元素的相对位置 在 CSS 里一切 HTML 元素皆为盒子，也就是通常所说的盒模型。块级元素自动从新的一行开始（比如标题、段落以及 div），行内元素排列在上一个元素后（比如图片以及 span）。元素默认按照这种方式布局称为文档的普通流，同时 CSS 提供了 position 属性来覆盖它。\n当元素的 position 设置为relative时，它允许你通过 CSS 指定该元素在当前普通流页面下的相对偏移量。 CSS 里控制各个方向偏移量的对应的属性是left、right、top和bottom。它们代表着从原来的位置向对应的方向偏移指定的像素、百分比或者 ems。下面的例子展示了段落向上偏移 10 像素：\np { position: relative; bottom: 10px; } 把元素的 position 设置成 relative 并不会改变该元素在普通流布局所占的位置，也不会对其它元素的位置产生影响。\n注意 定位可以让你在页面布局上更灵活、高效。注意不管元素的定位是怎样，内部的 HTML 代码阅读起来应该是整洁、有意义的。这样也可以让视障人员（他们重度依赖辅助设备比如屏幕阅读软件）能够浏览你的网页。 ## 使用 CSS 偏移移动相对定位的元素 CSS 里面的top、bottom、left和right定义了元素在相应方位的偏移距离。元素将从当前位置，向属性相反的方向偏移。就像你在上一个挑战看到的，top属性使h2向下移动。left属性使元素向右移动。 h2 { position: relative;\n}\n## 绝对定位的参照物是元素的父元素\n接下来要介绍 CSSposition属性的取值选项absolute，absolute相对于其包含块定位。和relative定位不一样，absolute定位会将元素从当前的文档流里面移除，周围的元素会忽略它。可以用 CSS 的 top、bottom、left 和 right 属性来调整元素的位置。\nabsolute定位比较特殊的一点是元素的定位参照于最近的已定位祖先元素。如果它的父元素没有添加定位规则（默认是position:relative;）,浏览器会继续寻找直到默认的 body 标签。 ## 固定定位的参照物是浏览器的窗口 接下来要介绍的是fixed定位，它是一种特殊的绝对（absolute）定位，区别是其包含块是浏览器窗口。和绝对定位类似，fixed定位使用 top、bottom、left 和 right 属性来调整元素的位置，并且会将元素从当前的文档流里面移除，其它元素会忽略它的存在。\nfixed定位和absolute定位的最明显的区别是fixed定位元素不会随着屏幕滚动而移动。"
+  },
+  {
+    "objectID": "posts/应用视觉设计/index.html#使用-float-属性将元素左浮动或右浮动",
+    "href": "posts/应用视觉设计/index.html#使用-float-属性将元素左浮动或右浮动",
+    "title": "应用视觉设计",
+    "section": "使用 float 属性将元素左浮动或右浮动",
+    "text": "使用 float 属性将元素左浮动或右浮动\n接下来要介绍的定位机制并不是position属性的选项，它通过元素的float属性来设置。浮动元素不在文档流中，它向左或向右浮动，直到它的外边缘碰到包含框或另一个浮动框的边框为止。通常需要用width属性来指定浮动元素占据的水平空间。 ## 使用 z-index 属性更改重叠元素的位置 当一些元素重叠时，在 HTML 里后出现的元素会默认显示在更早出现的元素的上面。你可以使用z-index属性指定元素的堆叠次序。z-index的取值是整数，数值大的元素优先于数值小的元素显示。"
+  },
+  {
+    "objectID": "posts/应用视觉设计/index.html#使用-margin-属性将元素水平居中",
+    "href": "posts/应用视觉设计/index.html#使用-margin-属性将元素水平居中",
+    "title": "应用视觉设计",
+    "section": "使用 margin 属性将元素水平居中",
+    "text": "使用 margin 属性将元素水平居中\n在应用设计中经常需要把一个块级元素水平居中显示。一种常见的实现方式是把块级元素的margin值设置为auto。\n同样的，这个方法也对图片奏效。图片默认是内联元素，但是可以通过设置其display属性为block来把它变成块级元素。 ## 了解互补色 色彩理论以及设计色彩学很复杂，这里将只涉及很基础的部分。在网站设计里，颜色能让内容更醒目，能调动情绪，从而创造舒适的视觉体验。不同的颜色组合对网站的视觉效果影响很大，精妙的设计都需要适宜的颜色来美化页面内容。\n一半是科学，一半是艺术，色环是我们认识颜色关系的好工具 - 它是一个近色相邻异色相离的圆环。当两个颜色恰好在色环的两端时，这两个颜色叫做补色。绘画中两只补色在混合后会变成灰色。补色搭配能形成强列的对比效果，传达出活力、能量、兴奋等意义。\n下面是一些十六进制码（hex code）补色的例子：\n红色（#FF0000）和蓝绿色 (#00FFFF) 绿色（#00FF00）和品红色（#FF00FF） 蓝色（#0000FF）和黄色（#FFFF00） 现在很多的在线选色工具都有寻找补色的功能。\n注意 对于所有的颜色关卡： 颜色能吸引用户的注意，但不是唯一的方式，切勿喧宾夺主，过度使用会适得其反。详细会在应用无障碍章节介绍。 ## 了解三原色 电脑显示器和手机屏幕是一种加色模型，将红（R）、绿（G）、蓝（B）三原色的色光以不同的比例相加，以产生多种多样的色光。两种原色相加产生二次色：蓝绿（G+B）、品红（R+B）和黄色（R+G）。你在上一个挑战里已经见过这些颜色了。这些二次色恰好是在合成它们时未使用的原色的补色，即在色环中位于两端。例如，品红色是红色和蓝色相加产生，它是绿色的补色。\n三次色是由原色和二次色相加产生的颜色，例如红色（原色）和黄色（二次色）相加产生橙色。将这六种颜色中相邻的颜色相加，便产生了十二色色环。\n设计里面有很多种颜色搭配方法。涉及到三次色的一种配色方法是分裂补色搭配法。选定主色之后，在色环上选择与它的补色相邻的两种颜色与之搭配。此种搭配既有对比，又不失和谐。\n下面是使用分裂补色搭配法创建的三个颜色：\n ## 将各种元素的颜色调整为互补色 通过前面关卡的学习，我们知道了补色搭配能形成强列的对比效果，让内容更富生机。但是如果使用不当效果会适得其反，比如如果文字背景色和文字颜色互为补色，文字会很难看清。通常的做法是，一种颜色做为主要颜色，其补色用来装点页面 ## 调整颜色的色相 HSL 色彩空间模型是一种将 RGB 色彩模型中的点放在圆柱坐标系中的表示法，描述了色相（hue）、饱和度（saturation）、亮度（lightness）。CSS3 引入了对应的hsl()属性做为对应的颜色描述方式。\n色相是色彩的基本属性，就是平常所说的颜色名称，如红色、黄色等。以颜色光谱为例，光谱左边从红色开始，移动到中间的绿色，一直到右边的蓝色，色相值就是沿着这条线的取值。在hsl()里面，色相用色环来代替光谱，色相值就是色环里面的颜色对应的从 0 到 360 度的角度值。\n饱和度是指色彩的纯度，也就是颜色里灰色的占比，越高色彩越纯，低则逐渐变灰，取0-100%的数值。\n亮度决定颜色的明暗程度，也就是颜色里白色或者黑色的占比，100% 亮度是白色， 0% 亮度是黑色，而 50% 亮度是“一般的”。\n下面是一些使用hsl()描述颜色的例子，颜色都为满饱和度，中等亮度:  ## 调整颜色的色调 hsl()使 CSS 更改色调更方便。给纯色添加白色可以创造更浅的色调，添加黑色可以创造更深的色调。另外，还可以通过给纯色添加灰色来同时改变颜色的深浅和明暗。回忆下hsl()里面的‘s’和‘l’分辨代表饱和度和亮度。饱和度代表灰色的占比，亮度代表白色和黑色的占比。这在当你有了一个基色调却需要微调时非常有用。"
+  },
+  {
+    "objectID": "posts/应用视觉设计/index.html#创建一个-css-线性渐变",
+    "href": "posts/应用视觉设计/index.html#创建一个-css-线性渐变",
+    "title": "应用视觉设计",
+    "section": "创建一个 CSS 线性渐变",
+    "text": "创建一个 CSS 线性渐变\nHTML 元素的背景色并不局限于单色。CSS 还提供了颜色过渡，也就是渐变。可以通过background里面的linear-gradient()来实现线性渐变，下面是它的语法：\nbackground: linear-gradient(gradient_direction, 颜色 1, 颜色 2, 颜色 3, …);\n第一个参数指定了颜色过渡的方向 - 它的值是角度，90deg 代表垂直渐变，45deg 的渐变角度和反斜杠方向差不多。剩下的参数指定了渐变颜色的顺序：\n例子：\nbackground: linear-gradient(90deg, red, yellow, rgb(204, 204, 255));"
+  },
+  {
+    "objectID": "posts/应用视觉设计/index.html#使用-css-线性渐变创建条纹元素",
+    "href": "posts/应用视觉设计/index.html#使用-css-线性渐变创建条纹元素",
+    "title": "应用视觉设计",
+    "section": "使用 CSS 线性渐变创建条纹元素",
+    "text": "使用 CSS 线性渐变创建条纹元素\nrepeating-linear-gradient()函数和linear-gradient()很像，主要区别是repeating-linear-gradient()重复指定的渐变。 repeating-linear-gradient()有很多参数，为了便于理解，本关只用到角度值和起止渐变颜色值。\n角度就是渐变的方向。起止渐变颜色值代表渐变颜色及其宽度值，由颜色值和起止位置组成，起止位置用百分比或者像素值表示。\n在代码编辑器的例子里，渐变开始于 0 像素位置的yellow，然后过渡到距离开始位置 40 像素的blue。由于下一个起止渐变颜色值的起止位置也是 40 像素，所以颜色直接渐变成第三个颜色值green，然后过渡到距离开始位置 80 像素的red。\n下面的代码可以帮助理解成对的起止渐变颜色值是如何过渡的。\n0px [黄色 – 过渡 – 蓝色] 40px [绿色 – 过渡 – 红色] 80px\n如果每对起止渐变颜色值的颜色都是相同的，由于是在两个相同的颜色间过渡，那么中间的过渡色也为同色，接着就是同色的过渡色和下一个起止颜色，最终产生的效果就是条纹。\n<style>\n\n  div{ \n    border-radius: 20px;\n    width: 70%;\n    height: 400px;\n    margin:  50 auto;\n    background: repeating-linear-gradient(\n      45deg,\n      yellow 0px,\n       yellow 40px,\n       black 40px,\n       black 80px\n    );\n\n  }\n\n</style>\n ## 通过添加细微图案作为背景图像来创建纹理 添加一个精致的背景图，可以增加页面的质感，让页面更美观。关键是要找到一个平衡点，抢了内容的风头，喧宾夺主可就不妙了。background属性支持使用url()函数通过链接的方式引入一个指定纹理或样式的图片。图片链接地址在括号内，一般会用引号包起来。 background:url(https://i.imgur.com/MJAkxbh.png) ## 使用 CSS Transform scale 属性可以更改元素的大小 CSS 属性transform里面的scale()函数，可以用来改变元素的显示比例。下面的例子把页面的段落元素放大了 2 倍：\np { transform:scale(2); }"
+  },
+  {
+    "objectID": "posts/应用视觉设计/index.html#使用css-transform-scale-属性在悬停时缩放元素",
+    "href": "posts/应用视觉设计/index.html#使用css-transform-scale-属性在悬停时缩放元素",
+    "title": "应用视觉设计",
+    "section": "使用CSS Transform scale 属性在悬停时缩放元素",
+    "text": "使用CSS Transform scale 属性在悬停时缩放元素\ntransform属性有很多函数，可以对元素进行调整大小、移动、旋转、翻转等操作。当使用伪类描述元素的指定状态如:hover时，transform属性可以方便的给元素添加交互。\n下面是当用户悬停段落元素时，段落大小缩放到原始大小 2.1 倍的例子：\np:hover { transform: scale(2.1); } ## 使用 CSS Transform skex 属性沿X轴倾斜元素 接下来要介绍的transform属性是skewX，skewX使选择的元素沿着 X 轴（横向）翻转指定的角度。\n下面的代码沿着 X 轴翻转段落元素 -32 度。\np { transform: skewX(-32deg); }  ## 使用 CSS 创建一个图形 术语表：blur-radius => 模糊半径，spread-radius => 辐射半径，transparent => 透明的，border-radius => 圆角边框。\n通过使用选择器选择不同的元素并改变其属性，你可以创造一些有趣的形状。比如新月。你可以使用box-shadow属性来设置元素的阴影，border-radius属性控制元素的圆角边框。\n首先你将会创建一个圆的、透明的对象，它具有模糊阴影并略微向两边递减。如你所见，这个阴影其实就是新月形狀。\n为了创建一个圆形的对象，border-radius应该被设置成 50%。\n你应该还记得之前关卡的box-shadow属性以及它的依次取值offset-x、offset-y、blur-radius、spread-radius和颜色值。其中blur-radius和spread-radius是可选的。"
+  },
+  {
+    "objectID": "posts/应用视觉设计/index.html#使用-css-和-html-创建更复杂的形状",
+    "href": "posts/应用视觉设计/index.html#使用-css-和-html-创建更复杂的形状",
+    "title": "应用视觉设计",
+    "section": "使用 CSS 和 HTML 创建更复杂的形状",
+    "text": "使用 CSS 和 HTML 创建更复杂的形状\n世界上最流行的形状非心形莫属了，在本关里你将用纯 CSS 创建一个心形。但是首先你需要了解:before和:after伪类。这些伪类用来在选择元素之前和之后添加一些内容。在下面的例子里，:before伪类元素用来给 class 为heart的元素添加一个正方形。\n:before和:after必须配合content来使用。这个属性通常用来给元素添加内容诸如图片或者文字。当:before和:after伪类用来添加某些形状而不是图片或文字时，content属性仍然是必需的，但是它的值可以是空字符串。\n在上面的例子里，class 为heart元素的:before伪类添加了一个黄色的长方形，长方形的height和width分别为 50px 和 70px。由于设置了其边框半径为 25%，所以长方形为圆角长方形，同时其相对位置为距离left5px，以及向top偏移 50px。\n.heart:before {\n  content: \"\";\n  background-color: yellow;\n  border-radius: 25%;\n  position: absolute;\n  height: 50px;\n  width: 70px;\n  top: -50px;\n  left: 5px;\n}\n心形图案css\n<style>\n.heart {\n  position: absolute;\n  margin: auto;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  background-color: pink;\n  height: 50px;\n  width: 50px;\n  transform:rotate(-45deg) ;\n}\n.heart:after {\n  background-color: pink;\n  content: \"\";\n  border-radius: 50%;\n  position: absolute;\n  width: 50px;\n  height: 50px;\n  top: 0px;\n  left: 25px;\n}\n.heart:before {\n  content:'' ;\n  background-color: pink;\n  border-radius: 50%;\n  position: absolute;\n  width: 50px;\n  height: 50px;\n  top: -25px;\n  left: 0px;\n} \n</style>\n<div class = \"heart\"></div>"
+  },
+  {
+    "objectID": "posts/应用视觉设计/index.html#了解-css-的关键帧和动画是如何工作的",
+    "href": "posts/应用视觉设计/index.html#了解-css-的关键帧和动画是如何工作的",
+    "title": "应用视觉设计",
+    "section": "了解 CSS 的关键帧和动画是如何工作的",
+    "text": "了解 CSS 的关键帧和动画是如何工作的\n如果要给元素添加动画，你需要了解animation属性以及@keyframes规则。animation属性控制动画的外观，@keyframes规则控制动画中各阶段的变化。总共有 8 个animation属性。为了便于理解，本关暂时只涉及到两个最常用的属性。\nanimation-name设置动画的名称， 也就是要绑定的选择器的@keyframes的名称。\nanimation-duration设置动画所花费的时间。\n@keyframes能够创建动画。 创建动画的原理是将一套 CSS 样式逐渐变化为另一套样式。具体是通过设置动画期间对应的“frames”的 CSS 的属性，以百分比来规定改变的时间，或者通过关键词“from”和“to”，等价于 0% 和 100%。打个比方，CSS 里面的 0% 属性就像是电影里面的开场镜头。CSS 里面的 100% 属性就是元素最后的样子，相当于电影里的演职员表或者鸣谢镜头。CSS 在对应的时间内给元素过渡添加效果。下面举例说明@keyframes和动画属性的用法：\n#anim {\n  animation-name: colorful;\n  animation-duration: 3s;\n}\n@keyframes colorful {\n  0% {\n    background-color: blue;\n  }\n  100% {\n    background-color: yellow;\n  }\n}\nid 为anim的元素，代码设置animation-name为colorful，设置animation-duration为 3 秒。然后把@keyframes引用到名为colorful的动画属性上。colorful在动画开始时（0%）设置颜色为蓝色，在动画结束时（100%）设置颜色为黄色。注意不是只有开始和结束的过渡可以设置，0% 到 100% 间的任意百分比你都可以设置。 ## 使用CSS动画更改按钮的悬停状态 你可以在按钮悬停时使用@keyframes改变按钮的颜色。\n下面是在图片悬停时改变图片宽度的例子：\n<style>\n  img:hover {\n    animation-name: width;\n    animation-duration: 500ms;\n  }\n\n  @keyframes width {\n    100% {\n      width: 40px;\n    }\n  }\n</style>\n\n<img src=\"https://bit.ly/smallgooglelogo\" alt=\"Google's Logo\" />\n注意ms代表毫秒，1000ms 等于 1s。"
+  },
+  {
+    "objectID": "posts/应用视觉设计/index.html#修改动画的填充模式颜色保持",
+    "href": "posts/应用视觉设计/index.html#修改动画的填充模式颜色保持",
+    "title": "应用视觉设计",
+    "section": "修改动画的填充模式颜色保持",
+    "text": "修改动画的填充模式颜色保持\n太棒了，但是现在还不完美。注意动画在500ms之后重置了，所以按钮又变成了之前的颜色。而我们想要的效果是按钮在悬停时始终高亮。\n这可以通过把animation-fill-mode设置成forwards来实现。animation-fill-mode指定了在动画结束时元素的样式。你可以向这样设置它：\nanimation-fill-mode: forwards; ## 使用 CSS 动画创建运动 当元素的position被指定，如fixed或者relative时，CSS 偏移属性right、left、top和bottom可以用在动画规则里创建动作。\n就像下面的例子展示的那样，你可以在50%keyframe 处设置top属性为 50px， 在开始（0%）和最后（100%）keframe 处设置为 0px，以产生项目向下运动，然后返回的动作效果。\n@keyframes rainbow {\n  0% {\n    background-color: blue;\n    top: 0px;\n  }\n  50% {\n    background-color: green;\n    top: 50px;\n  }\n  100% {\n    background-color: yellow;\n    top: 0px;\n  }\n}"
+  },
+  {
+    "objectID": "posts/应用视觉设计/index.html#通过从左到右淡化元素来创建视觉方向",
+    "href": "posts/应用视觉设计/index.html#通过从左到右淡化元素来创建视觉方向",
+    "title": "应用视觉设计",
+    "section": "通过从左到右淡化元素来创建视觉方向",
+    "text": "通过从左到右淡化元素来创建视觉方向\n在本关里，你将要改变动画元素的opacity，使其在到达屏幕右侧时渐隐。\n在展示的动画里，具有渐变背景的圆形元素在 50% 标记的@keyframes规则处向右移动。"
+  },
+  {
+    "objectID": "posts/应用视觉设计/index.html#使用无限的动画计数制作永不停止的动画",
+    "href": "posts/应用视觉设计/index.html#使用无限的动画计数制作永不停止的动画",
+    "title": "应用视觉设计",
+    "section": "使用无限的动画计数制作永不停止的动画",
+    "text": "使用无限的动画计数制作永不停止的动画\n之前的关卡里介绍了一些动画属性以及@keyframes规则的用法。还有一个常用的动画属性是animation-iteration-count，这个属性允许你控制动画循环的次数。下面是一个例子：\nanimation-iteration-count: 3;\n在这里动画会在运行 3 次后停止，如果想让动画一直运行，可以把值设置成 infinite。"
+  },
+  {
+    "objectID": "posts/应用视觉设计/index.html#使用无限的动画计数制作-css-心跳",
+    "href": "posts/应用视觉设计/index.html#使用无限的动画计数制作-css-心跳",
+    "title": "应用视觉设计",
+    "section": "使用无限的动画计数制作 CSS 心跳",
+    "text": "使用无限的动画计数制作 CSS 心跳\n这也是一个用animation-iteration-count属性创造持续动画的例子，它基于前面关卡创建的心形。\n心跳动画的每一秒包含两个部分。heart元素（包括:before和:after）使用transform属性改变其大小，背景div使用background属性改变其颜色`\n<style>\n  .back {\n    position: fixed;\n    padding: 0;\n    margin: 0;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background: white;\n    animation-name: backdiv;\n    animation-duration: 1s; \n    animation-iteration-count:infinite;\n  }\n\n  .heart {\n    position: absolute;\n    margin: auto;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    left: 0;\n    background-color: pink;\n    height: 50px;\n    width: 50px;\n    transform: rotate(-45deg);\n    animation-name: beat;\n    animation-duration: 1s;\n    animation-iteration-count:infinite;\n    \n  }\n  .heart:after {\n    background-color: pink;\n    content: \"\";\n    border-radius: 50%;\n    position: absolute;\n    width: 50px;\n    height: 50px;\n    top: 0px;\n    left: 25px;\n  }\n  .heart:before {\n    background-color: pink;\n    content: \"\";\n    border-radius: 50%;\n    position: absolute;\n    width: 50px;\n    height: 50px;\n    top: -25px;\n    left: 0px;\n  }\n\n  @keyframes backdiv {\n    50% {\n      background: #ffe6f2;\n    }\n  }\n\n  @keyframes beat {\n    0% {\n      transform: scale(1) rotate(-45deg);\n    }\n    50% {\n      transform: scale(0.6) rotate(-45deg);\n    }\n  }\n\n</style>\n<div class=\"back\"></div>\n<div class=\"heart\"></div>"
   },
   {
     "objectID": "posts/java_TreeSet和HashSet的去重原理 (作业四)/index.html",
@@ -1342,6 +1909,13 @@
     "title": "java常用类– System类的常用方法, Runtime类",
     "section": "",
     "text": "package cn.usts.edu.fly.SystemAndRuntime;\n\nimport java.util.Properties;\nimport java.util.Set;\n\n/**\n * @author ：fly\n * @description: java常用库System\n *               system类定义了一些常用的系统属性和相关方法\n *               获取Jvm版本,国家,操作系统架构,操作系统名......\n * @date ：2021/10/31 15:01\n */\npublic class SystemDemo {\n    public static void main(String[] args) {\n        // 获取当前系统属性\n        Properties properties = System.getProperties();\n        System.out.println(properties);\n        // 获取系统属性的所有key(属性名),返回set对象\n        Set<String> keys = properties.stringPropertyNames();\n        for (String key : keys) {\n            String value = System.getProperty(key);\n            System.out.println(key+\"--->\"+value);\n        }\n\n    }\n}\n ### System.currentTimeMillis() * System.gc();//内存回收 * System.exit(0);// 程序结束 * System.arraycopy(原数组,目标数组,要复制的起始位置,目标起始位置,复制长度);\n\n\n\n在这里插入图片描述\n\n\npackage cn.usts.edu.fly.SystemAndRuntime;\n\nimport java.util.Properties;\nimport java.util.Set;\n\n/**\n * @author ：fly\n * @description: java常用库System\n *               system类定义了一些常用的系统属性和相关方法\n *               获取Jvm版本,国家,操作系统架构,操作系统名......\n *\n *               System.gc();//内存回收\n *               System.exit(0);// 程序结束\n *               System.arraycopy(原数组,目标数组,要复制的起始位置,目标起始位置,复制长度);\n * @date ：2021/10/31 15:01\n */\npublic class SystemDemo {\n    public static void main(String[] args) {\n \n        System.out.println(\"------------------------------System.currentTimeMillis()-----------------------------------\");\n        long startTime = System.currentTimeMillis();\n\n        int sum=0;\n        for (int i = 0; i < 10000000; i++) {\n            sum+=i;\n        }\n\n\n        long endTime = System.currentTimeMillis();\n        System.out.println(\"程序运行时间:\"+(endTime-startTime)+\"毫秒\");      \n    }\n}\n\n\n\n          用来表示虚拟机的运行状态,用于封装java虚拟机进程,\n          每次使用java命令启动java虚拟机都会产生对应的一个Runtime实例,并且只有一个实例\n          应用程序会通过该实例与运行时的环境相连,应用程序不能创建自己的runtime实例,需要手动创建安\n          Runtime run = Runtime.getRuntime();\n\n\n\n\n在这里插入图片描述\n\n\npackage cn.usts.edu.fly.SystemAndRuntime;\n\nimport java.io.IOException;\n\n/**\n * @author ：fly\n * @description: Runtime类\n *               用来表示虚拟机的运行状态,用于封装java虚拟机进程,\n *               每次使用java命令启动java虚拟机都会产生对应的一个Runtime实例,并且只有一个实例\n *               应用程序会通过该实例与运行时的环境相连,应用程序不能创建自己的runtime实例,需要手动创建安\n *               Runtime run = Runtime.getRuntime();\n *\n *\n * @date ：2021/10/31 15:25\n */\npublic class RuntimeDemo {\n\n    public static void main(String[] args) throws IOException, InterruptedException {\n        Runtime runtime = Runtime.getRuntime();\n        System.out.println(\"处理器个数\" + runtime.availableProcessors()+\"核\");\n        System.out.println(\"空闲内存大小\" + runtime.freeMemory()+\"byte\");\n        System.out.println(\"最大内存大小\" + runtime.maxMemory()+\"byte\");\n        Process process = runtime.exec(\"notepad.exe\");//相当于打开cmd执行命令\n        Thread.sleep(3000);\n        process.destroy();// 3s后进程销毁;\n\n    }\n}"
+  },
+  {
+    "objectID": "posts/计算机组成原理/index.html",
+    "href": "posts/计算机组成原理/index.html",
+    "title": "计算机组成原理",
+    "section": "",
+    "text": "定点数\n\n纯小数 0.12, 0.98, 0.22……\n纯整数: 11, 2, 3, 4…\n\n\n\n浮点数\n\nN = 2^e.M\n\n\n\n原码： 便于人类计算，但是不利于计算机，进位和移位以及异号运算复杂 反码：转换为补码的过度 补码： 将减法转换为加法 移码： 补码符号位取反， 便于比较大小\n\n移码参考视频：https://www.bilibili.com/video/BV1dL4y1a7h2/?spm_id_from=333.337.search-card.all.click&vd_source=c0157a4afd2e47c7662431fd9d2739fb\n二进制转换计算器https://cn.calcuworld.com/%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%AE%A1%E7%AE%97%E5%99%A8\n\nieee754：\nbook p22 ->2.9\n\n\n奇偶校验\n奇校验： - 奇数个1：校验正确， 校验位填0 - 偶数个1：校验错误， 校验位填1\n偶校验： - 奇数个1：校验错误， 校验位填1 - 偶数个1：校验正确， 校验位填0\n\n奇偶校验参考视频：https://www.bilibili.com/video/BV1n5411m7QP/?spm_id_from=333.337.search-card.all.click&vd_source=c0157a4afd2e47c7662431fd9d2739fb\n\n定点加法\n\n\n补码加法\n\n补码相加等于原码相加, 最高位进位丢掉(符号位)\n\n\n\n补码减法\n\nx-y = x+(-y)\n\n\n\n溢出概念\n\n\n正溢\n两个正数相加后得到负数就是溢出了 例如：(第一位为符号位) ~01000 +01011 =10011(符号位为1即为负,所以不对)正溢 ## 负溢 两个负数相减也是类似相减后得到一个正数\n\n\n溢出的检测方法\n\n变形补码, 通过双符号位进行表示符号\n00 代替原先的0表示正数, 如果出现10表示正溢\n11代替原先的1表示负数, 如果出现01表示负溢\n\n\n\n全加器\n\n既然说到全加器, 那肯定得谈谈半加器\n个人理解的半加器, 就是不可以输入进位, 不可以串起来, 全加器可以实现N个加法器串联, 实现多位的运算\n\n\n >异或门: 相异 => 1 与非门: 1, 1 => 0\n\n\n\n在这里插入图片描述\n\n\n仿真:https://blog.csdn.net/qq_40272978/article/details/106229002 matlab 仿真参考: https://max.book118.com/html/2019/0531/6152154012002034.shtm"
   },
   {
     "objectID": "posts/Python--Threading/index.html",
@@ -1489,6 +2063,13 @@
     "title": "stm32F103-RT-Thread邮箱(mailbox)",
     "section": "",
     "text": "在编码前先打开rtconfig.h中的mailbox选项. > 这个程序会创建2个动态线程，一个静态的邮箱对象，其中一个线程往邮箱中发送邮件，一个线程往邮箱中收取邮件。 数据按照制定顺序进行发送,FIFO或者priority.\n#include \"board.h\"\n#include \"rtthread.h\"\n\n\nuint8_t count = 0;\n\n/* message */\nstatic char msg_1[] = \"hello\";\nstatic char msg_2[] = \"world.\";\nstatic char msg_3[] = \"@\";\n\n\n/* mail_box control block */\nstatic rt_mailbox_t mb_1 = RT_NULL;\n\n/* thread control blcok */\nstatic rt_thread_t mb_thread_1 = RT_NULL;\nstatic rt_thread_t mb_thread_2 = RT_NULL;\n\n/* thread_1 to send msg*/\nstatic void thread_1_entry(void *parameter)\n{\n    while (count < 10)\n    {\n        count++;\n        if (count & 0x1)\n        {\n            if(RT_EOK == rt_mb_send(mb_1, (rt_uint32_t)&msg_1)){\n                // rt_kprintf(\"-----%x++++++++++%p\\n\",(rt_uint32_t)&msg_1,&msg_1); // -----20000029++++++++++20000029\n\n                rt_kprintf(\"msg_1_send successful!!!\\n\");\n            }\n            else{\n                rt_kprintf(\"msg_1_send failed!!!\\n\");\n            }\n        }\n        //\n        else\n        {\n            if (RT_EOK == rt_mb_send(mb_1, (rt_uint32_t)&msg_2))\n            {\n                rt_kprintf(\"msg_2_send successful!!!\\n\");\n            }\n            else\n            {\n                rt_kprintf(\"msg_2_send failed!!!\\n\");\n            }\n        }\n\n        // thread wait 200 ticks\n        rt_thread_delay(50);\n    }\n\n    // message send [finish]\n    rt_mb_send(mb_1, (rt_uint32_t)&msg_3);\n    rt_kprintf(\"END flag is send....\");\n}\n \n/* thread_2 to receive msg */\nstatic void thread_2_entry(void *parameter){\n    char *str;\n    while (1)\n    {\n        rt_kprintf(\"thread_[2]: try reveive msg.....\\n\");\n        \n        if (rt_mb_recv(mb_1, (rt_uint32_t *)&str, RT_WAITING_FOREVER) == RT_EOK)\n        {\n            rt_kprintf(\"[%d]msg:%s\\n\",count,str);\n            if(str==msg_3){\n                rt_kprintf(\"revc END ............\\n\");\n                break;\n            }\n            rt_thread_delay(100);\n        }\n        else{\n            rt_kprintf(\"2_recv msg faild.....\\n\");\n        }\n    }\n    rt_mb_detach(mb_1);\n    \n}\n\n\n\nint main(void){\n// 这里的1,是mb_size,控制mailbox可以同时发送几个邮件\n    mb_1 = rt_mb_create(\"mb_1\",1,RT_IPC_FLAG_FIFO);\n    \n    if(mb_1!=RT_NULL){\n        rt_kprintf(\"mail_box is create\\n\");\n    }\n    else{\n        rt_kprintf(\"mail_box is create failed.\\n\");\n        return -1;\n    }\n\n    // mb_thread_1 create\n    mb_thread_1 = rt_thread_create(\"mb_thread_1\",thread_1_entry,RT_NULL,512,3,20);\n    if(mb_thread_1!=RT_NULL){\n        rt_thread_startup(mb_thread_1);\n    }   \n    // mb_thread_2 create\n    mb_thread_2 = rt_thread_create(\"mb_thread_2\", thread_2_entry, RT_NULL, 512, 3, 20);\n    if (mb_thread_2 != RT_NULL)\n    {\n        rt_thread_startup(mb_thread_2);\n    }\n    return 0;\n}"
+  },
+  {
+    "objectID": "posts/内存管理/index.html",
+    "href": "posts/内存管理/index.html",
+    "title": "内存管理",
+    "section": "",
+    "text": "一个编译完成的程序包含很多段 .text [ 代码段 ] .data [ 数据段 ] .bss [ 未初始化数据段 ]\n全局变量和static修饰的变量是在编译的时候分配空间的"
   },
   {
     "objectID": "posts/java注解和反射-- 利用反射获取类的运行时结构(属性,方法,对象,构造器)/index.html",
@@ -1645,11 +2226,25 @@
     "text": "package cn.usts.edu.lesson03;\n\n/**\n * 龟兔赛跑多线程来实现\n * 乌龟和兔子分别在不同的线程,同时开始\n * */\n\npublic class TortoiseRabbitRace implements Runnable{\n    String winner;\n\n    @Override\n    public void run() {\n        for (int i = 1; i < 101; i++) {\n            boolean flag = gameIsOver(i);\n            System.out.println(Thread.currentThread().getName()+\"跑了\"+i+\"步\");\n\n            // 兔子会偷懒,兔子偷懒100毫秒\n            if (Thread.currentThread().getName().equals(\"兔子\")){\n                try {\n                    Thread.sleep(100);//偷懒0.1秒\n                    i+=30;// 兔子跑的快\n                } catch (InterruptedException e) {\n                    e.printStackTrace();\n                }\n            }\n\n            if (flag){\n                break;\n            }\n        }\n    }\n\n    // 判断比赛是否结束\n    public boolean gameIsOver(int steps){\n        if (winner!=null){   // 没有获胜者---->gameIsOver=ture;\n            return true;\n        }else if(steps>=100) {\n             // 有人到达终点\n                winner = Thread.currentThread().getName();\n                System.out.println(\"winner is ----->\"+winner);\n                return true;\n            }\n        return false;\n    }\n\n\n    public static void main(String[] args) {\n        TortoiseRabbitRace race = new TortoiseRabbitRace();\n        new Thread(race,\"兔子\").start();\n        new Thread(race,\"乌龟\").start();\n    }\n}"
   },
   {
+    "objectID": "posts/缺失的计算机课程YouTube课程/index.html",
+    "href": "posts/缺失的计算机课程YouTube课程/index.html",
+    "title": "缺失的计算机课程YouTube课程",
+    "section": "",
+    "text": "课程的目的\n一共有11节课程， 每节课有一个主题，带你熟悉计算机工具\n\n\nclass 1\n\nwhat is shell\n\nshell 就是一个接受命令，然后返回结果的一个工具，解析你的命令给计算机执行，然后将执行结果返回给用户 > how to use shell\nshell的使用就像使用魔法一样，通过像魔法一样的单词来进行操作。\n其实shell的操作也称不上是魔法，每个命令其实就是一个单独的可执行程序，能够有同的功能，这也得益于linux的开源精神，开源作者为Linux大家庭添砖加瓦\necho hello              # 将会在终端中输出一行hello\necho $PATH              # 将会在终端中输出系统环境变量每个变量用:隔开\n\ninstall tldr tldr is cleaner than man\n\nsudo apt-get install npm\nsudo Jnpm install -g tldr\n\nhow to use tldr\n\ntldr tail               # 然后显示描述和案例，非常简洁，非常奈斯\n\ntail 将打印该./目录下的文件，然后打印最后一行， 然后输出到out.txt中\n\nls -l ./ |tail -n1 > out.txt\n\ncurl grep curl 和网络相关 grep 过滤信息\n\n                                    # 过滤关键词 Date关键字这一行|裁剪用‘ ’，第2个裁剪单位\ncurl --head --silent www.google.com | grep -i Date| cut --delimiter=' ' f2\n控制键盘led灯亮灭\n# on\necho 1| sudo tee /sys/class/leds/input27::capslock/brightness\n# off\necho 0| sudo tee /sys/class/leds/input27::capslock/brightness\n\nxdg-open 能够使用适合的程序打开，html用浏览器打开，文件夹用文件管理器打开\n\nxdg-open xxx.html\nxdg-open aa.txt\n...\n\n\nclass 2(shell script)\n\n脚本语言的编写\n\n\n单引号和双引号的作用是不一样的, 单引号不做解释,原样输出,双引号进行解释\n\nfoo=bar\necho \"$foo\"\n# prints bar\necho '$foo'\n# prints $foo\n\n函数编写\n\n函数名和脚本名一致, 编写完成执行source mcd.sh即可全局使用该脚本\nmcd () {\n    # -p表示可以添加子目录(可以套娃)\n    mkdir -p \"$1\"\n    # 进入到创建的目录\n    cd \"$1\"\n}\n\n$ 的使用\n\n$0 - 脚本的名字\n$1 to $9 - 脚本的后边跟的参数\n$@ - 所有参数\n$# - 参数个数返回上一条命令的执行结果\n$$ - 当前进行的id\n$_ - 上次的执行的命令的最后一个参数\n(base) root@VM-12-14-ubuntu:~/projects/cs_base/script# cat mcd.sh \nmcd(){\n    #mkdir -p \"$1\"\n    #cd \"$1\"\n\n    # 所有参数\n    echo \"@=$@\"\n    # 参数个数\n    echo \"#=$#\"\n    # 返回上一条命令的结果\n    echo \"?=$?\"\n    # 返回当前脚本进程号\n    echo '$$'\"=$$\"\n    # \n    echo '$_'\"=$_\"\n}\n(base) root@VM-12-14-ubuntu:~/projects/cs_base/script# source mcd.sh \n(base) root@VM-12-14-ubuntu:~/projects/cs_base/script# mcd aaa bb cc dd\n@=aaa bb cc dd\n#=4\n?=0\n$$=901010\n$_=$$=901010\n\n!! - 上一条整条命令\n\n(base) root@VM-12-14-ubuntu:~# echo hello\nhello\n(base) root@VM-12-14-ubuntu:~# !!\necho hello\nhello\n(base) root@VM-12-14-ubuntu:~# ls\ncreate_variables.sh  mcd.sh\n(base) root@VM-12-14-ubuntu:~# !!\nls\ncreate_variables.sh  mcd.sh\n(base) root@VM-12-14-ubuntu:~#\n\n|| 和 && || 第一个条件是否满足, 不满足执行后一个 && 两个条件同时满足才执行.\n\n\n\n\nll\n左边参数\n右边参数\n\n\n\n\n条件\n√\n不执行\n\n\n条件\n×\n执行\n\n\n\n\n\n\n&&\n左边参数\n右边参数\n是否执行\n\n\n\n\n条件\n√\n√\n执行\n\n\n条件\n×\n√\n不执行\n\n\n\nfalse || echo \"Oops, fail\"\n# Oops, fail\n\ntrue || echo \"Will not be printed\"\n#\n\ntrue && echo \"Things went well\"\n# Things went well\n\nfalse && echo \"Will not be printed\"\n#\n\ntrue ; echo \"This will always run\"\n# This will always run\n\nfalse ; echo \"This will always run\"\n# This will always run\n\n命令参数的使用$(cmd)\n\na=$(pwd)\necho \"we are now at:$a\"\n\n拼接不同进程的信息, CMD <(CMD) <(CMD)\n\n diff <(ls .) <(ls ../)\n ls <(ls .) <(ls ../)\n cat <(ls .) <(ls ../)\n ...\n\n对比不同路径下文件的内容中是否包含hello关键字 注意$(cmd)是执行命令, $VALUE 是取值 [xxx] 和[[xxx]]的区别,前者是旧版本,后者是新版本, 前者的适配性更好,但是后者的语法更适合人类编写,参考地址:[xxx]和[[xxx]]详细对比说明\n\n#!/bin/bash    \necho \"find_diff program is excute at:$(date)\"    \n    \necho \"sh name is:$0, with $# arguements, with pid is: $$\"    \n    \n# 遍历文件夹中的文件    \nfor file in \"$@\";do    \n    # 过滤文件中的hello关键字, 输出到系统中垃圾倾倒的地方    \n    echo \"----------->$file\"    \n    grep hello  \"$file\" > /dev/null 2> /dev/null    \n    \n    # 如果上面这行执行结果不等于0 \n    #if [[ $? -ne 0 ]]; then  \n    if [ $? -ne 0 ]; then    \n       echo \"$file has no '1'\"    \n       # 在没有的文件后边追一个 # hello    \n       echo \"#hello\" >> \"$file\"    \n    fi    \ndone\n$# 表示提供到shell脚本或者函数的参数总数。\n$0 表示第一个参数。\n-ne 表示不等于。\n这是unix的shell编程语句，如果上一条命令执行后的结束代码不是0则执行下面的命令，知道fi行之前，例子：\nwho am i | grep root\nif [ $? -ne 0 ]\nthen\necho 'hello'\nfi\n另外：\n整数比较\n-eq 等于,如:if [\"$a\" -eq \"$b\" ]\n-ne 不等于,如:if [\"$a\" -ne \"$b\" ]\n-gt 大于,如:if [\"$a\" -gt \"$b\" ]\n-ge 大于等于,如:if [\"$a\" -ge \"$b\" ]\n-lt 小于,如:if [\"$a\" -lt \"$b\" ]\n-le 小于等于,如:if [\"$a\" -le \"$b\" ]\n< 小于(需要双括号),如:((\"$a\" < \"$b\"))\n<= 小于等于(需要双括号),如:((\"$a\" <= \"$b\"))\n> 大于(需要双括号),如:((\"$a\" > \"$b\"))\n>= 大于等于(需要双括号),如:((\"$a\" >= \"$b\"))\n\nls *.sh 命令过滤\n\n\n参数扩展\n\nconvert hello.jpg hello.png\nconvert hello.{jpg,png} # \n\ntouch hello.{png,jpg}\nrm *.{jpg,png}\n > find 查找文件, 名字,日期(n天内..),类型(文件,文件夹), 大小(文件大小), 额外操作(删除,对比…)\nfind . -name src -type d\nfind ./{a,b} -path '*.py' -type f\n\n1、-mtime n : n为数字，意思为在n天之前的“一天之内”被更改过内容的文件\n2、-mtime +n : 列出在n天之前（不含n天本身）被更改过内容的文件名\n3、-mtime -n : 列出在n天之内（含n天本身）被更改过内容的文件名\n\n# Find all zip files with size in range 500k to 10M\nfind . -size +500k -size -10M -name '*.tar.gz'\n\n# 删除\n# Delete all files with .tmp extension\nfind . -name '*.tmp' -exec rm {} \\;\n# Find all PNG files and convert them to JPG\nfind . -name '*.png' -exec convert {} {}.jpg \\;\n >locate文件子串查找\n许多时候我们并不知道文件的位置,只有一些关键字, 所以通过关键字全局查找显得非常必要(有点类似windows 的everything)\nlocate hello\n\ngrep文件内容查找\n\n# 在指定文件内查找\ngrep hello xxx.sh\n# 在当前目录递归查找hello\ngrep -r hello .\n\nrg按照文件类型, 指定路径,搜索指定内容\n\nrg \"echo\" -t sh ~/projects/cs_base/\n\n# 获取前后2行(一共4行)内容\nrg \"echo\" -t sh -C 4 ~/projects/cs_base/\n\nctrl+r搜索历史, 继续按可以继续向前翻符合的命令 history展示全部命令\n\n\nfzf文件内容查找\n\ncat hello|fzf\n\n\n\n在这里插入图片描述\n\n\n\nbroot nnn # class 3 # class 4 # class 5 # class 6 # class 7 # class 8 # class 9 # class 10 # class 11 # 答疑"
+  },
+  {
     "objectID": "posts/java多线程-- 线程池( Executors.newFixedThreadPool() )/index.html",
     "href": "posts/java多线程-- 线程池( Executors.newFixedThreadPool() )/index.html",
     "title": "java多线程– 线程池( Executors.newFixedThreadPool() )",
     "section": "",
     "text": "执行结果 \npackage cn.usts.edu.lesson08;\n\nimport java.util.concurrent.ExecutorService;\nimport java.util.concurrent.Executors;\n/**\n * 线程池:\n * 线程的创建和销毁很烦,于是就出现了线程池,当线程闲置的时候就放置到池子中\n * 当需要线程的时候就到池子中去取出\n * 提高线程的利用率\n * */\npublic class ThreadPoolDemo {\n    public static void main(String[] args) {\n        // 创建池子  最大线程数\n        ExecutorService service = Executors.newFixedThreadPool(10);\n\n        //启动池子\n        for (int i = 0; i < 20; i++) {\n            service.execute(new TestThread());\n        }\n\n        // 关闭池子\n        service.shutdown();\n    }\n}\n\n\nclass TestThread implements Runnable{\n\n    @Override\n    public void run() {\n        System.out.println(Thread.currentThread().getName());\n    }\n}"
+  },
+  {
+    "objectID": "posts/app反爬/index.html",
+    "href": "posts/app反爬/index.html",
+    "title": "app反爬",
+    "section": "",
+    "text": "根据崔庆才的爬虫书练习 https://scrape.center/ https://www.sojson.com/simple_json.html # app1(简单app无爬措施) 对地址直接发送get请求即可可以获取json数据:\n# -*- coding: utf-8 -*-\n# @Time : 2022/4/17 13:42\n\nimport requests\n\ndef get(url):\n    res = requests.get(url)\n    return res\n\nif __name__ == '__main__':\n    # 数据一共100条\n    res = get(\"https://app1.scrape.center:443/api/movie/?offset=0&limit=100\")\n    print(res.text)\n # app2"
   },
   {
     "objectID": "posts/Ubuntu18版本换源/index.html",
@@ -1708,6 +2303,13 @@
     "text": "在这里插入图片描述"
   },
   {
+    "objectID": "posts/临时邮箱/index.html",
+    "href": "posts/临时邮箱/index.html",
+    "title": "临时邮箱",
+    "section": "",
+    "text": "知乎指南\nhttps://www.guerrillamail.com/"
+  },
+  {
     "objectID": "posts/javaGUI-- JPanel/index.html",
     "href": "posts/javaGUI-- JPanel/index.html",
     "title": "javaGUI– JPanel",
@@ -1741,6 +2343,13 @@
     "title": "Linux下_终端_终端模拟器_shell_bash的区别",
     "section": "",
     "text": "总结\n\n终端: 发送并接收键盘输入, 并渲染处理后的结果 shell: 执行终端发送过来的命令, 并把结果返回给终端. 终端模拟器: 由于在图形界面上第一个终端已经运行图形界面程序了, 所以需要使用第二个终端, 于是终端模拟器的作用就是模拟终端键盘输入发送给shell,渲染返回结果, 但是终端模拟器的出现有种种原因, 速度更快, 显示更好….. bash: 实际是shell的一种实现.\n\n\n\n番外\n\n任何一个linux下都有多个终端\n切换终端ctrl+clt+F1切换别的终端进行 把F1替换为F2 ,F3….\n\n\n图形界面(xserver)的linux\n默认第一个终端运行的就是xserver(图形界面)程序\n\n\n没有xserver的Linux\n默认运行的就是一个命令行 #### shell shell接收终端发送过来的命令并解析, 然后将结果返回给终端"
+  },
+  {
+    "objectID": "posts/多普勒原理/index.html",
+    "href": "posts/多普勒原理/index.html",
+    "title": "多普勒原理",
+    "section": "",
+    "text": "多普勒原理：\n高中知识点，麻了，选修失误， 让我和多普勒失之交臂，相见恨晚的多普勒。"
   },
   {
     "objectID": "posts/qt+darknet+yolo+vs2022(附加库目录lib库)/index.html",
@@ -1785,11 +2394,25 @@
     "text": "双击即可运行\n点击右上角的 x 关闭只关闭了界面, 系统检测进程还是在后台运行, 需要重写closeEvent 进行关闭系统."
   },
   {
+    "objectID": "posts/文件管理服务器/index.html",
+    "href": "posts/文件管理服务器/index.html",
+    "title": "文件管理服务器",
+    "section": "",
+    "text": "https://blog.laoda.de/archives/docker-compose-install-nextcloud"
+  },
+  {
     "objectID": "posts/linux-- 提权/index.html",
     "href": "posts/linux-- 提权/index.html",
     "title": "linux– 提权",
     "section": "",
     "text": "linux提权\nvim /ect/sudoers 修改内容如下\nroot    ALL=(ALL:ALL) ALL\n# 添加的用户\nfly     ALL=(ALL:ALL) ALL"
+  },
+  {
+    "objectID": "posts/南大操作系统基础-ics/index.html",
+    "href": "posts/南大操作系统基础-ics/index.html",
+    "title": "南大操作系统基础-ics",
+    "section": "",
+    "text": "nes模拟器\nhttps://github.com/NJU-ProjectN/fceux-am # https://nju-projectn.github.io/ics-pa-gitbook/ics2020/1.2.html"
   },
   {
     "objectID": "posts/java多线程-- CopyOnWriteArrayList/index.html",
@@ -1811,6 +2434,13 @@
     "title": "nvim打造c语言环境",
     "section": "",
     "text": "sudo apt update\nsudo apt -y upgrade\nsudo apt install -y neovim\nsudo apt install -y vim \n# 修改bashrc文件\nnvim ~/.bashrc\n# 修改内容如下\nalias vm='vim'\nalias nm='nvim'\nsource ~/.bashrc\n# 刷新\nsource ~/.bashrc\n\n创建配置文件夹\nmkdir ~/.config/nvim\nnvim ~/.config/nvim/init.vim"
+  },
+  {
+    "objectID": "posts/arch安装kde/index.html",
+    "href": "posts/arch安装kde/index.html",
+    "title": "arch安装kde",
+    "section": "",
+    "text": "好多安装视频都是框框一段乱敲, 不明所以,不知道安装的是什么插件以及基本功能, 做个笔记记录下安装过程\n\nked社区:https://apps.kde.org/zh-cn/ > 进入到这个社区一下就明白了 pacman -S xxxx 的一堆桌面插件是什么了 # 时间设置\n# 设置时区\ntimedatectl set-timezone Asia/Shanghai\n\n# 打开网络更新时间\ntimedatectl set-ntp true\n\n# 查看状态\ntimedatectl status\n\n配置bash shell环境变量\n# 进入保存环境变量的目录\ncd /etc/skel\n\n# 查看所有的文件(包括隐藏文件)\nls -al  \n\n# 编辑.bashrc文件(系统启动时运行的文件),这里的编辑器根据自己的写,nvim, vim, nano....,这一句即可,其他的可以不要\nnvim .bashrc    \n    -> export EDITOR=nvim       \n\n# 其他的是颜色的显示\n\n\n\n在这里插入图片描述\n\n\n\n\n添加用户\n# 添加用户,并在home目录下创建一个和z同名的文件夹\nuseradd --create-home z\n\n# 查看用户信息\nid z\n\n# 设置密码\npasswd z\n\n# 将z用户添加到常用de用户组中\nusermod -G wheel,users,power,ld,adm,optical,storage z\n\n\n安装sudo 给普通用户提权\n# 安装\npacman -S sudo\n\n# 编辑visudo\nvisudo\n    --> 去掉图中注释\n # 修改文文字设置 本文参考https://www.bilibili.com/read/cv13858119?from=search&spm_id_from=333.337.0.0 \n  \n\n\n安装桌面\nplasma指南 安装 plasma-meta 元软件包或者 plasma 组。 关于 plasma-meta 和 plasma 两者的不同见元软件包与软件包组。若要使用 Plasma 的最小安装，请安装 plasma-desktop 包。\n\n前者是软件包组，pacman -S plasma 允许你自由选装组内软件，后者是软件包，依赖的是前者的全部软件，不能选装，一旦软件包组里有软件新加入，前者不会要求你安装，后者会。\n\npacman -S plasma \n\n\n启动管理\n# \npacman -S sddm\nsystemctl enable sddm \n# 如果切换管理器先把之前的关闭\nsystemctl disable sddm\n\n# 手动启动sddm\nsudo systemctl start sddm \npacman -S dolphin konsole kdeconnect kcalc\n\n\n\n名称\n功能\n\n\n\n\ndolphin\n文件管理\n\n\nkonsole\n命令行终端\n\n\nkdeconnect\n手机电脑互联(发送文件等)\n\n\nkcalc\n计算器"
   },
   {
     "objectID": "index.html",
@@ -1845,6 +2475,6 @@
     "href": "article.html",
     "title": "Article",
     "section": "",
-    "text": "javaGUI–浮动布局(FlowLayOut)\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nlinux–创建用户修改&修改密码\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaArrayList作业二\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava网络编程– IP地址\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava EE请求转发（转发和重定向）\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– 线程休眠(sleep)\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\npyqt5 –01简单继承关系\n\n\n\n\n\n\n\npython\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava EE 重定向的多种实现方法\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nmysql8.0安装\n\n\n\n\n\n\n\nmysql\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nlinux ssh长时间无操作断连\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nqt线程问题(耗时操作)\n\n\n\n\n\n\n\nqt\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– join(线程插队,优先执行)\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nstm32–io口拉高还是拉低\n\n\n\n\n\n\n\nstm32\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nlinux键盘f1-f12功能键盘失效\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– thread.setDaemon(true) 守护线程简单实现\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–窗口事件监听\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– 静态代理(简单剖析)\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava EE 一行代码实现定时刷新，定时跳转\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程–ReentrantLock ( Lock上锁 _ 解锁 )\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nshell脚本批量创建多个用户\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava EE 获取请求行、请求头、请求正文\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nqtQByteArry以二进制写入多n个字节\n\n\n\n\n\n\n\nqt\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nlinux– linux忘记密码(修改root密码)\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\npip加速\n\n\n\n\n\n\n\npython\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava注解和反射– 内置注解\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nstm32F103-RT-Thread线程管理\n\n\n\n\n\n\n\nrtthread\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nTI_js脚本自动调试\n\n\n\n\n\n\n\nmmwave\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nvs studio添加include和依赖库\n\n\n\n\n\n\n\nide\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nqt –问题总结(头文件问题,QString转换,查找组件)\n\n\n\n\n\n\n\nqt\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava网络编程– 通信协议\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nstm32F103-RT-Thread 重映射串口到 rt_kprintf 函数\n\n\n\n\n\n\n\nrtthread\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–Swing之[Dialog]弹窗\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nTI_dsp入门-ti c660\n\n\n\n\n\n\n\nmmwave\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava网络编程– URL（基本用法）\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nstm32F103-RT-Thread定时器\n\n\n\n\n\n\n\nrtthread\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nSpring简单使用（依赖注入）\n\n\n\n\n\n\n\nspring\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava集合– 所有\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nqt上位机 – 自己开发出口助手\n\n\n\n\n\n\n\nqt\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nstm32H743+CubeMX+RtThread工程创建\n\n\n\n\n\n\n\nrtthread\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nvue – 01安装、创建、跑通\n\n\n\n\n\n\n\nvue\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–布局练习\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–滚动条JScrollPane\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava注解和反射–通过反射获取到注解的值\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava EE一行代码解决乱码（设置服务器编码；设置浏览器编码方式）\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– sleep实现 ( 时间刷新 , 模拟倒计时)\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaArrayList作业1\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– 线程不安全三大案例(银行账户同时取钱问题 、 网上买票问题 、 线程不安全集合)(同步块,同步方法)\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– 初识多线程的问题(简单案例)\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nNavicat中 int(0)表示什么【init（0）是什么意思】\n\n\n\n\n\n\n\nclutter\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–东西南北中布局\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nmanjaro install\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nqt多线程QThread()\n\n\n\n\n\n\n\nqt\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– 生产者消费者\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– 线程停止\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava网络编程– URL(网络资源下载)\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava网络编程– Tcp聊天\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nwin11-删除账户导致输入正确密码也无法卡机（windows无法进入系统）\n\n\n\n\n\n\n\nclutter\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava注解和反射– 得到class类的几种方式\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava冒泡排序\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nvs打包qt程序\n\n\n\n\n\n\n\nqt\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava基础知识（笔记）\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– 信号灯法则\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nspringmvc-json-乱码解决\n\n\n\n\n\n\n\nspring\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– Runnable简单实现(例子)\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nUbuntu21 美化\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava集合– HashSet小练习\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– Callable接口简单应用\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nspring整合SSM\n\n\n\n\n\n\n\nspring\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava EE 会话和会话技术 -cookie\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– yield 线程礼让\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava网络编程– 文件传输\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nstm32F103-RT-Thread– 互斥量(mutex)\n\n\n\n\n\n\n\nrtthread\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nlinux matlab安装失败major\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava EE 设置响应头内容、长度；响应行状态码、错误提示信息【setHeader和addHeader的区别—-＞步骤2】\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–下拉框JComboBox\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava EE 解决请求中的缓冲区中文乱码问题\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\npyqt5 –02面向对象的设计思想\n\n\n\n\n\n\n\npython\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava EE -Session\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–icon\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava网络编程– 端口\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nmap作业三(集合)韩顺平\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava EE 简单登陆跳转逻辑\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava注解和反射– 自定义注解\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\npyinstaller打包程序问题总结\n\n\n\n\n\n\n\npython\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nstm32F103-RT-Thread移植(固件库版本)-项目创建\n\n\n\n\n\n\n\nrtthread\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–Swing [ icon ]画一个icon\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nwebSocket-node – 01简单跑通\n\n\n\n\n\n\n\nnodejs\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nlinux入门基操作\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava注解和反射–类加的载\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nTI_ccs修改环境变量\n\n\n\n\n\n\n\nmmwave\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava常用类–时间日期类\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava常用类– String、StringBuffer（StringBuilder）\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nLinux _ Ubuntu18解决(无法获得锁 var_lib_dpkg_lock - open (11 资源暂时不可用))\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– 简单实现多线程\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava GUI编程–panel\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nstm32H743使用\n\n\n\n\n\n\n\nrtthread\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– Runnable接口实现多线程网图下载\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–监听器 [ 关闭按钮 ]\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nspringMVC-设置日期时间对象【自定义日期时间格式】\n\n\n\n\n\n\n\nspring\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nlinux–改变用户所在组(改变登陆初始位置)\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava–gui_简单计算器\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nnodejs安装–（npm安装）\n\n\n\n\n\n\n\nclutter\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–监听器02\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–frame\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava注解和反射– 反射\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nprotobuf协议– 01使用（js简单实现）\n\n\n\n\n\n\n\nnodejs\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–列表框 JList\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava和– Collections工具类\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nJava函数式接口的一个疑惑：为什么Comparator接口有两个抽象方法compare和equals，Comparator还是一个函数式接口？\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– thread.getState() 查看线程状态\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nqt–vs2022+qt5.15.2\n\n\n\n\n\n\n\nqt\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava_TreeSet和HashSet的去重原理 (作业四)\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nweb-packet –01\n\n\n\n\n\n\n\nnodejs\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nstm32F103-RT-Thread–信号量(semaphare)\n\n\n\n\n\n\n\nrtthread\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– lambda表达式(实现原理, 4行代码 最简单的实现 )\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI– 鼠标监听\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava–创建Tomcat服务器\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava EE 利用Referer简单实现防盗链功能\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava常用类– System类的常用方法, Runtime类\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nPython–Threading\n\n\n\n\n\n\n\npython\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– 死锁模拟( synchronized )\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nqt无法输出\n\n\n\n\n\n\n\nqt\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\npyqt5 –03QObje对象的使用\n\n\n\n\n\n\n\npython\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nPycharm环境配置\n\n\n\n\n\n\n\nide\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nwebSocket – 03 socket.io\n\n\n\n\n\n\n\nnodejs\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava注解和反射– 元注解\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava_Fastjson的使用\n\n\n\n\n\n\n\nspring\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nsmt32-f103寄存器点灯\n\n\n\n\n\n\n\nstm32\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nstm32芯片开发包\n\n\n\n\n\n\n\nrtthread\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava注解和反射– 所有类的Class类型\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava常用类– 包装类\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nstm32F103-RT-Thread线程同步(event)\n\n\n\n\n\n\n\nrtthread\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nLinux– 查看和修改文件所在组\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– 网图多线程下载\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nspringmvc-hellomvc-02\n\n\n\n\n\n\n\nspring\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\npyqt5 –04QObje对象的父子关系使用\n\n\n\n\n\n\n\npython\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava注解和反射– 利用反射来 实例化对象,调用功能方法,设置属性\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nstm32F103-RT-Thread邮箱(mailbox)\n\n\n\n\n\n\n\nrtthread\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava注解和反射– 利用反射获取类的运行时结构(属性,方法,对象,构造器)\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nvmware镜像站\n\n\n\n\n\n\n\nclutter\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nstm32F103-RT-Thread动态内存分配\n\n\n\n\n\n\n\nrtthread\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nTI_icboost+IWR6843\n\n\n\n\n\n\n\nmmwave\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–Swing[JFrame]\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nshell批量创建20个指定文件名格式的文件（或文件夹）\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– thread.setPriority() 线程优先级\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nquarto\n\n\n\n\n\n\n\nclutter\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava_jdk安装，配置环境（win10）\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nTI_MMWave_EDMA_以及ti_OutOfBoxDemo数据处理(data_path)_解析\n\n\n\n\n\n\n\nmmwave\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava网络编程– udp通信\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava常用类– Math和Random\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nshell编程的简单实现\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava- 贪吃蛇\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–文本框JTextField_密码框JPasswordField()_文本域 JTextArea\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程–龟兔赛跑\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– 线程池( Executors.newFixedThreadPool() )\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nUbuntu18版本换源\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\npowershell获取脚本执行权限\n\n\n\n\n\n\n\nclutter\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nwebSocket-node – 02 聊天室\n\n\n\n\n\n\n\nnodejs\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI– JPanel\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nqt大小端转换\n\n\n\n\n\n\n\nqt\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\npyqt5 –05对象类型判定和控件继承类型\n\n\n\n\n\n\n\npython\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–表格布局\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nLinux下_终端_终端模拟器_shell_bash的区别\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nqt+darknet+yolo+vs2022(附加库目录lib库)\n\n\n\n\n\n\n\nprojects\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nlinux– 提权\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– CopyOnWriteArrayList\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nqt移动界面无响应[ 多线程 ]\n\n\n\n\n\n\n\nqt\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nnvim打造c语言环境\n\n\n\n\n\n\n\nclutter\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nMatlab Coder\n\n\n\n\n\n\n\nmatlab\n\n\n\n\n\n\n\n\n\n\n\nNov 22, 2022\n\n\ndd21\n\n\n\n\n\n\nNo matching items"
+    "text": "javaGUI–浮动布局(FlowLayOut)\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nlinux–创建用户修改&修改密码\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n设置Caps_Lock和Esc交换\n\n\n\n\n\n\n\nclutter\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaArrayList作业二\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava网络编程– IP地址\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n中科大源\n\n\n\n\n\n\n\nclutter\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava EE请求转发（转发和重定向）\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– 线程休眠(sleep)\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\narch没有wifi\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\npyqt5 –01简单继承关系\n\n\n\n\n\n\n\npython\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava EE 重定向的多种实现方法\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nmysql8.0安装\n\n\n\n\n\n\n\nmysql\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nlinux ssh长时间无操作断连\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nqt线程问题(耗时操作)\n\n\n\n\n\n\n\nqt\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– join(线程插队,优先执行)\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nstm32–io口拉高还是拉低\n\n\n\n\n\n\n\nstm32\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nlinux键盘f1-f12功能键盘失效\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n三步简单解决3306端口占用问题（windows）\n\n\n\n\n\n\n\nclutter\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n算法 –0_算法是什么\n\n\n\n\n\n\n\nalgorithm\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– thread.setDaemon(true) 守护线程简单实现\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–窗口事件监听\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– 静态代理(简单剖析)\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava EE 一行代码实现定时刷新，定时跳转\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n树莓派开箱点亮(无屏幕)\n\n\n\n\n\n\n\nclutter\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程–ReentrantLock ( Lock上锁 _ 解锁 )\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nshell脚本批量创建多个用户\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava EE 获取请求行、请求头、请求正文\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nqtQByteArry以二进制写入多n个字节\n\n\n\n\n\n\n\nqt\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nlinux– linux忘记密码(修改root密码)\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n清除html和css标签自带的默认样式\n\n\n\n\n\n\n\nclutter\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\npip加速\n\n\n\n\n\n\n\npython\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava注解和反射– 内置注解\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nstm32F103-RT-Thread线程管理\n\n\n\n\n\n\n\nrtthread\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n算法– 1_递归\n\n\n\n\n\n\n\nalgorithm\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nTI_js脚本自动调试\n\n\n\n\n\n\n\nmmwave\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nvs studio添加include和依赖库\n\n\n\n\n\n\n\nide\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nqt –问题总结(头文件问题,QString转换,查找组件)\n\n\n\n\n\n\n\nqt\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava网络编程– 通信协议\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nstm32F103-RT-Thread 重映射串口到 rt_kprintf 函数\n\n\n\n\n\n\n\nrtthread\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–Swing之[Dialog]弹窗\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nTI_dsp入门-ti c660\n\n\n\n\n\n\n\nmmwave\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava网络编程– URL（基本用法）\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n电动车头盔检测系统(毕设)\n\n\n\n\n\n\n\nprojects\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nstm32F103-RT-Thread定时器\n\n\n\n\n\n\n\nrtthread\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nSpring简单使用（依赖注入）\n\n\n\n\n\n\n\nspring\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava集合– 所有\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nqt上位机 – 自己开发出口助手\n\n\n\n\n\n\n\nqt\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nstm32H743+CubeMX+RtThread工程创建\n\n\n\n\n\n\n\nrtthread\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nvue – 01安装、创建、跑通\n\n\n\n\n\n\n\nvue\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–布局练习\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n模仿网易严选(vant)\n\n\n\n\n\n\n\nprojects\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–滚动条JScrollPane\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava注解和反射–通过反射获取到注解的值\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava EE一行代码解决乱码（设置服务器编码；设置浏览器编码方式）\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– sleep实现 ( 时间刷新 , 模拟倒计时)\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaArrayList作业1\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– 线程不安全三大案例(银行账户同时取钱问题 、 网上买票问题 、 线程不安全集合)(同步块,同步方法)\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– 初识多线程的问题(简单案例)\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n腾讯云简单使用-Python\n\n\n\n\n\n\n\nclutter\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nNavicat中 int(0)表示什么【init（0）是什么意思】\n\n\n\n\n\n\n\nclutter\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–东西南北中布局\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nmanjaro install\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nqt多线程QThread()\n\n\n\n\n\n\n\nqt\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– 生产者消费者\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– 线程停止\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava网络编程– URL(网络资源下载)\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava网络编程– Tcp聊天\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n毫米波雷达\n\n\n\n\n\n\n\nmmwave\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nwin11-删除账户导致输入正确密码也无法卡机（windows无法进入系统）\n\n\n\n\n\n\n\nclutter\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava注解和反射– 得到class类的几种方式\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava冒泡排序\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nvs打包qt程序\n\n\n\n\n\n\n\nqt\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava基础知识（笔记）\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– 信号灯法则\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nspringmvc-json-乱码解决\n\n\n\n\n\n\n\nspring\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n中断-轮询\n\n\n\n\n\n\n\ncs\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– Runnable简单实现(例子)\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nUbuntu21 美化\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava集合– HashSet小练习\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n安卓7以上安装系统证书(system分区没有权限)\n\n\n\n\n\n\n\nspider\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– Callable接口简单应用\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nspring整合SSM\n\n\n\n\n\n\n\nspring\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n二分查找\n\n\n\n\n\n\n\nalgorithm\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava EE 会话和会话技术 -cookie\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– yield 线程礼让\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava网络编程– 文件传输\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nstm32F103-RT-Thread– 互斥量(mutex)\n\n\n\n\n\n\n\nrtthread\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nlinux matlab安装失败major\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava EE 设置响应头内容、长度；响应行状态码、错误提示信息【setHeader和addHeader的区别—-＞步骤2】\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–下拉框JComboBox\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava EE 解决请求中的缓冲区中文乱码问题\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\npyqt5 –02面向对象的设计思想\n\n\n\n\n\n\n\npython\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava EE -Session\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n小米刷机\n\n\n\n\n\n\n\nclutter\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–icon\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n南大ics基础课\n\n\n\n\n\n\n\ncs\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava网络编程– 端口\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n南大ics课程\n\n\n\n\n\n\n\ncs\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nmap作业三(集合)韩顺平\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava EE 简单登陆跳转逻辑\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava注解和反射– 自定义注解\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\npyinstaller打包程序问题总结\n\n\n\n\n\n\n\npython\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nstm32F103-RT-Thread移植(固件库版本)-项目创建\n\n\n\n\n\n\n\nrtthread\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–Swing [ icon ]画一个icon\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nwebSocket-node – 01简单跑通\n\n\n\n\n\n\n\nnodejs\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\narch安装\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n计算机组成原理 – 大端模式,小端模式\n\n\n\n\n\n\n\ncs\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nlinux入门基操作\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava注解和反射–类加的载\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nTI_ccs修改环境变量\n\n\n\n\n\n\n\nmmwave\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava常用类–时间日期类\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava常用类– String、StringBuffer（StringBuilder）\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nLinux _ Ubuntu18解决(无法获得锁 var_lib_dpkg_lock - open (11 资源暂时不可用))\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– 简单实现多线程\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava GUI编程–panel\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nstm32H743使用\n\n\n\n\n\n\n\nrtthread\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\narch yay安装qq\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n在Ubuntu下配置C语言编辑环境【gcc】,【gdb】，【build-essential】\n\n\n\n\n\n\n\nc\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– Runnable接口实现多线程网图下载\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–监听器 [ 关闭按钮 ]\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nspringMVC-设置日期时间对象【自定义日期时间格式】\n\n\n\n\n\n\n\nspring\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nlinux–改变用户所在组(改变登陆初始位置)\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nalu整数加法_减法\n\n\n\n\n\n\n\ncs\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava–gui_简单计算器\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n汇编–00安装dosBox\n\n\n\n\n\n\n\ncs\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nnodejs安装–（npm安装）\n\n\n\n\n\n\n\nclutter\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–监听器02\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–frame\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava注解和反射– 反射\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nprotobuf协议– 01使用（js简单实现）\n\n\n\n\n\n\n\nnodejs\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–列表框 JList\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\napp爬虫–持续更新\n\n\n\n\n\n\n\nspider\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n南京大学ics pa实验O\n\n\n\n\n\n\n\ncs\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava和– Collections工具类\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nJava函数式接口的一个疑惑：为什么Comparator接口有两个抽象方法compare和equals，Comparator还是一个函数式接口？\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– thread.getState() 查看线程状态\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nqt–vs2022+qt5.15.2\n\n\n\n\n\n\n\nqt\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n简单的创建一个DHCP服务器（WinServ2008-2R）【图文】\n\n\n\n\n\n\n\nnetwork\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n应用视觉设计\n\n\n\n\n\n\n\ncss\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava_TreeSet和HashSet的去重原理 (作业四)\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nweb-packet –01\n\n\n\n\n\n\n\nnodejs\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nstm32F103-RT-Thread–信号量(semaphare)\n\n\n\n\n\n\n\nrtthread\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– lambda表达式(实现原理, 4行代码 最简单的实现 )\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI– 鼠标监听\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava–创建Tomcat服务器\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava EE 利用Referer简单实现防盗链功能\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava常用类– System类的常用方法, Runtime类\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n计算机组成原理\n\n\n\n\n\n\n\ncs\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nPython–Threading\n\n\n\n\n\n\n\npython\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– 死锁模拟( synchronized )\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nqt无法输出\n\n\n\n\n\n\n\nqt\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\npyqt5 –03QObje对象的使用\n\n\n\n\n\n\n\npython\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nPycharm环境配置\n\n\n\n\n\n\n\nide\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nwebSocket – 03 socket.io\n\n\n\n\n\n\n\nnodejs\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava注解和反射– 元注解\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava_Fastjson的使用\n\n\n\n\n\n\n\nspring\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nsmt32-f103寄存器点灯\n\n\n\n\n\n\n\nstm32\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nstm32芯片开发包\n\n\n\n\n\n\n\nrtthread\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava注解和反射– 所有类的Class类型\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava常用类– 包装类\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nstm32F103-RT-Thread线程同步(event)\n\n\n\n\n\n\n\nrtthread\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nLinux– 查看和修改文件所在组\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– 网图多线程下载\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nspringmvc-hellomvc-02\n\n\n\n\n\n\n\nspring\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\npyqt5 –04QObje对象的父子关系使用\n\n\n\n\n\n\n\npython\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava注解和反射– 利用反射来 实例化对象,调用功能方法,设置属性\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nstm32F103-RT-Thread邮箱(mailbox)\n\n\n\n\n\n\n\nrtthread\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n内存管理\n\n\n\n\n\n\n\nc\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava注解和反射– 利用反射获取类的运行时结构(属性,方法,对象,构造器)\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nvmware镜像站\n\n\n\n\n\n\n\nclutter\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nstm32F103-RT-Thread动态内存分配\n\n\n\n\n\n\n\nrtthread\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nTI_icboost+IWR6843\n\n\n\n\n\n\n\nmmwave\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–Swing[JFrame]\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nshell批量创建20个指定文件名格式的文件（或文件夹）\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– thread.setPriority() 线程优先级\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nquarto\n\n\n\n\n\n\n\nclutter\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava_jdk安装，配置环境（win10）\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nTI_MMWave_EDMA_以及ti_OutOfBoxDemo数据处理(data_path)_解析\n\n\n\n\n\n\n\nmmwave\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava网络编程– udp通信\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava常用类– Math和Random\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nshell编程的简单实现\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava- 贪吃蛇\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–文本框JTextField_密码框JPasswordField()_文本域 JTextArea\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程–龟兔赛跑\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n缺失的计算机课程YouTube课程\n\n\n\n\n\n\n\ncs\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– 线程池( Executors.newFixedThreadPool() )\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\napp反爬\n\n\n\n\n\n\n\nspider\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nUbuntu18版本换源\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\npowershell获取脚本执行权限\n\n\n\n\n\n\n\nclutter\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nwebSocket-node – 02 聊天室\n\n\n\n\n\n\n\nnodejs\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n临时邮箱\n\n\n\n\n\n\n\nclutter\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI– JPanel\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nqt大小端转换\n\n\n\n\n\n\n\nqt\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\npyqt5 –05对象类型判定和控件继承类型\n\n\n\n\n\n\n\npython\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njavaGUI–表格布局\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nLinux下_终端_终端模拟器_shell_bash的区别\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n多普勒原理\n\n\n\n\n\n\n\nmmwave\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nqt+darknet+yolo+vs2022(附加库目录lib库)\n\n\n\n\n\n\n\nprojects\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n文件管理服务器\n\n\n\n\n\n\n\nclutter\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nlinux– 提权\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\n南大操作系统基础-ics\n\n\n\n\n\n\n\ncs\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\njava多线程– CopyOnWriteArrayList\n\n\n\n\n\n\n\njava\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nqt移动界面无响应[ 多线程 ]\n\n\n\n\n\n\n\nqt\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nnvim打造c语言环境\n\n\n\n\n\n\n\nclutter\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\narch安装kde\n\n\n\n\n\n\n\nlinux\n\n\n\n\n\n\n\n\n\n\n\nDec 5, 2022\n\n\ndd21\n\n\n\n\n\n\n  \n\n\n\n\nMatlab Coder\n\n\n\n\n\n\n\nmatlab\n\n\n\n\n\n\n\n\n\n\n\nNov 22, 2022\n\n\ndd21\n\n\n\n\n\n\nNo matching items"
   }
 ]
