@@ -1,0 +1,36 @@
+---
+title: "java多线程-- Runnable简单实现(例子)"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+
+```java
+package cn.usts.edu.lesson01;
+
+public class RunnableSimpleDemo implements Runnable{
+
+    @Override
+    public void run() {
+        for (int i = 0; i < 20; i++) {
+            System.out.println("吃第"+i+"个馒头");
+        }
+    }
+
+    public static void main(String[] args) {
+//        RunnableSimpleDemo runnableSimpleDemo = new RunnableSimpleDemo();
+//        Thread thread = new Thread(runnableSimpleDemo);
+//        thread.start();// 线程启动
+        new Thread(new RunnableSimpleDemo()).start();// 线程启动
+
+        for (int i = 0; i < 20; i++) {
+            System.out.println("喝第"+i+"口水");
+        }
+    }
+}
+
+```
+

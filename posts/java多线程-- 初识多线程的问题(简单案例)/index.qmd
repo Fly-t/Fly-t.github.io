@@ -1,0 +1,46 @@
+---
+title: "java多线程-- 初识多线程的问题(简单案例)"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+`没有控制的并发会导致数据的不一致`
+![在这里插入图片描述](https://img-blog.csdnimg.cn/e66aa5f82def4e22aef56883990222ca.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_17,color_FFFFFF,t_70,g_se,x_16)
+
+```java
+package cn.usts.edu.lesson02;
+
+/**
+ * 并发会导致对数据的访问有问题
+ * */
+public class ThreadProblem implements Runnable{
+    private int tickets=10;
+
+    @Override
+
+    public void run() {
+        String threadName = Thread.currentThread().getName(); // 获取当前线程的名字
+        while (true){
+            if (tickets<=0){
+                break;
+            }
+            System.out.println("【"+threadName+"】"+tickets--);
+
+        }
+    }
+
+    public static void main(String[] args) {
+        ThreadProblem ticket = new ThreadProblem();
+        new Thread(ticket,"小明").start();
+        new Thread(ticket,"小红").start();
+        new Thread(ticket,"黄牛").start();
+    }
+
+
+}
+
+```
+

@@ -1,0 +1,68 @@
+---
+title: "java多线程--ReentrantLock ( Lock上锁 _ 解锁 )"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+# Lock 的应用
+ * 可重复性锁,相比传统的synchronized
+ * ReentrantLock更直观,直观上锁解锁
+![在这里插入图片描述](https://img-blog.csdnimg.cn/9ecd3ad75f234d80857cca0ea5f0d60d.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+```java
+package cn.usts.edu.lesson08;
+
+import java.util.concurrent.locks.ReentrantLock;
+
+/**
+ * 可重复性锁,相比传统的synchronized
+ * ReentrantLock更直观,直观上锁解锁
+ * */
+
+public class LockDemo implements Runnable{
+
+    private int tickets=10;
+
+    private final ReentrantLock lock = new ReentrantLock(); // 实例化锁
+
+    public static void main(String[] args) {
+        LockDemo lockDemo = new LockDemo();
+        new Thread(lockDemo).start();
+        new Thread(lockDemo).start();
+        new Thread(lockDemo).start();
+    }
+
+
+
+    @Override
+    public void run() {
+
+        try {
+            lock.lock();// 上锁
+
+            while (true){
+                if (tickets>0){
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println(tickets--);
+                }
+                else {
+                    break;
+                }
+            }
+        }finally {
+            lock.unlock();// 解锁
+        }
+
+    }
+}
+
+
+```
+

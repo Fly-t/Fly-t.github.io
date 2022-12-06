@@ -1,0 +1,73 @@
+---
+title: "java多线程-- 静态代理(简单剖析)"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+
+`静态代理`
+ * 就是创建一个A对象代替B对象去干活, 
+ * 把认为不重要的事情交给A(代理)去做
+ * 到主要时候换B上厂,有点明星请替身的滋味
+```java
+package cn.usts.edu.lesson04;
+
+/**
+ * 静态代理
+ * 就是创建一个A对象代替B对象去干活, 
+ * 把认为不重要的事情交给A(代理)去做
+ * 到主要时候换B上厂,有点明星请替身的滋味
+ * */
+
+interface Marry{
+    void doMarry(String name);
+}
+
+// 你去实现Marry接口
+class You implements Marry{
+    @Override
+    public void doMarry(String name) {
+        System.out.println(name+"结婚啦");
+    }
+}
+
+// 婚庆公司 也实现结婚接口
+class WeddingCompany implements Marry{
+    private Marry target;// 代理的目标 [帮谁代理结婚的]
+
+    public WeddingCompany(Marry target) {
+        this.target = target;
+    }
+
+    public void before(){
+        System.out.println("布置现场");
+    }
+
+    public void after(){
+        System.out.println("收尾款");
+    }
+
+    @Override
+    public void doMarry(String name) {
+        this.before();
+        this.target.doMarry(name);
+        this.after();
+    }
+}
+
+// 主体类
+public class staticProxy {
+    public static void main(String[] args) {
+        You you = new You();
+        WeddingCompany weddingCompany = new WeddingCompany(you);
+        weddingCompany.doMarry("小明");
+    }
+}
+
+
+
+```
+

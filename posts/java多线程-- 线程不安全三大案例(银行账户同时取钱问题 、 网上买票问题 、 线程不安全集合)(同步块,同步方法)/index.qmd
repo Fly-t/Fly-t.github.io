@@ -1,0 +1,192 @@
+---
+title: "java多线程-- 线程不安全三大案例(银行账户同时取钱问题 、 网上买票问题 、 线程不安全集合)(同步块,同步方法)"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+## 银行账户同时取钱问题
+ * 编程模型: A,B共有一个账户,俩人一块要取钱,都在手机上操作
+ * 账户上有100, A取要90,B要取80;
+ * 连个人同时看到都有100.都可以取出,
+ * 所以问题就产生了.
+ * 解决方案:
+ *    `锁块,对account上锁,只能一个线程对account操作.[同步块]`
+```java
+package cn.usts.edu.lesson07;
+
+/**
+ * 编程模型: A,B共有一个账户,俩人一块要取钱,都在手机上操作
+ * 账户上有100, A取要90,B要取80;
+ * 连个人同时看到都有100.都可以取出,
+ * 所以问题就产生了.
+ *
+ * 解决方案:
+ *    锁块,对account上锁,只能一个线程对account操作.[同步块]
+ * */
+
+public class UnSafeBank {
+
+    public static void main(String[] args) {
+        Account account = new Account(100,"旅游基金");
+        Drawing a = new Drawing(account, 90);
+        Drawing b = new Drawing(account, 80);
+        new Thread(a, "A").start();
+        new Thread(b, "B").start();
+    }
+}
+
+// 账户
+class Account {
+    int money;
+    String name;
+
+    public Account(int money, String name) {
+        this.money = money;
+        this.name = name;
+    }
+}
+
+// 银行
+class Drawing implements Runnable{
+
+    final Account account;
+    int drawMoney;
+    int nowMoney=0;
+
+
+    public Drawing(Account account, int drawMoney) {
+        this.account = account;
+        this.drawMoney = drawMoney;
+
+    }
+
+    @Override
+    public void run() {
+        synchronized (account){   // 锁块,对account上锁,只能一个线程对account操作.
+            System.out.println(Thread.currentThread().getName()+"要取出"+drawMoney);
+            // 判断是否够取出的
+            if (account.money-drawMoney<0){
+                System.out.println(Thread.currentThread().getName()+"==输入的金额有问题,取不了");
+                return;
+            }
+
+            // 现在手上的钱
+            nowMoney = nowMoney+drawMoney;
+            System.out.println(Thread.currentThread().getName()+"现在手上:"+nowMoney);
+
+            // 现在的卡内余额
+            account.money=account.money-drawMoney;
+            System.out.println(account.name+"余额:"+account.money);
+        }
+
+
+    }
+}
+```
+## 网上买票问题
+不安全的买票机制
+ * 如果网络拥堵导致网络延时,会使得对于tickets的读取有问题,
+ * 对于并发生的问题就是排队和上锁
+ * 解决方案:
+ *   `在方法前加上 synchronized 同步方法,锁的是this  [同步方法]`
+```java
+package cn.usts.edu.lesson07;
+
+/**
+ * 不安全的买票机制
+ * 如果网络拥堵导致网络延时,会使得对于tickets的读取有问题,
+ * 对于并发生的问题就是排队和上锁
+ *
+ * 解决方案:
+ *   在方法前加上 synchronized 同步方法,锁的是this  [同步方法]
+ * */
+
+public class UnSafeBuyTickets {
+    public static void main(String[] args) {
+        BuyTickets buyTickets = new BuyTickets();
+        new Thread(buyTickets,"小明").start();
+        new Thread(buyTickets,"小红").start();
+        new Thread(buyTickets,"黄牛").start();
+
+    }
+}
+
+class  BuyTickets implements Runnable{
+    // 100张票
+    int tickets = 10;
+    boolean flag = true;
+
+    @Override
+    public void run() {
+        while (flag){
+            buy();
+        }
+    }
+
+
+    // 在方法前加上 synchronized 同步方法,锁的是this
+    public  void buy(){
+
+        if (tickets<=0){
+            flag=false;
+            return; // 程序到这结束
+        }
+        try {
+            Thread.sleep(100);// 模拟网络延时,放大问题
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(Thread.currentThread().getName()+tickets--);
+    }
+}
+```
+
+## 线程不安全集合
+ * 每次执行都无法达到理想的数字,是什么原因,
+ * 是因为反应太快,导致不同线程对同一个list中的位置进行修改,导致了覆盖.
+ * 解决方案:
+ *    `添加锁块,等待线程结束`
+```java
+package cn.usts.edu.lesson07;
+
+/**
+ * 每次执行都无法达到理想的数字,是什么原因,
+ * 是因为反应太快,导致不同线程对同一个list中的位置进行修改,导致了覆盖.
+ *
+ * 解决方案:
+ *      添加锁块,等待线程结束.
+ * */
+
+import java.util.ArrayList;
+
+public class UnSafeList {
+    public static void main(String[] args) {
+        ArrayList<String> arrayList = new ArrayList<>();
+
+
+        for (int i = 0; i < 10000; i++) {
+
+
+                new Thread(()->{// 每次循环启动一个线程,并写线程名
+                    synchronized (arrayList){
+                        arrayList.add(Thread.currentThread().getName());//写入线程名
+                    }
+
+                }).start();
+        }
+        try {
+            Thread.sleep(1000);//等待线程跑完,不加可能线程没跑完就打印出来了
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(arrayList.size());// 查看list的大小(list中有多少个线程名)
+    }
+}
+
+
+```
+

@@ -1,0 +1,62 @@
+---
+title: "java EE请求转发（转发和重定向）"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+请求转发和请求重定向的区别是：
+`请求转发只有一次请求，请求重定向有两次请求。`
+# 1、 请求转发  方法实现
+将`RequestFrowardServlet`里的company的值转发给`ResaultServlet`展示
+<br>
+域对象：在一定范围内可以存值和取值
+request域对象：在一次请求中可以存值和取值。
+
+```java
+存值： request.setAttribute(String key, Object obj)
+取值： Object obj = request.getAttribute(String key, Object obj)
+删除值： request.removeAttRibute(String key)
+
+```
+
+
+`RequestFrowardServlet`
+```java
+// 获取转发对象
+RequestDispatcher  rd = request.getRequestDispatcher("/resault");
+// 调用转发方法，实现转发效果
+request.setAttribute("company","abc公司");
+rd.forward(request, response);
+```
+
+<br>`ResaultServlet`
+```java
+// 处理响应中文乱码
+response.setContentType("text/html;charset=utf-8");
+// 获取并转换获取的company所对应的的值
+String name = (String) request.getAttribute("company");
+// 输出到页面
+response.getWriter().write(name);
+```
+# 2、 请求重定向   方法实现
+将`RequestFrowardServlet`里的company的值转发给`ResaultServlet`展示<br>
+`RequestFrowardServlet`
+```java
+// 重定向
+response.sendRedirect("welcom");
+```
+`ResaultServlet`
+```java
+// 处理响应中文乱码
+response.setContentType("text/html;charset=utf-8");
+// 获取转发过来的参数
+String usr = request.getParameter("username");
+String psd = request.getParameter("password");
+// 打印参数
+response.getWriter().write(usr+"<br>");
+response.getWriter().write(psd+"<br>");
+```
+

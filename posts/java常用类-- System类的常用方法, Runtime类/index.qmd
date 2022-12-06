@@ -1,0 +1,127 @@
+---
+title: "java常用类-- System类的常用方法, Runtime类"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+## System类的常用方法
+```java
+package cn.usts.edu.fly.SystemAndRuntime;
+
+import java.util.Properties;
+import java.util.Set;
+
+/**
+ * @author ：fly
+ * @description: java常用库System
+ *               system类定义了一些常用的系统属性和相关方法
+ *               获取Jvm版本,国家,操作系统架构,操作系统名......
+ * @date ：2021/10/31 15:01
+ */
+public class SystemDemo {
+    public static void main(String[] args) {
+        // 获取当前系统属性
+        Properties properties = System.getProperties();
+        System.out.println(properties);
+        // 获取系统属性的所有key(属性名),返回set对象
+        Set<String> keys = properties.stringPropertyNames();
+        for (String key : keys) {
+            String value = System.getProperty(key);
+            System.out.println(key+"--->"+value);
+        }
+
+    }
+}
+
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/74332f9873ab4f41b376525e7807e145.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+### System.currentTimeMillis()
+ *    System.gc();//内存回收
+ *    System.exit(0);// 程序结束
+ *    System.arraycopy(原数组,目标数组,要复制的起始位置,目标起始位置,复制长度);
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/93b560741bc947aeb7b71e77adc0036b.png)
+
+
+```java
+package cn.usts.edu.fly.SystemAndRuntime;
+
+import java.util.Properties;
+import java.util.Set;
+
+/**
+ * @author ：fly
+ * @description: java常用库System
+ *               system类定义了一些常用的系统属性和相关方法
+ *               获取Jvm版本,国家,操作系统架构,操作系统名......
+ *
+ *               System.gc();//内存回收
+ *               System.exit(0);// 程序结束
+ *               System.arraycopy(原数组,目标数组,要复制的起始位置,目标起始位置,复制长度);
+ * @date ：2021/10/31 15:01
+ */
+public class SystemDemo {
+    public static void main(String[] args) {
+ 
+        System.out.println("------------------------------System.currentTimeMillis()-----------------------------------");
+        long startTime = System.currentTimeMillis();
+
+        int sum=0;
+        for (int i = 0; i < 10000000; i++) {
+            sum+=i;
+        }
+
+
+        long endTime = System.currentTimeMillis();
+        System.out.println("程序运行时间:"+(endTime-startTime)+"毫秒");      
+    }
+}
+
+```
+
+
+
+### Runtime类
+ *               用来表示虚拟机的运行状态,用于封装java虚拟机进程,
+ *               每次使用java命令启动java虚拟机都会产生对应的一个Runtime实例,并且只有一个实例
+ *               应用程序会通过该实例与运行时的环境相连,应用程序不能创建自己的runtime实例,需要手动创建安
+ *               Runtime run = Runtime.getRuntime();
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/4908a55be55f4352a9cc8170e7a9caa2.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_19,color_FFFFFF,t_70,g_se,x_16)
+
+
+```java
+package cn.usts.edu.fly.SystemAndRuntime;
+
+import java.io.IOException;
+
+/**
+ * @author ：fly
+ * @description: Runtime类
+ *               用来表示虚拟机的运行状态,用于封装java虚拟机进程,
+ *               每次使用java命令启动java虚拟机都会产生对应的一个Runtime实例,并且只有一个实例
+ *               应用程序会通过该实例与运行时的环境相连,应用程序不能创建自己的runtime实例,需要手动创建安
+ *               Runtime run = Runtime.getRuntime();
+ *
+ *
+ * @date ：2021/10/31 15:25
+ */
+public class RuntimeDemo {
+
+    public static void main(String[] args) throws IOException, InterruptedException {
+        Runtime runtime = Runtime.getRuntime();
+        System.out.println("处理器个数" + runtime.availableProcessors()+"核");
+        System.out.println("空闲内存大小" + runtime.freeMemory()+"byte");
+        System.out.println("最大内存大小" + runtime.maxMemory()+"byte");
+        Process process = runtime.exec("notepad.exe");//相当于打开cmd执行命令
+        Thread.sleep(3000);
+        process.destroy();// 3s后进程销毁;
+
+    }
+}
+
+```
+

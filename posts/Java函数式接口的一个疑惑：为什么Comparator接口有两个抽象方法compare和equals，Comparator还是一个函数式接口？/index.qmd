@@ -1,0 +1,21 @@
+---
+title: "Java函数式接口的一个疑惑：为什么Comparator接口有两个抽象方法compare和equals，Comparator还是一个函数式接口？"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/62caf12e23c74a399ef302f311297bf6.png)
+## TreeSet的lambda写法个人理解
+```java
+TreeSet<String> treeSet = new TreeSet((o1,o2)->((String) o1).compareTo((String) o2) );
+```
+## TreeSet提供的构造器
+这么多的构造器lambda怎么确定是Compartor的呢
+一个一个点进去看,会发现只有Compartor是函数是接口
+![在这里插入图片描述](https://img-blog.csdnimg.cn/c2e76569929a43b59177c886978e1f88.png)
+点击到Compartor中发现,里面有很多方法啊,为什么就是函数式接口了呢
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2b7d804bbf794ed8a1c42f0dad8aa7bc.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+有两个抽象方法,查资料才发现,equals是Object类的方法,这里不属于Compartor,所以最后定位到了compare了

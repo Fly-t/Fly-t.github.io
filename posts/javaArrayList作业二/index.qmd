@@ -1,0 +1,114 @@
+---
+title: "javaArrayList作业二"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+## ArrayList作业二
+![在这里插入图片描述](https://img-blog.csdnimg.cn/94c8bc5e846247ed82dbd16e08fd980b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+```java
+package cn.usts.edu.homework;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+/**
+ * @author ：fly
+ * @description:
+ * @date ：2021/11/4 12:40
+ */
+public class CarDemo {
+
+    public static void main(String[] args) {
+        Car car1 = new Car("宝马", 4000000);
+        Car car2 = new Car("宾利", 5000000);
+
+        ArrayList<Car> cars = new ArrayList<>();
+        cars.add(car1);
+        cars.add(car2);
+        System.out.println(cars);
+
+        cars.remove(car2);// 删除
+        System.out.println(cars.contains(car1));
+
+        System.out.println(cars.size());//长度
+        System.out.println(cars.isEmpty());//判断空
+        cars.clear();// 清空
+        System.out.println(cars);
+
+        ArrayList<Car> cars1 = new ArrayList<>();
+        cars1.add(new Car("大众",150000));
+        cars1.add(new Car("法拉利",150000));
+        cars.addAll(cars1);// 添加多个
+        cars.addAll(cars1);
+        System.out.println(cars);
+
+        cars.add(car1);
+        System.out.println(cars);
+
+        System.out.println(cars.containsAll(cars1));// 包含多个
+
+        //cars.removeAll(cars1);// 删除列表中的所有
+        //System.out.println(cars);
+
+        // for遍历
+        System.out.println("=================for遍历=============");
+        for (Car car : cars) {
+            System.out.println(car);
+        }
+
+        
+        System.out.println("=================迭代器遍历=============");
+        // 迭代器遍历
+        Iterator<Car> iterator = cars.iterator();
+        while (iterator.hasNext()){
+            System.out.println(iterator.next());
+        }
+
+    }
+}
+
+class Car{
+    private String name;
+    private double price;
+
+    public Car() {
+    }
+
+    public Car(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                '}';
+    }
+}
+
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/ed94b0c08bd44f23a1f1e3c0b18e7ae9.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+

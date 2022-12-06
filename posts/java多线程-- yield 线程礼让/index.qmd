@@ -1,0 +1,43 @@
+---
+title: "java多线程-- yield 线程礼让"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+
+## yield 线程礼让
+加上礼让大概率会让被礼让的先执行.`不是一定被礼让的先执行`
+![在这里插入图片描述](https://img-blog.csdnimg.cn/70de51a1d6f14f4c909e9213522592c4.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+```java
+package cn.usts.edu.lesson06;
+
+/**
+ * 线程礼让
+ * 礼让的线程会重新和竞争的线程再次公平竞争cpu的资源
+ * 再次竞争的结果为最后结果
+ * */
+
+public class ThreadYieldDemo implements Runnable{
+
+    @Override
+    public void run() {
+        System.out.println(Thread.currentThread().getName()+"开始");
+        if (Thread.currentThread().getName().equals("线程A")){ // 如果是线程A就礼让
+            Thread.yield();// 线程礼让
+        }
+        System.out.println(Thread.currentThread().getName()+"执行结束");
+    }
+
+    public static void main(String[] args) {
+        ThreadYieldDemo threadYieldDemo = new ThreadYieldDemo();
+        new Thread(threadYieldDemo,"线程A").start();
+        new Thread(threadYieldDemo,"线程B").start();
+    }
+}
+
+```
+
