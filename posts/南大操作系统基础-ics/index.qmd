@@ -1,0 +1,13 @@
+---
+title: "南大操作系统基础-ics"
+author: "dd21"
+date: "2022-12-05" 
+categories: [cs]
+image: ../csdn.png
+---
+
+
+# nes模拟器
+https://github.com/NJU-ProjectN/fceux-am
+# 
+https://nju-projectn.github.io/ics-pa-gitbook/ics2020/1.2.html

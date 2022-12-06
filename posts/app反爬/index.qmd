@@ -1,0 +1,32 @@
+---
+title: "app反爬"
+author: "dd21"
+date: "2022-12-05" 
+categories: [spider]
+image: ../csdn.png
+---
+
+
+根据崔庆才的爬虫书练习
+[https://scrape.center/](https://scrape.center/)
+[https://www.sojson.com/simple_json.html](https://www.sojson.com/simple_json.html)
+# app1(简单app无爬措施)
+对地址直接发送get请求即可可以获取json数据:
+```python
+# -*- coding: utf-8 -*-
+# @Time : 2022/4/17 13:42
+
+import requests
+
+def get(url):
+    res = requests.get(url)
+    return res
+
+if __name__ == '__main__':
+    # 数据一共100条
+    res = get("https://app1.scrape.center:443/api/movie/?offset=0&limit=100")
+    print(res.text)
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/63a25c79bc4a4ee78c55f827590b821a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+# app2
+

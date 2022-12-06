@@ -1,0 +1,30 @@
+---
+title: "汇编--00安装dosBox"
+author: "dd21"
+date: "2022-12-05" 
+categories: [cs]
+image: ../csdn.png
+---
+
+
+官网下载dosBox软件后无法debug
+
+缺少`asmtools`,创建好`asm`文件夹,将下载的文件都放入创建的文件夹中.
+[https://jszhuanben.lanzoui.com/i2H5dtq5qab](https://jszhuanben.lanzoui.com/i2H5dtq5qab)
+
+
+配置启动时执行的命令:
+
+`1#`  dosBox配置文件路径
+```c
+C:\Users\msi\AppData\Local\DOSBox
+```
+`2#`  在最后添加
+
+```c
+mount C: F:\asm
+C:
+```
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/3aa8b6ef5d3f4510a5b3ed69dd33512e.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+

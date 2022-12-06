@@ -1,0 +1,22 @@
+---
+title: "小米刷机"
+author: "dd21"
+date: "2022-12-05" 
+categories: [clutter]
+image: ../csdn.png
+---
+
+
+# 官方教程
+[https://miuiver.com/how-to-flash-xiaomi-phone/](https://miuiver.com/how-to-flash-xiaomi-phone/)
+
+# ROM地址
+[https://xiaomirom.com/](https://xiaomirom.com/)
+
+# miflash地址
+[https://miuiver.com/miflash/](https://miuiver.com/miflash/)
+
+## `右下角注意别选择第三项`(重新上BL锁)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/5adc467cc6a04134923632b1a3e09034.png)
+# bilibili视频地址
+[https://www.bilibili.com/video/BV1BY4y1H7Mc?spm_id_from=333.337.search-card.all.click&vd_source=c0157a4afd2e47c7662431fd9d2739fb](https://www.bilibili.com/video/BV1BY4y1H7Mc?spm_id_from=333.337.search-card.all.click&vd_source=c0157a4afd2e47c7662431fd9d2739fb)

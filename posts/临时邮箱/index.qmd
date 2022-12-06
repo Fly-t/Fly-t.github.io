@@ -1,0 +1,14 @@
+---
+title: "临时邮箱"
+author: "dd21"
+date: "2022-12-05" 
+categories: [clutter]
+image: ../csdn.png
+---
+
+
+
+[知乎指南](https://zhuanlan.zhihu.com/p/350391806)
+
+
+[https://www.guerrillamail.com/](https://www.guerrillamail.com/)
