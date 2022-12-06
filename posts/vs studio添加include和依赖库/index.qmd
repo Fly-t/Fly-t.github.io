@@ -9,9 +9,16 @@ image: ../csdn.png
 
 # 无法打开 源 文件 "xxxxxx"
 解决办法: 添加include文件夹
+
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/43eaad66cb844eee868d1bed75ab5e2c.png)
+
 项目右键属性,c/c++,添加附加包含目录, 找到你所需要的头文件的位置,
+
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/fea6ec3ad0b143d2a3e823ed42f0da1d.png)
+
+
 添加lib库:
 * 链接器->常规->附加库目录->
 

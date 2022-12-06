@@ -8,16 +8,25 @@ image: ../csdn.png
 
 
 # EDMA
+
+EDMA的数据数据搬移，这部分比较重要，对于能否清楚数据排列很关键
+
 ## 源数据块描述:
+
 >- ACount: Array(每个切分数据)的大小 
 >- BCount: 一共有N个Array
 >- CCount: N个BCount
->
+
+
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/1322671fc9074bf9a087787ba56d4e44.png)
+
+
 ### 目的数据块描述:
 > - srcBidx: `源数据块的读取偏移`(上面的一个array的大小), 即读取每个array偏移的大小
 > - dstBidx: `目的地址偏移`(如果为0 表示不偏移, 最大支持0xffffH的偏移)
 > - 下图表示的是ab同步传输模式, 在vitalsign中使用的是a同步传输
+
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/4c9a08babe93493db8beb4588e58c031.png)
 ```c

@@ -7,9 +7,18 @@ image: ../csdn.png
 ---
 
 
+# 概要
+
+ti毫米波雷达开发过程，环境搭建
+ 
+
 参考:[https://blog.csdn.net/Tronlong_/article/details/108147255](https://blog.csdn.net/Tronlong_/article/details/108147255)
+
+
 # 硬件链接
  - 对应的拨码开关以及条线配置如图
+
+ 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/986e8a66ac044217a29a83cabcb279e6.jpeg)
 
 # ccs配置

@@ -6,20 +6,31 @@ categories: [projects]
 image: ../csdn.png
 ---
 
+# 摘要
+
+darknet框架相pyrtorch轻量化很多，将darknet和qt进行整合，大多项目都是基于单独的框架的，对于整合的工作相对来说低很多
+
 
 # 最终效果
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/9c11602817544b90aba9a2465b59e868.png)
+
 # 项目创建
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/28d5bae4bbe04b709db3518122cefecc.png)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/a6c732e76a1d435ca01e863a1c69a34d.png)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/0ca001c70f6e40408c1d1da27b571931.png)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/7af70632a46d49e4a3632c37799cc6d5.png)
+
+
 ### 创建完成的项目结构
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/83ff71f1ffef45b8a591dbb263f03715.png)
 编辑ui,用来展示视频
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/849ec325191c4985a14aa8a383d9ab42.png)
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/c777bb696aa44e32951e89c63145b79b.png)
+
 # 创建一个槽函数
 `show_video()`
 
@@ -27,16 +38,26 @@ image: ../csdn.png
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/6a18ef8700154507b4cbad9fa8d8801e.png)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/77f4b6b71c57440e897edad4fa8dca96.png)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/d3493e853c044bd6a15ca5ca29514b73.png)
+
 ## 创建完成记得保存
+
 对修改完的ui文件进行编译
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/225879f808e540b6b7c1aaf4fd9f3985.png)
+
 # 打开`yoloshow.h`头文件
+
 实现刚才的`show_video()`槽函数
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/b558795553554c739041bc1517bfb911.png)
+
 将darknet提供接口进行封装, 封装到函数体内部
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/0faaa101502642bcb74d067989274d98.png)
+
 # 进入到cpp文件中进行实现刚.h文件中的函数
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/b761530d062a4002be72657ff1a45ea6.png)
+
+
 # 到此代码部分配置完成,下面配置环境部分
 `yoloshow.cpp`
 
@@ -621,29 +642,48 @@ void YoloShow::darknet_yolo_detection()
 对于项目的应用问题来说, 直接将代码嵌入到项目中, 项目的体积和维护成本都会很大. 为了简化应用, AlexeyAB程序进行封装成多个版本,分别针对不同语言的调用, 也简化了开发.但是对于刚接触的人环境会是一个比较大的问题.
 
 ## 环境配置需要的文件
+
 #### `incldue` 文件夹
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/e8290e5f3bdf453bb0826892a029146d.png)
+
+
 ####  `config`文件夹
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/58a4fe4c92b0435488d786daad546640.png)
+
+
 #### `lib`文件夹![在这里插入图片描述](https://img-blog.csdnimg.cn/3ed4fe4c6d0747468feff46ee63b3596.png)
+
+
+
 # 配置项目属性
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/15e5b97950c9405eb993d337a723c9a6.png)
+
+
 # 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/fe0569e1b863480db5041085d129f3dc.png)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/ca4d5f4ca94840329f177f9f76a62f89.png)
+
+
 # 链接器附加库目录设置
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/f1df488721a14e28ab8fd9b732d6ae9e.png)
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/d5cf5aba6bb8459fa0511713cf86540a.png)
+
+
 ## 链接器中附加目录中的附加依赖项
 `opencv版本根据自身开发环境进行配置`
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/f506987b7cf14c39ba648c5604dcf4e0.png)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/ded6f361d9ee421fb1ad4b4b9a9de6c6.png)
+
+
 # Release模式下进行启动
+
 debug模式下没有ide报错, 切换到Release模式下ide摸错不用担心,直接忽略
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2d69b11979924660a8777862eb2e387f.png)
+
 ## 生成
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/47c867c7b09f41b3b9c71d92d662adec.png)
+
 # 生成后将项目下config文件夹中的文件全部复制到Release目录下(exe所在目录)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/f311b4d1f1a240af9d22fd3a65cfc29b.png)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/14d5ad5fb7b14b12a0364137f640f1ef.png)
@@ -658,8 +698,11 @@ windeployqt YoloShow.exe
 ```
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/bf56569f0ddd44c5a844aa26df42438b.png)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/78c104ff3c394f20a705f3ec2814923d.png)
+
 # 执行后目录中多出很多文件
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/6d2bc63a647942abadc030f062722031.png)
+
 ## 双击即可运行
 点击右上角的 x 关闭只关闭了界面, 系统检测进程还是在后台运行, 需要重写closeEvent 进行关闭系统. 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/d2e0ea306bc4411ba5a0d2604410031d.png)
