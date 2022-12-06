@@ -1,0 +1,19 @@
+---
+title: "pyinstaller打包程序问题总结"
+author: "dd21"
+date: "2022-12-05" 
+categories: [python]
+image: ../csdn.png
+---
+
+
+# pyinstaller打包exe 程序问题总结
+
+1.查看报错信息:
+2.文件夹: 
+	加入 __init__.py
+3.导包顺序 
+	Python内置包->pip install的包->自己的包
+	from  A.b import c  => import A.b as b  => b.c
+4.包的版本(关键)
+	不行就降版本

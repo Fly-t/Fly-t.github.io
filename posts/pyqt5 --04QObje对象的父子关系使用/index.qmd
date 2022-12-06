@@ -1,0 +1,58 @@
+---
+title: "pyqt5 --04QObje对象的父子关系使用"
+author: "dd21"
+date: "2022-12-05" 
+categories: [python]
+image: ../csdn.png
+---
+
+
+```python
+from PyQt5.Qt import *
+import sys
+
+
+class Window(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle('QObject父子对象学习')
+        self.resize(500, 500)
+        self.func_list()
+
+    def func_list(self):
+        self.func1()
+
+    def func1(self):
+        objA = QObject()
+        objA.setObjectName('A对象')
+
+        objB = QObject()
+        objB.setObjectName('B对象')
+
+        objC = QObject()
+        objC.setObjectName('C对象')
+
+        # B--->A
+        objB.setParent(objA)
+
+        # C--->B
+        objC.setParent(objB)
+        # objC.children(objA) # 设置子类
+        
+        print('B---->',objB.parent().objectName())
+        print('C---->',objC.parent().objectName())
+        print(objA.findChild(QObject))# A的【直接】QObject类型的子类是
+        print(objA.findChildren(QObject))# A的【所有】QObject类型的子类是
+        
+
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    window = Window()
+    window.show()
+    sys.exit(app.exec_())
+
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/8ba986cce7fe4fc29deb5ab22a74e3c0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+

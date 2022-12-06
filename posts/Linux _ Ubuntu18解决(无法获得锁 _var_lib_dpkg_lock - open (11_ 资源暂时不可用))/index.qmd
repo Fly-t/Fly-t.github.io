@@ -1,0 +1,27 @@
+---
+title: "Linux _ Ubuntu18解决(无法获得锁 _var_lib_dpkg_lock - open (11_ 资源暂时不可用))"
+author: "dd21"
+date: "2022-12-05" 
+categories: [linux]
+image: ../csdn.png
+---
+
+
+## 问题描述：
+
+```bash
+E: 无法获得锁 /var/lib/dpkg/lock - open (11: 资源暂时不可用)
+E: 无法锁定管理目录(/var/lib/dpkg/)，是否有其他进程正占用它？
+
+```
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2020101319084274.png#pic_center)
+
+## 解决方法：
+
+删掉这两个文件即可
+```bash
+sudo rm /var/cache/apt/archives/lock  
+sudo rm /var/lib/dpkg/lock 
+```
+

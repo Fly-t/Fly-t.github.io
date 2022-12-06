@@ -1,0 +1,12 @@
+---
+title: "pip加速"
+author: "dd21"
+date: "2022-12-05" 
+categories: [python]
+image: ../csdn.png
+---
+
+
+# pip加速
+清华镜像站使用
+https://mirrors.tuna.tsinghua.edu.cn/help/pypi/

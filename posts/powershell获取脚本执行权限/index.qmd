@@ -1,0 +1,19 @@
+---
+title: "powershell获取脚本执行权限"
+author: "dd21"
+date: "2022-12-05" 
+categories: [clutter]
+image: ../csdn.png
+---
+
+
+
+# `管理员权限执行powershell`
+
+```bash
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted
+```
+
+
+>参考地址:[https://docs.microsoft.com/zh-cn/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.2](https://docs.microsoft.com/zh-cn/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.2)
+

@@ -1,0 +1,63 @@
+---
+title: "jdbc-- StatementSQL注入演示"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+## StatementSQL注入演示
+解决方案:
+preparedStatement
+测试用户名:   `1' or`
+测试密码:      `or '1'='1`
+```java
+// StatementSQL注入演示
+    @Test
+    public void statementSqlDemo() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException, IOException {
+
+        // 注册驱动
+        Class<?> aClass = Class.forName("com.mysql.jdbc.Driver");
+        Driver driver =(Driver) aClass.newInstance();
+        DriverManager.registerDriver(driver);
+        FileInputStream fileInputStream = new FileInputStream("src/cn/usts/edu/config/db.properties");
+        Properties properties = new Properties();
+        properties.load(fileInputStream);
+        String url=(String) properties.get("url");
+        String user=(String) properties.get("user");
+        String password=(String) properties.get("password");
+
+        // 建立连接
+        Connection connection = DriverManager.getConnection(url, user, password);
+
+        // 执行sql
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("输入用户名");//
+        String name = scanner.nextLine();// nextLine不会空格切断    用户名 1' or
+        System.out.println("输入密码");  
+        String psd = scanner.nextLine();// nextLine不会空格切断   万能密码 or '1' = 1'
+        String sql ="select admin.amin,admin.psd from admin where amin='"+name+"'and psd='"+psd+"'";
+
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+
+        // 获取结果
+        if (resultSet.next()){ // 查询到结果才会有记录
+            System.out.print("登陆成功");
+        }else{
+            System.out.print("登陆失败");
+        }
+
+
+        // 切断链接
+        resultSet.close();
+        statement.close();
+        connection.close();
+
+
+    }
+
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/5742e97ce25f4d99820ef31428b3e8b1.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+

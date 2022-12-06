@@ -1,0 +1,42 @@
+---
+title: "nodejs安装--（npm安装）"
+author: "dd21"
+date: "2022-12-05" 
+categories: [clutter]
+image: ../csdn.png
+---
+
+
+nodejs下载地址[https://nodejs.org/zh-cn/](https://nodejs.org/zh-cn/)
+### 2、双击安装
+一路next
+### 3、查看是否安装成功
+![在这里插入图片描述](https://img-blog.csdnimg.cn/1c82917d40d14838a47691a31d3ce000.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+进入到安装目录：`node -v`
+![在这里插入图片描述](https://img-blog.csdnimg.cn/f23d93b166144dfeaef20c35dcba11b0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+### 4、建两个文件夹
+再看看另外2个目录，npm的本地仓库跑在系统盘c盘的用户目录了(没见到npm-cache是因为没有用过，
+一使用缓存目录就生成了)，我们试图把这2个目录移动回到D:\nodejs
+![在这里插入图片描述](https://img-blog.csdnimg.cn/64b69a0312994430b28aaed49a1f6d37.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+### 5、然后运行以下2条命令
+
+```bash
+npm config set prefix "D:\nodejs\node_global"
+npm config set cache "D:\nodejs\node_cache"
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/0791e7227902406da76960e975d0766b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+### 6、配置一个镜像站，为了提升速度
+
+```bash
+npm config set registry=http://registry.npm.taobao.org
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/617cb3a1844a4ce2ac04ee1882cbf57f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+### 7、输入命令npm config list 显示所有配置信息
+
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/31b3c5bc5850433d87b344b08e5912d4.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+##### 注意，此时，默认的模块D:\nodejs\node_modules 目录 将会改变为D:\nodejs\node_global\node_modules 目录， 如果直接运行npm install等命令会报错的。 我们需要做1件事情： `增加环境变量NODE_PATH 内容是：D:\nodejs\node_global\node_modules`
+![在这里插入图片描述](https://img-blog.csdnimg.cn/a8637782f50d418ca7449a5438a2ae11.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
