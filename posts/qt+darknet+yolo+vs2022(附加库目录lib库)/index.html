@@ -211,11 +211,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
+<section id="摘要" class="level1">
+<h1>摘要</h1>
+<p>darknet框架相pyrtorch轻量化很多，将darknet和qt进行整合，大多项目都是基于单独的框架的，对于整合的工作相对来说低很多</p>
+</section>
 <section id="最终效果" class="level1">
 <h1>最终效果</h1>
-<p><img src="https://img-blog.csdnimg.cn/9c11602817544b90aba9a2465b59e868.png" class="img-fluid" alt="在这里插入图片描述"> # 项目创建 <img src="https://img-blog.csdnimg.cn/28d5bae4bbe04b709db3518122cefecc.png" class="img-fluid" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/a6c732e76a1d435ca01e863a1c69a34d.png" class="img-fluid" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/0ca001c70f6e40408c1d1da27b571931.png" class="img-fluid" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/7af70632a46d49e4a3632c37799cc6d5.png" class="img-fluid" alt="在这里插入图片描述"> ### 创建完成的项目结构 <img src="https://img-blog.csdnimg.cn/83ff71f1ffef45b8a591dbb263f03715.png" class="img-fluid" alt="在这里插入图片描述"> 编辑ui,用来展示视频 <img src="https://img-blog.csdnimg.cn/849ec325191c4985a14aa8a383d9ab42.png" class="img-fluid" alt="在这里插入图片描述"></p>
-<p><img src="https://img-blog.csdnimg.cn/c777bb696aa44e32951e89c63145b79b.png" class="img-fluid" alt="在这里插入图片描述"> # 创建一个槽函数 <code>show_video()</code></p>
-<p><img src="https://img-blog.csdnimg.cn/6a18ef8700154507b4cbad9fa8d8801e.png" class="img-fluid" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/77f4b6b71c57440e897edad4fa8dca96.png" class="img-fluid" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/d3493e853c044bd6a15ca5ca29514b73.png" class="img-fluid" alt="在这里插入图片描述"> ## 创建完成记得保存 对修改完的ui文件进行编译 <img src="https://img-blog.csdnimg.cn/225879f808e540b6b7c1aaf4fd9f3985.png" class="img-fluid" alt="在这里插入图片描述"> # 打开<code>yoloshow.h</code>头文件 实现刚才的<code>show_video()</code>槽函数 <img src="https://img-blog.csdnimg.cn/b558795553554c739041bc1517bfb911.png" class="img-fluid" alt="在这里插入图片描述"> 将darknet提供接口进行封装, 封装到函数体内部 <img src="https://img-blog.csdnimg.cn/0faaa101502642bcb74d067989274d98.png" class="img-fluid" alt="在这里插入图片描述"> # 进入到cpp文件中进行实现刚.h文件中的函数 <img src="https://img-blog.csdnimg.cn/b761530d062a4002be72657ff1a45ea6.png" class="img-fluid" alt="在这里插入图片描述"> # 到此代码部分配置完成,下面配置环境部分 <code>yoloshow.cpp</code></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://img-blog.csdnimg.cn/9c11602817544b90aba9a2465b59e868.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">在这里插入图片描述</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="项目创建" class="level1">
+<h1>项目创建</h1>
+<p><img src="https://img-blog.csdnimg.cn/28d5bae4bbe04b709db3518122cefecc.png" class="img-fluid" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/a6c732e76a1d435ca01e863a1c69a34d.png" class="img-fluid" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/0ca001c70f6e40408c1d1da27b571931.png" class="img-fluid" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/7af70632a46d49e4a3632c37799cc6d5.png" class="img-fluid" alt="在这里插入图片描述"></p>
+<section id="创建完成的项目结构" class="level3">
+<h3 class="anchored" data-anchor-id="创建完成的项目结构">创建完成的项目结构</h3>
+<p><img src="https://img-blog.csdnimg.cn/83ff71f1ffef45b8a591dbb263f03715.png" class="img-fluid" alt="在这里插入图片描述"> 编辑ui,用来展示视频 <img src="https://img-blog.csdnimg.cn/849ec325191c4985a14aa8a383d9ab42.png" class="img-fluid" alt="在这里插入图片描述"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://img-blog.csdnimg.cn/c777bb696aa44e32951e89c63145b79b.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">在这里插入图片描述</figcaption><p></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="创建一个槽函数" class="level1">
+<h1>创建一个槽函数</h1>
+<p><code>show_video()</code></p>
+<p><img src="https://img-blog.csdnimg.cn/6a18ef8700154507b4cbad9fa8d8801e.png" class="img-fluid" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/77f4b6b71c57440e897edad4fa8dca96.png" class="img-fluid" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/d3493e853c044bd6a15ca5ca29514b73.png" class="img-fluid" alt="在这里插入图片描述"></p>
+<section id="创建完成记得保存" class="level2">
+<h2 class="anchored" data-anchor-id="创建完成记得保存">创建完成记得保存</h2>
+<p>对修改完的ui文件进行编译 <img src="https://img-blog.csdnimg.cn/225879f808e540b6b7c1aaf4fd9f3985.png" class="img-fluid" alt="在这里插入图片描述"></p>
+</section>
+</section>
+<section id="打开yoloshow.h头文件" class="level1">
+<h1>打开<code>yoloshow.h</code>头文件</h1>
+<p>实现刚才的<code>show_video()</code>槽函数 <img src="https://img-blog.csdnimg.cn/b558795553554c739041bc1517bfb911.png" class="img-fluid" alt="在这里插入图片描述"></p>
+<p>将darknet提供接口进行封装, 封装到函数体内部</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://img-blog.csdnimg.cn/0faaa101502642bcb74d067989274d98.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">在这里插入图片描述</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="进入到cpp文件中进行实现刚.h文件中的函数" class="level1">
+<h1>进入到cpp文件中进行实现刚.h文件中的函数</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://img-blog.csdnimg.cn/b761530d062a4002be72657ff1a45ea6.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">在这里插入图片描述</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="到此代码部分配置完成下面配置环境部分" class="level1">
+<h1>到此代码部分配置完成,下面配置环境部分</h1>
+<p><code>yoloshow.cpp</code></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>#include <span class="st">"yoloshow.h"</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>#include <span class="op">&lt;</span>iostream<span class="op">&gt;</span></span>
@@ -794,14 +848,92 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="环境配置需要的文件">环境配置需要的文件</h2>
 <section id="incldue-文件夹" class="level4">
 <h4 class="anchored" data-anchor-id="incldue-文件夹"><code>incldue</code> 文件夹</h4>
-<p><img src="https://img-blog.csdnimg.cn/e8290e5f3bdf453bb0826892a029146d.png" class="img-fluid" alt="在这里插入图片描述"> #### <code>config</code>文件夹 <img src="https://img-blog.csdnimg.cn/58a4fe4c92b0435488d786daad546640.png" class="img-fluid" alt="在这里插入图片描述"> #### <code>lib</code>文件夹<img src="https://img-blog.csdnimg.cn/3ed4fe4c6d0747468feff46ee63b3596.png" class="img-fluid" alt="在这里插入图片描述"> # 配置项目属性 <img src="https://img-blog.csdnimg.cn/15e5b97950c9405eb993d337a723c9a6.png" class="img-fluid" alt="在这里插入图片描述"> # <img src="https://img-blog.csdnimg.cn/fe0569e1b863480db5041085d129f3dc.png" class="img-fluid" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/ca4d5f4ca94840329f177f9f76a62f89.png" class="img-fluid" alt="在这里插入图片描述"> # 链接器附加库目录设置 <img src="https://img-blog.csdnimg.cn/f1df488721a14e28ab8fd9b732d6ae9e.png" class="img-fluid" alt="在这里插入图片描述"></p>
-<p><img src="https://img-blog.csdnimg.cn/d5cf5aba6bb8459fa0511713cf86540a.png" class="img-fluid" alt="在这里插入图片描述"> ## 链接器中附加目录中的附加依赖项 <code>opencv版本根据自身开发环境进行配置</code> <img src="https://img-blog.csdnimg.cn/f506987b7cf14c39ba648c5604dcf4e0.png" class="img-fluid" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/ded6f361d9ee421fb1ad4b4b9a9de6c6.png" class="img-fluid" alt="在这里插入图片描述"> # Release模式下进行启动 debug模式下没有ide报错, 切换到Release模式下ide摸错不用担心,直接忽略 <img src="https://img-blog.csdnimg.cn/2d69b11979924660a8777862eb2e387f.png" class="img-fluid" alt="在这里插入图片描述"> ## 生成 <img src="https://img-blog.csdnimg.cn/47c867c7b09f41b3b9c71d92d662adec.png" class="img-fluid" alt="在这里插入图片描述"> # 生成后将项目下config文件夹中的文件全部复制到Release目录下(exe所在目录) <img src="https://img-blog.csdnimg.cn/f311b4d1f1a240af9d22fd3a65cfc29b.png" class="img-fluid" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/14d5ad5fb7b14b12a0364137f640f1ef.png" class="img-fluid" alt="在这里插入图片描述"> 利用windows自带的搜索,搜索出qt的msvc</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://img-blog.csdnimg.cn/e8290e5f3bdf453bb0826892a029146d.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">在这里插入图片描述</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="config文件夹" class="level4">
+<h4 class="anchored" data-anchor-id="config文件夹"><code>config</code>文件夹</h4>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://img-blog.csdnimg.cn/58a4fe4c92b0435488d786daad546640.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">在这里插入图片描述</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="lib文件夹在这里插入图片描述" class="level4">
+<h4 class="anchored" data-anchor-id="lib文件夹在这里插入图片描述"><code>lib</code>文件夹<img src="https://img-blog.csdnimg.cn/3ed4fe4c6d0747468feff46ee63b3596.png" class="img-fluid" alt="在这里插入图片描述"></h4>
+</section>
+</section>
+</section>
+<section id="配置项目属性" class="level1">
+<h1>配置项目属性</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://img-blog.csdnimg.cn/15e5b97950c9405eb993d337a723c9a6.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">在这里插入图片描述</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="section" class="level1">
+<h1></h1>
+<p><img src="https://img-blog.csdnimg.cn/fe0569e1b863480db5041085d129f3dc.png" class="img-fluid" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/ca4d5f4ca94840329f177f9f76a62f89.png" class="img-fluid" alt="在这里插入图片描述"></p>
+</section>
+<section id="链接器附加库目录设置" class="level1">
+<h1>链接器附加库目录设置</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://img-blog.csdnimg.cn/f1df488721a14e28ab8fd9b732d6ae9e.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">在这里插入图片描述</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://img-blog.csdnimg.cn/d5cf5aba6bb8459fa0511713cf86540a.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">在这里插入图片描述</figcaption><p></p>
+</figure>
+</div>
+<section id="链接器中附加目录中的附加依赖项" class="level2">
+<h2 class="anchored" data-anchor-id="链接器中附加目录中的附加依赖项">链接器中附加目录中的附加依赖项</h2>
+<p><code>opencv版本根据自身开发环境进行配置</code> <img src="https://img-blog.csdnimg.cn/f506987b7cf14c39ba648c5604dcf4e0.png" class="img-fluid" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/ded6f361d9ee421fb1ad4b4b9a9de6c6.png" class="img-fluid" alt="在这里插入图片描述"></p>
+</section>
+</section>
+<section id="release模式下进行启动" class="level1">
+<h1>Release模式下进行启动</h1>
+<p>debug模式下没有ide报错, 切换到Release模式下ide摸错不用担心,直接忽略 <img src="https://img-blog.csdnimg.cn/2d69b11979924660a8777862eb2e387f.png" class="img-fluid" alt="在这里插入图片描述"></p>
+<section id="生成" class="level2">
+<h2 class="anchored" data-anchor-id="生成">生成</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://img-blog.csdnimg.cn/47c867c7b09f41b3b9c71d92d662adec.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">在这里插入图片描述</figcaption><p></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="生成后将项目下config文件夹中的文件全部复制到release目录下exe所在目录" class="level1">
+<h1>生成后将项目下config文件夹中的文件全部复制到Release目录下(exe所在目录)</h1>
+<p><img src="https://img-blog.csdnimg.cn/f311b4d1f1a240af9d22fd3a65cfc29b.png" class="img-fluid" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/14d5ad5fb7b14b12a0364137f640f1ef.png" class="img-fluid" alt="在这里插入图片描述"> 利用windows自带的搜索,搜索出qt的msvc</p>
 <p><img src="https://img-blog.csdnimg.cn/9ecba0ff55aa47b3866a8aa776d53a19.png" class="img-fluid" alt="在这里插入图片描述"> 打开并进入<code>exe所在目录</code>(Release目录) <img src="https://img-blog.csdnimg.cn/405f107349014107822185d25deafbbd.png" class="img-fluid" alt="在这里插入图片描述"></p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>windeployqt YoloShow<span class="op">.</span><span class="fu">exe</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><img src="https://img-blog.csdnimg.cn/bf56569f0ddd44c5a844aa26df42438b.png" class="img-fluid" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/78c104ff3c394f20a705f3ec2814923d.png" class="img-fluid" alt="在这里插入图片描述"> # 执行后目录中多出很多文件 <img src="https://img-blog.csdnimg.cn/6d2bc63a647942abadc030f062722031.png" class="img-fluid" alt="在这里插入图片描述"> ## 双击即可运行 点击右上角的 x 关闭只关闭了界面, 系统检测进程还是在后台运行, 需要重写closeEvent 进行关闭系统. <img src="https://img-blog.csdnimg.cn/d2e0ea306bc4411ba5a0d2604410031d.png" class="img-fluid" alt="在这里插入图片描述"></p>
-
-
+<p><img src="https://img-blog.csdnimg.cn/bf56569f0ddd44c5a844aa26df42438b.png" class="img-fluid" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/78c104ff3c394f20a705f3ec2814923d.png" class="img-fluid" alt="在这里插入图片描述"></p>
 </section>
+<section id="执行后目录中多出很多文件" class="level1">
+<h1>执行后目录中多出很多文件</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://img-blog.csdnimg.cn/6d2bc63a647942abadc030f062722031.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">在这里插入图片描述</figcaption><p></p>
+</figure>
+</div>
+<section id="双击即可运行" class="level2">
+<h2 class="anchored" data-anchor-id="双击即可运行">双击即可运行</h2>
+<p>点击右上角的 x 关闭只关闭了界面, 系统检测进程还是在后台运行, 需要重写closeEvent 进行关闭系统. <img src="https://img-blog.csdnimg.cn/d2e0ea306bc4411ba5a0d2604410031d.png" class="img-fluid" alt="在这里插入图片描述"></p>
+
+
 </section>
 </section>
 

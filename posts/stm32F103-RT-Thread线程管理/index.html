@@ -211,8 +211,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
+<section id="概要" class="level1">
+<h1>概要</h1>
+<p>系统总共支持 256 个优先 (0 ~ 255，数值越小的优先级越高，0 为最高优先级，255 分配给空闲线程使用,默认优先级32个，一般用户不使用)。</p>
 <blockquote class="blockquote">
-<p>系统总共支持 256 个优先级 (0 ~ 255，<code>数值越小的优先级越高，0 为最高优先级，255 分配给空闲线程使用,默认优先级32个</code>，一般用户不使用。在一些资源比较紧张的系统中，可以根据实,际情况选择只支持 8 个或 32 个优先级的系统配置)。在系统中，当有比当前线程优先级更高的线程就绪时，当前线程将立刻被换出，高优先级线程抢占处理器运行</p>
+<p>在一些资源比较紧张的系统中，可以根据实,际情况选择只支持 8 个或 32 个优先级的系统配置。</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>在系统中，当有比当前线程优先级更高的线程就绪时，当前线程将立刻被换出，高优先级线程抢占处理器运行</p>
 </blockquote>
 <blockquote class="blockquote">
 <p>RT-Thread 内核中也允许创建相同优先级的线程。相同优先级的线程采用时间片轮转方式进行调 度（也就是通常说的分时调度器），时间片轮转调度仅在当前系统中无更高优先级就绪线程存在 的情况下才有效。</p>
@@ -346,6 +352,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

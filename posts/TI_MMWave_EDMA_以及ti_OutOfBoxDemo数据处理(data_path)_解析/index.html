@@ -213,6 +213,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="edma" class="level1">
 <h1>EDMA</h1>
+<p>EDMA的数据数据搬移，这部分比较重要，对于能否清楚数据排列很关键</p>
 <section id="源数据块描述" class="level2">
 <h2 class="anchored" data-anchor-id="源数据块描述">源数据块描述:</h2>
 <blockquote class="blockquote">
@@ -221,7 +222,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>BCount: 一共有N个Array</li>
 <li>CCount: N个BCount</li>
 </ul>
-<p><img src="https://img-blog.csdnimg.cn/1322671fc9074bf9a087787ba56d4e44.png" class="img-fluid" alt="在这里插入图片描述"> ### 目的数据块描述: - srcBidx: <code>源数据块的读取偏移</code>(上面的一个array的大小), 即读取每个array偏移的大小 - dstBidx: <code>目的地址偏移</code>(如果为0 表示不偏移, 最大支持0xffffH的偏移) - 下图表示的是ab同步传输模式, 在vitalsign中使用的是a同步传输</p>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://img-blog.csdnimg.cn/1322671fc9074bf9a087787ba56d4e44.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">在这里插入图片描述</figcaption><p></p>
+</figure>
+</div>
+<section id="目的数据块描述" class="level3">
+<h3 class="anchored">目的数据块描述:</h3>
+<blockquote class="blockquote">
+<ul>
+<li>srcBidx: <code>源数据块的读取偏移</code>(上面的一个array的大小), 即读取每个array偏移的大小</li>
+<li>dstBidx: <code>目的地址偏移</code>(如果为0 表示不偏移, 最大支持0xffffH的偏移)</li>
+<li>下图表示的是ab同步传输模式, 在vitalsign中使用的是a同步传输</li>
+</ul>
 </blockquote>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -261,7 +276,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    NULL<span class="op">,</span></span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span><span class="dt">uintptr_t</span><span class="op">)</span> obj<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <blockquote class="blockquote">
-<h2 id="dema的组成" class="anchored">DEMA的组成</h2>
+<h2 id="dema的组成" class="anchored" data-anchor-id="目的数据块描述">DEMA的组成</h2>
 <ul>
 <li>通道控制器(<code>EDMA_TPCC0_REQ_FREE_0</code>这里vitalsign使用的是通道控制器0)</li>
 <li><code>cc0 有 2个 TC(传输控制器)</code></li>
@@ -556,6 +571,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>        NULL<span class="op">,</span></span>
 <span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
 <span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>        <span class="op">(</span><span class="dt">uintptr_t</span><span class="op">)</span> obj<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
 </section>
 </section>
 <section id="参考资料" class="level1">
