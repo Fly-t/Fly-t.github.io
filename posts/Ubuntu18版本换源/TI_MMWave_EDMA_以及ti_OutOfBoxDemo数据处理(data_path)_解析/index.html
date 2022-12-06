@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="dd21">
+<meta name="dcterms.date" content="2022-12-05">
+
+<title>TengFei’s Blog - TI_MMWave_EDMA_以及ti_OutOfBoxDemo数据处理(data_path)_解析</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">TengFei’s Blog</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../article.html">
+ <span class="menu-text">Article</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/fly-t"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://raw.githubusercontent.com/fly-t/images/main/blog/wechat-2022-11-27-16-30-56.png"><i class="bi bi-qr-code-scan" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">TI_MMWave_EDMA_以及ti_OutOfBoxDemo数据处理(data_path)_解析</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">mmwave</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>dd21 </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 5, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="edma" class="level1">
+<h1>EDMA</h1>
+<p>EDMA的数据数据搬移，这部分比较重要，对于能否清楚数据排列很关键</p>
+<section id="源数据块描述" class="level2">
+<h2 class="anchored" data-anchor-id="源数据块描述">源数据块描述:</h2>
+<blockquote class="blockquote">
+<ul>
+<li>ACount: Array(每个切分数据)的大小</li>
+<li>BCount: 一共有N个Array</li>
+<li>CCount: N个BCount</li>
+</ul>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://img-blog.csdnimg.cn/1322671fc9074bf9a087787ba56d4e44.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">在这里插入图片描述</figcaption><p></p>
+</figure>
+</div>
+<section id="目的数据块描述" class="level3">
+<h3 class="anchored">目的数据块描述:</h3>
+<blockquote class="blockquote">
+<ul>
+<li>srcBidx: <code>源数据块的读取偏移</code>(上面的一个array的大小), 即读取每个array偏移的大小</li>
+<li>dstBidx: <code>目的地址偏移</code>(如果为0 表示不偏移, 最大支持0xffffH的偏移)</li>
+<li>下图表示的是ab同步传输模式, 在vitalsign中使用的是a同步传输</li>
+</ul>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://img-blog.csdnimg.cn/4c9a08babe93493db8beb4588e58c031.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">在这里插入图片描述</figcaption><p></p>
+</figure>
+</div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/**</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"> * EDMA_Handle handle,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">    uint8_t *srcBuff,              ADCdataBuf</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">    uint8_t *dstBuff,              adcDataIn</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">    uint8_t chId,                   PONG</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">    bool isEventTriggered,          false</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">    uint16_t shadowParamId,</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">    uint16_t aCount,                100*(16*2)</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">    uint16_t bCount,                Rx*numChirp</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">    int16_t srcBIdx,                </span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">    int16_t dstBIdx,                0</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">    uint8_t eventQueueId,</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">    EDMA_transferCompletionCallbackFxn_t transferCompletionCallbackFxn,</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">    uintptr_t transferCompletionCallbackFxnArg</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"> * */</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>EDMAutil_configType1<span class="op">(</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    context<span class="op">-&gt;</span>edmaHandle<span class="op">[</span>MMW_DATA_PATH_EDMA_INSTANCE<span class="op">],</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span><span class="dt">uint8_t</span> <span class="op">*)(&amp;</span>obj<span class="op">-&gt;</span>ADCdataBuf<span class="op">[</span>obj<span class="op">-&gt;</span>numAdcSamples <span class="op">*</span> obj<span class="op">-&gt;</span>numChirpsPerChirpEvent<span class="op">]),</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span><span class="dt">uint8_t</span> <span class="op">*)(</span>SOC_translateAddress<span class="op">((</span><span class="dt">uint32_t</span><span class="op">)(&amp;</span>obj<span class="op">-&gt;</span>adcDataIn<span class="op">[</span>obj<span class="op">-&gt;</span>numRangeBins<span class="op">]),</span>SOC_TranslateAddr_Dir_TO_EDMA<span class="op">,</span>NULL<span class="op">)),</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    MMW_EDMA_CH_1D_IN_PONG<span class="op">,</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    false<span class="op">,</span> <span class="co">// 如果要在配置后启用通道，则设置为 true，否则设置为 false。</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    shadowParam<span class="op">++,</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    obj<span class="op">-&gt;</span>numAdcSamples <span class="op">*</span> BYTES_PER_SAMP_1D<span class="op">,</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    MAX<span class="op">(</span>obj<span class="op">-&gt;</span>numRxAntennas <span class="op">/</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">1</span><span class="op">)</span> <span class="op">*</span> obj<span class="op">-&gt;</span>numChirpsPerChirpEvent<span class="op">,</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>obj<span class="op">-&gt;</span>numAdcSamples <span class="op">*</span> BYTES_PER_SAMP_1D <span class="op">*</span> <span class="dv">2</span><span class="op">)</span> <span class="op">*</span> obj<span class="op">-&gt;</span>numChirpsPerChirpEvent<span class="op">,</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    eventQueue<span class="op">,</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    NULL<span class="op">,</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span><span class="dt">uintptr_t</span><span class="op">)</span> obj<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<h2 id="dema的组成" class="anchored" data-anchor-id="目的数据块描述">DEMA的组成</h2>
+<ul>
+<li>通道控制器(<code>EDMA_TPCC0_REQ_FREE_0</code>这里vitalsign使用的是通道控制器0)</li>
+<li><code>cc0 有 2个 TC(传输控制器)</code></li>
+<li><code>cc1 有 1个 TC(传输控制器)</code></li>
+<li>传输控制器</li>
+</ul>
+</blockquote>
+<p>vitalSign中的EDMA配置</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">/*EDMA instance used*/</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MMW_DATA_PATH_EDMA_INSTANCE      EDMA_INSTANCE_0</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                                         </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">/* channels */</span>                           </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MMW_EDMA_CH_1D_IN_PING           EDMA_TPCC0_REQ_FREE_0</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MMW_EDMA_CH_1D_IN_PONG           EDMA_TPCC0_REQ_FREE_1</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MMW_EDMA_CH_1D_OUT_PING          EDMA_TPCC0_REQ_FREE_2</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MMW_EDMA_CH_1D_OUT_PONG          EDMA_TPCC0_REQ_FREE_3</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MMW_EDMA_CH_2D_IN_PING           EDMA_TPCC0_REQ_FREE_4</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MMW_EDMA_CH_2D_IN_PONG           EDMA_TPCC0_REQ_FREE_5</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MMW_EDMA_CH_DET_MATRIX           EDMA_TPCC0_REQ_FREE_6</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MMW_EDMA_CH_DET_MATRIX2          EDMA_TPCC0_REQ_FREE_7</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MMW_EDMA_CH_3D_IN_PING           EDMA_TPCC0_REQ_FREE_8</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MMW_EDMA_CH_3D_IN_PONG           EDMA_TPCC0_REQ_FREE_9</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MMW_EDMA_CH_SIGIMG_MON           EDMA_TPCC0_REQ_FREE_10</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MMW_EDMA_CH_RX_SATURATION_MON    EDMA_TPCC0_REQ_FREE_11</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">/*shadow*/</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">// #define EDMA_NUM_DMA_CHANNELS (64U)</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MMW_EDMA_CH_1D_IN_PING_SHADOW           (EDMA_NUM_DMA_CHANNELS + 0U)    </span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MMW_EDMA_CH_1D_IN_PONG_SHADOW           (EDMA_NUM_DMA_CHANNELS + 1U)</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MMW_EDMA_CH_1D_OUT_PING_SHADOW          (EDMA_NUM_DMA_CHANNELS + 2U)</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MMW_EDMA_CH_1D_OUT_PONG_SHADOW          (EDMA_NUM_DMA_CHANNELS + 3U)</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MMW_EDMA_CH_2D_IN_PING_SHADOW           (EDMA_NUM_DMA_CHANNELS + 4U)</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MMW_EDMA_CH_2D_IN_PONG_SHADOW           (EDMA_NUM_DMA_CHANNELS + 5U)</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MMW_EDMA_CH_DET_MATRIX_SHADOW           (EDMA_NUM_DMA_CHANNELS + 6U)</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MMW_EDMA_CH_DET_MATRIX2_SHADOW          (EDMA_NUM_DMA_CHANNELS + 7U)</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MMW_EDMA_CH_3D_IN_PING_SHADOW           (EDMA_NUM_DMA_CHANNELS + 8U)</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MMW_EDMA_CH_3D_IN_PONG_SHADOW           (EDMA_NUM_DMA_CHANNELS + 9U)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="https://img-blog.csdnimg.cn/eb843bed985b4e2f89d1da862cc61b7e.png" class="img-fluid" alt="在这里插入图片描述"> &gt;## DMA触发方式 &gt;- 手动触发(ESR) &gt;- 链接触发(Link) [vitalsign使用的方式] &gt; <code>用一个edma的传输结束来出发另外一个edma</code> &gt;- 事件触发(EER)</p>
+<p>这里vitalSign使用的是cc0, 所以查看cc0支持的事件表 <img src="https://img-blog.csdnimg.cn/72cb4a398f504e3c8b539f567250c77f.png" class="img-fluid" alt="在这里插入图片描述"> 下面的32个通道对应上面的32个事件(event), 如果我们想要通过UART0 Receice 来出发EDMA传输, 就需要配置到通道8, 这就是<code>事件触发方式</code> <img src="https://img-blog.csdnimg.cn/54c333a841f443a4ba4ac4f8e8143c5d.png" class="img-fluid" alt="在这里插入图片描述"></p>
+<blockquote class="blockquote">
+<h3 id="param" class="anchored">PaRAM</h3>
+<p>每个EDMA事件对应一个paRAM, 每个paRAM存储一个EDMA配置, 每个paRAM包括8个字</p>
+</blockquote>
+<p>这里的参数对应<code>EDMAutil_configType1</code>里面的代码</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int32_t</span> EDMAutil_configType1<span class="op">(</span>EDMA_Handle handle<span class="op">,</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint8_t</span> <span class="op">*</span>srcBuff<span class="op">,</span>  <span class="co">// 源地址</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint8_t</span> <span class="op">*</span>dstBuff<span class="op">,</span> <span class="co">// 目的地址</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint8_t</span> chId<span class="op">,</span>       <span class="co">// 通道</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bool</span> isEventTriggered<span class="op">,</span>  <span class="co">// 是否立即触发</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint16_t</span> shadowParamId<span class="op">,</span> <span class="co">// 影子通道, 链接传输</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint16_t</span> aCount<span class="op">,</span>        <span class="co">// 源数据块(Array)大小</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint16_t</span> bCount<span class="op">,</span>        <span class="co">// 源数据块数量(N*Array)</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int16_t</span> srcBIdx<span class="op">,</span>        <span class="co">// 源数据读取偏移</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int16_t</span> dstBIdx<span class="op">,</span>        <span class="co">// 目的地址写入偏移</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint8_t</span> eventQueueId<span class="op">,</span>   <span class="co">// 事件队列id</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    EDMA_transferCompletionCallbackFxn_t transferCompletionCallbackFxn<span class="op">,</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uintptr_t</span> transferCompletionCallbackFxnArg<span class="op">)</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    EDMA_channelConfig_t config<span class="op">;</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int32_t</span> errorCode <span class="op">=</span> EDMA_NO_ERROR<span class="op">;</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>channelId <span class="op">=</span> chId<span class="op">;</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>channelType <span class="op">=</span> <span class="op">(</span><span class="dt">uint8_t</span><span class="op">)</span>EDMA3_CHANNEL_TYPE_DMA<span class="op">;</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>paramId <span class="op">=</span> chId<span class="op">;</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>eventQueueId <span class="op">=</span> eventQueueId<span class="op">;</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>paramSetConfig<span class="op">.</span>sourceAddress <span class="op">=</span> <span class="op">(</span><span class="dt">uint32_t</span><span class="op">)</span> srcBuff<span class="op">;</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>paramSetConfig<span class="op">.</span>destinationAddress <span class="op">=</span> <span class="op">(</span><span class="dt">uint32_t</span><span class="op">)</span> dstBuff<span class="op">;</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>paramSetConfig<span class="op">.</span>aCount <span class="op">=</span> aCount<span class="op">;</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>paramSetConfig<span class="op">.</span>bCount <span class="op">=</span> bCount<span class="op">;</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>paramSetConfig<span class="op">.</span>cCount <span class="op">=</span> <span class="dv">1</span><span class="bu">U</span><span class="op">;</span>                      <span class="co">// 数据只有一行</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>paramSetConfig<span class="op">.</span>bCountReload <span class="op">=</span> <span class="dv">0</span><span class="bu">U</span><span class="op">;</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>paramSetConfig<span class="op">.</span>sourceBindex <span class="op">=</span> srcBIdx<span class="op">;</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>paramSetConfig<span class="op">.</span>destinationBindex <span class="op">=</span> dstBIdx<span class="op">;</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>paramSetConfig<span class="op">.</span>sourceCindex <span class="op">=</span> <span class="dv">0</span><span class="bu">U</span><span class="op">;</span>            </span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>paramSetConfig<span class="op">.</span>destinationCindex <span class="op">=</span> <span class="dv">0</span><span class="bu">U</span><span class="op">;</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>paramSetConfig<span class="op">.</span>linkAddress <span class="op">=</span> EDMA_NULL_LINK_ADDRESS<span class="op">;</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>paramSetConfig<span class="op">.</span>transferType <span class="op">=</span> <span class="op">(</span><span class="dt">uint8_t</span><span class="op">)</span>EDMA3_SYNC_A<span class="op">;</span>     <span class="co">// 传输模式A同步传输模式(Array*B)</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>paramSetConfig<span class="op">.</span>transferCompletionCode <span class="op">=</span> chId<span class="op">;</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>paramSetConfig<span class="op">.</span>sourceAddressingMode <span class="op">=</span> <span class="op">(</span><span class="dt">uint8_t</span><span class="op">)</span> EDMA3_ADDRESSING_MODE_LINEAR<span class="op">;</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>paramSetConfig<span class="op">.</span>destinationAddressingMode <span class="op">=</span> <span class="op">(</span><span class="dt">uint8_t</span><span class="op">)</span> EDMA3_ADDRESSING_MODE_LINEAR<span class="op">;</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* don't care because of linear addressing modes above */</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>paramSetConfig<span class="op">.</span>fifoWidth <span class="op">=</span> <span class="op">(</span><span class="dt">uint8_t</span><span class="op">)</span> EDMA3_FIFO_WIDTH_8BIT<span class="op">;</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>paramSetConfig<span class="op">.</span>isStaticSet <span class="op">=</span> false<span class="op">;</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>paramSetConfig<span class="op">.</span>isEarlyCompletion <span class="op">=</span> false<span class="op">;</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>paramSetConfig<span class="op">.</span>isFinalTransferInterruptEnabled <span class="op">=</span> true<span class="op">;</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>paramSetConfig<span class="op">.</span>isIntermediateTransferInterruptEnabled <span class="op">=</span> true<span class="op">;</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>paramSetConfig<span class="op">.</span>isFinalChainingEnabled <span class="op">=</span> false<span class="op">;</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>paramSetConfig<span class="op">.</span>isIntermediateChainingEnabled <span class="op">=</span> false<span class="op">;</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>transferCompletionCallbackFxn <span class="op">=</span> transferCompletionCallbackFxn<span class="op">;</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>    config<span class="op">.</span>transferCompletionCallbackFxnArg <span class="op">=</span> transferCompletionCallbackFxnArg<span class="op">;</span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">((</span>errorCode <span class="op">=</span> EDMA_configChannel<span class="op">(</span>handle<span class="op">,</span> <span class="op">&amp;</span>config<span class="op">,</span> isEventTriggered<span class="op">))</span> <span class="op">!=</span> EDMA_NO_ERROR<span class="op">)</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>        System_printf<span class="op">(</span><span class="st">"Error: EDMA_configChannel() failed with error code = %d</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> errorCode<span class="op">);</span></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>        <span class="cf">goto</span> exit<span class="op">;</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>    errorCode <span class="op">=</span> EDMA_setup_shadow_link<span class="op">(</span>handle<span class="op">,</span> chId<span class="op">,</span> shadowParamId<span class="op">,</span></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>        <span class="op">&amp;</span>config<span class="op">.</span>paramSetConfig<span class="op">,</span> config<span class="op">.</span>transferCompletionCallbackFxn<span class="op">,</span> transferCompletionCallbackFxnArg<span class="op">);</span></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>exit<span class="op">:</span></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span><span class="op">(</span>errorCode<span class="op">);</span></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://img-blog.csdnimg.cn/3d330392385447be9127ff76b4f5e7ed.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">在这里插入图片描述</figcaption><p></p>
+</figure>
+</div>
+<p><img src="https://img-blog.csdnimg.cn/a84947e2e4004b368b2be1dc925ddf93.png" class="img-fluid"></p>
+<blockquote class="blockquote">
+<h2 id="qdma触发方式" class="anchored">QDMA触发方式</h2>
+<ul>
+<li>链接触发</li>
+<li>自动触发</li>
+<li>没有用到所有没写</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h1 id="ti-3d点云_demo数据处理流程的解析">TI <code>3D点云_demo</code>数据处理流程的解析</h1>
+<ul>
+<li>主要针对dma对数据的搬移</li>
+</ul>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/5146083d91414dcd8af4839fbc2af4b8.png" class="img-fluid" alt="在这里插入图片描述"> &gt;### EDMA配置 &gt; - 上图处理过程主要用到4 个EDMA &gt; - <code>1D_IN_Ping</code> , <code>1D_IN_Pong</code>, <code>1D_OUT_Ping</code>, <code>1D_OUT_Pong</code></p>
+<blockquote class="blockquote">
+<h4 id="d_in_ping" class="anchored">1D_IN_Ping</h4>
+<ul>
+<li>这个edma主要的工作时将AdcDataBuf中的数据搬移到adcDataIn中</li>
+<li>这里的chrip1, chirp2 …表示的是<code>一frame内的chirp序号</code>, <code>不是所有的chirp, 每次++</code></li>
+<li>chirp1 和 chirp2 的到达时间肯定是不同的, chirp2在chirp1之后, 所以edma_1d_in_ping同一时间搬移到adcDataIn里面的数据是 <code>chrip 1 Rx 1</code> <code>chrip 1 Rx 2</code>,</li>
+<li>bcount=4 表示一共传输4次</li>
+<li>将<code>chrip 1 Rx 1</code> <code>chrip 1 Rx 2</code>组成ping pong , 为后面的加窗 和fft操作组成流水线做准备</li>
+<li>shadow表示链接触发, shadow使用和1d_in_ping的一样的配置参数, 也发送4次,刚好将数据发送完</li>
+<li>这的ping(adcDataBuf)pong(adcDataBuf)表示的是一帧内的chirp, 每个buff中放两个chirp, 如果大于2chrip会组成pingpong</li>
+</ul>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/031b2a12ab7344f8a3e9c5dfbf9ca7a4.png" class="img-fluid" alt="在这里插入图片描述"> &gt; 将<code>chrip 1 Rx 1</code> <code>chrip 1 Rx 2</code>组成ping pong &gt; <img src="https://img-blog.csdnimg.cn/98c6e20cff0e48b8a2fa04c54c10d8ef.png" class="img-fluid" alt="在这里插入图片描述"></p>
+<blockquote class="blockquote">
+<h5 id="对应代码" class="anchored">对应代码</h5>
+<ul>
+<li>后续使用该api请参考这里</li>
+</ul>
+</blockquote>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int32_t</span> EDMAutil_configType1<span class="op">(</span>EDMA_Handle handle<span class="op">,</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint8_t</span> <span class="op">*</span>srcBuff<span class="op">,</span>  <span class="co">// 源地址</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint8_t</span> <span class="op">*</span>dstBuff<span class="op">,</span> <span class="co">// 目的地址</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint8_t</span> chId<span class="op">,</span>       <span class="co">// 通道</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bool</span> isEventTriggered<span class="op">,</span>  <span class="co">// 是否立即触发</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint16_t</span> shadowParamId<span class="op">,</span> <span class="co">// 影子通道, 链接传输</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint16_t</span> aCount<span class="op">,</span>        <span class="co">// 源数据块(Array)大小</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint16_t</span> bCount<span class="op">,</span>        <span class="co">// 源数据块数量(N*Array)</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int16_t</span> srcBIdx<span class="op">,</span>        <span class="co">// 源数据读取偏移</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int16_t</span> dstBIdx<span class="op">,</span>        <span class="co">// 目的地址写入偏移</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint8_t</span> eventQueueId<span class="op">,</span>   <span class="co">// 事件队列id</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>    EDMAutil_configType1<span class="op">(</span>context<span class="op">-&gt;</span>edmaHandle<span class="op">[</span>MMW_DATA_PATH_EDMA_INSTANCE<span class="op">],</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>        <span class="op">(</span><span class="dt">uint8_t</span> <span class="op">*)(&amp;</span>obj<span class="op">-&gt;</span>ADCdataBuf<span class="op">[</span><span class="dv">0</span><span class="op">]),</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="op">(</span><span class="dt">uint8_t</span> <span class="op">*)(</span>SOC_translateAddress<span class="op">((</span><span class="dt">uint32_t</span><span class="op">)&amp;</span>obj<span class="op">-&gt;</span>adcDataIn<span class="op">[</span><span class="dv">0</span><span class="op">],</span>SOC_TranslateAddr_Dir_TO_EDMA<span class="op">,</span>NULL<span class="op">)),</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        MMW_EDMA_CH_1D_IN_PING<span class="op">,</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        false<span class="op">,</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        shadowParam<span class="op">++,</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        obj<span class="op">-&gt;</span>numAdcSamples <span class="op">*</span> BYTES_PER_SAMP_1D<span class="op">,</span><span class="co">// acount</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        MAX<span class="op">(</span>obj<span class="op">-&gt;</span>numRxAntennas <span class="op">/</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">1</span><span class="op">)</span> <span class="op">*</span> obj<span class="op">-&gt;</span>numChirpsPerChirpEvent<span class="op">,</span><span class="co">// bcount</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="op">(</span>obj<span class="op">-&gt;</span>numAdcSamples <span class="op">*</span> BYTES_PER_SAMP_1D <span class="op">*</span> <span class="dv">2</span><span class="op">)</span> <span class="op">*</span> obj<span class="op">-&gt;</span>numChirpsPerChirpEvent<span class="op">,</span> <span class="co">// srcbidx</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        <span class="dv">0</span><span class="op">,</span>                                                                         <span class="co">// dstbidx</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        eventQueue<span class="op">,</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef EDMA_1D_INPUT_BLOCKING</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        MmwDemo_EDMA_transferCompletionCallbackFxn<span class="op">,</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="pp">#else</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        NULL<span class="op">,</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        <span class="op">(</span><span class="dt">uintptr_t</span><span class="op">)</span> obj<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<h4 id="d_in_pong" class="anchored">1D_IN_Pong</h4>
+<ul>
+<li>这个edma和1d_in_ping类似</li>
+<li>参考上面描述</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h4 id="ping-pong-参数对比" class="anchored">ping pong 参数对比</h4>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://img-blog.csdnimg.cn/178a9d386d774249a9c031c798f8a600.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">在这里插入图片描述</figcaption><p></p>
+</figure>
+</div>
+</blockquote>
+<blockquote class="blockquote">
+<h5 id="对应代码-1" class="anchored">对应代码</h5>
+</blockquote>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>EDMAutil_configType1<span class="op">(</span>context<span class="op">-&gt;</span>edmaHandle<span class="op">[</span>MMW_DATA_PATH_EDMA_INSTANCE<span class="op">],</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>        <span class="op">(</span><span class="dt">uint8_t</span> <span class="op">*)(&amp;</span>obj<span class="op">-&gt;</span>ADCdataBuf<span class="op">[</span>obj<span class="op">-&gt;</span>numAdcSamples <span class="op">*</span> obj<span class="op">-&gt;</span>numChirpsPerChirpEvent<span class="op">]),</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="op">(</span><span class="dt">uint8_t</span> <span class="op">*)(</span>SOC_translateAddress<span class="op">((</span><span class="dt">uint32_t</span><span class="op">)(&amp;</span>obj<span class="op">-&gt;</span>adcDataIn<span class="op">[</span>obj<span class="op">-&gt;</span>numRangeBins<span class="op">]),</span>SOC_TranslateAddr_Dir_TO_EDMA<span class="op">,</span>NULL<span class="op">)),</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        MMW_EDMA_CH_1D_IN_PONG<span class="op">,</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        false<span class="op">,</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        shadowParam<span class="op">++,</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        obj<span class="op">-&gt;</span>numAdcSamples <span class="op">*</span> BYTES_PER_SAMP_1D<span class="op">,</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        MAX<span class="op">(</span>obj<span class="op">-&gt;</span>numRxAntennas <span class="op">/</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">1</span><span class="op">)</span> <span class="op">*</span> obj<span class="op">-&gt;</span>numChirpsPerChirpEvent<span class="op">,</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="op">(</span>obj<span class="op">-&gt;</span>numAdcSamples <span class="op">*</span> BYTES_PER_SAMP_1D <span class="op">*</span> <span class="dv">2</span><span class="op">)</span> <span class="op">*</span> obj<span class="op">-&gt;</span>numChirpsPerChirpEvent<span class="op">,</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        eventQueue<span class="op">,</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef EDMA_1D_INPUT_BLOCKING</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        MmwDemo_EDMA_transferCompletionCallbackFxn<span class="op">,</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="pp">#else</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        NULL<span class="op">,</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        <span class="op">(</span><span class="dt">uintptr_t</span><span class="op">)</span> obj<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<h4 id="d_out_ping" class="anchored">1D_OUT_Ping</h4>
+<ul>
+<li><code>这里的ping pong 表示按照发射天线进行区分</code>, 将前面的Ping(adcDataBuf) 或者Pong(adcDataBuf) 单个Buffer中的接收数据进行全部分组, 按照发射天线进行分组</li>
+<li>后将数据搬移到RadarCube中</li>
+<li>Cube中只有一帧的数据,并按照天线的奇偶进行拆分排列</li>
+<li>该EDMA中的配置的搬移到Cube中的数据按照配置生成, <code>dataPathObj-&gt;numRangeBins        = MmwDemo_pow2roundup(dataPathObj-&gt;numAdcSamples);</code> 按照满足的二次幂来设置, <code>numAdcSamples</code> = 100, 那么此时的<code>numRangeBins</code>=128, 如果<code>numAdcSamples=64</code>则<code>numRangeBins=64</code>, 所以这里的EDMA配置根据该参数自动调整</li>
+</ul>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://img-blog.csdnimg.cn/95d1a206c1c8468d99cf6359192ec30f.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">在这里插入图片描述</figcaption><p></p>
+</figure>
+</div>
+<blockquote class="blockquote">
+<h5 id="对应的数据采集的cube排列" class="anchored">对应的数据采集的cube排列</h5>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://img-blog.csdnimg.cn/3014d6b67a7d49b7aaf461adc017e872.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">在这里插入图片描述</figcaption><p></p>
+</figure>
+</div>
+</blockquote>
+<blockquote class="blockquote">
+<h5 id="对应代码-2" class="anchored">对应代码</h5>
+</blockquote>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>    EDMAutil_configType1<span class="op">(</span>context<span class="op">-&gt;</span>edmaHandle<span class="op">[</span>MMW_DATA_PATH_EDMA_INSTANCE<span class="op">],</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>        <span class="op">(</span><span class="dt">uint8_t</span> <span class="op">*)(</span>SOC_translateAddress<span class="op">((</span><span class="dt">uint32_t</span><span class="op">)(&amp;</span>obj<span class="op">-&gt;</span>fftOut1D<span class="op">[</span><span class="dv">0</span><span class="op">]),</span>SOC_TranslateAddr_Dir_TO_EDMA<span class="op">,</span>NULL<span class="op">)),</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        <span class="op">(</span><span class="dt">uint8_t</span> <span class="op">*)(&amp;</span>obj<span class="op">-&gt;</span>radarCube<span class="op">[</span><span class="dv">0</span><span class="op">]),</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        MMW_EDMA_CH_1D_OUT_PING<span class="op">,</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        false<span class="op">,</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        shadowParam<span class="op">++,</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        aCount<span class="op">,</span>   <span class="co">// 128*Rx*complex</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        obj<span class="op">-&gt;</span>numChirpsPerFrame <span class="op">/</span> <span class="dv">2</span><span class="op">,</span> <span class="co">//bCount  4/2</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="dv">0</span><span class="op">,</span> <span class="co">//srcBidx</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        oneD_destinationBindex<span class="op">,</span> <span class="co">//dstBidx</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        eventQueue<span class="op">,</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef EDMA_1D_OUTPUT_BLOCKING</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        MmwDemo_EDMA_transferCompletionCallbackFxn<span class="op">,</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="pp">#else</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>        NULL<span class="op">,</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        <span class="op">(</span><span class="dt">uintptr_t</span><span class="op">)</span> obj<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<h4 id="d_out_pong" class="anchored">1D_OUT_Pong</h4>
+<ul>
+<li>对应参照 1D_OUT_Ping</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://img-blog.csdnimg.cn/0fa8760b93ec46f68e0b3d8bb456f998.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">在这里插入图片描述</figcaption><p></p>
+</figure>
+</div>
+</blockquote>
+<blockquote class="blockquote">
+<h5 id="对应代码-3" class="anchored">对应代码</h5>
+</blockquote>
+<div class="sourceCode" id="cb8"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>    EDMAutil_configType1<span class="op">(</span>context<span class="op">-&gt;</span>edmaHandle<span class="op">[</span>MMW_DATA_PATH_EDMA_INSTANCE<span class="op">],</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>        <span class="op">(</span><span class="dt">uint8_t</span> <span class="op">*)(</span>SOC_translateAddress<span class="op">((</span><span class="dt">uint32_t</span><span class="op">)(&amp;</span>obj<span class="op">-&gt;</span>fftOut1D<span class="op">[</span>numPingOrPongSamples<span class="op">]),</span><span class="co">// numPingOrPongSamples:  128*Rx</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                                         SOC_TranslateAddr_Dir_TO_EDMA<span class="op">,</span>NULL<span class="op">)),</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        oneD_destinationPongAddress<span class="op">,</span> <span class="co">// 128*4*1</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        MMW_EDMA_CH_1D_OUT_PONG<span class="op">,</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        false<span class="op">,</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        shadowParam<span class="op">++,</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        aCount<span class="op">,</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        obj<span class="op">-&gt;</span>numChirpsPerFrame <span class="op">/</span> <span class="dv">2</span><span class="op">,</span> <span class="co">//bCount</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        <span class="dv">0</span><span class="op">,</span> <span class="co">//srcBidx</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        oneD_destinationBindex<span class="op">,</span> <span class="co">//dstBidx</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        eventQueue<span class="op">,</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef EDMA_1D_OUTPUT_BLOCKING</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>        MmwDemo_EDMA_transferCompletionCallbackFxn<span class="op">,</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="pp">#else</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>        NULL<span class="op">,</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>        <span class="op">(</span><span class="dt">uintptr_t</span><span class="op">)</span> obj<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+</section>
+<section id="参考资料" class="level1">
+<h1>参考资料:</h1>
+<blockquote class="blockquote">
+<p><code>file:///D:/environment/ti/mmwave_sdk_02_00_00_04/packages/ti/demo/xwr16xx/mmw/docs/doxygen/html/index.html</code></p>
+</blockquote>
+<blockquote class="blockquote">
+<p><code>extension://bfdogplmndidlpjfhoijckpakkdjkkil/pdf/viewer.html?file=https%3A%2F%2Fwww.ti.com%2Flit%2Fug%2Fsprugs5b%2Fsprugs5b.pdf</code></p>
+</blockquote>
+<blockquote class="blockquote">
+<p><code>file:///D:/environment/ti/mmwave_sdk_03_05_00_04/packages/ti/drivers/edma/docs/doxygen/html/struct_e_d_m_a__channel_config__t__.html</code></p>
+</blockquote>
+<p><a href="https://item.taobao.com/item.htm?spm=a1z10.1-c.w10275485-13199536769.9.3d075064CdSOed&amp;id=38410914796">https://item.taobao.com/item.htm?spm=a1z10.1-c.w10275485-13199536769.9.3d075064CdSOed&amp;id=38410914796</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
