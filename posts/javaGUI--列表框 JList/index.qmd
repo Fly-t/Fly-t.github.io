@@ -1,0 +1,49 @@
+---
+title: "javaGUI--列表框 JList"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+`注意动态写入和静态写入`
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/f2219d68d98b4d199ccd4b4e4e871d6a.png)
+
+```java
+package cn.usts.edu.lesson06;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Vector;
+
+public class JComboBoxDemo02 extends JFrame {
+    public JComboBoxDemo02() {
+        this.setBounds(100,100,400,200);
+        this.setVisible(true);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        //String[] contents = {"1","2","3"}; // 静态的写入
+        Vector<Object> contents = new Vector<>();//动态写入
+        contents.add("tom");
+        contents.add("jack");
+        contents.add("lili");
+        contents.add("加载完成");
+
+
+        JList<Object> list = new JList<>(contents);
+        Container container = this.getContentPane();
+        container.add(list);
+
+    }
+
+    public static void main(String[] args)  {
+        new JComboBoxDemo02();
+    }
+
+}
+
+
+```
+

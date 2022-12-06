@@ -1,0 +1,96 @@
+---
+title: "javaGUI--Swing之[Dialog]弹窗"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+```java
+package cn.usts.edu.lesson04;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class JDialogDemo extends JFrame {
+
+    JButton button01,button02,button03;
+
+    public JDialogDemo() {
+        this.setBounds(200,200,400,200);
+        this.setVisible(true);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        // 获取容器
+        Container container = this.getContentPane();
+        // 绝对布局
+        container.setLayout(null);
+
+        // 按钮
+        button01 = new JButton("点击弹出一个对话框");
+        button01.setBounds(30,30,200,50);
+
+        // 按钮监听
+        button01.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // 弹窗
+                new MyDialogDemo();
+            }
+        });
+
+        this.add(button01);// 添加组件
+    }
+
+    public static void main(String[] args) {
+        new JDialogDemo();
+    }
+}
+
+class MyDialogDemo extends JDialog{
+    public MyDialogDemo() {
+        this.setBounds(100,100,500,500);
+        this.setVisible(true);
+        this.setTitle("hello");
+        Container container = this.getContentPane();
+        container.setLayout(null);
+
+        JLabel jLabel = new JLabel("我的第一个弹窗");
+        jLabel.setBounds(10,10,100,20);// label需要设置大小才能看的到
+        
+        container.add(jLabel);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+

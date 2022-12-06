@@ -1,0 +1,49 @@
+---
+title: "javaGUI--表格布局"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+## **效果**
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/5f734161a9544ceda57f6fa39a063889.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+```java
+package cn.usts.edu.lesson01;
+
+import java.awt.*;
+
+public class TestGridLayOut {
+    // 表格布局
+    public static void main(String[] args) {
+        Frame frame = new Frame("GridLayOut");
+        frame.setVisible(true);
+
+        // 按钮组件
+        Button button1 = new Button("button1");
+        Button button2 = new Button("button2");
+        Button button3 = new Button("button3");
+        Button button4 = new Button("button4");
+        Button button5 = new Button("button5");
+        Button button6 = new Button("button6");
+
+        // 设置布局形式为表格布局
+        frame.setLayout(new GridLayout(2,3));
+
+        frame.add(button1);
+        frame.add(button2);
+        frame.add(button3);
+        frame.add(button4);
+        frame.add(button5);
+        frame.add(button6);
+
+        // 自动调整为合适大小
+        frame.pack();
+    }
+}
+
+```
+

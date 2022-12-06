@@ -1,0 +1,67 @@
+---
+title: "javaGUI--布局练习"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+效果:
+![在这里插入图片描述](https://img-blog.csdnimg.cn/ee173ab3ef644aa0a4f4e5aa0a11caf2.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+
+```java
+package cn.usts.edu.lesson01;
+
+import java.awt.*;
+
+public class Ex01 {
+
+    public static void main(String[] args) {
+        Frame frame = new Frame("练习");
+        // 大小
+        frame.setSize(900,600);
+        frame.setBackground(Color.orange);
+        // 位置
+        frame.setLocation(500,500);
+        // 可见
+        frame.setVisible(true);
+        // 2*1
+        frame.setLayout(new GridLayout(2,1));
+
+        // ------------------------------------上半部分----------------------------------
+        Panel pup =new Panel(new BorderLayout());
+        Panel pup_in =new Panel(new GridLayout(2,1));
+
+        pup.add(new Button("up-west"),BorderLayout.WEST);
+        pup.add(new Button("up-east"),BorderLayout.EAST);
+
+        pup_in.add(new Button("up-center-01"));
+        pup_in.add(new Button("up-center-02"));
+
+        pup.add(pup_in,BorderLayout.CENTER);
+
+        frame.add(pup);
+
+        // ------------------------------------下半部分----------------------------------
+        Panel pdown = new Panel();
+        pdown.setLayout(new BorderLayout());
+        pdown.add(new Button("down-left-01"),BorderLayout.WEST);
+        pdown.add(new Button("down-left-02"),BorderLayout.EAST);
+
+        Panel pdwon_in = new Panel();
+        pdwon_in.setLayout(new GridLayout(2,2));
+        pdwon_in.add(new Button("down-center-01"));
+        pdwon_in.add(new Button("down-center-02"));
+        pdwon_in.add(new Button("down-center-03"));
+        pdwon_in.add(new Button("down-center-04"));
+
+        pdown.add(pdwon_in);
+
+        frame.add(pdown);
+    }
+}
+
+```
+

@@ -1,0 +1,19 @@
+---
+title: "javaGUI--监听器 [ 关闭按钮 ]"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+```java
+// 监听事件,监听窗口关闭实践
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+```
+

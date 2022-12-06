@@ -1,0 +1,64 @@
+---
+title: "javaGUI-- 单选框 JRadioButton _ 复选框 JCheckBox"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+`单选框记得分组,要不然不是只能选一个`
+一个分组中只能选择一个
+`复选框可以选多个`
+![在这里插入图片描述](https://img-blog.csdnimg.cn/c8608758794f40c4afeda9391086ac9c.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_15,color_FFFFFF,t_70,g_se,x_16)
+
+```java
+package cn.usts.edu.lesson05;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class JButtonDemo extends JFrame {
+    public JButtonDemo() {
+        this.setTitle("单选框/复选框");
+        this.setBounds(100,100,500,500);
+        this.setVisible(true);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        // 单选框
+        JRadioButton radioButton01 = new JRadioButton("JRadioButton01");
+        JRadioButton radioButton02 = new JRadioButton("JRadioButton02");
+        JRadioButton radioButton03 = new JRadioButton("JRadioButton03");
+
+        // 因为单选框智能选择一个,所以分组,每个组内只能选择一个
+        ButtonGroup group = new ButtonGroup();
+        group.add(radioButton01);
+        group.add(radioButton02);
+        group.add(radioButton03);
+
+        // 复选框
+        JCheckBox checkBox01 = new JCheckBox("checkBox01");
+        JCheckBox checkBox02 = new JCheckBox("checkBox02");
+        JCheckBox checkBox03 = new JCheckBox("checkBox03");
+
+        Container container = this.getContentPane();
+        container.add(radioButton01,BorderLayout.WEST);
+        container.add(radioButton02,BorderLayout.CENTER);
+        container.add(radioButton03,BorderLayout.EAST);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());
+        panel.add(checkBox01);
+        panel.add(checkBox02);
+        panel.add(checkBox03);
+        container.add(panel,BorderLayout.NORTH);
+    }
+
+    public static void main(String[] args) {
+        new JButtonDemo();
+    }
+}
+
+
+```
+

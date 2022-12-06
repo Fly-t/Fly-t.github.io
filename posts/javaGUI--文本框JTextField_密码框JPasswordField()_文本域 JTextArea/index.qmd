@@ -1,0 +1,62 @@
+---
+title: "javaGUI--文本框JTextField_密码框JPasswordField()_文本域 JTextArea"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+`文本框,密码框,文本域`
+panel.add(scrollPane);// 加上文本域就会让之前的鼠标悬停显示没了,不知道是什么问题
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/1d904d15ab9741c6bbc1ed1444dcb44d.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+```java
+package cn.usts.edu.lesson06;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class JComboBoxDemo03 extends JFrame {
+    public JComboBoxDemo03() {
+        this.setBounds(100,100,500,500);
+        this.setVisible(true);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        // 文本框
+        JTextField field01 = new JTextField();
+        field01.setToolTipText("text01");
+        JTextField field02 = new JTextField();
+        field02.setToolTipText("text02");
+
+        // 密码框
+        JPasswordField passwordField01 = new JPasswordField();
+        passwordField01.setToolTipText("password01");// 悬停显示
+        passwordField01.setEchoChar('*');// 设置显示的内容
+        JPasswordField passwordField02 = new JPasswordField();
+        passwordField02.setEchoChar('x');// 设置显示的内容
+        passwordField02.setToolTipText("password02");// 悬停显示
+
+        // 文本域
+        JTextArea textArea = new JTextArea();
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane.setToolTipText("文本域"); 
+
+        // 布局
+        Panel panel = new Panel(new GridLayout(3,2,20,20));
+        panel.add(field01);
+        panel.add(field02);
+        panel.add(passwordField01);
+        panel.add(passwordField02);
+        panel.add(scrollPane);// 加上文本域就会让之前的鼠标悬停显示没了,不知道是什么问题
+        this.add(panel);
+    }
+
+    public static void main(String[] args) {
+        new JComboBoxDemo03();
+    }
+}
+
+```
+

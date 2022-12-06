@@ -1,0 +1,62 @@
+---
+title: "jdbc-- druid"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+## druid 
+在访问量很大的情况下,明显看出druid和c3p0的区别
+```java
+package cn.usts.edu.jdbc.druid;
+
+import com.alibaba.druid.pool.DruidDataSourceFactory;
+
+import javax.sql.DataSource;
+import java.io.FileInputStream;
+import java.sql.Connection;
+import java.util.Properties;
+
+/**
+ * @author ：fly
+ * @description: druid数据库连接池
+ * @date ：2021/11/6 14:53
+ */
+public class DruidDemo {
+    public static void main(String[] args) throws Exception {
+        FileInputStream fileInputStream = new FileInputStream("src/druid-config.properties");
+        Properties properties = new Properties();
+        properties.load(fileInputStream);
+
+        System.out.println("执行....");
+        long start = System.currentTimeMillis();
+
+        DataSource dataSource = DruidDataSourceFactory.createDataSource(properties);
+        for (int i = 0; i < 500000; i++) {
+            Connection connection = dataSource.getConnection();
+            connection.close();
+        }
+
+        System.out.println("执行时间"+(System.currentTimeMillis()-start));
+    }
+}
+
+```
+## 配置文件
+druid-config.properties
+放src下
+```java
+driverClassName=com.mysql.jdbc.Driver
+url=jdbc:mysql://127.0.0.1:3306/persons?characterEncoding=UTF-8
+username=root
+password=123321
+# 初始化连接数
+initialSize=5
+#最大连接数
+maxActive=10
+#超时时间
+maxWait=3000
+```
+
