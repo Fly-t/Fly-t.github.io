@@ -1,5 +1,5 @@
 ---
-title: "LNK1104错误 无法打开文件“xxx.lib“和查看所有宏定义$xxxx"
+title: "LNK1104错误_无法打开文件xxx.lib_和查看所有宏定义$xxxx"
 author: "dd21"
 date: "2022-12-05" 
 categories: [bug]
