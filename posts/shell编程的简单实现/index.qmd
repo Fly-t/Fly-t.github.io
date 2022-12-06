@@ -1,0 +1,43 @@
+---
+title: "shell编程的简单实现"
+author: "dd21"
+date: "2022-12-05" 
+categories: [linux]
+image: ../csdn.png
+---
+
+
+## 1、新建一个`xxxx.sh`文件
+这里以 <i>bashscript.sh</i> 为例
+```bash
+vim bashscript.sh
+```
+
+## 2、在文件中编写简单的输出指令
+
+```bash
+#！ /bin/bash                           // 脚本解释器程序路径
+#filename:bashscript                       // 注释
+echo  “这是一个bash脚本程序。”					// 输出指令
+echo “---------------------------------------“
+
+```
+
+## 3、给文件赋权
+
+```bash
+chmod u+x bashscript.sh
+```
+
+
+## 4、运行`.sh`文件
+执行程序bashscript.sh
+```bash
+./bashscript.sh
+```
+
+## 99、运行结果
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201024110545934.png#pic_center)
+
+

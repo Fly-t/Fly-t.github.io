@@ -1,0 +1,63 @@
+---
+title: "shell脚本批量创建多个用户"
+author: "dd21"
+date: "2022-12-05" 
+categories: [linux]
+image: ../csdn.png
+---
+
+
+## 1、创建`.sh`文件
+
+执行以下命令
+
+```bash
+vim adduser.sh
+```
+
+## 2、编写shell代码
+
+```bash
+#! /bin/bash
+#filename:add_user
+i=1
+groupadd user1
+while [ $i -le 20 ]
+do
+        if [ $i -le 9 ]; then
+                USERNAME=student0${i}
+        else
+                USERNAME=student${i}
+        fi
+        useradd $USERNAME
+        mkdir /home/$USERNAME
+        chown -R $USERNAME /home/$USERNAME
+        chgrp -R user1 /home/$USERNAME
+        i=$(($i+1))
+done
+
+```
+
+## 3、赋权
+
+```bash
+chmod u+x adduser.sh
+```
+
+## 4、执行
+
+创建用户需要管理员权限，需要加上`sudo`
+
+```bash
+sudo ./adduser.sh
+```
+
+## 99、运行结果
+
+查看是否创建成功
+
+```bash
+cat /etc/passwd
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201024134430961.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70#pic_center)
+

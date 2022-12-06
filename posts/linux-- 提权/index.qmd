@@ -1,0 +1,21 @@
+---
+title: "linux-- 提权"
+author: "dd21"
+date: "2022-12-05" 
+categories: [linux]
+image: ../csdn.png
+---
+
+
+# linux提权
+`vim /ect/sudoers  `
+修改内容如下
+
+```
+root    ALL=(ALL:ALL) ALL
+# 添加的用户
+fly     ALL=(ALL:ALL) ALL
+
+
+```
+

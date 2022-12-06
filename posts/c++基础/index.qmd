@@ -1,0 +1,710 @@
+---
+title: "c++基础"
+author: "dd21"
+date: "2022-12-05" 
+categories: [c++]
+image: ../csdn.png
+---
+
+
+# 输出
+helloworld
+
+```csharp
+cout<< "hello world" << endl;
+```
+# 头文件
+declaration(.h) 和 definition(.cpp)` 任何的类都应该成对出现`
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2036090bad474c95824c6027337508d9.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+```csharp
+cpp 02test.cpp # c预处理器
+g++ 02test.cpp --save-temp #保留编译过程中的中间过程文件
+.ii (编译预处理后的结果)
+.s(汇编代码)
+.o(目标代码)
+.out(最终可执行程序)
+
+g++ 02test.cpp --save -c # 只编译不链接
+g++ 02test.cpp --save-temps # 保留编译过程中的 .o 文件(给人看的)
+g++ 02test.cpp 03test.cpp --save-temps -Wall # 打印所有warning
+```
+# 标准头文件程序:
+为了一个头文件(`xxx.h`)只能被一次引入,不能重复的引入
+```csharp
+#ifndef __LIST_HEAD__
+#define __LIST_HEAD__
+
+#include "node.h"
+
+typedef struct _list
+{
+	Node *head;
+	Node *tail;
+} List;
+
+#endif
+```
+# 双冒号作用域运算符
+
+```csharp
+using namespace std; # 这里很关键否则cot,endl无法使用
+int a=10;
+void h(){
+	int a=20;
+	cout << a << endl; # 20
+	cout << ::a<< endl;  # 10
+}
+```
+有点类似匿名函数,匿名内部类的感觉
+```csharp
+void h(){
+	int a=20;
+	std::cout << a << std::endl; # 20 这里就不用using namespace std了
+	std::cout << ::a<< std::endl;  # 10
+}
+```
+
+# 地址输出
+
+```csharp
+int a = 0;
+const char * p = "hello";
+cout << "变量a的地址: " << &a << endl;                           // 变量a的地址
+cout << "变量a的地址: " << static_cast<void *>(&a) << endl;      // 变量a的地址
+cout << "字符串 " << p << endl;                                 // 字符串内容,即"hello"
+cout << "字符串的地址 " << static_cast<const void *>(p) << endl; // 字符串的地址
+```
+
+# 本地变量,成员变量
+参考地址:[https://blog.csdn.net/smile_from_2015/article/details/50189797](https://blog.csdn.net/smile_from_2015/article/details/50189797)
+参考地址:[https://blog.csdn.net/du_minchao/article/details/48881637](https://blog.csdn.net/du_minchao/article/details/48881637)
+
+`成员变量`(实例变量)
+成员变量随着对象的建立而建立，随着对象的消失而消失，`在类中可以随意使用`
+(实例化对象后会有成员变量)
+
+
+`本地变量`(局部变量)
+在`方法体`中任何位置都可以访问
+
+本地变量:
+成员变量:可以在函数中随意访问.
+
+```csharp
+g++ -m32 a.cpp // 32位系统
+```
+相同的类(对象)使用同一个function,同一个类
+不同的对象调用同一个函数时,函数里面知道是哪个对象在调用他 ( 实现的方式`*this`隐藏的变量 )
+```csharp
+#include "iostream"
+using namespace std;
+
+
+class A{
+    public:
+        int i;
+        void f();
+};
+
+struct B{
+    int i;
+};
+
+
+void A::f(){
+    i=20;
+    cout << i << endl;
+    cout << "A::f().i" << static_cast<void *>(&i) << endl;
+    cout << "this" << static_cast<void *>(this) << endl;
+}
+
+void f(struct B* p){
+    p->i=200;
+    cout << p->i << endl;
+
+}
+
+int main(){
+    A a;
+    B b;
+    A aa;
+    a.i = 10;
+    cout << a.i << endl;
+    cout << "&a  \t" << static_cast<void *>(&a)<<endl;
+    cout << "&a.i\t"  << static_cast<void *>(&a.i) << endl;
+    //  cout << b.i << endl;
+    a.f();
+    aa.f();
+    f(&b);
+}
+
+```
+
+# 构造函数constructor
+为什么要有构造函数
+
+```csharp
+# 因为c语言和其他的语言(java,python)不太一样,c++自己不会对内存初始化,为了提升效率,让程序员自己去初始化内存,
+
+# vsStudio的debug模式会填充0xcb,两个0xcb连起来(国标码)就会显示中文的烫,就以为着没有初始化的内存
+
+# 为了规范程序员的代码,然程序员去初始化内存,于是就出来了constructor就应需而生.
+```
+构造函数, 没有返回类型,在这个对象被创建的时候自动被调用  
+```csharp
+class x {
+	int i;
+	public:
+		X(); // 这里的名字要和class的名字一样(大小写也一致)
+};   // 这里的这个 ; 很重要
+```
+
+构造函数`demo`
+```csharp
+#include "iostream"
+
+using namespace::std;
+
+class Tree{
+    public:
+        Tree(int length);
+        int init_length;
+};
+
+Tree::Tree(int length){
+    init_length = length;
+    cout << "inside Tree structor" << endl;
+} 
+
+int main(){
+    cout << " ------stat----" << endl;
+    { // scope start
+    	cout << "create Tree before" << endl;
+	    Tree t(12);
+	    cout << "create Tree after" << endl; 
+    }// scope end
+    cout << " ----- end ----" << endl; 
+    return 0;
+}
+
+
+```
+# 析构函数
+释放掉之前构造函数申请的内存空间`析构函数没有参数`
+
+```csharp
+class x {
+	int i;
+	public:
+		~X(); 
+};   
+```
+`析构函数demo`		
+
+```csharp
+#include "iostream"
+
+using namespace::std;
+
+class Tree{
+    public:
+        Tree(int length);
+        int init_length;
+        ~Tree();// 析构函数 Destructor
+
+};
+
+Tree::Tree(int length){
+    init_length = length;
+    cout << "inside Tree structor" << endl;
+} 
+
+Tree::~Tree(){
+    cout << static_cast<void *>(this) << endl;
+}
+
+int main(){
+    cout << " ------stat----" << endl;
+    {
+    Tree t(12);
+    } // 析构函数的作用域scope,出了这个大括号就会调用析构函数.
+    cout << "create Tree after" << endl; 
+    cout << " ----- end ----" << endl; 
+    return 0;
+}
+
+
+```
+# 动态内存分配
+`c`语言的动态内存分配是 `malloc` 和 `free` 
+在`c++`中采用的是: `new`(生成对象)和`delete`(回收对象)
+
+### new
+1.分配空间
+2.调用构造函数(自定义类)
+3.返回一个地址()
+```csharp
+new int # new Type 分配一个type类型的空间出来
+new Class  # new Class 分配一个对象给出来. 
+new int[10] # new Type[n] 分配n个type空间出来
+```
+
+### delete
+把内存还给内存池.
+delete的时候先调用析构函数,然后内存空间才会被回收.
+```csharp
+delete p; # 回收单个内存
+delete[] p; # 回收一组内存
+```
+`delete demo`
+ 
+要点:
+`1: 不要用delete去释放不是 new 分配出来的内存`
+`2: 不要delete同一个空间两次`
+`3: delete 可以安全的删除一个空指针(int * p = 0;)`
+`4: 数组的时候一定要用数组[]类型delete`
+```csharp
+#include "iostream"
+
+using namespace::std;
+
+class A{
+
+    private:
+        int i;
+    public:
+        //int i;
+        A(){
+            cout << "A::A()" << endl;
+        }
+        ~A(){
+            cout << "~A" << i << endl;
+        }
+        void set(int i){
+            this->i=i;
+        }
+        void f(){
+           cout << "hello" << endl; 
+        }
+};
+
+
+int main(){
+    A* p = new A[10];
+    for (int i=0;i<10;i++){
+        p[i].set(i);
+    }
+    delete[] p;// 释放内存
+    return 0;
+}
+
+```
+# 访问限制
+public：公开的,任何人都可以访问；
+protected：子孙类可以访问；
+private：只有自己可以访问。)(同一个类之内可以访问,成员函数...)
+friend : 可以互相访问
+`这个限制只有在编译阶段有效, 运行时刻没有限制`
+**代码有点烂,不具备参考**
+```csharp                                                     
+#include "iostream"
+
+using namespace::std;
+
+class A{
+
+    private:
+        int i;
+    public:
+        //int i;
+        A(){
+            cout << "A::A()" << endl;
+        }
+        ~A(){
+            cout << "~A" << i << endl;
+        }
+        void set(int i){
+            this->i=i;
+        }
+        void f(){
+           cout << "hello" << endl; 
+        }
+        void g(A* p2){
+            cout << "p2->i is :"  << p2->i << endl;
+        }
+
+};
+
+
+int main(){
+    A* p = new A[10];
+    for (int i=0;i<10;i++){
+        p[i].set(i);
+        p[i].g(&p[i]);
+    }
+    
+
+    delete[] p;// 
+    return 0;
+}
+
+```
+`friend demo`
+
+```csharp
+#include "iostream"
+
+using namespace::std;
+
+
+struct A;
+
+struct B{
+    void f(A*);
+};
+
+
+struct A{
+    private:
+        int i;
+    public:
+        void hello();
+        friend void g(A*, int);
+        friend void B::f(A*);
+        friend struct Z;
+        friend void h();
+};
+
+void A::hello(){
+    i=100;
+    cout << "成员访问变量:" <<  i << endl;
+}
+
+void g(A* a, int i){
+    a->i = i;
+    cout << "friend 方法访问:" << i  << endl;
+}
+
+void B::f(A* a){
+    a->i=999;
+    cout << "B中函数修改A中i: "<< a->i<< endl;
+}
+
+struct Z{
+    private:
+        int j;
+};
+
+void h(){
+    cout <<"hello" <<endl;
+}
+
+
+int main(){
+    A a;
+    a.hello();
+    A a;
+    a.hello();
+    
+    return 0;
+}
+```
+
+# class和struct的区别
+`class`默认的是`private`
+`struct`默认是`public`
+# 初始化列表(推荐)
+初始化列表不要被名字唬住,其实就是是相当于在初始化之前给了一个默认值,赋值的过程提到了构造器之前.格式: `Class(): key(value)`
+`推荐类在初始化列表中做初始化,不要要构造器中做赋值`
+
+```csharp
+#include "iostream"
+
+using namespace::std;
+
+
+class Student{
+    public:
+        int age;
+        string name;
+        Student():age(12),name("tom"){};
+};
+
+
+int main(){
+    Student a;
+    cout << a.name << endl;
+    cout << a.age << endl;
+    return 0;
+}
+
+
+```
+# 组合和继承
+组合是对象进行拼装,是存在对象的
+继承是类进行拼装,是没有真实的存在的
+`c++中的组合适类的组合,不是对象的组合`
+### interface
+对外公开的部分(`public`)
+### 继承
+继承可以访问继承的`成员变量`,`成员方法`,`interface`(就是member data,member function中public的部分)
+
+子类可以使用父类的所有内容(但是在实例化的时候就不可以了,`实例化的时候只可以访问public的部分!!!!!`)
+protected属性表示只可以子类访问,其他的类都不行(测试实例化的对象可不可以) 
+private 子类可以访问,但是实例化对象不可以.
+public 谁都可以访问.
+
+```csharp
+#include"iostream"
+
+using namespace std;
+
+
+class Person{
+    public:
+        string name;
+        void work(){
+            cout << "work......"  << name << endl;
+        }
+        Person():name("tom"){};
+        ~Person(){ cout << "~person" << endl;};
+    
+    private:
+        int age=10;
+        void wash_clothes(){
+            cout << "wash clothes" << endl;
+        } 
+    
+    protected:
+        string book="TomAndJerry";
+        void use_note(){
+            cout << "use note" << endl;
+        }
+};
+
+class Parent :public Person{
+    string self_book;
+
+    public:
+    void hello(){
+        self_book = Person::book;// child class can use prarent class protected data;
+        cout << self_book << endl;
+    }
+    void self_wash(){
+        //Person::wash_clothes();// protected can not use anywhere 
+    }
+};
+
+
+int main(){
+    Parent father;
+    cout << father.name <<endl;
+    father.work();// because is public
+    father.hello();
+    //father.self_book;// protected can be used by class not entertiy
+    //father.age;// can not be use the reason is not public
+     
+    return 0;
+}
+
+
+```
+# 函数重载(function overload) 
+相同的函数名,接受不同的参数
+
+```csharp
+void hello(){};
+void hello(string name){};
+void hello(int age){};
+void hello(int age,float weight){};
+void hello(float height,float wieight){};
+...
+```
+
+# 默认参数(default arguement)
+`虽然方便但是不推荐,因为在后期调用的时候只能看到赋值一个参数,容易误解`
+默认参数要写到`.h`文件中
+`a.h`
+```csharp
+void hello(int i; int j=10);
+```
+`a.cpp`
+```csharp
+#include "a.h"
+#include "iostream"
+
+using namespace std;
+
+void hello(int i,int j){
+    cout << i << "|" << j << endl;            
+}
+
+int main(){
+    hello(999);
+    return 0;
+}
+
+```
+# 内联函数(inline function)
+空间换时间
+类型校验
+`递归问题`,`函数代码超过20行`
+函数构造的的时候直接写操作,默认是`inline`	的
+### 什么时候inline
+代码很少 2~3行
+频繁调用(循环中)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/1e9edf64e2fb4019963e2b9a5fc179a4.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+### class的inline写法:
+![在这里插入图片描述](https://img-blog.csdnimg.cn/0cad5c8f46c24755921f27b254215d8a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+# static
+
+```csharp
+// main 函数运行完才会释放
+static int a=0;
+// 函数执行完就会释放
+void func(){
+	int a = 0;
+}
+```
+
+# define
+##### define和const的区别
+`const可以进行类型检查`
+
+```csharp
+cosnt int A  200;
+```
+
+`define是完全的替换`
+
+```csharp
+#define A 100;
+```
+
+# const
+const 常量,不可以修改.
+
+```csharp
+const double PI=3.1415926
+
+// not allow
+PI++;
+```
+extern表示这是一个声明而不是一个定义. (有但是不知道是多少,相当于匿名)
+告诉编译器说,你可以放心大胆的用,后边我会给你提供值得的
+### 问题
+初始化的的时候一定要给具体的值,不可以用extern
+```csharp
+extern const int buffersize;
+```
+### const pointer / pointer const
+对象是const: 对象不可以修改.指针可以修改
+
+```csharp
+#include"iostream"
+
+using namespace std;
+
+class A{
+    public:
+    int age=19;
+};
+
+int main(){
+    A a;
+    A a2;
+    const A* p1=&a;
+    cout << p1->age=10 <<endl;// error!!!!
+    p1++;//not error!!!!
+    return 0;
+}
+```
+
+指针是const: 指针不可以修改(`不可以p++`)但是可以通过不同的指针	
+
+```csharp
+#include"iostream"
+
+using namespace std;
+
+class A{
+    public:
+    int age=19;
+};
+
+int main(){
+    A a;
+    A a2;
+    A* const p1=&a;
+    cout << p1->age <<endl;
+    p1++; // error!!!!!
+    return 0;
+}
+```
+
+```csharp
+Person p1("tom",18);
+
+const Person* p = &p1; // 对象是const不可以修改
+Person const* p = &p1; // 对象是const不可以修改
+Person *const p = &p1; // 指针是const不可以修改
+const Person *const p  = &p1; // 都不可以修改
+```
+`const写在 * 的前面对象是const` 表示指向的那块内存是const,不能通过这个指针修改所指的对象.
+`const写在 * 的后面指针是const` 表示指针的地址是const
+### 字符类型是放在全局数据区里面的 
+```csharp
+void hello() const; // 表示这个const加在this上
+void hello(cosnt *A this){};
+
+void hello(); // 这两个方法构成了重载.
+void hello(*A this){};
+```
+# 引用
+
+```csharp
+#include<iostream>
+
+int main(){
+    int a = 100;
+    int& b = a; // b的vule就是a的value
+    std::cout<< b <<std::endl;
+    
+    return 0;
+}
+
+```
+
+# 文件保存
+
+```csharp
+#include <iostream>
+#include<fstream>
+
+std::ofstream fileSteam;
+int data = 100;
+
+fileSteam.open("D:test.txt")
+
+fileSteam << data << std::endl;
+fileSteam.close()
+```
+# 文件读取(按行)
+[文件读取参考](https://blog.csdn.net/qq_35987777/article/details/107704637)
+```csharp
+#include <iostream>
+#include<fstream>
+
+int main(){
+    std::string read_data;
+    std::ifstream inFile("./readme",std::ios::in);
+        while(std::getline(inFile,read_data)){
+            std::cout << read_data << std::endl;
+        }
+  	inFile.close();        
+  return 0;
+}
+
+```
+

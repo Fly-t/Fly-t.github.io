@@ -1,0 +1,34 @@
+---
+title: "qt大小端转换"
+author: "dd21"
+date: "2022-12-05" 
+categories: [qt]
+image: ../csdn.png
+---
+
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/a626ac799dc24a5184b18bd4392ffdfc.png)
+
+以`1580 0001`为例
+```csharp
+	QByteArray b("15800001");
+    qint32 a = parseValueInt32(b, 0, 8);
+    qDebug() << "\tseqNum:" << a;
+```
+ 32位大端解析:
+```csharp
+qint32 single_test::parseValueInt32(QByteArray data, int valuePos, int valueSize)
+{
+    bool ok;
+    QByteArray parseData;
+    parseData = data.mid(valuePos, valueSize);
+    QString strParseData = parseData;
+    qint32 tempInt32 = strParseData.toInt(&ok, 16);
+    					    // 					   0x15 80 00 01(原始数据反过来)
+    qDebug() << tempInt32; // 16810005 (十进制) --> 0x01 00 80 15(十六进制)
+    qint32 parseValueOut = qToBigEndian(tempInt32);     // Convert to Big-Endian
+    return parseValueOut;    
+}
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/f4c3f5412fc4434b96b1a08556063940.png)
+

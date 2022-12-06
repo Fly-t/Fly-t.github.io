@@ -1,0 +1,27 @@
+---
+title: "qt多线程QThread()"
+author: "dd21"
+date: "2022-12-05" 
+categories: [qt]
+image: ../csdn.png
+---
+
+
+# 创建
+```csharp
+class MyThread : public QThread
+{
+protected:
+    void run()
+    {
+        /* 线程的相关代码 */
+    }
+};
+```
+# 调用
+```csharp
+Thread *thread = new Thread;
+
+thread->start(); 
+```
+

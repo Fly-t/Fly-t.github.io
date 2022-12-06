@@ -1,0 +1,141 @@
+---
+title: "java EE 获取请求行、请求头、请求正文"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+# 1、常用请求行信息获取的方法
+
+
+## 1.1 获取请求提交的方式
+
+```java
+// 统一编码方式防止中文乱码
+response.setContentType("text/html;charset=utf-8");
+// 获取请求方法
+String method = request.getMethod();
+```
+## 1.2 获取请求的协议
+```java
+// 获取请求的协议
+String protocol = request.getProtocol();
+```
+
+## 1.3 获取项目名称
+
+```java
+// 获取项目名称
+String conttextPath = request.getContextPath();
+		
+```
+
+## 1.4 获取servlet路径
+
+```java
+// 获取servlet路径
+String servletPath = request.getServletPath();		
+```
+
+## 1.5 获取请求路径
+```java
+// 获取请求路径
+String requestURI = request.getRequestURI();
+String requestURL = request.getRequestURL().toString();
+```
+
+## 1.6 输出
+
+```java
+response.getWriter().write("请求方法："+method+"<br>");
+response.getWriter().write("请求协议："+protocol+"<br>");
+response.getWriter().write("请求项目名称："+conttextPath+"<br>");
+response.getWriter().write("请求servlet路径："+servletPath+"<br>");
+response.getWriter().write("请求路径URI："+requestURI+"<br>");
+response.getWriter().write("请求路径URL："+requestURL+"<br>");
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2021031614274975.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+# 2、常用请求头中信息获取的方法
+
+## 2.1 获取所有请求头名称
+
+```java
+// 请求头信息获取
+		
+response.setContentType("text/html;charset=utf-8");
+// 获取所有的消息头名称
+Enumeration<String> er = request.getHeaderNames();
+// 遍历
+while(er.hasMoreElements()){
+// 3、获取消息头
+	String name = er.nextElement();
+	// 4、获取消息头对应值
+	String value = request.getHeader(name);
+	esponse.getWriter().write("消息头："+name+" "+value+"<br>");
+}
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210316145054357.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+
+## 2.2 获取值
+
+```java
+// 获取请求头中的"user-agent"对应的值
+String value = request.getHeader("user-agent");
+response.getWriter().write(value);
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210316145716150.png)
+
+# 3、请求正文的值
+
+## 3.1 获取值
+
+```java
+// 根据name属性值获取用户输入的值
+String value = request.getParamerter("name属性对应的值");
+
+// 根据name属性值 获取用户选择的值（复选框等）
+String[] values = request.getParamerterValues("name属性对应的值");
+
+// 没有参数获取所有值
+map<String, String[]> map = request.getParamerterMap();
+```
+
+## 3.2 测试
+
+```java
+response.getWriter().write("username:"+value+ "<br>");
+response.getWriter().write("password:"+psd+ "<br>");
+response.getWriter().write("hobby:"+Arrays.toString(hobby)+ "<br>");
+```
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210316161134233.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+
+## 3.3 form表单
+
+```html
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+                              "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+ 	<form action="/myProject/para" method="GET">
+ 	 	用户名：<input type="text" name="username"><br>
+ 	 	密  &nbsp;&nbsp;&nbsp;码：<input type="password" name="password"><br>
+ 	 	爱好：
+ 	 	<input type="checkbox" name="hobby" value="sing">唱歌
+ 	 	<input type="checkbox" name="hobby" value="dance">跳舞
+ 	 	<input type="checkbox" name="hobby" value="football">足球<br>
+ 	 	<input type="submit" value="提交">
+ 	</form>
+</body>
+</html>
+```
+
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210316160958524.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+

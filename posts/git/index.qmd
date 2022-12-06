@@ -1,0 +1,23 @@
+---
+title: "git"
+author: "dd21"
+date: "2022-12-05" 
+categories: [git]
+image: ../csdn.png
+---
+
+
+git commit
+
+git checkout HEAD
+git checkout pushed
+git checkout main
+
+git reset HEAD^
+git revert HEAD
+
+git rebase main
+git branch -f main HEAD
+
+git cherry-pick c1 c2 c3
+git rebase -i HEAD~2

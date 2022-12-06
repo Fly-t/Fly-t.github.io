@@ -1,0 +1,178 @@
+---
+title: "qt上位机 -- 自己开发出口助手"
+author: "dd21"
+date: "2022-12-05" 
+categories: [qt]
+image: ../csdn.png
+---
+
+
+# 成品效果
+代码地址:[https://gitee.com/itengfei/serial-assistant](https://gitee.com/itengfei/serial-assistant)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/9e18bff796b94512bc033947854e9a60.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+
+# ui布局
+代码链接:
+![在这里插入图片描述](https://img-blog.csdnimg.cn/9c9aa9eec7f34f73a5001fda10f44c09.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+# 编码
+![在这里插入图片描述](https://img-blog.csdnimg.cn/51d7e4e6562847acb61b5fb59b80229b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+[串口助手](https://lanzout.com/iVuR4xw95nc)
+[虚拟串口](https://lanzout.com/iKMo4xw77nc)
+
+
+`serialAssistant.h`代码
+
+```csharp
+#pragma once
+
+#include <QtWidgets/QWidget>
+#include "ui_serialassistant.h"
+
+#include <QSerialPort>        //提供访问串口的功能
+#include <QSerialPortInfo>    //提供系统中存在的串口的信息
+#include<qmessagebox.h>
+
+class serialAssistant : public QWidget
+{
+    Q_OBJECT
+
+public:
+    serialAssistant(QWidget* parent = Q_NULLPTR) ;
+    ~serialAssistant() {};
+   
+  
+    QSerialPort* serialPort;
+    QSerialPort::BaudRate baudRate{};
+    QSerialPort::StopBits stopBits{};
+    QSerialPort::DataBits dataBits{};
+    QSerialPort::Parity checkBits{};
+
+public slots:
+    void start();
+    void stop();
+    void clear();
+    void send();
+    void receive();
+
+
+private:
+    Ui::serialAssistantClass ui;
+};
+
+```
+
+`serialAssistant.cpp`代码
+```csharp
+#include "serialassistant.h"
+#include <iostream>
+
+
+
+serialAssistant::serialAssistant(QWidget *parent)
+    : QWidget(parent)
+{
+    
+    ui.setupUi(this);
+
+    serialPort = new QSerialPort(this);
+    
+    // get and show  ports
+    for each (const QSerialPortInfo &info in QSerialPortInfo::availablePorts())
+    {
+        ui.serialPortComBox->addItem(info.portName());
+    }
+    
+    connect(serialPort, SIGNAL(readyRead()),this, SLOT(receive()));
+}
+
+void serialAssistant::start() {
+    if (ui.baudRatCombox->currentText() == "4800") {
+        serialAssistant::baudRate = QSerialPort::Baud4800;
+    }
+    else if (ui.baudRatCombox->currentText() == "9600") {
+        serialAssistant::baudRate = QSerialPort::Baud9600;
+    }
+    else if (ui.baudRatCombox->currentText() == "115200") {
+        serialAssistant::baudRate = QSerialPort::Baud115200;
+    }
+
+
+    if (ui.dataBitComBox->currentText() == "5") {
+        serialAssistant::dataBits = QSerialPort::Data5;
+    }
+    else if (ui.dataBitComBox->currentText() == "6") {
+        serialAssistant::dataBits = QSerialPort::Data6;
+    }
+    else if (ui.dataBitComBox->currentText() == "7") {
+        serialAssistant::dataBits = QSerialPort::Data7;
+    }
+    else if (ui.dataBitComBox->currentText() == "8") {
+        serialAssistant::dataBits = QSerialPort::Data8;
+    }
+
+
+    if (ui.stopBitComBox->currentText() == "1") {
+        serialAssistant::stopBits = QSerialPort::OneStop;
+    }
+    else if (ui.stopBitComBox->currentText() == "1.5") {
+        serialAssistant::stopBits = QSerialPort::OneAndHalfStop;
+    }
+    else if (ui.stopBitComBox->currentText() == "2") {
+        serialAssistant::stopBits = QSerialPort::TwoStop;
+    }
+
+    if (ui.checkComBox->currentText() == "none") {
+        serialAssistant::checkBits = QSerialPort::NoParity;
+    }
+   
+    serialPort->setPortName(ui.serialPortComBox->currentText());
+    serialPort->setBaudRate(serialAssistant::baudRate);
+    serialPort->setDataBits(serialAssistant::dataBits);
+    serialPort->setStopBits(serialAssistant::stopBits);
+    serialPort->setParity(serialAssistant::checkBits);
+ 
+   // std::cout << serialAssistant::baudRate << std::endl;
+    // std::cout << serialAssistant::dataBits << std::endl;
+    // std::cout << serialAssistant::stopBits << std::endl;
+    // std::cout << serialAssistant::checkBits << std::endl;
+
+    // chek status 
+    if (serialPort->open(QIODevice::ReadWrite) == true) {
+       
+        QMessageBox::information(this, "tip", "ok");
+    }
+    else {
+        QMessageBox::critical(this, "tip", "fail");
+    }
+
+}
+
+void serialAssistant::stop()
+{
+    QMessageBox::information(this, "tip", "closed");
+    serialPort->close();
+}
+
+void serialAssistant::clear()
+{
+    ui.sendLineEdit->clear();
+}
+
+void serialAssistant::send()
+{
+    serialPort->write(ui.sendLineEdit->text().toLocal8Bit().data());
+    //std::cout << ui.sendLineEdit->text().toLocal8Bit().data() << std::endl;
+}
+
+void serialAssistant::receive()
+{
+    QString buffer;
+    buffer =  QString(serialPort->readAll());
+    ui.receivePlainTextEdit->appendPlainText(buffer);
+    //std::cout << buffer.toStdString() << std::endl;
+}
+
+```
+

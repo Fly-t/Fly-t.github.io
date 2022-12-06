@@ -1,0 +1,78 @@
+---
+title: "java EE 会话和会话技术 -cookie"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+## 1、cookie对象
+	cookie是一种会话管理技术，他是用来保存会话技术过程中产生的数据，然后在浏览器和服务器交互时，会使用cookie里面保存的数据。
+	首次访问不会携带cookie
+
+## 2、常用api
+```java
+//得到cookie对象： 
+Cookie cookie = new Cookie( String key, String value);
+//回写（响应）到浏览器：
+ response.addCookie(cookie);
+//得到cookie 的名称 ：
+String name = cookie.getName(),
+//得到cookie 的值：   
+String value = cookie.getValue();
+//给cookie设置 生命时长： 
+setMaxAge(int sr);
+//设置cookie生命为7 天;
+例：setMaxAge(60*60*24*7)
+	分类：
+		①会话级别cookie，浏览器关闭，cookie对象就销毁了；
+		②持久化cookie，通过setMaxAge()这个方法设置。
+	给cookie设置路径，设置域名：
+		setPath(路径的url),setDomain(域名)；
+		例：域名就是服务器名称   如：www.baidu.com
+//得到cookie：
+Cookie[] cookies = request.getCookies();
+```
+## 3、cookie记录上次访问时间
+` 默认级别cookie（浏览器关闭就会消失）`
+```java
+response.setContentType("text/html;charset=utf-8");
+		// 获取cookies
+		Cookie[] cookies = request.getCookies();
+		// 遍历cookies数组
+		String lasTime=null;
+		for(int i=0; cookies != null&& i<cookies.length;i++){
+			String name = cookies[i].getName();
+			if("lastAccess".equals(name)){
+				// 获取cookie的时间
+				lasTime = cookies[i].getValue();
+			}
+		}
+		// 判断是否是首次访问，如果cookie里有时间，就不是第一次访问
+		if(lasTime == null){
+			//String time = String.format("%tF %<tT", new Date());
+			//Cookie cookie = new Cookie("lastAccess", time);
+			response.getWriter().print("您是第一次访问");
+		}
+		else{
+			response.getWriter().print("您上次访问时间是："+lasTime);
+			//String time = String.format("%F %<tT", new Date());
+			//Cookie cookie = new Cookie("lastAccess", time);
+			//response.addCookie(cookie);
+		}
+		
+		String time = String.format("%tF %<tT", new Date());
+		Cookie cookie = new Cookie("lastAccess", time);
+		response.addCookie(cookie);
+```
+`持久化cookie`
+
+```java
+String time = String.format("%tF %<tT", new Date());
+		Cookie cookie = new Cookie("lastAccess", time);
+		// 保留7天
+		cookie.setMaxAge(60*60*24*7);
+		response.addCookie(cookie);
+```
+

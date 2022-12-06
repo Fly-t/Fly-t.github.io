@@ -1,0 +1,42 @@
+---
+title: "java网络编程-- URL(网络资源下载)"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+```java
+package cn.usts.edu.lesson06;
+
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+/**
+ * 利用URL进行网络文件下载
+ * */
+public class URLDownload {
+    public static void main(String[] args) throws IOException {
+        URL url = new URL("https://img-home.csdnimg.cn/images/20211019040101.gif");
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();//打开连接,对链接进行访问;
+        InputStream inputStream = urlConnection.getInputStream();
+        FileOutputStream fileOutputStream = new FileOutputStream("D:\\all_projects\\java_projects\\java_ij" +
+                "\\springMVC\\NetWork\\src\\cn\\usts\\edu\\lesson06\\download.gif");
+        byte[] buffer = new byte[1024];
+        int len;
+        while ((len=inputStream.read(buffer))!=-1){
+            fileOutputStream.write(buffer,0,len);
+        }
+        fileOutputStream.close();
+        inputStream.close();
+        System.out.println("下载完成");
+    }
+}
+
+```
+

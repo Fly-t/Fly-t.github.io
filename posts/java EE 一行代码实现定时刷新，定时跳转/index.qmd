@@ -1,0 +1,25 @@
+---
+title: "java EE 一行代码实现定时刷新，定时跳转"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+## 1、定时跳转
+
+```java
+response.addHeader("Refresh","【跳转时间】;url=/【项目名】/【跳转页面名】.html")
+//例：定时5秒跳转到myProject中的hello.html页面
+response.addHeader("Refresh","5;url=/myProject/hello.html")
+```
+
+## 2、定时刷新
+
+```java
+response.addHeader("Refresh","【刷新时间】")
+// 每5秒钟刷新一下页面
+response.addHeader("Refresh",'5')
+```
+

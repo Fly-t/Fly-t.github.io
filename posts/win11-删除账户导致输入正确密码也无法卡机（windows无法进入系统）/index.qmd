@@ -1,0 +1,24 @@
+---
+title: "win11-删除账户导致输入正确密码也无法卡机（windows无法进入系统）"
+author: "dd21"
+date: "2022-12-05" 
+categories: [clutter]
+image: ../csdn.png
+---
+
+
+# 问题描述：
+直接点击了删除账户，导致系统无用户存在，重启系统完发现之前账户依旧存在，但是输入密码无法进入系统。
+# 解决方案（进入windows自带的启动修复）
+登录页面点击电源按钮（关机，重启，注销）选择重启（①在点击重启的同时点击键盘上的shift按键）
+，将会进入到下面的界面
+### `①在点击重启的同时点击键盘上的shift按键`
+### `②选择系统还原`
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/c7c8efcf95d24026862530b9d9d55e42.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+### `③选择还原点`
+
+![**](https://img-blog.csdnimg.cn/2b6600b76f634521aed19ab9f0056db2.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+### `④windows11需要输入硬盘密码`（登录微软账户查询密码：[https://account.microsoft.com/devices/recoverykey?refd=account.microsoft.com](https://account.microsoft.com/devices/recoverykey?refd=account.microsoft.com)）
+![在这里插入图片描述](https://img-blog.csdnimg.cn/8abdba0ddfb94ae58f0c4bd8829a6be0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+### 输入以上密钥后系统将进入还原点进行还原，等待系统重启即可恢复。

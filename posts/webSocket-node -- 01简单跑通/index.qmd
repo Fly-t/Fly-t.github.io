@@ -1,0 +1,101 @@
+---
+title: "webSocket-node -- 01简单跑通"
+author: "dd21"
+date: "2022-12-05" 
+categories: [nodejs]
+image: ../csdn.png
+---
+
+
+# 简单实现架构图
+![在这里插入图片描述](https://img-blog.csdnimg.cn/0429dd30f2044290aca022ae743196d7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+安装webSocket
+```bash
+npm install websocket
+```
+启动程序前配置`package.json`
+```bash
+{
+  "scripts": {
+    "start": "node index.js 8080"
+  },
+  "dependencies": {
+    "websocket": "^1.0.34"
+  }
+}
+```
+
+服务端程序: `serverClient.js`
+
+```js
+var WebSocket = require('websocket').server
+var http = require('http')
+
+// 创建httpServer
+var httpServer = http.createServer().listen(8080,function (){
+    console.log('http://127.0.0.1:8080')
+})
+
+// 创建webSocketServer
+var wsServer = new WebSocket({
+    httpServer:httpServer,
+    autoAcceptConnections:false
+})
+
+wsServer.on('request',function (request){
+    var connection = request.accept()
+    connection.on('message',function (msg){
+        console.log(msg)
+
+        // 发送给客户端
+        connection.send(msg.utf8Data)
+    })
+})
+```
+客户端程序: `Client.html`
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="msg"></div>
+    <input type="text" id="text">
+    <input type="submit" value="发送" onclick="send()">
+
+    <script>
+        var websocket = new WebSocket('ws://localhost:8080');
+        // ws ---> http
+        // wss ---> https
+
+        websocket.readyState
+        // 0 链接还没有建立
+        // 1 连接建立成功
+        // 2 连接正在关闭
+        // 3 连接已经关闭
+        websocket.onopen = function () {
+            console.log(websocket.readyState)
+        }
+        
+        function send() {
+            var text = document.getElementById('text').value
+            websocket.send(text)
+        }
+
+        websocket.onmessage = function (backMsg){
+            console.log(backMsg.data)
+        }
+    </script>
+
+</body>
+</html>
+```
+
+客户端：![在这里插入图片描述](https://img-blog.csdnimg.cn/6973cc9c306d4fbd87157bb37baed12d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+服务端：
+![在这里插入图片描述](https://img-blog.csdnimg.cn/9da784ea988548538bf2e52b9bb3e231.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+

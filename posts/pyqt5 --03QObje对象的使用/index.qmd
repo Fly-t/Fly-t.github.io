@@ -1,0 +1,43 @@
+---
+title: "pyqt5 --03QObje对象的使用"
+author: "dd21"
+date: "2022-12-05" 
+categories: [python]
+image: ../csdn.png
+---
+
+
+```python
+from PyQt5.Qt import *
+import sys
+
+
+class Window(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle('QObject对象学习')
+        self.resize(500, 500)
+        self.func_list()
+
+    def func_list(self):
+        self.func1()
+
+    def func1(self):
+        obj = QObject()
+        obj.setObjectName('第一个objectname')
+        obj.setProperty('key', 'value')
+        obj.setProperty('key2', 'value2')
+        print(obj.property('key'))
+        print(obj.objectName())  # 设置属性+set,去掉set就是获取(get)
+        print(obj.dynamicPropertyNames())  # 获取所有已经设置的键值对
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    window = Window()
+    window.show()
+    sys.exit(app.exec_())
+
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/50e3e70294f2400aa6343beb7d8ccb53.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+

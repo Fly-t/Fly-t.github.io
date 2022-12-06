@@ -1,0 +1,27 @@
+---
+title: "java EE 利用Referer简单实现防盗链功能"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+1、原理
+通过判断请求url是否包含自家服务器的名称从而来判断是否由本家发起的请求。
+
+```java
+		// 获取Referer请求头
+		String referer  = request.getHeader("Referer");
+		// 获取服务器名称 
+			String serverName = request.getServerName();
+		// 判断referer是否包含服务器名称
+			if(referer!=null && referer.contains(serverName)){
+				response.getWriter().write("downloading............");
+			}
+			else{
+				// 不是从本网站发起的请求，把用户重定向到我们的网页
+				response.sendRedirect("/myProject/welcom.html");
+			}
+```
+

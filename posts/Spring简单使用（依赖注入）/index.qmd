@@ -1,0 +1,160 @@
+---
+title: "Spring简单使用（依赖注入）"
+author: "dd21"
+date: "2022-12-05" 
+categories: [spring]
+image: ../csdn.png
+---
+
+
+## spring
+
+`IOC（Inversion of Control）:`控制反转    
+
+```bash
+ 创建对象的方式改变了，以前是new创建对象，现在时通过Spring创建对象
+```
+
+
+`AOP（Aspect Oriented Programming）:`面向切片编程    
+
+```bash
+创建代码会有很多重复的部分，如异常处理、日志等。只需要写一遍，利用aop写入程序中
+```
+
+## spring核心包
+
+beans：bean管理
+Context：上下文（体现在xml配置）
+Expression Language：spring EL表达式
+Core：spring框架核心
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210510183526121.png)
+
+## spring入门程序
+UserDao.java
+```java
+package cn.edu.usts.spring;
+
+public class UserDao {
+public  void say() {
+	System.out.println("spring test！！");
+}
+}
+
+```
+applicationContext.xml
+
+```bash
+spring-framework-4.3.6.RELEASE-dist\spring-framework-4.3.6.RELEASE\docs\spring-framework-reference\html\index.html------>7.2.1
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210510194001254.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+    <bean id="userDao" class="cn.edu.usts.spring.UserDao"></bean>
+
+</beans>
+
+
+```
+Test,java
+
+```java
+package cn.edu.usts.spring;
+
+ 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import cn.edu.usts.spring.UserDao;
+
+public class Test {
+	
+	public static void main(String[] args) {
+	    // 实例化容器
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+		// 通过容器获取实例
+		UserDao userDao = (UserDao)applicationContext.getBean("userDao");
+		// 使用实例中方法
+		userDao.say();
+	}
+	
+}
+
+```
+
+
+
+## 通过set方法进行依赖注入
+
+UserService.java
+
+```java
+package cn.edu.usts.spring;
+
+public class UserService {
+	public UserDao userDao;
+
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
+	}
+
+
+
+	public void say(){
+		System.out.println("userService say test!!!");
+		this.userDao.say();
+	}
+}
+
+```
+applicationContext.xml
+
+```java
+package cn.edu.usts.spring;
+
+ 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+
+
+public class Test {
+	
+	public static void main(String[] args) {
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+		UserService userService = (UserService)applicationContext.getBean("userService");
+		userService.say();
+	}
+	
+}
+
+```
+Test.java
+
+```java
+package cn.edu.usts.spring;
+
+ 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+
+
+public class Test {
+	
+	public static void main(String[] args) {
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+		UserService userService = (UserService)applicationContext.getBean("userService");
+		userService.say();
+	}
+	
+}
+
+```
+

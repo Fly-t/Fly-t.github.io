@@ -1,0 +1,33 @@
+---
+title: "java网络编程-- 端口"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+端口是为了定位到计算机内的软件所在位置
+```bash
+netstat -an  # 查看素有端口
+netstat -an|findstr "5900"  # 查看指定的端口
+tasklist|findstr "8696"     # 查看指定端口的进程
+```
+
+```java
+package cn.usts.edu.lesson01;
+
+import java.net.InetSocketAddress;
+
+public class TestSocketAddress {
+    public static void main(String[] args) {
+        InetSocketAddress socketAddress = new InetSocketAddress("127.0.0.1", 8080);
+        System.out.println(socketAddress);
+        System.out.println(socketAddress.getAddress());// 地址
+        System.out.println(socketAddress.getPort());    // 端口
+        System.out.println(socketAddress.getHostName());  // 域名//C:\Windows\System32\drivers\etc\hosts文件中
+    }
+}
+
+```
+

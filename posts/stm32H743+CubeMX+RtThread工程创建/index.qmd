@@ -1,0 +1,88 @@
+---
+title: "stm32H743+CubeMX+RtThread工程创建"
+author: "dd21"
+date: "2022-12-05" 
+categories: [rtthread]
+image: ../csdn.png
+---
+
+
+# `CubeMX`
+> ## 时钟修改
+把时钟修改为`非sysTicks`
+![在这里插入图片描述](https://img-blog.csdnimg.cn/8fb11f3374244839b73caa185174abfd.png)
+
+>## 外部高速时钟
+> 使能外部高速晶振
+> 
+![在这里插入图片描述](https://img-blog.csdnimg.cn/28298e6a3f884d2c8d2ffc07fe7e451f.png)
+> 配置时钟树
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/8fc1b5932c324f5b9e6756c4dcf67ad3.png)
+
+>## Debug
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/a95f1a0786444c7c998c2c0b61c539ee.png)
+
+>## Usart
+> 设置引脚, 使能usart
+> 
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/4f26a6f8b96545749f1c75ee87f3448f.png)
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/6e067d3447bf47b1b303d0212a88202c.png)
+>## RT-Thread
+>[添加rtt参考链接](https://zhuanlan.zhihu.com/p/80532282)
+>
+![在这里插入图片描述](https://img-blog.csdnimg.cn/e2233d449dbf4f139f97d4b52c0ebfc4.png)
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/7f05403b97404e19ab64105ef13b2171.png)
+> 打开动态内存堆.否则`无法使用rt_thread_create`动态创建线程.
+> 
+![在这里插入图片描述](https://img-blog.csdnimg.cn/130babe5ecf7479daf2a5b081c1bca39.png)
+> ## 生成项目 
+![在这里插入图片描述](https://img-blog.csdnimg.cn/c3c8bc28b723451b8a44f02ff3252ae9.png)
+> 生成keil项目
+> 
+![在这里插入图片描述](https://img-blog.csdnimg.cn/ea23452a2dc34915a6c830f610c026e6.png)
+
+# `工程创建完成后修改`
+>#### 工程创建完成后直接编译会有error无法通过编译
+![在这里插入图片描述](https://img-blog.csdnimg.cn/e555cfe5dbd740ffaa70b64dcaa6adb5.png)
+> 添加`board.h` 删除 `rtconfig.h`
+> 
+![在这里插入图片描述](https://img-blog.csdnimg.cn/9f75b924a03845808f895db26cb46d21.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/3bfa7d36fabe4441a1aa90b29d9c2f71.png)
+`board.h` 
+```c
+#ifndef __BOARD_H
+#define __BOARD_H
+
+#include "main.h" // 这里可以添加平台文件(stm32h743xx.h)替换
+
+
+
+#endif // !__BOARD_H
+
+```
+> #### 修改rtconfig.h`添加fish组件`
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/5fe206d7e6bf48c0b59b888182a9af75.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/02dc514a27784f59ae5de8acfc37b472.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/41e3b04a82e74abb84a97efafdef3dad.png)
+> ###  修改串口输出
+> H7的发送和接收是分开的
+
+#### `board.c`
+![在这里插入图片描述](https://img-blog.csdnimg.cn/f2e936908b964eb59cfb4e8dc0104984.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/528219c748ee46839fffba6361fe065a.png)
+# 重复定义错误
+![在这里插入图片描述](https://img-blog.csdnimg.cn/a7892a36a551415c8b4047dd56684a70.png)
+### 修改堆内存
+![在这里插入图片描述](https://img-blog.csdnimg.cn/5736e8c6154f450d813327f8a1a05bb9.png)
+### `main.c`
+![在这里插入图片描述](https://img-blog.csdnimg.cn/77ca83e2b362488a912e11413470fc48.png)
+## 测试结果
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/e512cd3992714bdc8859b7d32d39e24d.png)
+

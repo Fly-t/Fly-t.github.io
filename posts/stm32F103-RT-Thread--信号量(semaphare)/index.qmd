@@ -1,0 +1,104 @@
+---
+title: "stm32F103-RT-Thread--信号量(semaphare)"
+author: "dd21"
+date: "2022-12-05" 
+categories: [rtthread]
+image: ../csdn.png
+---
+
+
+# 信号量(semaphare)
+>主要是`量`这个字, 表示这个信号有一定的量, 可以是0,也可是10,也可以是任意数字, 但是当他为0的时候就表示不可以使用了, 当为非零的时候可以使用,每使用一次即-1,释放的时候+1,为0就等待释放.
+
+```csharp
+static int count = 0;
+
+static rt_sem_t sem = RT_NULL;							// semaphore control block
+static rt_thread_t sem_1_thread = RT_NULL;				// semaphore thread_1 control block
+static rt_thread_t sem_2_thread = RT_NULL;				// semaphore thread_2 control block
+static rt_thread_t sem_3_thread = RT_NULL;				// semaphore thread_2 control block
+
+static void sem_thread_1_entry(void *parmaeter);
+static void sem_thread_2_entry(void *parmaeter);
+static void sem_thread_3_entry(void *parmaeter);
+
+int main(void){
+
+	/* 这里的main简化了 */
+	sem = rt_sem_create("sem_count_per10_++", 0,RT_IPC_FLAG_FIFO);
+	
+	sem_1_thread = rt_thread_create("sem_1_thread", sem_thread_1_entry, RT_NULL, 512, 3, 20);
+	rt_thread_startup(sem_1_thread);
+	
+	
+	sem_2_thread = rt_thread_create("sem_2_thread", sem_thread_2_entry, RT_NULL, 512, 2, 20);
+	rt_thread_startup(sem_2_thread);
+	
+	
+	sem_3_thread = rt_thread_create("sem_3_thread", sem_thread_3_entry,RT_NULL, 512, 2, 20);
+	rt_thread_startup(sem_3_thread);
+	
+}
+
+
+static void sem_thread_1_entry(void *parameter){
+	while (1)	
+	{
+		if (count <= 100)
+		{
+			count++;
+		}
+		else
+			return;
+
+		if (0 == count % 10)
+		{
+			rt_kprintf("thread_1 is release the semaphore %d\n",count);
+			rt_sem_release(sem);	// release the semaphore
+		}
+		
+	}
+	
+}
+
+/*this thread is to get the semphore and do +1*/
+static void sem_thread_2_entry(void *parameter){
+
+	while (1)
+	{
+		rt_err_t result = RT_NULL;
+		result = rt_sem_take(sem,RT_WAITING_FOREVER);
+		
+		if(result==RT_EOK){
+			count++;
+			rt_kprintf("thread_[2] if take the semaphore and after ++ is: [%d]\n",count);
+		}
+		else{
+			rt_kprintf("[2]take the semaphore is failed!!!!!\n");
+			rt_sem_delete(sem);
+			return;
+		}
+	}	
+}
+
+
+static void sem_thread_3_entry(void *parameter){
+
+	while (1)
+	{
+		rt_err_t result = RT_NULL;
+		result = rt_sem_take(sem,RT_WAITING_FOREVER);
+		
+		if(result==RT_EOK){
+			count++;
+			rt_kprintf("thread_[3] if take the semaphore and after ++ is: [%d]\n",count);
+		}
+		else{
+			rt_kprintf("[3]take the semaphore is failed!!!!!\n");
+			rt_sem_delete(sem);
+			return;
+		}
+	}	
+}
+```
+

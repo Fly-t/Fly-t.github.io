@@ -1,0 +1,54 @@
+---
+title: "安卓7以上安装系统证书(system分区没有权限)"
+author: "dd21"
+date: "2022-12-05" 
+categories: [spider]
+image: ../csdn.png
+---
+
+
+> 试验环境
+>  小米8 
+>  已root
+>  安卓9
+>  `system分区没有修改权限大概率是没有remount`
+
+>下载安装openssl
+[https://jszhuanben.lanzouy.com/iPxBM0bb6gni
+](https://jszhuanben.lanzouy.com/iPxBM0bb6gni)
+> 添加及环境变量(`openssl所在目录`)
+
+>获取系统证书
+>- 从抓包软件中获取证书(`charles`,`fiddler`等)
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/090fb91535cd4f1e954cfef1a3c7e83d.png)
+>- 将证书文件重新命名为`hash.0`
+```c
+openssl x509 -subject_hash_old -in Charles.pem
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/8eac25d763a041028fa3a5af424a641a.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/0b2660fc63194ae58f98b3b57359f330.png)
+
+
+>将文件放入系统证书目录中
+
+- 利用adb的shell进行操作
+
+```bash
+# 修改system分区为可读写
+mount -o remount,rw /system
+
+# 移动文件到系统证书目录(文件已经通过拖拉放到手机上了anlink)
+mv 0c454880.0 /system/etc/security/cacerts
+ 
+# 修改文件权限
+chmod 644 /system/etc/security/cacerts/0c454880.0
+```
+
+> 查看证书
+> - 可以查看到证书才算成功
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/b662955cf05944e684df1fbcda6a8bcc.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/3105e6a0003e4e38afb4fa67a40b9b5c.png)
+
+> 后续的操作就是正常的charles代理的设置, 设置wifi代理ip和端口,就不叙述了

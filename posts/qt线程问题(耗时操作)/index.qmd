@@ -1,0 +1,13 @@
+---
+title: "qt线程问题(耗时操作)"
+author: "dd21"
+date: "2022-12-05" 
+categories: [qt]
+image: ../csdn.png
+---
+
+
+qt多线程问题:
+	方法1: qtsignal 启动线程,避免界面卡死
+	方法2: 使用QApplication.processEvents()
+	方法3: 使用QThread

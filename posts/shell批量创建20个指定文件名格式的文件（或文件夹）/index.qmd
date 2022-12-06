@@ -1,0 +1,58 @@
+---
+title: "shell批量创建20个指定文件名格式的文件（或文件夹）"
+author: "dd21"
+date: "2022-12-05" 
+categories: [linux]
+image: ../csdn.png
+---
+
+
+## 1、创建一个`xxx.sh`文件
+
+这里以test2.sh为例
+
+```bash
+vim test2.sh
+```
+
+## 2、主体程序
+
+```bash
+#!/bin/bash
+#filename:test_2
+
+# 设置文件存储路径
+path=./space/
+
+# 判断路径是否存在
+if [ -d $path ]
+then
+        echo $path
+else
+        mkdir $path
+fi
+
+# 程序主体
+i=1
+while(($i<=9))
+
+# 程序主体循环
+do
+		# 文件名格式
+        number=$[ "183500110"$i"" ]
+        filename=$number
+        #mkdir $path/$filename
+        let "i++"
+done
+
+# 避免0不占位置导致的格式不对齐
+while(($i<=20))
+do
+        number=$[ "18350011"$i"" ]
+        filename=$number
+        mkdir $path/$filename
+        let "i++"
+done
+
+```
+

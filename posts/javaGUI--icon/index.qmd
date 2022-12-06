@@ -1,0 +1,72 @@
+---
+title: "javaGUI--icon"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+在maven项目中,将图片文件放入classes文件夹下才有效!!!!!
+
+`URL url = ImageIconDemo.class.getResource("csdn.png");`获取不到图片的原因.
+![在这里插入图片描述](https://img-blog.csdnimg.cn/9b6546538abe4a5c911417710225d838.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_16,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/60fdd436ba764a9b8bd8659922f9c2a1.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+`button.setToolTipText("图片按钮");// 鼠标悬停上面会提示的文字`
+
+```java
+package cn.usts.edu.lesson04;
+
+import javax.swing.*;
+import java.awt.*;
+import java.net.URL;
+
+public class ImageIconDemo extends JFrame {
+
+    public ImageIconDemo() {
+        JLabel label01 = new JLabel("图片icon");
+        JButton button = new JButton();
+
+        URL url = ImageIconDemo.class.getResource("csdn.png");// 获取图片位置
+        ImageIcon imageIcon = new ImageIcon(url);// 实例化新的图片icon
+
+        label01.setIcon(imageIcon);
+        label01.setHorizontalAlignment(SwingConstants.CENTER);
+
+        button.setIcon(imageIcon);
+        button.setBounds(100,100,200,100);
+        button.setToolTipText("图片按钮");// 鼠标悬停上面会提示的文字
+
+        Container container = this.getContentPane();
+        container.add(button);
+        container.add(label01);
+
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setBounds(100,100,600,600);
+        this.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        new ImageIconDemo();
+    }
+}
+
+
+```
+
+解决方案
+修改`pom.xml`文件
+```xml
+<!--所有文件复制到classes下-->
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </resource>
+        </resources>
+    </build>
+```
+

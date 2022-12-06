@@ -1,0 +1,69 @@
+---
+title: "Django项目三步快速创建"
+author: "dd21"
+date: "2022-12-05" 
+categories: [django]
+image: ../csdn.png
+---
+
+
+# **一、先安装Django**
+
+```bash
+pip install django==2.1.7                 # 安装Django2.1.7版本，高版本不兼容
+```
+pip 安装的库的时候很大概率可能会出现~~安装失败~~  的情况，他会提示升级pip的版本。大多数情况不用升级，直接多pip安装一次两次就好了，就会安装上。
+
+## 方法①：
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200430134334108.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+
+## 方法②：
+直接调出cmd（win+r，输入cmd回车，在弹出的cmd中输入pip install.....）
+
+# **二、创建项目**
+
+①pip 安装好django的库之后，我们就要创建项目了
+
+```bash
+django-admin startproject FirstWeb 			# 创建名为FirstWeb的项目	项目名大写
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200430135828838.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+②执行完命令发现会多出几个文件夹，说明项目创建成功了
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200430140143876.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+
+## **三、启动项目**
+
+项目创建成功，就要启动项目测试下了
+①先进入到__init__所在的文件夹下，执行以下命令
+```bash
+python manage.py runserver 0:8000		# 运行项目 0 = 0.0.0.0 允许所有ip访问
+```
+如果没法访问
+
+```bash
+python manage.py runserver 127.0.0.1:8000		# 运行项目 允许所有127.0.0.1访问
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200430140709376.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+**②出现小火箭，就成功了**
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200430140843231.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+③下次就不用执行：python manage.py runserver 127.0.0.1:8000了
+直接接点绿色小箭头就行了
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200430141157159.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+
+**④如果没法自动创建Django启动项**
+
+1）
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200430141654892.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+2）
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200430141749985.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+3）
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200430142204400.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+现在就都配置好了
+
+## 最后
+设置terminal编码(**如果terminal窗口出现乱码**)
+	file------>settings 
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200430142350185.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+
+

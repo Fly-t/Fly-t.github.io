@@ -1,0 +1,127 @@
+---
+title: "quarto"
+author: "dd21"
+date: "2022-12-05" 
+categories: [clutter]
+image: ../csdn.png
+---
+
+
+
+
+
+# picgo（图床）
+```c
+    // picogo config
+    "picgo.picBed.current": "github",
+    "picgo.picBed.github.token": "gxxxxxxxx",
+    "picgo.picBed.github.repo": "fly-t/blog",
+    "picgo.picBed.github.branch": "master",
+    "picgo.customUploadName": "${mdFileName}-${dateTime}${extName}",
+    "picgo.picBed.github.path": "images/",
+    "picgo.customOutputFormat": "![](${url})",
+```
+# githu连接问题
+github push不支持账号密码，使用token
+```bash
+[core]
+    repositoryformatversion = 0
+    filemode = false
+    bare = false
+    logallrefupdates = true
+    ignorecase = true
+[remote "origin"]
+    url = https://ellisonpei:这里填access_token@github.com/项目名/项目名.git
+    fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+    remote = origin
+    merge = refs/heads/master
+[user]
+    name = aa5279aa
+    email = xxxx@qq.com
+[branch "develop"]
+    remote = origin
+    merge = refs/heads/develop
+[credential]
+    helper =
+```
+
+# 这里没有反应， 关掉代理重新尝试
+```c
+quarto publish gh-pages
+```
+
+# github action 自动部署
+`_quarto.yml`
+```c
+execute: 
+  freeze: auto
+```
+
+创建该目录并创建文件
+```c
+// 项目根目录
+mkdir .github/workflows
+cd 
+touch .github/workflows/publish.yml
+```
+`.github/workflows/publish.yml`
+
+```c
+on:
+  workflow_dispatch:
+  push:
+    branches: main
+
+name: Quarto Publish
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Render and Publish
+        uses: quarto-dev/quarto-actions/publish@v2
+        with:
+          target: gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+```c
+ git config --global credential.helper store                              
+ vim .gitconfig
+// close
+git config --system --unset credential.helper
+
+git config --global http.proxy 'http://127.0.0.1:7890'
+git config --global https.proxy 'http://127.0.0.1:7890'
+
+```
+
+
+修改上传快捷键
+![在这里插入图片描述](https://img-blog.csdnimg.cn/7c6f8a03ec36429ea1cd3c69ea753bc4.png)
+
+
+
+
+
+
+
+# 参考
+
+设置github push [https://www.jianshu.com/p/3b4f7619999e](https://www.jianshu.com/p/3b4f7619999e)
+显示。git：[https://blog.csdn.net/Mrs_chens/article/details/101191893](https://blog.csdn.net/Mrs_chens/article/details/101191893)
+
+Quarto 官方部署流程：https://quarto.org/docs/publishing/github-pages.html
+GitHub Pages: https://docs.github.com/cn/pages
+GitHub Actions: https://docs.github.com/cn/actions
+workflows 字段介绍：https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions

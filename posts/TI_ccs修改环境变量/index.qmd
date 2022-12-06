@@ -1,0 +1,15 @@
+---
+title: "TI_ccs修改环境变量"
+author: "dd21"
+date: "2022-12-05" 
+categories: [mmwave]
+image: ../csdn.png
+---
+
+
+项目右键
+![在这里插入图片描述](https://img-blog.csdnimg.cn/51b44e2a7a2b4820a75dfd3aa81dd76b.png)
+
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/d50fd85ff6654fc2bd36ec6e232df44c.png)
+

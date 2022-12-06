@@ -1,0 +1,105 @@
+---
+title: "vue -- 01安装、创建、跑通"
+author: "dd21"
+date: "2022-12-05" 
+categories: [vue]
+image: ../csdn.png
+---
+
+
+# vue安装
+
+```bash
+查看版本
+
+vue/cli --version
+
+查看2.xx版本
+
+npm view vue-cli versions --json
+
+vue init webpack vue2xx
+
+查看3.xx以上版本
+
+npm view @vue/cli versions --json
+
+vue create my-project
+
+卸载
+
+npm uninstall -g @vue/cli
+
+安装指定版本（2.xx）
+
+npm install -g vue-cli@2.9.6
+
+安装指定版本（3.xx）
+
+npm install -g @vue/cli@3.9.3
+
+安装最新版本
+
+npm install -g @vue/cli
+
+作者：铁有情
+链接：https://www.jianshu.com/p/cd5dc9aad773
+来源：简书
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+```
+# 查看是否安装成功
+```bash
+vue -V
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/21c1bb09d41842c89a0755fb56313197.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+# 创建项目
+```bash
+vue create APP_NAME
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2a63fe032723423b8cf82defa2090049.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/23e7676b6de44071850163af2789e367.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+# 手动安装
+![在这里插入图片描述](https://img-blog.csdnimg.cn/ba62edaa3b88400c910530e6669025a2.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+空格选择
+![在这里插入图片描述](https://img-blog.csdnimg.cn/58c95362a7f0497381fff3db7662c993.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+历史模式：
+```bash
+y
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2dfab516a2a54afc9e1a57e70af68cfe.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+## `scss`![在这里插入图片描述](https://img-blog.csdnimg.cn/16f9d4cbcdc143d687b02c448988c25b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+# `in package.json`
+放到一个文件中方便管理
+![在这里插入图片描述](https://img-blog.csdnimg.cn/e32b1e80670a4fa599ea2516ebf13a48.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+### `是否保存为配置文件`
+![在这里插入图片描述](https://img-blog.csdnimg.cn/b5cb5df07784439dafec5cf6097b01cc.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+到这里大概率会出现一个pyhton 的错误(因为需要python2)
+
+进入到创建的app文件夹中
+```bash
+import sys   print "%s%s%s"
+```
+第一次发现annaconda香起来了
+```bash
+# 创建py27
+conda create -n py27 python==2.7
+# 切换到py27
+conda activate py27
+```
+重新安装node-sass
+```bash
+npm install node-sass@4.14.1
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/4f1fb10fcd09470980d672867c3e5f8c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+# 启动
+ide启动
+![在这里插入图片描述](https://img-blog.csdnimg.cn/985d4bc22d4f4c0c92f436b01b4fa9f3.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+## cmd启动：
+在app项目目录下
+```bash
+npm run serve
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/46077844ef2c4cf3a961d4b7a7241b20.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/78190438352043a8a0436199cbec8480.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+

@@ -1,0 +1,375 @@
+---
+title: "TI_MMWave_EDMA_以及ti_OutOfBoxDemo数据处理(data_path)_解析"
+author: "dd21"
+date: "2022-12-05" 
+categories: [mmwave]
+image: ../csdn.png
+---
+
+
+# EDMA
+## 源数据块描述:
+>- ACount: Array(每个切分数据)的大小 
+>- BCount: 一共有N个Array
+>- CCount: N个BCount
+>
+![在这里插入图片描述](https://img-blog.csdnimg.cn/1322671fc9074bf9a087787ba56d4e44.png)
+### 目的数据块描述:
+> - srcBidx: `源数据块的读取偏移`(上面的一个array的大小), 即读取每个array偏移的大小
+> - dstBidx: `目的地址偏移`(如果为0 表示不偏移, 最大支持0xffffH的偏移)
+> - 下图表示的是ab同步传输模式, 在vitalsign中使用的是a同步传输
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/4c9a08babe93493db8beb4588e58c031.png)
+```c
+/**
+ * EDMA_Handle handle,
+    uint8_t *srcBuff,              ADCdataBuf
+    uint8_t *dstBuff,              adcDataIn
+    uint8_t chId,                   PONG
+    bool isEventTriggered,          false
+    uint16_t shadowParamId,
+    uint16_t aCount,                100*(16*2)
+    uint16_t bCount,                Rx*numChirp
+    int16_t srcBIdx,				
+    int16_t dstBIdx,				0
+    uint8_t eventQueueId,
+    EDMA_transferCompletionCallbackFxn_t transferCompletionCallbackFxn,
+    uintptr_t transferCompletionCallbackFxnArg
+ * */
+
+
+EDMAutil_configType1(
+	context->edmaHandle[MMW_DATA_PATH_EDMA_INSTANCE],
+    (uint8_t *)(&obj->ADCdataBuf[obj->numAdcSamples * obj->numChirpsPerChirpEvent]),
+    (uint8_t *)(SOC_translateAddress((uint32_t)(&obj->adcDataIn[obj->numRangeBins]),SOC_TranslateAddr_Dir_TO_EDMA,NULL)),
+    MMW_EDMA_CH_1D_IN_PONG,
+    false, // 如果要在配置后启用通道，则设置为 true，否则设置为 false。
+    shadowParam++,
+    obj->numAdcSamples * BYTES_PER_SAMP_1D,
+    MAX(obj->numRxAntennas / 2, 1) * obj->numChirpsPerChirpEvent,
+    (obj->numAdcSamples * BYTES_PER_SAMP_1D * 2) * obj->numChirpsPerChirpEvent,
+    0,
+    eventQueue,
+    NULL,
+    (uintptr_t) obj);
+```
+
+> ## DEMA的组成
+> - 通道控制器(`EDMA_TPCC0_REQ_FREE_0`这里vitalsign使用的是通道控制器0)
+> - `cc0 有 2个 TC(传输控制器)`
+> - `cc1 有 1个 TC(传输控制器)`
+> - 传输控制器
+
+vitalSign中的EDMA配置
+
+```c
+/*EDMA instance used*/
+#define MMW_DATA_PATH_EDMA_INSTANCE      EDMA_INSTANCE_0
+                                         
+/* channels */                           
+#define MMW_EDMA_CH_1D_IN_PING           EDMA_TPCC0_REQ_FREE_0
+#define MMW_EDMA_CH_1D_IN_PONG           EDMA_TPCC0_REQ_FREE_1
+#define MMW_EDMA_CH_1D_OUT_PING          EDMA_TPCC0_REQ_FREE_2
+#define MMW_EDMA_CH_1D_OUT_PONG          EDMA_TPCC0_REQ_FREE_3
+#define MMW_EDMA_CH_2D_IN_PING           EDMA_TPCC0_REQ_FREE_4
+#define MMW_EDMA_CH_2D_IN_PONG           EDMA_TPCC0_REQ_FREE_5
+#define MMW_EDMA_CH_DET_MATRIX           EDMA_TPCC0_REQ_FREE_6
+#define MMW_EDMA_CH_DET_MATRIX2          EDMA_TPCC0_REQ_FREE_7
+#define MMW_EDMA_CH_3D_IN_PING           EDMA_TPCC0_REQ_FREE_8
+#define MMW_EDMA_CH_3D_IN_PONG           EDMA_TPCC0_REQ_FREE_9
+#define MMW_EDMA_CH_SIGIMG_MON           EDMA_TPCC0_REQ_FREE_10
+#define MMW_EDMA_CH_RX_SATURATION_MON    EDMA_TPCC0_REQ_FREE_11
+
+/*shadow*/
+// #define EDMA_NUM_DMA_CHANNELS (64U)
+#define MMW_EDMA_CH_1D_IN_PING_SHADOW           (EDMA_NUM_DMA_CHANNELS + 0U)    
+#define MMW_EDMA_CH_1D_IN_PONG_SHADOW           (EDMA_NUM_DMA_CHANNELS + 1U)
+#define MMW_EDMA_CH_1D_OUT_PING_SHADOW          (EDMA_NUM_DMA_CHANNELS + 2U)
+#define MMW_EDMA_CH_1D_OUT_PONG_SHADOW          (EDMA_NUM_DMA_CHANNELS + 3U)
+#define MMW_EDMA_CH_2D_IN_PING_SHADOW           (EDMA_NUM_DMA_CHANNELS + 4U)
+#define MMW_EDMA_CH_2D_IN_PONG_SHADOW           (EDMA_NUM_DMA_CHANNELS + 5U)
+#define MMW_EDMA_CH_DET_MATRIX_SHADOW           (EDMA_NUM_DMA_CHANNELS + 6U)
+#define MMW_EDMA_CH_DET_MATRIX2_SHADOW          (EDMA_NUM_DMA_CHANNELS + 7U)
+#define MMW_EDMA_CH_3D_IN_PING_SHADOW           (EDMA_NUM_DMA_CHANNELS + 8U)
+#define MMW_EDMA_CH_3D_IN_PONG_SHADOW           (EDMA_NUM_DMA_CHANNELS + 9U)
+```
+
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/eb843bed985b4e2f89d1da862cc61b7e.png)
+>## DMA触发方式
+>- 手动触发(ESR)
+>- 链接触发(Link) [vitalsign使用的方式]
+> `用一个edma的传输结束来出发另外一个edma`
+>- 事件触发(EER)
+
+这里vitalSign使用的是cc0, 所以查看cc0支持的事件表
+![在这里插入图片描述](https://img-blog.csdnimg.cn/72cb4a398f504e3c8b539f567250c77f.png)
+下面的32个通道对应上面的32个事件(event), 如果我们想要通过UART0 Receice 来出发EDMA传输, 就需要配置到通道8, 这就是`事件触发方式`
+![在这里插入图片描述](https://img-blog.csdnimg.cn/54c333a841f443a4ba4ac4f8e8143c5d.png)
+
+
+
+> ### PaRAM
+> 每个EDMA事件对应一个paRAM, 每个paRAM存储一个EDMA配置, 每个paRAM包括8个字 
+
+这里的参数对应`EDMAutil_configType1`里面的代码
+
+```c
+
+int32_t EDMAutil_configType1(EDMA_Handle handle,
+    uint8_t *srcBuff,  // 源地址
+    uint8_t *dstBuff, // 目的地址
+    uint8_t chId, 		// 通道
+    bool isEventTriggered,	// 是否立即触发
+    uint16_t shadowParamId,	// 影子通道, 链接传输
+    uint16_t aCount,		// 源数据块(Array)大小
+    uint16_t bCount,		// 源数据块数量(N*Array)
+    int16_t srcBIdx,		// 源数据读取偏移
+    int16_t dstBIdx,		// 目的地址写入偏移
+    uint8_t eventQueueId,	// 事件队列id
+    EDMA_transferCompletionCallbackFxn_t transferCompletionCallbackFxn,
+    uintptr_t transferCompletionCallbackFxnArg)
+{
+    EDMA_channelConfig_t config;
+    int32_t errorCode = EDMA_NO_ERROR;
+
+    config.channelId = chId;
+    config.channelType = (uint8_t)EDMA3_CHANNEL_TYPE_DMA;
+    config.paramId = chId;
+    config.eventQueueId = eventQueueId;
+
+    config.paramSetConfig.sourceAddress = (uint32_t) srcBuff;
+    config.paramSetConfig.destinationAddress = (uint32_t) dstBuff;
+
+    config.paramSetConfig.aCount = aCount;
+    config.paramSetConfig.bCount = bCount;
+    config.paramSetConfig.cCount = 1U;						// 数据只有一行
+    config.paramSetConfig.bCountReload = 0U;
+
+    config.paramSetConfig.sourceBindex = srcBIdx;
+    config.paramSetConfig.destinationBindex = dstBIdx;
+
+    config.paramSetConfig.sourceCindex = 0U;			
+    config.paramSetConfig.destinationCindex = 0U;
+
+    config.paramSetConfig.linkAddress = EDMA_NULL_LINK_ADDRESS;
+    config.paramSetConfig.transferType = (uint8_t)EDMA3_SYNC_A;		// 传输模式A同步传输模式(Array*B)
+    config.paramSetConfig.transferCompletionCode = chId;
+    config.paramSetConfig.sourceAddressingMode = (uint8_t) EDMA3_ADDRESSING_MODE_LINEAR;
+    config.paramSetConfig.destinationAddressingMode = (uint8_t) EDMA3_ADDRESSING_MODE_LINEAR;
+
+    /* don't care because of linear addressing modes above */
+    config.paramSetConfig.fifoWidth = (uint8_t) EDMA3_FIFO_WIDTH_8BIT;
+
+    config.paramSetConfig.isStaticSet = false;
+    config.paramSetConfig.isEarlyCompletion = false;
+    config.paramSetConfig.isFinalTransferInterruptEnabled = true;
+    config.paramSetConfig.isIntermediateTransferInterruptEnabled = true;
+    config.paramSetConfig.isFinalChainingEnabled = false;
+    config.paramSetConfig.isIntermediateChainingEnabled = false;
+    config.transferCompletionCallbackFxn = transferCompletionCallbackFxn;
+    config.transferCompletionCallbackFxnArg = transferCompletionCallbackFxnArg;
+
+    if ((errorCode = EDMA_configChannel(handle, &config, isEventTriggered)) != EDMA_NO_ERROR)
+    {
+        System_printf("Error: EDMA_configChannel() failed with error code = %d\n", errorCode);
+        goto exit;
+    }
+
+    errorCode = EDMA_setup_shadow_link(handle, chId, shadowParamId,
+        &config.paramSetConfig, config.transferCompletionCallbackFxn, transferCompletionCallbackFxnArg);
+
+exit:
+    return(errorCode);
+}
+```
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/3d330392385447be9127ff76b4f5e7ed.png)
+
+![](https://img-blog.csdnimg.cn/a84947e2e4004b368b2be1dc925ddf93.png)
+
+
+
+>## QDMA触发方式
+>- 链接触发
+>- 自动触发
+> - 没有用到所有没写
+
+
+> # TI `3D点云_demo`数据处理流程的解析
+> - 主要针对dma对数据的搬移
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/5146083d91414dcd8af4839fbc2af4b8.png)
+>### EDMA配置
+>  - 上图处理过程主要用到4 个EDMA
+>  - `1D_IN_Ping` , `1D_IN_Pong`, `1D_OUT_Ping`, `1D_OUT_Pong`
+
+>#### 1D_IN_Ping
+>- 这个edma主要的工作时将AdcDataBuf中的数据搬移到adcDataIn中
+>- 这里的chrip1, chirp2 ...表示的是`一frame内的chirp序号`, `不是所有的chirp, 每次++`
+> - chirp1 和 chirp2 的到达时间肯定是不同的, chirp2在chirp1之后, 所以edma_1d_in_ping同一时间搬移到adcDataIn里面的数据是 `chrip 1 Rx 1` `chrip 1 Rx 2`, 
+> - bcount=4 表示一共传输4次
+> - 将`chrip 1 Rx 1` `chrip 1 Rx 2`组成ping pong , 为后面的加窗 和fft操作组成流水线做准备
+> - shadow表示链接触发, shadow使用和1d_in_ping的一样的配置参数, 也发送4次,刚好将数据发送完
+>  - 这的ping(adcDataBuf)pong(adcDataBuf)表示的是一帧内的chirp, 每个buff中放两个chirp, 如果大于2chrip会组成pingpong
+
+
+
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/031b2a12ab7344f8a3e9c5dfbf9ca7a4.png)
+> 将`chrip 1 Rx 1` `chrip 1 Rx 2`组成ping pong 
+> 
+![在这里插入图片描述](https://img-blog.csdnimg.cn/98c6e20cff0e48b8a2fa04c54c10d8ef.png)
+
+
+
+
+> ##### 对应代码
+>  - 后续使用该api请参考这里
+
+```c
+int32_t EDMAutil_configType1(EDMA_Handle handle,
+    uint8_t *srcBuff,  // 源地址
+    uint8_t *dstBuff, // 目的地址
+    uint8_t chId, 		// 通道
+    bool isEventTriggered,	// 是否立即触发
+    uint16_t shadowParamId,	// 影子通道, 链接传输
+    uint16_t aCount,		// 源数据块(Array)大小
+    uint16_t bCount,		// 源数据块数量(N*Array)
+    int16_t srcBIdx,		// 源数据读取偏移
+    int16_t dstBIdx,		// 目的地址写入偏移
+    uint8_t eventQueueId,	// 事件队列id
+)
+```
+
+```c
+    EDMAutil_configType1(context->edmaHandle[MMW_DATA_PATH_EDMA_INSTANCE],
+        (uint8_t *)(&obj->ADCdataBuf[0]), 
+        (uint8_t *)(SOC_translateAddress((uint32_t)&obj->adcDataIn[0],SOC_TranslateAddr_Dir_TO_EDMA,NULL)), 
+        MMW_EDMA_CH_1D_IN_PING,
+        false,
+        shadowParam++,
+        obj->numAdcSamples * BYTES_PER_SAMP_1D,// acount
+        MAX(obj->numRxAntennas / 2, 1) * obj->numChirpsPerChirpEvent,// bcount
+        (obj->numAdcSamples * BYTES_PER_SAMP_1D * 2) * obj->numChirpsPerChirpEvent, // srcbidx
+        0,                                                                         // dstbidx
+        eventQueue,
+#ifdef EDMA_1D_INPUT_BLOCKING
+        MmwDemo_EDMA_transferCompletionCallbackFxn,
+#else
+        NULL,
+#endif
+        (uintptr_t) obj);
+```
+
+ 
+
+>#### 1D_IN_Pong
+>- 这个edma和1d_in_ping类似
+> - 参考上面描述
+> 
+>
+
+> #### ping pong 参数对比
+>  
+![在这里插入图片描述](https://img-blog.csdnimg.cn/178a9d386d774249a9c031c798f8a600.png)
+
+> ##### 对应代码
+
+```c
+EDMAutil_configType1(context->edmaHandle[MMW_DATA_PATH_EDMA_INSTANCE],
+        (uint8_t *)(&obj->ADCdataBuf[obj->numAdcSamples * obj->numChirpsPerChirpEvent]),
+        (uint8_t *)(SOC_translateAddress((uint32_t)(&obj->adcDataIn[obj->numRangeBins]),SOC_TranslateAddr_Dir_TO_EDMA,NULL)),
+        MMW_EDMA_CH_1D_IN_PONG,
+        false,
+        shadowParam++,
+        obj->numAdcSamples * BYTES_PER_SAMP_1D,
+        MAX(obj->numRxAntennas / 2, 1) * obj->numChirpsPerChirpEvent,
+        (obj->numAdcSamples * BYTES_PER_SAMP_1D * 2) * obj->numChirpsPerChirpEvent,
+        0,
+        eventQueue,
+#ifdef EDMA_1D_INPUT_BLOCKING
+        MmwDemo_EDMA_transferCompletionCallbackFxn,
+#else
+        NULL,
+#endif
+        (uintptr_t) obj);
+```
+
+>#### 1D_OUT_Ping
+>- `这里的ping pong 表示按照发射天线进行区分`, 将前面的Ping(adcDataBuf) 或者Pong(adcDataBuf) 单个Buffer中的接收数据进行全部分组, 按照发射天线进行分组
+> - 后将数据搬移到RadarCube中
+> - Cube中只有一帧的数据,并按照天线的奇偶进行拆分排列
+> - 该EDMA中的配置的搬移到Cube中的数据按照配置生成, `dataPathObj->numRangeBins        = MmwDemo_pow2roundup(dataPathObj->numAdcSamples);` 按照满足的二次幂来设置, `numAdcSamples` = 100, 那么此时的`numRangeBins`=128, 如果`numAdcSamples=64`则`numRangeBins=64`, 所以这里的EDMA配置根据该参数自动调整
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/95d1a206c1c8468d99cf6359192ec30f.png)
+
+> ##### 对应的数据采集的cube排列
+> 
+![在这里插入图片描述](https://img-blog.csdnimg.cn/3014d6b67a7d49b7aaf461adc017e872.png)
+
+
+
+> ##### 对应代码
+
+
+```c
+    EDMAutil_configType1(context->edmaHandle[MMW_DATA_PATH_EDMA_INSTANCE],
+        (uint8_t *)(SOC_translateAddress((uint32_t)(&obj->fftOut1D[0]),SOC_TranslateAddr_Dir_TO_EDMA,NULL)),
+        (uint8_t *)(&obj->radarCube[0]),
+        MMW_EDMA_CH_1D_OUT_PING,
+        false,
+        shadowParam++,
+        aCount,   // 128*Rx*complex
+        obj->numChirpsPerFrame / 2, //bCount  4/2
+        0, //srcBidx
+        oneD_destinationBindex, //dstBidx
+        eventQueue,
+#ifdef EDMA_1D_OUTPUT_BLOCKING
+        MmwDemo_EDMA_transferCompletionCallbackFxn,
+#else
+        NULL,
+#endif
+        (uintptr_t) obj);
+```
+
+>#### 1D_OUT_Pong
+> - 对应参照 1D_OUT_Ping
+> 
+![在这里插入图片描述](https://img-blog.csdnimg.cn/0fa8760b93ec46f68e0b3d8bb456f998.png)
+
+
+
+> ##### 对应代码
+
+```c
+    EDMAutil_configType1(context->edmaHandle[MMW_DATA_PATH_EDMA_INSTANCE],
+        (uint8_t *)(SOC_translateAddress((uint32_t)(&obj->fftOut1D[numPingOrPongSamples]),// numPingOrPongSamples:  128*Rx
+                                         SOC_TranslateAddr_Dir_TO_EDMA,NULL)),
+        oneD_destinationPongAddress, // 128*4*1
+        MMW_EDMA_CH_1D_OUT_PONG,
+        false,
+        shadowParam++,
+        aCount,
+        obj->numChirpsPerFrame / 2, //bCount
+        0, //srcBidx
+        oneD_destinationBindex, //dstBidx
+        eventQueue,
+#ifdef EDMA_1D_OUTPUT_BLOCKING
+        MmwDemo_EDMA_transferCompletionCallbackFxn,
+#else
+        NULL,
+#endif
+        (uintptr_t) obj);
+```
+
+# 参考资料:
+>`file:///D:/environment/ti/mmwave_sdk_02_00_00_04/packages/ti/demo/xwr16xx/mmw/docs/doxygen/html/index.html`
+
+>`extension://bfdogplmndidlpjfhoijckpakkdjkkil/pdf/viewer.html?file=https%3A%2F%2Fwww.ti.com%2Flit%2Fug%2Fsprugs5b%2Fsprugs5b.pdf`
+
+>`file:///D:/environment/ti/mmwave_sdk_03_05_00_04/packages/ti/drivers/edma/docs/doxygen/html/struct_e_d_m_a__channel_config__t__.html`
+
+[https://item.taobao.com/item.htm?spm=a1z10.1-c.w10275485-13199536769.9.3d075064CdSOed&id=38410914796](https://item.taobao.com/item.htm?spm=a1z10.1-c.w10275485-13199536769.9.3d075064CdSOed&id=38410914796)
+
+

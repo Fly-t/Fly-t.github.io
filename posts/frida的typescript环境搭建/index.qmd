@@ -1,0 +1,27 @@
+---
+title: "frida的typescript环境搭建"
+author: "dd21"
+date: "2022-12-05" 
+categories: [spider]
+image: ../csdn.png
+---
+
+
+# 安装nodejs
+
+# 安装vscode
+
+# 安装typescript
+>在vs中打开终端
+
+```bash
+npm install ts-node
+npm install typescript -g --save-dev
+npx tsc --init
+
+outDir = "./js/"
+
+```
+
+获取脚本执行权限[https://editor.csdn.net/md/?articleId=126796769](https://editor.csdn.net/md/?articleId=126796769)
+

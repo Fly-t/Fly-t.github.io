@@ -1,0 +1,187 @@
+---
+title: "qt移动界面无响应[ 多线程 ]"
+author: "dd21"
+date: "2022-12-05" 
+categories: [qt]
+image: ../csdn.png
+---
+
+
+
+# 创建子进程类
+>普通的长时间操作界面容易卡死, 体验非常不好,为了提升体验, 所以将需要较长时间响应的事件都放到了子线程中执行, 这样主线程就不会出现假死的状态
+
+### 方法1(继承QThread):
+`.h [头文件]`
+```c
+#ifndef MYTHREAD_H
+#define MYTHREAD_H
+
+#include <QThread>
+
+class Generate : public QThread
+{
+    Q_OBJECT
+public:
+    explicit Generate(QObject* parent = nullptr);// 直接使用qt的类生成,这里没有默认的空指针,new的时候会报错,需要设置成nullptr
+
+protected:
+    void run(); // 重写run函数
+
+signals:
+    void curNumber(int num);// 自定义信号, 传递数据
+    void curimg(QImage* img); // 传递图片, 如果是自定义的结构, 需要注册类型:qRegisterMetaType<int>("int")  [int根据自己的类型设置];
+
+public slots:
+};
+
+#endif // MYTHREAD_H
+
+```
+`.c[源文件]`
+
+```csharp
+#include "mythread.h"
+#include "qdebug.h"
+
+Generate::Generate(QObject* parent) : QThread(parent)
+{
+
+}
+
+void Generate::run()
+{
+    qDebug() << "current Thread id is: " << QThread::currentThread();
+
+    int num = 0;
+    while (1)
+    {
+        emit curNumber(num++);
+        if (num == 999)
+        {
+         	qDebug() << " sub Thread is finished...";
+         	break;
+        }
+        QThread::usleep(1);
+    }
+}
+```
+
+`mainwindow.c主线程`
+
+```csharp
+#include "qtwidgetsapplication_thread.h"
+#include "MyCreate.h"
+
+
+
+#include <qdebug.h>
+
+QtWidgetsApplication_Thread::QtWidgetsApplication_Thread(QWidget *parent)
+    : QMainWindow(parent)
+{
+    ui.setupUi(this);
+    qDebug() << "main thread is : " << QThread::currentThread();
+    
+    // 将刚才的创建的类实例化
+    Generate * subThread_A = new Generate ;
+   
+
+
+    // 绑定信号和槽
+    connect(subThread_A, &Generate ::curNumber, this, [=](int num) {
+        ui.label->setNum(num);
+        });
+   
+
+
+    // 启动线程
+    connect(ui.pushButton, &QPushButton::clicked, this, [=]() {
+        subThread_A->start();
+        });
+    
+   
+
+}
+```
+
+
+# 方法二(moveToThread):
+这种方法相对来说更加灵活
+![在这里插入图片描述](https://img-blog.csdnimg.cn/db17151204a848c6b49ade8825be99a5.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/d74a36f88ddc4e2bae576cb79f925191.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/7d96b750687944e399fa5e68677e92df.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/38025d0c38e64998a8c02105a1a668af.png)
+**打开创建类的头文件`MyThread.h`**
+
+>修改`MyThread(QObject *parent);`----->MyThread(QObject *parent`=nullptr`);, 
+>不修改在new的时候会报错 **[类 不存在默认构造函数]**
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/7b3683948454438cb7201cc78959fccd.png)
+修改完成后如下
+```csharp
+#include <QObject>
+
+class MyThread  : public QObject
+{
+	Q_OBJECT
+	
+public:
+	MyThread(QObject *parent=nullptr);
+	~MyThread();
+
+	// create working function to do sth what you want
+	void working(); //线程中执行的代码写到working中,这个函数名随意
+
+signals:
+	// create a signal to kick the thread
+	void signal_hello(int count); // 设置一个触发信号, count为传递的变量, 将这个变量用来讲子线程和主线程之间进行传递数据.
+};
+```
+**打开创建类的源文件`MyThread.cpp`**
+
+> 将刚才创建的头文件进行实现
+> <i>这个程序的作用主要是将子线程中的变量发送到主线程进行显示</i>
+
+```csharp
+#include "MyThread.h"
+
+#include "qdebug.h"
+#include "qthread.h"
+
+MyThread::MyThread(QObject *parent)
+	: QObject(parent)
+{}
+
+MyThread::~MyThread()
+{}
+
+void MyThread::working()
+{
+	int count = 0;
+	while (1) {
+		// kick the signal, and post the data [count] by this signal
+		emit signal_hello(++count);  // 将信号发送, 并将数据发送到主线程
+		if (count == 999) {
+			qDebug() << "sub thread is stoped:";
+			break;
+		}
+		qDebug() << "current thread is:" << QThread::currentThread;
+	}
+}
+```
+**进入到主线程进行实现`mainwindow.cpp`**
+
+```csharp
+MyThread* work = new MyThread;
+QThread* thread_c = new QThread;
+
+work->moveToThread(thread_c);					 // 放到新线程中
+thread_c->start(); 								 // 启动线程
+
+connect(ui.pushButton, &QPushButton::clicked, work, &MyThread::working);// 按钮点击信号
+connect(work, &MyThread::signal_hello, this, [=](int count) {
+       ui.label->setNum(count);
+       });	// 界面刷新信号
+```
+

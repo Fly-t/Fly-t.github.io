@@ -1,0 +1,502 @@
+---
+title: "应用视觉设计"
+author: "dd21"
+date: "2022-12-05" 
+categories: [css]
+image: ../csdn.png
+---
+
+
+## 使用 text-align 属性创建视觉平衡
+
+这部分课程主要关于应用视觉设计。开始的挑战展示了一些核心的原则，代码基于一个指定的卡片布局。
+
+web 内容大部分都是文本。CSS 里面的text-align属性可以控制文本的对齐方式。
+
+text-align: justify;可以让除最后一行之外的文字两端对齐，即每行的左右两端都紧贴行的边缘。
+
+text-align: center;可以让文本居中对齐。
+
+text-align: right;可以让文本右对齐。
+
+text-align: left;是text-align的默认值，它可以让文本左对齐
+
+## 使用 width 属性调整元素的宽度
+你可以使用 CSS 里面的width属性来指定元素的宽度。属性值可以是相对单位（比如 em），绝对单位（比如 px），或者包含块（父元素）宽度的百分比。下面这个例子把图片的宽度设置为 220px：
+
+img {
+  width: 220px;
+}
+## 使用 height 属性调整元素的高度
+和width属性类似，你可以使用 CSS 里面的height属性来指定元素的高度。下面这个例子把图片的高度设置为 20px：
+
+img {
+  height: 20px;
+}
+
+## 使用 strong 标签加粗文本
+术语：Strong => s => 加粗。
+
+你可以使用strong标签来加粗文字。添加了strong标签后，浏览器会自动给元素应用font-weight:bold;。
+
+## 使用 u 标签给文本添加下划线
+术语：Underline => u => 下划线。
+
+你可以使用u标签来给文字添加下划线。添加了u标签后，浏览器会自动给元素应用text-decoration: underline;。
+## 使用 em 标签强调文本
+术语：emphasis => em => 强调。
+
+你可以使用em标签来强调文本。由于浏览器会自动给元素应用font-style: italic;，所以文本会显示为斜体
+## 使用 s 标签给文本添加删除线
+术语：Strikethrough => s => 删除线。
+
+你可以用s标签来给文字添加删除线，我是明晃晃的删除线，它代表着这段文字不再有效。添加了s标签后，浏览器会自动给元素应用text-decoration: line-through;。
+
+## 使用 hr 标签创建水平线
+术语：Horizontal Rule => hr => 水平线。
+
+你可以用hr标签来创建一条宽度撑满父元素的水平线。它一般用来表示文档主题的改变，在视觉上将文档分隔成几个部分
+## 调整文本的背景色
+为了让页面更美观，除了设置整个页面的背景色以及文字颜色外，你还可以单独设置文字的背景色，即在文字的父元素上添加background-color属性。在本挑战里我们将使用rgba()颜色，而不是之前学到的hex编码或者rgb()颜色。
+
+rgba 代表：
+  r = red 红色
+  g = green 绿色
+  b = blue 蓝色
+  a = alpha 透明度
+RGB 值可以在 0 到 255 之间。alpha 值可以在 0 到 1 之间，其中 0 代表完全透明，1 代表完全不透明。rgba()非常棒，因为你可以设置颜色的透明度，这意味着你可以做出一些很漂亮的半透明效果。
+## 调整标题与段落的大小
+标题（h1到h6）的文字应该比的段落的文字大，这样可以让用户更直观的看到页面的布局，同时能区别出不同元素的重要程度，更方便用户捕捉关键的信息。你可以使用font-size属性来设置元素内文字的大小。
+## 给卡片元素添加 box-shadow
+box-shadow属性用来给元素添加阴影，该属性值是由逗号分隔的一个或多个阴影列表。
+
+box-shadow属性的每个阴影依次由下面这些值描述：
+offset-x阴影的水平偏移量；
+offset-y阴影的垂直偏移量;
+blur-radius模糊距离；
+spread-radius阴影尺寸；
+颜色。
+其中blur-raduis和spread-raduis是可选的。
+
+下面是创建了多个阴影的 CSS 例子，阴影加了模糊效果，颜色是透明度很高的黑色:
+
+box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+## 降低元素的 opactiy
+CSS 里的opacity属性用来设置元素的透明度。
+
+值 1 代表完全不透明。
+值 0.5 代表半透明。
+值 0 代表完全透明。
+透明度会应用到元素内的所有内容，不论是图片，还是文本，或是背景色。
+
+## 使用 text-transform 属性给文本添加大写效果
+CSS 里面的text-transform属性来改变英文中字母的大小写。它通常用来统一页面里英文的显示，且无需直接改变 HTML 元素中的文本。
+
+下面的表格展示了text-transform的不同值对文字 “Transform me” 的影响。
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2020060113013429.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+## 设置多个标题元素的 font-size
+在上一个挑战里你已经设置了每个标题的font-size，接下来你将设置font-weight。
+
+font-weight属性用于设置文本中所用的字体的粗细。
+## 设置段落文本的 font-size
+CSS 里面的font-size属性不只限于标题，它可以应用于任何包含文字的元素内。
+
+## 设置段落的 line-height
+CSS 提供line-height属性来设置行间的距离。行高，顾名思义，用来设置每行文字所占据的垂直空间。
+
+
+## 调整锚点的悬停状态
+本挑战将要涉及到伪类。伪类是可以添加到选择器上的关键字，用来选择元素的指定状态。
+
+比如，超链接可以使用:hover伪类选择器定义它的悬停状态样式。下面是悬停超链接时改变超链接颜色的 CSS：
+
+a:hover {
+  color: red;
+}
+## 更改元素的相对位置
+在 CSS 里一切 HTML 元素皆为盒子，也就是通常所说的盒模型。块级元素自动从新的一行开始（比如标题、段落以及 div），行内元素排列在上一个元素后（比如图片以及 span）。元素默认按照这种方式布局称为文档的普通流，同时 CSS 提供了 position 属性来覆盖它。
+
+当元素的 position 设置为relative时，它允许你通过 CSS 指定该元素在当前普通流页面下的相对偏移量。 CSS 里控制各个方向偏移量的对应的属性是left、right、top和bottom。它们代表着从原来的位置向对应的方向偏移指定的像素、百分比或者 ems。下面的例子展示了段落向上偏移 10 像素：
+
+p {
+  position: relative;
+  bottom: 10px;
+}
+把元素的 position 设置成 relative 并不会改变该元素在普通流布局所占的位置，也不会对其它元素的位置产生影响。
+
+注意
+定位可以让你在页面布局上更灵活、高效。注意不管元素的定位是怎样，内部的 HTML 代码阅读起来应该是整洁、有意义的。这样也可以让视障人员（他们重度依赖辅助设备比如屏幕阅读软件）能够浏览你的网页。
+## 使用 CSS 偏移移动相对定位的元素
+CSS 里面的top、bottom、left和right定义了元素在相应方位的偏移距离。元素将从当前位置，向属性相反的方向偏移。就像你在上一个挑战看到的，top属性使h2向下移动。left属性使元素向右移动。
+ h2 {
+    position: relative;
+    
+    
+  }  
+## 绝对定位的参照物是元素的父元素
+
+接下来要介绍 CSSposition属性的取值选项absolute，absolute相对于其包含块定位。和relative定位不一样，absolute定位会将元素从当前的文档流里面移除，周围的元素会忽略它。可以用 CSS 的 top、bottom、left 和 right 属性来调整元素的位置。
+
+absolute定位比较特殊的一点是元素的定位参照于最近的已定位祖先元素。如果它的父元素没有添加定位规则（默认是position:relative;）,浏览器会继续寻找直到默认的 body 标签。
+## 固定定位的参照物是浏览器的窗口
+接下来要介绍的是fixed定位，它是一种特殊的绝对（absolute）定位，区别是其包含块是浏览器窗口。和绝对定位类似，fixed定位使用 top、bottom、left 和 right 属性来调整元素的位置，并且会将元素从当前的文档流里面移除，其它元素会忽略它的存在。
+
+fixed定位和absolute定位的最明显的区别是fixed定位元素不会随着屏幕滚动而移动。
+
+## 使用 float 属性将元素左浮动或右浮动
+接下来要介绍的定位机制并不是position属性的选项，它通过元素的float属性来设置。浮动元素不在文档流中，它向左或向右浮动，直到它的外边缘碰到包含框或另一个浮动框的边框为止。通常需要用width属性来指定浮动元素占据的水平空间。
+## 使用 z-index 属性更改重叠元素的位置
+当一些元素重叠时，在 HTML 里后出现的元素会默认显示在更早出现的元素的上面。你可以使用z-index属性指定元素的堆叠次序。z-index的取值是整数，数值大的元素优先于数值小的元素显示。
+
+## 使用 margin 属性将元素水平居中
+在应用设计中经常需要把一个块级元素水平居中显示。一种常见的实现方式是把块级元素的margin值设置为auto。
+
+同样的，这个方法也对图片奏效。图片默认是内联元素，但是可以通过设置其display属性为block来把它变成块级元素。
+## 了解互补色
+色彩理论以及设计色彩学很复杂，这里将只涉及很基础的部分。在网站设计里，颜色能让内容更醒目，能调动情绪，从而创造舒适的视觉体验。不同的颜色组合对网站的视觉效果影响很大，精妙的设计都需要适宜的颜色来美化页面内容。
+
+一半是科学，一半是艺术，色环是我们认识颜色关系的好工具 - 它是一个近色相邻异色相离的圆环。当两个颜色恰好在色环的两端时，这两个颜色叫做补色。绘画中两只补色在混合后会变成灰色。补色搭配能形成强列的对比效果，传达出活力、能量、兴奋等意义。
+
+下面是一些十六进制码（hex code）补色的例子：
+
+红色（#FF0000）和蓝绿色 (#00FFFF)
+绿色（#00FF00）和品红色（#FF00FF）
+蓝色（#0000FF）和黄色（#FFFF00）
+现在很多的在线选色工具都有寻找补色的功能。
+
+注意
+对于所有的颜色关卡： 颜色能吸引用户的注意，但不是唯一的方式，切勿喧宾夺主，过度使用会适得其反。详细会在应用无障碍章节介绍。
+## 了解三原色
+电脑显示器和手机屏幕是一种加色模型，将红（R）、绿（G）、蓝（B）三原色的色光以不同的比例相加，以产生多种多样的色光。两种原色相加产生二次色：蓝绿（G+B）、品红（R+B）和黄色（R+G）。你在上一个挑战里已经见过这些颜色了。这些二次色恰好是在合成它们时未使用的原色的补色，即在色环中位于两端。例如，品红色是红色和蓝色相加产生，它是绿色的补色。
+
+三次色是由原色和二次色相加产生的颜色，例如红色（原色）和黄色（二次色）相加产生橙色。将这六种颜色中相邻的颜色相加，便产生了十二色色环。
+
+设计里面有很多种颜色搭配方法。涉及到三次色的一种配色方法是分裂补色搭配法。选定主色之后，在色环上选择与它的补色相邻的两种颜色与之搭配。此种搭配既有对比，又不失和谐。
+
+下面是使用分裂补色搭配法创建的三个颜色：
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200602095743148.png)
+## 将各种元素的颜色调整为互补色
+通过前面关卡的学习，我们知道了补色搭配能形成强列的对比效果，让内容更富生机。但是如果使用不当效果会适得其反，比如如果文字背景色和文字颜色互为补色，文字会很难看清。通常的做法是，一种颜色做为主要颜色，其补色用来装点页面
+## 调整颜色的色相
+HSL 色彩空间模型是一种将 RGB 色彩模型中的点放在圆柱坐标系中的表示法，描述了色相（hue）、饱和度（saturation）、亮度（lightness）。CSS3 引入了对应的hsl()属性做为对应的颜色描述方式。
+
+色相是色彩的基本属性，就是平常所说的颜色名称，如红色、黄色等。以颜色光谱为例，光谱左边从红色开始，移动到中间的绿色，一直到右边的蓝色，色相值就是沿着这条线的取值。在hsl()里面，色相用色环来代替光谱，色相值就是色环里面的颜色对应的从 0 到 360 度的角度值。
+
+饱和度是指色彩的纯度，也就是颜色里灰色的占比，越高色彩越纯，低则逐渐变灰，取0-100%的数值。
+
+亮度决定颜色的明暗程度，也就是颜色里白色或者黑色的占比，100% 亮度是白色， 0% 亮度是黑色，而 50% 亮度是“一般的”。
+
+下面是一些使用hsl()描述颜色的例子，颜色都为满饱和度，中等亮度:
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200602095907978.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+## 调整颜色的色调
+hsl()使 CSS 更改色调更方便。给纯色添加白色可以创造更浅的色调，添加黑色可以创造更深的色调。另外，还可以通过给纯色添加灰色来同时改变颜色的深浅和明暗。回忆下hsl()里面的‘s’和‘l’分辨代表饱和度和亮度。饱和度代表灰色的占比，亮度代表白色和黑色的占比。这在当你有了一个基色调却需要微调时非常有用。
+
+## 创建一个 CSS 线性渐变
+HTML 元素的背景色并不局限于单色。CSS 还提供了颜色过渡，也就是渐变。可以通过background里面的linear-gradient()来实现线性渐变，下面是它的语法：
+
+background: linear-gradient(gradient_direction, 颜色 1, 颜色 2, 颜色 3, ...);
+
+第一个参数指定了颜色过渡的方向 - 它的值是角度，90deg 代表垂直渐变，45deg 的渐变角度和反斜杠方向差不多。剩下的参数指定了渐变颜色的顺序：
+
+例子：
+
+background: linear-gradient(90deg, red, yellow, rgb(204, 204, 255));
+
+## 使用 CSS 线性渐变创建条纹元素
+repeating-linear-gradient()函数和linear-gradient()很像，主要区别是repeating-linear-gradient()重复指定的渐变。 repeating-linear-gradient()有很多参数，为了便于理解，本关只用到角度值和起止渐变颜色值。
+
+角度就是渐变的方向。起止渐变颜色值代表渐变颜色及其宽度值，由颜色值和起止位置组成，起止位置用百分比或者像素值表示。
+
+在代码编辑器的例子里，渐变开始于 0 像素位置的yellow，然后过渡到距离开始位置 40 像素的blue。由于下一个起止渐变颜色值的起止位置也是 40 像素，所以颜色直接渐变成第三个颜色值green，然后过渡到距离开始位置 80 像素的red。
+
+下面的代码可以帮助理解成对的起止渐变颜色值是如何过渡的。
+
+0px [黄色 -- 过渡 -- 蓝色] 40px [绿色 -- 过渡 -- 红色] 80px
+
+如果每对起止渐变颜色值的颜色都是相同的，由于是在两个相同的颜色间过渡，那么中间的过渡色也为同色，接着就是同色的过渡色和下一个起止颜色，最终产生的效果就是条纹。
+
+```css
+<style>
+
+  div{ 
+    border-radius: 20px;
+    width: 70%;
+    height: 400px;
+    margin:  50 auto;
+    background: repeating-linear-gradient(
+      45deg,
+      yellow 0px,
+       yellow 40px,
+       black 40px,
+       black 80px
+    );
+
+  }
+
+</style>
+```
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200602101621283.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+## 通过添加细微图案作为背景图像来创建纹理
+添加一个精致的背景图，可以增加页面的质感，让页面更美观。关键是要找到一个平衡点，抢了内容的风头，喧宾夺主可就不妙了。background属性支持使用url()函数通过链接的方式引入一个指定纹理或样式的图片。图片链接地址在括号内，一般会用引号包起来。
+background:url(https://i.imgur.com/MJAkxbh.png)
+## 使用 CSS Transform scale 属性可以更改元素的大小
+CSS 属性transform里面的scale()函数，可以用来改变元素的显示比例。下面的例子把页面的段落元素放大了 2 倍：
+
+p {
+  transform:scale(2);
+}
+
+## 使用CSS Transform scale 属性在悬停时缩放元素
+transform属性有很多函数，可以对元素进行调整大小、移动、旋转、翻转等操作。当使用伪类描述元素的指定状态如:hover时，transform属性可以方便的给元素添加交互。
+
+下面是当用户悬停段落元素时，段落大小缩放到原始大小 2.1 倍的例子：
+
+p:hover {
+  transform: scale(2.1);
+}
+## 使用 CSS Transform skex 属性沿X轴倾斜元素
+接下来要介绍的transform属性是skewX，skewX使选择的元素沿着 X 轴（横向）翻转指定的角度。
+
+下面的代码沿着 X 轴翻转段落元素 -32 度。
+
+p {
+  transform: skewX(-32deg);
+}
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200602105519168.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+## 使用 CSS 创建一个图形
+术语表：blur-radius => 模糊半径，spread-radius => 辐射半径，transparent => 透明的，border-radius => 圆角边框。
+
+通过使用选择器选择不同的元素并改变其属性，你可以创造一些有趣的形状。比如新月。你可以使用box-shadow属性来设置元素的阴影，border-radius属性控制元素的圆角边框。
+
+首先你将会创建一个圆的、透明的对象，它具有模糊阴影并略微向两边递减。如你所见，这个阴影其实就是新月形狀。
+
+为了创建一个圆形的对象，border-radius应该被设置成 50%。
+
+你应该还记得之前关卡的box-shadow属性以及它的依次取值offset-x、offset-y、blur-radius、spread-radius和颜色值。其中blur-radius和spread-radius是可选的。
+
+
+## 使用 CSS 和 HTML 创建更复杂的形状
+世界上最流行的形状非心形莫属了，在本关里你将用纯 CSS 创建一个心形。但是首先你需要了解:before和:after伪类。这些伪类用来在选择元素之前和之后添加一些内容。在下面的例子里，:before伪类元素用来给 class 为heart的元素添加一个正方形。
+
+:before和:after必须配合content来使用。这个属性通常用来给元素添加内容诸如图片或者文字。当:before和:after伪类用来添加某些形状而不是图片或文字时，content属性仍然是必需的，但是它的值可以是空字符串。
+
+在上面的例子里，class 为heart元素的:before伪类添加了一个黄色的长方形，长方形的height和width分别为 50px 和 70px。由于设置了其边框半径为 25%，所以长方形为圆角长方形，同时其相对位置为距离left5px，以及向top偏移 50px。
+
+
+```css
+.heart:before {
+  content: "";
+  background-color: yellow;
+  border-radius: 25%;
+  position: absolute;
+  height: 50px;
+  width: 70px;
+  top: -50px;
+  left: 5px;
+}
+```
+心形图案css
+```css
+<style>
+.heart {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: pink;
+  height: 50px;
+  width: 50px;
+  transform:rotate(-45deg) ;
+}
+.heart:after {
+  background-color: pink;
+  content: "";
+  border-radius: 50%;
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: 0px;
+  left: 25px;
+}
+.heart:before {
+  content:'' ;
+  background-color: pink;
+  border-radius: 50%;
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: -25px;
+  left: 0px;
+} 
+</style>
+<div class = "heart"></div>
+```
+## 了解 CSS 的关键帧和动画是如何工作的
+如果要给元素添加动画，你需要了解animation属性以及@keyframes规则。animation属性控制动画的外观，@keyframes规则控制动画中各阶段的变化。总共有 8 个animation属性。为了便于理解，本关暂时只涉及到两个最常用的属性。
+
+animation-name设置动画的名称， 也就是要绑定的选择器的@keyframes的名称。
+
+animation-duration设置动画所花费的时间。
+
+@keyframes能够创建动画。 创建动画的原理是将一套 CSS 样式逐渐变化为另一套样式。具体是通过设置动画期间对应的“frames”的 CSS 的属性，以百分比来规定改变的时间，或者通过关键词“from”和“to”，等价于 0% 和 100%。打个比方，CSS 里面的 0% 属性就像是电影里面的开场镜头。CSS 里面的 100% 属性就是元素最后的样子，相当于电影里的演职员表或者鸣谢镜头。CSS 在对应的时间内给元素过渡添加效果。下面举例说明@keyframes和动画属性的用法：
+
+```css
+#anim {
+  animation-name: colorful;
+  animation-duration: 3s;
+}
+@keyframes colorful {
+  0% {
+    background-color: blue;
+  }
+  100% {
+    background-color: yellow;
+  }
+}
+```
+id 为anim的元素，代码设置animation-name为colorful，设置animation-duration为 3 秒。然后把@keyframes引用到名为colorful的动画属性上。colorful在动画开始时（0%）设置颜色为蓝色，在动画结束时（100%）设置颜色为黄色。注意不是只有开始和结束的过渡可以设置，0% 到 100% 间的任意百分比你都可以设置。
+## 使用CSS动画更改按钮的悬停状态
+你可以在按钮悬停时使用@keyframes改变按钮的颜色。
+
+下面是在图片悬停时改变图片宽度的例子：
+
+```css
+<style>
+  img:hover {
+    animation-name: width;
+    animation-duration: 500ms;
+  }
+
+  @keyframes width {
+    100% {
+      width: 40px;
+    }
+  }
+</style>
+
+<img src="https://bit.ly/smallgooglelogo" alt="Google's Logo" />
+```
+注意ms代表毫秒，1000ms 等于 1s。
+
+## 修改动画的填充模式颜色保持
+太棒了，但是现在还不完美。注意动画在500ms之后重置了，所以按钮又变成了之前的颜色。而我们想要的效果是按钮在悬停时始终高亮。
+
+这可以通过把animation-fill-mode设置成forwards来实现。animation-fill-mode指定了在动画结束时元素的样式。你可以向这样设置它：
+
+animation-fill-mode: forwards;
+## 使用 CSS 动画创建运动
+当元素的position被指定，如fixed或者relative时，CSS 偏移属性right、left、top和bottom可以用在动画规则里创建动作。
+
+就像下面的例子展示的那样，你可以在50%keyframe 处设置top属性为 50px， 在开始（0%）和最后（100%）keframe 处设置为 0px，以产生项目向下运动，然后返回的动作效果。
+
+```css
+@keyframes rainbow {
+  0% {
+    background-color: blue;
+    top: 0px;
+  }
+  50% {
+    background-color: green;
+    top: 50px;
+  }
+  100% {
+    background-color: yellow;
+    top: 0px;
+  }
+}
+```
+## 通过从左到右淡化元素来创建视觉方向
+在本关里，你将要改变动画元素的opacity，使其在到达屏幕右侧时渐隐。
+
+在展示的动画里，具有渐变背景的圆形元素在 50% 标记的@keyframes规则处向右移动。
+
+## 使用无限的动画计数制作永不停止的动画
+之前的关卡里介绍了一些动画属性以及@keyframes规则的用法。还有一个常用的动画属性是animation-iteration-count，这个属性允许你控制动画循环的次数。下面是一个例子：
+
+animation-iteration-count: 3;
+
+在这里动画会在运行 3 次后停止，如果想让动画一直运行，可以把值设置成 infinite。
+
+
+## 使用无限的动画计数制作 CSS 心跳
+这也是一个用animation-iteration-count属性创造持续动画的例子，它基于前面关卡创建的心形。
+
+心跳动画的每一秒包含两个部分。heart元素（包括:before和:after）使用transform属性改变其大小，背景div使用background属性改变其颜色`
+
+```css
+<style>
+  .back {
+    position: fixed;
+    padding: 0;
+    margin: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    animation-name: backdiv;
+    animation-duration: 1s; 
+    animation-iteration-count:infinite;
+  }
+
+  .heart {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: pink;
+    height: 50px;
+    width: 50px;
+    transform: rotate(-45deg);
+    animation-name: beat;
+    animation-duration: 1s;
+    animation-iteration-count:infinite;
+    
+  }
+  .heart:after {
+    background-color: pink;
+    content: "";
+    border-radius: 50%;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: 0px;
+    left: 25px;
+  }
+  .heart:before {
+    background-color: pink;
+    content: "";
+    border-radius: 50%;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: -25px;
+    left: 0px;
+  }
+
+  @keyframes backdiv {
+    50% {
+      background: #ffe6f2;
+    }
+  }
+
+  @keyframes beat {
+    0% {
+      transform: scale(1) rotate(-45deg);
+    }
+    50% {
+      transform: scale(0.6) rotate(-45deg);
+    }
+  }
+
+</style>
+<div class="back"></div>
+<div class="heart"></div>
+```
+

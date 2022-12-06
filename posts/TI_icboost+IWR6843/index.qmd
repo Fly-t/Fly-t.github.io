@@ -1,0 +1,36 @@
+---
+title: "TI_icboost+IWR6843"
+author: "dd21"
+date: "2022-12-05" 
+categories: [mmwave]
+image: ../csdn.png
+---
+
+
+参考:[https://blog.csdn.net/Tronlong_/article/details/108147255](https://blog.csdn.net/Tronlong_/article/details/108147255)
+# 硬件链接
+ - 对应的拨码开关以及条线配置如图
+![在这里插入图片描述](https://img-blog.csdnimg.cn/986e8a66ac044217a29a83cabcb279e6.jpeg)
+
+# ccs配置
+![在这里插入图片描述](https://img-blog.csdnimg.cn/0bc9846fae624e548596fca18c9164f7.png)
+>## 搜索对应的开发板的项目
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/ad665a8dec9649418026c0166b1ed037.png)
+> ## 分别导入项目
+> - mss 和 dss
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/681684f8d57d409d96d4efd2b35aef6f.png)
+>## 编译dss项目
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/7da92a3a609f40e0a8564b772ff6af6e.png)
+>## 编译mss项目
+同样的方法编译mss
+![在这里插入图片描述](https://img-blog.csdnimg.cn/b553e125297d4b5dabe4e84dd0df02a9.png)
+> ### 如果遇到not find xxx, 请添加对应的sdk和依赖, 若果sdk安装位置不在默认的C:\ti则需要进行修改环境变量中的`TI_PRODUCT`的路径
+![在这里插入图片描述](https://img-blog.csdnimg.cn/d418f6b198f849b7a5da97f134afece8.png)
+
+> ## debug
+请参考:[ccs脚本自动调试](https://editor.csdn.net/md/?articleId=127475948)
+
+

@@ -1,0 +1,509 @@
+---
+title: "spring整合SSM"
+author: "dd21"
+date: "2022-12-05" 
+categories: [spring]
+image: ../csdn.png
+---
+
+
+## 1、创建一个存放书籍数据的数据库表
+
+```sql
+CREATE DATABASE `ssmbuild`;
+
+USE `ssmbuild`;
+
+DROP TABLE IF EXISTS `books`;
+
+CREATE TABLE `books` (
+`bookID` INT(10) NOT NULL AUTO_INCREMENT COMMENT '书id',
+`bookName` VARCHAR(100) NOT NULL COMMENT '书名',
+`bookCounts` INT(11) NOT NULL COMMENT '数量',
+`detail` VARCHAR(200) NOT NULL COMMENT '描述',
+KEY `bookID` (`bookID`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8
+
+INSERT  INTO `books`(`bookID`,`bookName`,`bookCounts`,`detail`)VALUES
+(1,'Java',1,'从入门到放弃'),
+(2,'MySQL',10,'从删库到跑路'),
+(3,'Linux',5,'从进门到进牢');
+```
+
+## 2.1新建一Maven项目！ssmbuild ， 添加web的支持
+
+## 2.2导入相关的pom依赖！
+
+```shell
+<dependencies>
+   <!--Junit-->
+   <dependency>
+       <groupId>junit</groupId>
+       <artifactId>junit</artifactId>
+       <version>4.12</version>
+   </dependency>
+   <!--数据库驱动-->
+   <dependency>
+       <groupId>mysql</groupId>
+       <artifactId>mysql-connector-java</artifactId>
+       <version>5.1.47</version>
+   </dependency>
+   <!-- 数据库连接池 -->
+   <dependency>
+       <groupId>com.mchange</groupId>
+       <artifactId>c3p0</artifactId>
+       <version>0.9.5.2</version>
+   </dependency>
+
+   <!--Servlet - JSP -->
+   <dependency>
+       <groupId>javax.servlet</groupId>
+       <artifactId>servlet-api</artifactId>
+       <version>2.5</version>
+   </dependency>
+   <dependency>
+       <groupId>javax.servlet.jsp</groupId>
+       <artifactId>jsp-api</artifactId>
+       <version>2.2</version>
+   </dependency>
+   <dependency>
+       <groupId>javax.servlet</groupId>
+       <artifactId>jstl</artifactId>
+       <version>1.2</version>
+   </dependency>
+
+   <!--Mybatis-->
+   <dependency>
+       <groupId>org.mybatis</groupId>
+       <artifactId>mybatis</artifactId>
+       <version>3.5.2</version>
+   </dependency>
+   <dependency>
+       <groupId>org.mybatis</groupId>
+       <artifactId>mybatis-spring</artifactId>
+       <version>2.0.2</version>
+   </dependency>
+
+   <!--Spring-->
+   <dependency>
+       <groupId>org.springframework</groupId>
+       <artifactId>spring-webmvc</artifactId>
+       <version>5.1.9.RELEASE</version>
+   </dependency>
+   <dependency>
+       <groupId>org.springframework</groupId>
+       <artifactId>spring-jdbc</artifactId>
+       <version>5.1.9.RELEASE</version>
+   </dependency>
+   
+   <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.22</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+</dependencies>
+```
+
+## 3、Maven资源过滤设置
+静态资源没有导出记得加上
+
+```shell
+<build>
+   <resources>
+       <resource>
+           <directory>src/main/java</directory>
+           <includes>
+               <include>**/*.properties</include>
+               <include>**/*.xml</include>
+           </includes>
+           <filtering>false</filtering>
+       </resource>
+       <resource>
+           <directory>src/main/resources</directory>
+           <includes>
+               <include>**/*.properties</include>
+               <include>**/*.xml</include>
+           </includes>
+           <filtering>false</filtering>
+       </resource>
+   </resources>
+</build>
+```
+
+## 4、配置包
+
+```java
+cn.usts.pojo
+
+cn.usts.dao
+
+cn.usts.service
+
+cn.usts.controller
+```
+
+## 5、mybatis-config.xml
+
+
+```shell
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+       PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+       "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+</configuration>
+```
+
+## 6、applicationContext.xml
+```shell
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+</beans>
+```
+
+## 7、数据库配置文件 database.properties
+
+```shell
+jdbc.driver=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://localhost:3306/ssmbuild?useSSL=true&useUnicode=true&characterEncoding=utf8
+jdbc.username=root
+jdbc.password=123321
+```
+
+## 8、Books.class
+
+```java
+package cn.usts.edu.pojo;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Books {
+    private int bookID;
+    private String bookName;
+    private int bookCounts;
+    private String detail;
+}
+
+```
+
+## 9、bookMapper接口
+
+```java
+package cn.usts.edu.dao;
+
+import cn.usts.edu.pojo.Books;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface bookMapper {
+    // 增加一本书
+    int addBook(Books books);
+    // 删除一本书
+    int deleteBook(@Param("bookId") int id);
+    // 根据id查询一本书
+    Books queryBook(@Param("bookId") int id);
+    // 更新一本书
+    int updateBook(Books books);
+    // 查询全部书
+    List<Books> queryAllBooks();
+}
+
+```
+
+
+## 10、bookMapper.xml
+PUBLIC "-//mybatis.org//DTD `mapper` 3.0//EN"别写错了
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.usts.edu.dao.bookMapper">
+    <insert id="addBook" parameterType="Books">
+        insert into ssmbuild.books(bookName, bookCounts, detail)
+        values(#{bookName},#{bookCounts},#{detail});
+    </insert>
+
+    <delete id="deleteBook" parameterType="int">
+        delete from ssmbuild.books where bookID=#{bookId};
+    </delete>
+
+    <update id="updateBook" parameterType="Books">
+        update ssmbuild.books
+        set bookName=#{bookName},
+            bookCounts=#{bookCounts},
+            detail=#{detail}
+        where bookID=#{bookId};
+    </update>
+
+    <select id="queryBook" parameterType="Books">
+        select * from ssmbuild.books
+        where bookID=#{bookId};
+    </select>
+
+    <select id="queryAllBooks" parameterType="Books">
+        select * from ssmbuild.books;
+    </select>
+</mapper>
+```
+
+## 11、绑定mapper【myBatis-config.xml】
+
+```shell
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://www.mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <package name="cn.usts.edu.pojo" />
+    </typeAliases>
+
+<!--    绑定mapper-->
+    <mappers>
+        <mapper class="cn/usts/edu/dao/bookMapper.xml"/>
+    </mappers>
+</configuration>
+
+```
+**【文件结构】**
+![在这里插入图片描述](https://img-blog.csdnimg.cn/595e964f4cfa44788869e171cee83215.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+
+## 12、编写service层
+
+**12.1 BookService接口**
+
+```java
+package cn.usts.edu.service;
+
+import cn.usts.edu.pojo.Books;
+
+
+import java.util.List;
+
+public interface BookService {
+    // 增加一本书
+    int addBook(Books books);
+    // 删除一本书
+    int deleteBook( int id);
+    // 根据id查询一本书
+    Books queryBook( int id);
+    // 更新一本书
+    int updateBook(Books books);
+    // 查询全部书
+    List<Books> queryAllBooks();
+}
+
+```
+
+**12.2  BookServiceImp.class**
+
+```java
+package cn.usts.edu.service;
+
+import cn.usts.edu.pojo.Books;
+import cn.usts.edu.dao.bookMapper;
+import java.util.List;
+
+public class BookServiceImp implements BookService {
+
+    // service层调用dao层
+    private bookMapper bookMapper;
+
+    public void setBookMapper(cn.usts.edu.dao.bookMapper bookMapper) {
+        this.bookMapper = bookMapper;
+    }
+
+    @Override
+    public int addBook(Books books) {
+        return bookMapper.addBook(books);
+    }
+
+    @Override
+    public int deleteBook(int id) {
+        return bookMapper.deleteBook(id);
+    }
+
+    @Override
+    public Books queryBook(int id) {
+        return bookMapper.queryBook(id);
+    }
+
+    @Override
+    public int updateBook(Books books) {
+        return bookMapper.updateBook(books);
+    }
+
+    @Override
+    public List<Books> queryAllBooks() {
+        return bookMapper.queryAllBooks();
+    }
+}
+
+```
+
+## 13、配置Spring整合MyBatis，我们这里数据源使用c3p0连接池；
+
+```java
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+<!--    1、关联数据库配置-->
+    <context:property-placeholder location="classpath:database.properties"/>
+    <!--    2、连接池
+            dbcp,半自动化 不能自动连接
+            c3p0,自动化操作
+            druid,hikari
+    -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${jdbc.driver}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+<!--    3、sqlSessionFactory-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+<!--        绑定mybatis配置文件-->
+        <property name="configLocation" value="classpath:myBatis-config.xml"/>
+    </bean>
+
+<!--  配置dao接口扫描包，动态的实现了dao接口可以注入到spring容器中  -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="cn.usts.edu.dao"/>
+    </bean>
+</beans>
+```
+
+## 14、Spring整合service层
+
+```java
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+<!--    包扫描-->
+    <context:component-scan base-package="cn.usts.edu.service"/>
+<!--    将所有业务类，注入到spring，可以通过配置，或者注解实现-->
+    <bean id="BookServiceImpl" class="cn.usts.edu.service.BookServiceImp">
+        <property name="bookMapper" ref="bookMapper"/>
+    </bean>
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!-- 注入数据库连接池 -->
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+</beans>
+```
+
+## 15、web.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+<!--    前端控制器-->
+    <servlet>
+        <servlet-name>srpingmvc</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring-mvc.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>srpingmvc</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+<!--    编码过滤器-->
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>utf-8</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+<!--    session过期时间 15min-->
+    <session-config>
+        <session-timeout>15</session-timeout>
+    </session-config>
+</web-app>
+```
+
+## 16、spring-mvc.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+<!--    包扫描-->
+    <context:component-scan base-package="cn.usts.edu.controller"/>
+<!--    注解驱动-->
+    <mvc:annotation-driven/>
+<!--    默认静态资源过滤-->
+    <mvc:default-servlet-handler/>
+<!--    视图解析器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="internalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+</beans>
+```
+17、Spring配置整合文件，applicationContext.xml
+
+```java
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <import resource="classpath:spring-dao.xml"/>
+    <import resource="classpath:spring-mvc.xml"/>
+    <import resource="classpath:spring-service.xml"/>
+
+
+</beans>
+```
+
+## 18、 index.jsp
+
+```java
+在这里插入代码片
+```
+

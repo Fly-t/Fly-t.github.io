@@ -1,0 +1,66 @@
+---
+title: "javaGUI--监听器02"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/93cc9fcc5f4f4074b1d6017145e8afd0.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_17,color_FFFFFF,t_70,g_se,x_16)
+点击
+![在这里插入图片描述](https://img-blog.csdnimg.cn/16cea4f98489446e873917216bd84610.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+
+```java
+package cn.usts.edu.lesson02;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+public class TestActionEvent {
+
+    public static void main(String[] args) {
+
+
+        Frame frame = new Frame("action Event");
+        Button button = new Button();
+        frame.add(button,BorderLayout.CENTER);
+        frame.pack();
+        frame.setVisible(true);
+
+        // 按钮监听
+        MyActionListener myActionListener = new MyActionListener();
+        // addActionListener需要一个ActionListener于是我们创建了一个myActionListener
+        button.addActionListener(myActionListener);
+
+        // 关闭
+        myClose(frame);
+
+    }
+
+
+    // 监听关闭按钮
+    private static void myClose(Frame frame){
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+    }
+}
+
+
+class MyActionListener implements ActionListener{
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        System.out.println("监听到按钮动作");
+    }
+}
+
+```
+

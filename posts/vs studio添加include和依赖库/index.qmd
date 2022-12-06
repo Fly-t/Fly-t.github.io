@@ -1,0 +1,22 @@
+---
+title: "vs studio添加include和依赖库"
+author: "dd21"
+date: "2022-12-05" 
+categories: [ide]
+image: ../csdn.png
+---
+
+
+# 无法打开 源 文件 "xxxxxx"
+解决办法: 添加include文件夹
+![在这里插入图片描述](https://img-blog.csdnimg.cn/43eaad66cb844eee868d1bed75ab5e2c.png)
+项目右键属性,c/c++,添加附加包含目录, 找到你所需要的头文件的位置,
+![在这里插入图片描述](https://img-blog.csdnimg.cn/fea6ec3ad0b143d2a3e823ed42f0da1d.png)
+添加lib库:
+* 链接器->常规->附加库目录->
+
+![](https://img-blog.csdnimg.cn/509bcf636dde44afaa79628c85eb029e.png)	
+
+ - 链接器->输入->附加依赖->输入需要的依赖项.
+
+ ![在这里插入图片描述](https://img-blog.csdnimg.cn/275cd6b2a3924ff390fe136877581e66.png)

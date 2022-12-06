@@ -1,0 +1,96 @@
+---
+title: "webSocket-node -- 02 聊天室"
+author: "dd21"
+date: "2022-12-05" 
+categories: [nodejs]
+image: ../csdn.png
+---
+
+
+## 聊天室架构
+![在这里插入图片描述](https://img-blog.csdnimg.cn/5eea46766248404a88141a23e696493a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+#  所有连接的客户全部转发（类似广播）
+点对点的那种就把connection存起来，大多数使用redis存起来，用的时候取出对应的connection
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/a380a945b3ab4e60b63b7308703667cd.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+客户端: `client.html`
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="msg"></div>
+    <input type="text" id="text">
+    <input type="submit" value="发送" onclick="send()">
+
+    <script>
+        var websocket = new WebSocket('ws://localhost:8080');
+        // ws ---> http
+        // wss ---> https
+
+        websocket.readyState
+        // 0 链接还没有建立
+        // 1 连接建立成功
+        // 2 连接正在关闭
+        // 3 连接已经关闭
+        websocket.onopen = function () {
+            console.log(websocket.readyState)
+        }
+        
+        function send() {
+            var text = document.getElementById('text').value
+            websocket.send(text)
+        }
+
+        websocket.onmessage = function (backMsg){
+            console.log(backMsg.data)
+        }
+    </script>
+
+</body>
+</html>
+```
+服务端： `server.js`
+```js
+var WebSocket = require('websocket').server
+var http = require('http')
+
+// 创建httpServer
+var httpServer = http.createServer().listen(8080,function (){
+    console.log('http://127.0.0.1:8080')
+})
+
+// 创建webSocketServer
+var wsServer = new WebSocket({
+    httpServer:httpServer,
+    autoAcceptConnections:false
+})
+
+var connectionArr = []
+
+
+wsServer.on('request',function (request){
+    var connection = request.accept()
+    // 将connection信息添加到列表中存起来
+    connectionArr.push(connection)
+
+    connection.on('message',function (msg){
+        console.log(msg)
+
+        // 发送给客户端
+        for (let i = 0; i < connectionArr.length; i++) {
+            connectionArr[i].send(msg.utf8Data)
+        }
+
+    })
+})
+```
+# 启动
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/bda9fc1f8fc34e239ad2548809d5027e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+

@@ -1,0 +1,24 @@
+---
+title: "stm32--io口拉高还是拉低"
+author: "dd21"
+date: "2022-12-05" 
+categories: [stm32]
+image: ../csdn.png
+---
+
+
+[https://zhuanlan.zhihu.com/p/458067480](https://zhuanlan.zhihu.com/p/458067480)
+
+```bash
+1.2GPIO_Mode_IPD (Pull-down):
+输入下拉就是把电压拉低，拉到GND。与上拉原理相似。
+
+简单的说，如果你希望你的引脚平时处于高电平用于检测低电平，你就使用Pull-up。
+
+如果你希望你的引脚平时处于低电平用于检测高电平，你就使用Pull-down。
+
+按键未按下时端口接低电平，即低电平 0 状态---0v
+
+按键按下时端口接高电平，即高电平 1 状态------3.3v
+```
+

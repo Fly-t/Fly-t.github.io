@@ -1,0 +1,233 @@
+---
+title: "web-packet --01"
+author: "dd21"
+date: "2022-12-05" 
+categories: [nodejs]
+image: ../csdn.png
+---
+
+
+## 新建项目文件夹
+进入
+```bah
+npm -init -y
+```
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+<!--        ul>li{这是$}*9-->
+        <ul>
+            <li>这是第1个li</li>
+            <li>这是第2个li</li>
+            <li>这是第3个li</li>
+            <li>这是第4个li</li>
+            <li>这是第5个li</li>
+            <li>这是第6个li</li>
+            <li>这是第7个li</li>
+            <li>这是第8个li</li>
+            <li>这是第9个li</li>
+        </ul>
+    </div>
+</body>
+</html>
+```
+index.js
+```js
+import $ from 'jquery'
+
+// 实现隔行变色
+$(function (){
+    // 奇数行
+    $('li:odd').css('backgroundColor','red')
+    // 偶数行
+    $('li:even').css('backgroundColor','red')
+})
+```
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/f1094852cb6645db9094cf3d8255a239.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+安装 jQuery，webpack
+```bash
+npm install jquery -S
+npm install webpack
+// 开发时存在
+npm install webpack-cli -D
+```
+创建名为 `webpack.config.js` 的 webpack 配置文件
+
+```js
+const path = require('path');
+
+module.exports = {
+    mode:'development', // 设置为开发，编译更快，设置production更小
+    entry: './src/index.js', // 输入程序
+  output: {
+    filename: 'main.js',//输出名
+    path: path.resolve(__dirname, 'dist') // 输出文件夹
+  }
+};
+```
+在 `package.json` 的 scripts 节点下，新增 dev 脚本如下
+![在这里插入图片描述](https://img-blog.csdnimg.cn/b12438643fc44af8bcce34ecae636891.png)
+## 添加插件（修改自动同步）
+安装
+```bash
+npm install webpack-dev-server -D
+```
+配置
+出现
+`
+使用webpack插件webpack-dev-server 出现Cannot GET/的解决办法
+`
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/09f416829a394936ab28197757d758c3.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/c47ccfc690aa4656b2d1f1e0f1d8e014.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+```bash
+devServer: {
+        static:'./', // webpack can not GET /
+    }
+```
+
+`
+webpack.config.js
+`
+
+```bash
+const path = require('path');
+
+module.exports = {
+    mode:'development', // 设置为开发，编译更快，设置production更小
+    entry: './src/index.js', // 输入程序
+
+    output: {
+    filename: 'main.js',//输出名
+    path: path.resolve(__dirname, 'dist') // 输出文件夹
+  },
+    devServer: {
+        static:'./src', // 直接http主頁就是src，記得修改index.html中的main.js位置 webpack can not GET /
+        open:false,// true直接打开
+        host:"127.0.0.1",
+        port:80,
+    }
+};
+```
+### loader解析
+在实际开发过程中，webpack 默认只能打包处理以 .js 后缀名结尾的模块。其他非 .js 后缀名结尾的模块，
+webpack 默认处理不了，需要调用 loader 加载器才可以正常打包，否则会报错！
+* css-loader 可以打包处理 .css 相关的文件
+*  less-loader 可以打包处理 .less 相关的文件
+*  babel-loader 可以打包处理 webpack 无法处理的高级 JS 语法
+### 安准css-loader：
+
+```bash
+npm i style-loader@2.0.0 css-loader@5.0.1 -D
+# less-loader
+npm i less less-loader -D
+```
+
+### 配置loader
+
+```bash
+module: {// 设置loader规则,从后往前生效
+    rules: [
+        { test: /\.css$/, use: ['style-loader','css-loader'] },
+        { test: /\.less$/, use: ['style-loader','css-loader','less-loader'] },
+    ],
+  },
+```
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/f603c6cbbbca4f5b94bbc8b7d6fd4794.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+### 打包处理样式表中与 url 路径相关的文件
+
+```
+npm i url-loader file-loader -D
+
+```
+`webpack.config.js`
+```bash
+// 体积小于limit: 8192就会转成base64
+{ test: /\.(png|jpg|gif)$/, use: [{ loader: 'url-loader', options: { limit: 8192}}]},
+```
+
+
+### 新版本的webpack不会报高级的js语法错误（"webpack": "^5.5.1"）
+就要用到bable-loader
+[webpack-loader配置](https://www.webpackjs.com/loaders/babel-loader/)
+# 打包发布
+
+```
+"build": "webpack --mode production"
+```
+
+### sourceMap
+开发环境下，推荐在 webpack.config.js 中添加如下的配置，即可保证运行时报错的行数与源代码的行数
+保持一致：
+![在这里插入图片描述](https://img-blog.csdnimg.cn/4366e163f41f479e9d2c00ce1649a7fa.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+### 完成整
+`webpack.config.js`
+```js
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+
+// 1. 导入插件，得到构造函数
+const HtmlPlugin = require('html-webpack-plugin')
+// 2. 创建插件的实例对象
+const htmlPlugin = new HtmlPlugin({
+  template: './src/index.html',
+  filename: './index.html',
+})
+
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const cleanPlugin = new CleanWebpackPlugin()
+
+module.exports = {
+  mode: 'development', // development  production
+  // eval-source-map 仅限在开发模式下使用
+   devtool: 'eval-source-map',
+  // 生产环境下，建议关闭 SourceMap 或将 devtool 的值设置为 nosources-source-map
+  // devtool: 'nosources-source-map',
+  // devtool: 'source-map',
+  // 指定打包的入口
+  entry: path.join(__dirname, './src/index.js'),
+  // 指定打包的出口
+  output: {
+    // 表示输出文件的存放路径
+    path: path.join(__dirname, './dist'),
+    // 表示输出文件的名称
+    filename: 'js/bundle.js',
+  },
+  plugins: [htmlPlugin, cleanPlugin], // 3. 挂载插件的实例对象
+  devServer: {
+        static:'./src', // 直接http主頁就是src，記得修改index.html中的main.js位置 webpack can not GET /
+        open:true,// true直接打开
+        host:"127.0.0.1",
+        port:80,
+    },
+  module: {
+    rules: [
+      { test: /\.css$/, use: ['style-loader', 'css-loader'] },
+      { test: /\.less$/, use: ['style-loader', 'css-loader', 'less-loader'] },
+      // { test: /\.jpg|png|gif$/, use: 'url-loader?limit=22228' }
+      {test: /\.jpg|png|gif$/, use: {loader: 'url-loader', options: {limit: 22228,outputPath: 'image',},},},
+      {test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            plugins: ['@babel/plugin-proposal-class-properties'],
+          },
+        },
+      },//babel-loader
+    ],
+  },
+
+};
+```
+

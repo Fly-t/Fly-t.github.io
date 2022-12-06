@@ -1,0 +1,29 @@
+---
+title: "stm32H743使用"
+author: "dd21"
+date: "2022-12-05" 
+categories: [rtthread]
+image: ../csdn.png
+---
+
+
+# 0. 所需材料
+|材料| 数量 |
+|--|--|
+| ST-Link V2 | 1 |
+|  战舰扩展板 | 1 |
+|  stm32H743核心板 | 1 |
+
+# 1. 安装仿真器驱动程序
+![在这里插入图片描述](https://img-blog.csdnimg.cn/4ebec07a2fdb4839a2408f7657f1f1c6.png)
+# 1. 安装芯片包
+![在这里插入图片描述](https://img-blog.csdnimg.cn/05530b80bc5b43ce9b19121e6730d39c.png)
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/f51333dab4fe4fa9a3d4e101f71a3e86.png)
+
+# 1. 使用MX-Cube配置工程
+时钟配置
+![在这里插入图片描述](https://img-blog.csdnimg.cn/3b86a42fc9f14022a628fe4f7b0b8f6d.png)
+串口设置:
+
+

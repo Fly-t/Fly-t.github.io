@@ -1,0 +1,49 @@
+---
+title: "vs打包qt程序"
+author: "dd21"
+date: "2022-12-05" 
+categories: [qt]
+image: ../csdn.png
+---
+
+
+把vs切换到Release模式,编译程序
+![在这里插入图片描述](https://img-blog.csdnimg.cn/1a29b7ebbd4c4ed49cda56580c10ce31.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+# 进入到项目的Release文件夹中把`*.exe`文件拷贝出来
+![在这里插入图片描述](https://img-blog.csdnimg.cn/0a82e0fd3a1d49a8a8bf8026bef0b1fc.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+# 进入到新建的空文件夹`package_demo`把`.exe`文件复制进去.
+![在这里插入图片描述](https://img-blog.csdnimg.cn/6f601bd5d197481383cb00c6da4c028b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+# 打开qt的MSVC编译器(编译成windows平台的可执行程序)
+用windows自带的应用搜索功能搜索即可, 版本号根据所装版本而定
+这里用32位的,方便在32和64位机器上运行.因为64位机器是兼容32机器的,方便在两个系统运行
+![在这里插入图片描述](https://img-blog.csdnimg.cn/0072cb60678d4bb4907cf436a019ab42.png)![在这里插入图片描述](https://img-blog.csdnimg.cn/b4fe75e2324e422dbe52320a4ecb3cd6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+# 进入到exe所在文件夹,执行以下命令
+```csharp
+windeployqt *.exe
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/10c8723149f8470eb289f4a27917146a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+```csharp
+windeployqt VitalSignsRadar_Demo.exe
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/812743f8b84847d0beb04edebf3f5f9d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+执行完效果:
+![在这里插入图片描述](https://img-blog.csdnimg.cn/785c5e96d4e24de9887294f25f2dec4d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/85ee8e94b7984bbf98899c17b2391935.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+# 到这里在开发环境是运行是没有问题的
+打包的目的是为了在用户的环境上使用,所以我们要把开发环境下qt之外的包也打包进来
+这里用`EnigmaVirtualBox`打包额外的需要的包
+![在这里插入图片描述](https://img-blog.csdnimg.cn/1e04f2b674324255b22fd621a83e7868.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/c474997bf98b4a2fb00248585294c4df.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/06208d6134364f4ba68fa259124d71d7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+# 点击 `添加` -> `添加文件夹递归`
+![在这里插入图片描述](https://img-blog.csdnimg.cn/d85a0b6a69244db5b5ef7dedc0cc4034.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/9a09c9caa56748f5a737964169abc04b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_16,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/884531598de94ba98120ea9d8208ba4b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/571c3901a6c84dc3adb0969ae4c8f54e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/a428f2680ec645bd921372158ff32518.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/d9a3b46ebead4c5babea1874931144c7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/f0e4928630da4ae6a3f9ea89da5ea344.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/0690276bc38e4ff88ee49091f992a940.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+

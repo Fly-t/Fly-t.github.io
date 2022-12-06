@@ -1,0 +1,21 @@
+---
+title: "stm32芯片开发包"
+author: "dd21"
+date: "2022-12-05" 
+categories: [rtthread]
+image: ../csdn.png
+---
+
+
+# stm32芯片开发包
+https://www.keil.com/dd2/pack/#!#eula-container
+
+# 固件库
+https://blog.csdn.net/cbkdgq/article/details/88076843
+![在这里插入图片描述](https://img-blog.csdnimg.cn/a04a3fb63234494da23ba3859a999e40.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/723232c9a38e483c82a0574970777851.png)
+## RCC   - 218
+![在这里插入图片描述](https://img-blog.csdnimg.cn/ad8f59122e754beda2aa4fcb489b1c28.png)
+ODR -269
+![在这里插入图片描述](https://img-blog.csdnimg.cn/85f32cf8a4894b1aa7b2b8a12cc16181.png)
+

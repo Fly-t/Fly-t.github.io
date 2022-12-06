@@ -1,0 +1,206 @@
+---
+title: "stm32F103-RT-Thread移植(固件库版本)-项目创建"
+author: "dd21"
+date: "2022-12-05" 
+categories: [rtthread]
+image: ../csdn.png
+---
+
+
+
+创建一个固件库项目
+参考:[野火固件库创建](https://www.bilibili.com/video/BV1yW411Y7Gw?p=18&spm_id_from=pageDriver&vd_source=c0157a4afd2e47c7662431fd9d2739fb)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/116e7c4ac4c74dd3a2d443d08496842a.png)
+>下载RT-Thread
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2baa50040f08431ab315828b883b3e02.png)
+>安装RT-Thread
+>[https://www.keil.com/dd2/pack/](https://www.keil.com/dd2/pack/)
+>
+![在这里插入图片描述](https://img-blog.csdnimg.cn/d84a2e6744674a0680b0f589d5781821.png)
+
+> ### 移植开始
+> - 将packs文件夹中的RealThread复制到刚创建的固件库项目中
+![在这里插入图片描述](https://img-blog.csdnimg.cn/265ce708244f4743a50692cb078f721b.png)
+
+
+####  `复制`
+![在这里插入图片描述](https://img-blog.csdnimg.cn/5f8ffff03b3b430fb9d7b6fa6f8ae3a5.png)
+####  `粘贴`
+`粘贴到项目文件夹后然后根据项目进行移植`
+其他文件夹都可以删除  
+> 管理的头文件
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/6151c05b73124c7e840a80204ec97553.png)
+>#### `RTT内核代码移植`
+![在这里插入图片描述](https://img-blog.csdnimg.cn/219fbb71ac9940ea92221a46a807b3e5.png)
+>#### `芯片文件`
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/0648afd7abc94b33a2771c703617e640.png)
+> # 整理完项目结构
+
+多层目录添加--> 直接输入`rtt/ports`
+![在这里插入图片描述](https://img-blog.csdnimg.cn/b88e5960935741a9b1d5083e14236f13.png)
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/9ed374a293fd48ea8f6e5b9c926d6be2.png)
+> ### `添加环境变量`
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/ec1136a015d84bffaa78934a668b093a.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/39ec9ed45f69463da2344dcb36d38936.png)
+
+> ### 修改`rtconfig.h`
+> 该头文件对裁剪整个 RT-Thread 所需的功能的宏均做了定义，有些宏定义被使能，有些宏定义被失能，一开始我们只需要配置最简单的功能即可。要想随心所欲的配置 RT- Thread 的功能，我们必须对这些宏定义的功能有所掌握，下面我们先简单的介绍下这些宏定义的含义，然后再对这些宏定义进行修改。(摘自野火RTT)
+
+```csharp
+• 代码清单: 移植 RTT-1 (1) ：头文件 RTE_Components.h 是在 MDK 中添加 RT-Thead Package
+时由 MDK 自动生成的，目前我们没有使用 MDK 中自带的 RT-Thread 的 Package，所以这
+个头文件不存在，如果包含了该头文件，编译的时候会报错，等下修改 rtconfig.h 的时候需
+要注释掉该头文件。
+
+
+[ 修改4处如下 ]
+
+//#include "RTE_Components.h"
+#define RT_THREAD_PRIORITY_MAX  8
+#define RT_TICK_PER_SECOND 1000
+#define RT_MAIN_THREAD_STACK_SIZE     512
+```
+> ### 修改 `board.c`
+> 在user下创建`board.h`
+
+```csharp
+/*
+ * File      : board.c
+ * This file is part of RT-Thread RTOS
+ * COPYRIGHT (C) 2006, RT-Thread Development Team
+ *
+ * The license and distribution terms for this file may be
+ * found in the file LICENSE in this distribution or at
+ * http://www.rt-thread.org/license/LICENSE
+ *
+ * Change Logs:
+ * Date           Author       Notes
+ * 2017-07-24     Tanek        the first version
+ */
+#include "board.h"												// 修改
+#include <rthw.h>
+#include <rtthread.h>
+
+
+#if 0															// 修改
+#define _SCB_BASE       (0xE000E010UL)
+#define _SYSTICK_CTRL   (*(rt_uint32_t *)(_SCB_BASE + 0x0))
+#define _SYSTICK_LOAD   (*(rt_uint32_t *)(_SCB_BASE + 0x4))
+#define _SYSTICK_VAL    (*(rt_uint32_t *)(_SCB_BASE + 0x8))
+#define _SYSTICK_CALIB  (*(rt_uint32_t *)(_SCB_BASE + 0xC))
+#define _SYSTICK_PRI    (*(rt_uint8_t  *)(0xE000ED23UL))
+
+    // Updates the variable SystemCoreClock and must be called
+    // whenever the core clock is changed during program execution.
+    /* 外部时钟和函数声明 */
+    extern void
+    SystemCoreClockUpdate(void);
+
+// Holds the system core clock, which is the system clock 
+// frequency supplied to the SysTick timer and the processor 
+// core clock.
+extern uint32_t SystemCoreClock;
+
+static uint32_t _SysTick_Config(rt_uint32_t ticks)
+{
+    if ((ticks - 1) > 0xFFFFFF)
+    {
+        return 1;
+    }
+    
+    _SYSTICK_LOAD = ticks - 1; 
+    _SYSTICK_PRI = 0xFF;
+    _SYSTICK_VAL  = 0;
+    _SYSTICK_CTRL = 0x07;  
+    
+    return 0;
+}
+#endif															// 修改
+
+
+
+#if defined(RT_USING_USER_MAIN) && defined(RT_USING_HEAP)
+#define RT_HEAP_SIZE 1024
+static uint32_t rt_heap[RT_HEAP_SIZE];	// heap default size: 4K(1024 * 4)
+RT_WEAK void *rt_heap_begin_get(void)
+{
+    return rt_heap;
+}
+
+RT_WEAK void *rt_heap_end_get(void)
+{
+    return rt_heap + RT_HEAP_SIZE;
+}
+#endif
+
+/**
+ * This function will initial your board.
+ */
+void rt_hw_board_init()
+{	
+    #if 0																		// 修改
+	/* System Clock Update */
+	SystemCoreClockUpdate();
+	
+	/* System Tick Configuration */
+
+    _SysTick_Config(SystemCoreClock / RT_TICK_PER_SECOND);
+#endif																			// 修改
+    /* 初始化 SysTick */
+    SysTick_Config(SystemCoreClock / RT_TICK_PER_SECOND);						// 修改
+
+    
+    /* Call components board initial (use INIT_BOARD_EXPORT()) */
+#ifdef RT_USING_COMPONENTS_INIT
+    rt_components_board_init();
+#endif
+    
+#if defined(RT_USING_CONSOLE) && defined(RT_USING_DEVICE)
+	rt_console_set_device(RT_CONSOLE_DEVICE_NAME);
+#endif
+    
+#if defined(RT_USING_USER_MAIN) && defined(RT_USING_HEAP)
+    rt_system_heap_init(rt_heap_begin_get(), rt_heap_end_get());
+#endif
+}
+
+void SysTick_Handler(void)
+{
+	/* enter interrupt */
+	rt_interrupt_enter();
+
+	rt_tick_increase();
+
+	/* leave interrupt */
+	rt_interrupt_leave();
+}
+
+```
+[PendSV_Handler,HardFault_Handler...重复定义错误](http://bbs.eeworld.com.cn/thread-1065333-1-1.html)
+> 屏蔽即可, 推荐直接将`stm32f10x_it.h`和`stm32f10x_it.c`清空,如下!!!!
+
+## stm32f10x_it.c
+```csharp
+/* 存放终端函数 */
+#include "stm32f10x_it.h"
+```
+## stm32f10x_it.h
+
+```csharp
+#ifndef __STM32F10x_IT_H
+#define __STM32F10x_IT_H
+
+
+#include "stm32f10x.h"
+
+
+
+#endif /* __STM32F10x_IT_H */
+
+```
+

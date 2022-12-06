@@ -1,0 +1,26 @@
+---
+title: "java--创建Tomcat服务器"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+## 1、去官网下载安装包
+[Tomcat7.0（蓝奏云）](https://jszhuanben.lanzous.com/iiwi1mc092f)
+## 2、选择安装位置解压缩
+找个合适的位置
+## 3、运行Tomcat
+
+①windows双击`apache-tomcat-7.0.73\bin\startup.bat`文件
+②linux就打开`apache-tomcat-7.0.73\bin\startup.sh`文件
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210301082853855.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+
+
+## 4、用浏览器访问
+
+[http://localhost:8080/](http://localhost:8080/)
+出现以下页面即成功
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210301082937611.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+

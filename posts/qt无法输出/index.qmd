@@ -1,0 +1,11 @@
+---
+title: "qt无法输出"
+author: "dd21"
+date: "2022-12-05" 
+categories: [qt]
+image: ../csdn.png
+---
+
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/4f96fc8018484750b8355bdebdd455d4.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+

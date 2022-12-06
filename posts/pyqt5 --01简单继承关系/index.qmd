@@ -1,0 +1,42 @@
+---
+title: "pyqt5 --01简单继承关系"
+author: "dd21"
+date: "2022-12-05" 
+categories: [python]
+image: ../csdn.png
+---
+
+
+```python
+from PyQt5.Qt import *
+import sys
+
+
+app = QApplication(sys.argv)# 创建一个应用（程序） sys.argv接受启动敞口 传递过来的参数
+
+
+window = QWidget() # QWidget()是程序内部的位置，不包括最大最小化的那个框
+window.setWindowTitle('这是标题')
+window.resize(600,500)  # 窗口大小
+
+
+# 按钮
+btn = QPushButton(window)# 按钮继承了窗口，所以按钮在这个wedget中
+btn.setText('按钮上的文字')
+btn.resize(100,50)
+btn.move(100,100)  # 位置按钮的左上角到widget左上角的位置
+btn.setStyleSheet('background-color:red')# 样式，css样式的写法
+
+
+label = QLabel(window)
+label.setText('标签名')
+label.setStyleSheet('background-color:red')# 样式，css样式的写法
+
+label.show()
+window.show()
+
+# sys.exit()  接受程序结束代码号（检测代码退出原因）
+sys.exit(app.exec_())# app.exec_()消息循环功能
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/8cd1d0fef7f44d4b8715697a1dce6a22.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+

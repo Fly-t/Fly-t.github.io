@@ -1,0 +1,47 @@
+---
+title: "java常用类-- 包装类"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+```java
+package cn.usts.edu.fly.packingClass;
+
+/**
+ * @author ：fly
+ * @description: 包装类:
+ *                     java中有8大基本数据类型,但是没有属性和和方法,于是jdk出现了包装类
+ *                     byte Byte   char Char   int Integer   short    Short
+ *                     long Long   float  Float  double Double  boolean  Boolean
+ *
+ *                     自动装箱
+ *                     基本类型  --->  包装类型
+ *                     int      -->    Integer   自动装箱
+ *
+ *
+ *                     自动拆箱
+ *                     基本类型  <---  包装类型
+ *                     int      <--    Integer   自动拆箱
+ *
+ *
+ *                     valueOf:返回的是个包装类
+ *                     parseInt：返回的就是基本数据类型
+ * @date ：2021/10/31 16:15
+ */
+public class PackingDemo {
+    public static void main(String[] args) {
+        String a = "123";
+        int i = Integer.parseInt(a);// 把string类型转换为int类型
+        System.out.println(i+1);
+        int b = 456;
+        System.out.println(123+String.valueOf(b)+"789");// int转换为字符串
+    }
+
+}
+
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2ce21d6b70c445c89396b361627550bf.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+

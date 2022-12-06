@@ -1,0 +1,69 @@
+---
+title: "javaGUI--Swing [ icon ]画一个icon"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+画出一个icon
+`icon可以放在标签上也可以放在按钮上,但是 大多数情况是放的图片`
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/3f3613b498444fba82a44497a9a8779a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+```java
+package cn.usts.edu.lesson04;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class JIconDemo extends JFrame implements Icon {
+    // 设置icon宽高
+    private int width,height;
+
+    // 全参构造
+    public JIconDemo(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
+    // 无参构造
+    public JIconDemo()  {
+    }
+
+    public void init(){
+        JIconDemo jIconDemo = new JIconDemo(20,20);
+        // 图标可以放按钮上也可以放标签上
+        JLabel jLabel = new JLabel("iconDemo",jIconDemo,SwingConstants.CENTER);
+        this.setBounds(100,100,500,500);
+        this.setVisible(true);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        Container container = this.getContentPane();
+        container.add(jLabel);
+
+    }
+
+
+    public static void main(String[] args) {
+        new JIconDemo().init();
+    }
+
+    // 画icon
+    @Override
+    public void paintIcon(Component c, Graphics g, int x, int y) {
+        g.fillOval(x,y,width,height);
+    }
+
+    @Override
+    public int getIconWidth() {
+        return this.width;
+    }
+
+    @Override
+    public int getIconHeight() {
+        return this.height;
+    }
+}
+
+```
+

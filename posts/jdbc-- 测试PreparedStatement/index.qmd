@@ -1,0 +1,87 @@
+---
+title: "jdbc-- 测试PreparedStatement"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+# 测试PreparedStatement
+ * @description:  测试PreparedStatement
+ *                 对sql注入的解决
+ *                 以及常用方法
+
+```java
+package cn.usts.edu.jdbc;
+
+import com.mysql.jdbc.Driver;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.*;
+import java.util.Properties;
+import java.util.Scanner;
+
+/**
+ * @author ：fly
+ * @description:  测试PreparedStatement
+ *                 对sql注入的解决
+ *                 以及常用方法
+ * @date ：2021/11/5 16:06
+ */
+public class PreparedStatementDemo {
+
+    public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException, IOException {
+
+        // 注册驱动
+        Class<?> aClass = Class.forName("com.mysql.jdbc.Driver");
+        Driver driver =(Driver) aClass.newInstance();
+        DriverManager.registerDriver(driver);
+        FileInputStream fileInputStream = new FileInputStream("D:\\all_projects\\java_projects\\java_ij\\springMVC\\Jdbc\\src\\cn\\usts\\edu\\config\\db.properties");
+        Properties properties = new Properties();
+        properties.load(fileInputStream);
+        String url=(String) properties.get("url");
+        String user=(String) properties.get("user");
+        String password=(String) properties.get("password");
+
+        // 建立连接
+        Connection connection = DriverManager.getConnection(url, user, password);
+
+        // 执行sql
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("输入用户名");//
+        String name = scanner.nextLine();// nextLine不会空格切断    用户名 1' or
+        System.out.println("输入密码");
+        String psd = scanner.nextLine();// nextLine不会空格切断   万能密码 or '1' = 1'
+        String sql ="select admin.amin,admin.psd from admin where amin=? and psd=?";
+        // ? 占位符
+
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1,name); // 占位符位置
+        preparedStatement.setString(2,psd);
+        ResultSet resultSet = preparedStatement.executeQuery();// 这里不用在给sql了
+
+        // 获取结果
+        if (resultSet.next()){ // 查询到结果才会有记录
+            System.out.print("登陆成功");
+        }else{
+            System.out.print("登陆失败");
+        }
+
+
+        // 切断链接
+        resultSet.close();
+        preparedStatement.close();
+        connection.close();
+
+
+    }
+
+}
+
+```
+控制住了sql注入问题
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/6564b1b8bc434b768431c106c343d425.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+

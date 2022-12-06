@@ -1,0 +1,69 @@
+---
+title: "stm32F103-RT-Thread定时器"
+author: "dd21"
+date: "2022-12-05" 
+categories: [rtthread]
+image: ../csdn.png
+---
+
+
+
+## 定时器(timer)
+
+>创建两个动态定时器，一个是单次定时，一个是周期性定时,并让周期定时器运行一段时间后停止运行
+>硬件定时器，定时器的回调函数将在系统时钟中断里调用。
+>软件定时器，定时器的回调函数将在定时器线程中调用。
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/5d2fee7baa014098a3a237974f1f7eb0.png)
+
+```csharp
+#include "board.h"
+#include "rtthread.h"
+
+
+static rt_timer_t timer_1;
+static rt_timer_t timer_2;
+static int count_c = 0;
+static int short_c = 0;
+
+
+static void timeout_1(void *parameter);
+static void timeout_2(void *parameter);
+
+/* timer_1 is run 10 times then stop  */
+static void timeout_1(void *parameter){
+	
+	rt_kprintf("periodic timer_[1] is start. --> count is [%d]\n",count_c);
+	if(count_c++>=90){
+		rt_timer_stop(timer_1);
+		rt_kprintf("timer_[1] was stoped!\n");
+	}
+}
+
+static void timeout_2(void *parameter){
+	short_c++;
+	
+	rt_kprintf("short timer_[2] is start. -->short is [%d]\n", short_c);
+}
+
+int main(void)
+{
+	// create timer_1 and flag is periodic model
+	timer_1 = rt_timer_create("timer1", timeout_1,RT_NULL,90,RT_TIMER_FLAG_PERIODIC);
+	
+	// create timer_2 and flag is short model(count only once then stop)
+	timer_2 = rt_timer_create("timer2", timeout_2, RT_NULL, 30, RT_TIMER_FLAG_PERIODIC);
+
+	if(timer_1!=RT_NULL){
+		rt_timer_start(timer_1);
+	}
+
+	if (timer_2 != RT_NULL)
+	{
+		rt_timer_start(timer_2);
+	}
+
+	return 0;
+}
+```
+

@@ -1,0 +1,125 @@
+---
+title: "java和-- Collections工具类"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+# Collections工具类
+```java
+package cn.usts.edu.collections;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+/**
+ * @author ：fly
+ * @description: 集合工具类
+ * @date ：2021/11/3 16:20
+ */
+public class CollectionsDemo {
+
+    public static void main(String[] args) {
+        ArrayList al = new ArrayList();
+        al.add("tom");
+        al.add("tom");
+        al.add("jack");
+        al.add("al");
+        al.add("swallow");
+
+        System.out.println("正常顺序");
+        System.out.println(al);
+
+        // 位置交换
+        System.out.println("=========0,最后 位置交换=======");
+        Collections.swap(al,0,al.size()-1);// 0,最后 位置交换
+        System.out.println(al);
+
+        System.out.println("=========逆序=======");
+        Collections.reverse(al);
+        System.out.println("逆序:"+al);
+
+        // 随机排序
+        System.out.println("=========随机排序=======");
+        Collections.shuffle(al);
+        System.out.println(al);
+
+        // 自然顺序
+        System.out.println("=========自然顺序=======");
+        Collections.sort(al);
+        System.out.println(al);
+
+
+        // 自定义排序
+        System.out.println("=========自定义排序(字符大到小)=======");
+        Collections.sort(al, new Comparator() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                if(o1 instanceof String) { // 校验是否是String
+                    return ((String) o2).compareTo((String) o1);
+                }
+                return 0;
+            }
+        });
+        System.out.println(al);
+
+
+        System.out.println("=========自定义排序(长度大到小)=======");
+        Collections.sort(al, new Comparator() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                return ((String) o2).length() - (((String) o1).length());
+            }
+        });
+        System.out.println(al);
+
+
+        // 自然排序最大值
+        System.out.println("=========自定义(长度最大)=======");
+        Object max = Collections.max(al, new Comparator() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                return ((String) o1).length() - (((String) o2).length());
+            }
+        });
+        System.out.println(max);
+
+        // 自定义最大值
+        System.out.println("=========自然排序最大值=======");
+        Comparable max1 = Collections.max(al);
+        System.out.println(max1);
+
+
+        // 同理max(),自定义也同理
+//        Collections.min();
+
+
+        // 出现次数
+        System.out.println("=========出现次数=======");
+        int tomTimes = Collections.frequency(al, "tom");
+        System.out.println("tom出现:"+tomTimes+"次");
+
+
+        // 复制
+        System.out.println("=========复制数组=======");
+        ArrayList bal = new ArrayList();
+        for (Object o : al) {
+            bal.add(""); // 新的数组默认为零,不填充空的数据,回报数组Index越界
+        }
+        Collections.copy(bal,al);
+        System.out.println(bal);
+
+        //替换
+        System.out.println("=========替换元素=======");
+        Collections.replaceAll(al,"tom","汤姆");
+        System.out.println(al);
+    }
+
+}
+
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20fbf5087c3c42ca8a464cdacb699be5.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+

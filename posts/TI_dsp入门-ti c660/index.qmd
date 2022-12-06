@@ -1,0 +1,14 @@
+---
+title: "TI_dsp入门-ti c660"
+author: "dd21"
+date: "2022-12-05" 
+categories: [mmwave]
+image: ../csdn.png
+---
+
+
+dps分类:
+	都可以进行浮点数的预算
+	定点 : 无法使用硬件加速, 软件模拟, 性能消耗, 开发耗时(q格式)
+	浮点 : 
+	

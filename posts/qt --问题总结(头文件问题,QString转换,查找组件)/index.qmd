@@ -1,0 +1,76 @@
+---
+title: "qt --问题总结(头文件问题,QString转换,查找组件)"
+author: "dd21"
+date: "2022-12-05" 
+categories: [qt]
+image: ../csdn.png
+---
+
+
+# 项目问题解决
+在使用过程中无法使用控件的大多数原因就是因为没有在.h文件中创建方法.
+只有集成的类中才会有组件,单独的cpp中没有组件.所以会报错.如果已经使用继承类,已经可以跳转.但是还是报错,大多刷新解决方案即可.
+![在这里插入图片描述](https://img-blog.csdnimg.cn/07bcce8538774aa8823ee98e38be26fa.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_15,color_FFFFFF,t_70,g_se,x_16)
+### 查找QObject
+```csharp
+  QString objectNameBtn = sender()->objectName();
+    QPushButton *tempButton = this->findChild<QPushButton *>(objectNameBtn);
+```
+### 字符串转换QString < == > std::string
+```csharp
+QString qstr;
+std::string str;
+//===============================
+//QString转std::string
+str = qstr.toStdString();
+//===============================
+//std::string转QString
+qstr = QString::fromStdString(str);
+```
+### 找到父对象控件
+parent , parentWidget, setParent
+```csharp
+userFrame->parentWidget()->setWindowFlags(Qt::WindowMinMaxButtonsHint);
+// 用管道符添加多个属性
+userFrame->parentWidget()->setWindowFlags(Qt::Dialog|Qt::WindowMinMaxButtonsHint|Qt::WindowStaysOnTopHint);
+```
+### 找到子组件
+findChild,findChildren
+### windowFlags参数
+原文:[https://blog.csdn.net/xuebing1995/article/details/96478891](https://blog.csdn.net/xuebing1995/article/details/96478891)
+```csharp
+Qt::Widget               //是一个窗口或部件，有父窗口就是部件，没有就是窗口
+Qt::Window               //是一个窗口，有窗口边框和标题
+Qt::Dialog               //是一个对话框窗口
+Qt::Sheet                //是一个窗口或部件Macintosh表单
+Qt::Drawer               //是一个窗口或部件Macintosh抽屉，去掉窗口左上角的图标
+Qt::Popup                //是一个弹出式顶层窗口
+Qt::Tool                 //是一个工具窗口
+Qt::ToolTip              //是一个提示窗口，没有标题栏和窗口边框
+Qt::SplashScreen         //是一个欢迎窗口，是QSplashScreen构造函数的默认值
+Qt::Desktop              //是一个桌面窗口或部件
+Qt::SubWindow            //是一个子窗口
+
+```
+#### 窗口属性
+```csharp
+Qt::CustomizeWindowHint          //关闭默认窗口标题提示
+Qt::WindowTitleHint              //为窗口修饰一个标题栏
+Qt::WindowSystemMenuHint         //为窗口修饰一个窗口菜单系统
+Qt::WindowMinimizeButtonHint     //为窗口添加最小化按钮
+Qt::WindowMaximizeButtonHint     //为窗口添加最大化按钮
+Qt::WindowMinMaxButtonsHint      //为窗口添加最大化和最小化按钮
+Qt::WindowCloseButtonHint			//窗口只有一个关闭按钮
+Qt::WindowContextHelpButtonHint
+Qt::MacWindowToolBarButtonHint
+Qt::WindowFullscreenButtonHint
+Qt::BypassGraphicsProxyWidget
+Qt::WindowShadeButtonHint
+Qt::WindowStaysOnTopHint	//总在最上面的窗口,置前
+Qt::WindowStaysOnBottomHint
+Qt::WindowOkButtonHint
+Qt::WindowCancelButtonHint
+Qt::WindowTransparentForInput
+
+```
+

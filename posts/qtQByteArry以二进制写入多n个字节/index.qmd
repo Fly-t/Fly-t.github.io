@@ -1,0 +1,28 @@
+---
+title: "qtQByteArry以二进制写入多n个字节"
+author: "dd21"
+date: "2022-12-05" 
+categories: [qt]
+image: ../csdn.png
+---
+
+
+# 问题描述
+使用qt串口接收数据，将数据保存成二进制数数据数据中会有多出的字节。但是将数据存储为文本模式（ascii字符·txt·）时没有问题，数据量正确。
+# 原因
+是因为QByteArry在写入文件时，会默认加上个长度字节，在原始数据中。
+
+# 解决方案
+使用QDataStream进行写入
+
+```csharp
+QFile qfile_save_adc_bin("./out/file.bin"); 
+QDataStream out_adc(&qfile_save_adc_bin);
+
+# 串口接收数据
+QByteArray data_serial = serialRead->readAll();
+# 写入
+out_adc.writeRawData(data_serial,data_serial.size());
+qfile_save_adc_bin.close(); // 关闭文件
+```
+

@@ -1,0 +1,104 @@
+---
+title: "stm32F103-RT-Thread线程同步(event)"
+author: "dd21"
+date: "2022-12-05" 
+categories: [rtthread]
+image: ../csdn.png
+---
+
+
+# 事件(event)
+## 个人理解
+event是不同线程间满足`条件时的控制块`(比较适合多flag和多线程的情况)
+mutex访问`单独`的临界资源
+semaphore访问`多个`临界资源
+> 线程1接收event,查看其中的flag是否满足设置的条件
+> 线程2发送flag1,flag2
+
+
+```csharp
+#include "board.h"
+#include "rtthread.h"
+
+#define FLAG3  1<<3
+#define FLAG5  1<<5
+static rt_event_t event1 = NULL;
+static rt_thread_t event_1_thread = RT_NULL;				// semaphore thread_1 control block
+static rt_thread_t event_2_thread = RT_NULL;				// semaphore thread_2 control block
+
+
+
+static void event_thread_1_entry(void *parmaeter);
+static void event_thread_2_entry(void *parmaeter);
+
+
+
+
+int main(void)
+{
+	event1 = rt_event_create("flag", RT_IPC_FLAG_FIFO);
+
+	event_1_thread = rt_thread_create("event_1_thread", event_thread_1_entry, RT_NULL, 512, 3, 20);
+	if (event_1_thread!= RT_NULL){
+		
+		rt_thread_startup(event_1_thread);
+	}
+	else{
+		return -1;
+	}
+
+	event_2_thread = rt_thread_create("metux_2_thread", event_thread_2_entry, RT_NULL, 512, 3, 30);
+	if (event_2_thread!= RT_NULL){
+		
+		rt_thread_startup(event_2_thread);
+	}
+	else{
+		return -1;
+	}
+}
+
+
+
+
+/* receive envet thread */
+static void event_thread_1_entry(void *parameter)
+{
+	while (1)	
+	{
+		rt_uint32_t e;
+
+		// if (rt_event_recv(event1, (FLAG3 | FLAG5), RT_EVENT_FLAG_AND | RT_EVENT_FLAG_CLEAR, RT_WAITING_FOREVER, &e) == RT_EOK)
+		// {
+		// 	rt_kprintf("thread1: [AND] recv event 0x%x\n", &e);
+		// }
+		// rt_kprintf("thread1: delay 1s to prepare the second event\n");
+		// rt_thread_delay(1000);
+
+		if (rt_event_recv(event1, (FLAG3 | FLAG5), RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR, RT_WAITING_FOREVER, &e) == RT_EOK)
+		{
+			rt_kprintf("thread1: [OR] recv event 0x%x\n", &e);
+		}
+
+		rt_kprintf("thread1 leave.\n");
+	}
+}
+
+/* send event thread */
+static void event_thread_2_entry(void *parameter)
+{
+
+	while (1)
+	{
+		rt_kprintf("thread_2 is send event[3]\n");
+		rt_event_send(event1, FLAG3);
+		rt_thread_delay(500);
+
+		rt_kprintf("thread_2 is send event[5]\n");
+		rt_thread_delay(1800);
+		rt_event_send(event1, FLAG5);
+		rt_kprintf("thread2 leave.\n");
+		}
+}
+
+```
+

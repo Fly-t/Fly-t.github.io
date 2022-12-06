@@ -1,0 +1,62 @@
+---
+title: "pyqt5 --02面向对象的设计思想"
+author: "dd21"
+date: "2022-12-05" 
+categories: [python]
+image: ../csdn.png
+---
+
+
+```python
+import sys
+from PyQt5.Qt import *
+"""
+    面向对象的设计思想
+"""
+
+class Window(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle('标题名称')
+        self.resize(600,700)
+        self.func_list()
+
+    # 方法通过func_list调用
+    def func_list(self):
+        self.func1()
+        self.func2()
+
+    # 标签控件
+    def func1(self):
+        label = QLabel(self)
+        label.setText('标签上的文字')
+        label.move(100,100)
+        label.setStyleSheet('background-color:red;')
+
+    # 按钮控件
+    def func2(self):
+        btn = QPushButton(self)
+        btn.setStyleSheet('background:blue;')
+        btn.resize(100,100)
+        btn.setText('按钮文字')
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+
+    # sys.argv可以接收用户命令行启动时所输入的参数，根据参数执行不同程序
+    # qApp 为全局对象
+    print(sys.argv)
+    print(app.arguments())
+    print(qApp.arguments())
+    # 以上三个输出结果是一样的
+
+    window = Window()
+    window.show()
+    sys.exit(app.exec_())  # 0是正常退出
+    # app.exec_()  进行循环
+    # sys.exit()   检测退出原因
+
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/81d7c1802dde4980ac337023a9c92166.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+

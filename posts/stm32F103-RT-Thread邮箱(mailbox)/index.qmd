@@ -1,0 +1,126 @@
+---
+title: "stm32F103-RT-Thread邮箱(mailbox)"
+author: "dd21"
+date: "2022-12-05" 
+categories: [rtthread]
+image: ../csdn.png
+---
+
+
+## 邮箱 (mailbox)
+在编码前先打开rtconfig.h中的mailbox选项.
+ > 这个程序会创建2个动态线程，一个静态的邮箱对象，其中一个线程往邮箱中发送邮件，一个线程往邮箱中收取邮件。
+数据按照制定顺序进行发送,FIFO或者priority.
+
+```csharp
+#include "board.h"
+#include "rtthread.h"
+
+
+uint8_t count = 0;
+
+/* message */
+static char msg_1[] = "hello";
+static char msg_2[] = "world.";
+static char msg_3[] = "@";
+
+
+/* mail_box control block */
+static rt_mailbox_t mb_1 = RT_NULL;
+
+/* thread control blcok */
+static rt_thread_t mb_thread_1 = RT_NULL;
+static rt_thread_t mb_thread_2 = RT_NULL;
+
+/* thread_1 to send msg*/
+static void thread_1_entry(void *parameter)
+{
+	while (count < 10)
+	{
+		count++;
+		if (count & 0x1)
+		{
+			if(RT_EOK == rt_mb_send(mb_1, (rt_uint32_t)&msg_1)){
+				// rt_kprintf("-----%x++++++++++%p\n",(rt_uint32_t)&msg_1,&msg_1); // -----20000029++++++++++20000029
+
+				rt_kprintf("msg_1_send successful!!!\n");
+			}
+			else{
+				rt_kprintf("msg_1_send failed!!!\n");
+			}
+		}
+		//
+		else
+		{
+			if (RT_EOK == rt_mb_send(mb_1, (rt_uint32_t)&msg_2))
+			{
+				rt_kprintf("msg_2_send successful!!!\n");
+			}
+			else
+			{
+				rt_kprintf("msg_2_send failed!!!\n");
+			}
+		}
+
+		// thread wait 200 ticks
+		rt_thread_delay(50);
+	}
+
+	// message send [finish]
+	rt_mb_send(mb_1, (rt_uint32_t)&msg_3);
+	rt_kprintf("END flag is send....");
+}
+ 
+/* thread_2 to receive msg */
+static void thread_2_entry(void *parameter){
+	char *str;
+	while (1)
+	{
+		rt_kprintf("thread_[2]: try reveive msg.....\n");
+		
+		if (rt_mb_recv(mb_1, (rt_uint32_t *)&str, RT_WAITING_FOREVER) == RT_EOK)
+		{
+			rt_kprintf("[%d]msg:%s\n",count,str);
+			if(str==msg_3){
+				rt_kprintf("revc END ............\n");
+				break;
+			}
+			rt_thread_delay(100);
+		}
+		else{
+			rt_kprintf("2_recv msg faild.....\n");
+		}
+	}
+	rt_mb_detach(mb_1);
+	
+}
+
+
+
+int main(void){
+// 这里的1,是mb_size,控制mailbox可以同时发送几个邮件
+	mb_1 = rt_mb_create("mb_1",1,RT_IPC_FLAG_FIFO);
+	
+	if(mb_1!=RT_NULL){
+		rt_kprintf("mail_box is create\n");
+	}
+	else{
+		rt_kprintf("mail_box is create failed.\n");
+		return -1;
+	}
+
+	// mb_thread_1 create
+	mb_thread_1 = rt_thread_create("mb_thread_1",thread_1_entry,RT_NULL,512,3,20);
+	if(mb_thread_1!=RT_NULL){
+		rt_thread_startup(mb_thread_1);
+	}	
+	// mb_thread_2 create
+	mb_thread_2 = rt_thread_create("mb_thread_2", thread_2_entry, RT_NULL, 512, 3, 20);
+	if (mb_thread_2 != RT_NULL)
+	{
+		rt_thread_startup(mb_thread_2);
+	}
+	return 0;
+}
+```
+

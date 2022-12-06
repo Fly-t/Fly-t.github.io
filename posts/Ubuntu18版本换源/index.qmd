@@ -1,0 +1,71 @@
+---
+title: "Ubuntu18版本换源"
+author: "dd21"
+date: "2022-12-05" 
+categories: [linux]
+image: ../csdn.png
+---
+
+
+【此源只适合bionic版本！！！！！！！，重要的事情说三遍】
+【此源只适合bionic版本！！！！！！！，重要的事情说三遍】
+【此源只适合bionic版本！！！！！！！，重要的事情说三遍】
+## 0. Ubuntu版本必须匹配
+查看Ubuntu版本命令
+```bash
+lsb_release -c
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201014165944164.png#pic_center)
+
+
+## 1.备份sources.list
+
+```bash
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+```
+
+## 2.编辑sources.list（换源）
+
+```bash
+sudo gedit /etc/apt/sources.list 
+```
+
+## 3.把打开的sources.list里面的东西都删除，把下面代码复制进去，【保存】，【保存】，【保存】。
+```bash
+deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+
+ 
+
+deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+
+ 
+
+deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+
+deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+
+deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+```
+
+## 4.更新源
+
+```bash
+sudo apt-get update
+```
+
+## 5.完成换源
+
+
+
+
+

@@ -1,0 +1,83 @@
+---
+title: "jdbc-- PreparedStatement( DML语句)insert,delete,update"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+# PreparedStatement( DML语句)insert,delete,update
+```java
+package cn.usts.edu.jdbc;
+
+import com.mysql.jdbc.Driver;
+import org.junit.Test;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.*;
+import java.util.Properties;
+import java.util.Scanner;
+
+/**
+ * @author ：fly
+ * @description:  测试PreparedStatement
+ *                 对sql注入的解决
+ *                 以及常用方法  DML语句
+ * @date ：2021/11/5 16:06
+ */
+public class PreparedStatementDemo {
+
+    // CRUD
+    @Test
+    public void crud() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException, IOException {
+
+        // 注册驱动
+        Class<?> aClass = Class.forName("com.mysql.jdbc.Driver");
+        Driver driver =(Driver) aClass.newInstance();
+        DriverManager.registerDriver(driver);
+        FileInputStream fileInputStream = new FileInputStream("D:\\all_projects\\java_projects\\java_ij\\springMVC\\Jdbc\\src\\cn\\usts\\edu\\config\\db.properties");
+        Properties properties = new Properties();
+        properties.load(fileInputStream);
+        String url=(String) properties.get("url");
+        String user=(String) properties.get("user");
+        String password=(String) properties.get("password");
+
+        // 建立连接
+        Connection connection = DriverManager.getConnection(url, user, password);
+
+        // 执行sql
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("输入用户名");//
+        String name = scanner.nextLine();// nextLine不会空格切断    用户名 1' or
+        System.out.println("输入密码");
+        String psd = scanner.nextLine();// nextLine不会空格切断   万能密码 or '1' = 1'
+
+
+        //String sql ="insert into admin (amin, psd) values (?,?);";// insert
+        //String sql ="update admin set psd = ? where ? = amin";  // update
+        String sql ="delete from admin where amin=?";   // delete
+
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1,name);
+        //preparedStatement.setString(2,name); // 占位符位置
+        //preparedStatement.setString(1,psd);
+        int rows = preparedStatement.executeUpdate();// 这里不用在给sql了 返回修改行数
+
+        System.out.println("执行行数"+rows);
+
+        // 切断链接
+        preparedStatement.close();
+        connection.close();
+
+
+    }
+
+
+
+
+}
+
+```
+

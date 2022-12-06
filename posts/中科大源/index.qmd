@@ -1,0 +1,14 @@
+---
+title: "中科大源"
+author: "dd21"
+date: "2022-12-05" 
+categories: [clutter]
+image: ../csdn.png
+---
+
+
+# 地址
+https://mirrors.ustc.edu.cn/
+
+# 使用帮助文档
+https://mirrors.ustc.edu.cn/help/debian.html

@@ -1,0 +1,235 @@
+---
+title: "stm32F103-RT-Thread动态内存分配"
+author: "dd21"
+date: "2022-12-05" 
+categories: [rtthread]
+image: ../csdn.png
+---
+
+
+#  打开动态内存分配
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/88f94bfb44ce49ed80f1539790fbb62e.png)
+# 设置线程句柄
+```csharp
+/* 定义线程控制块 */
+static rt_thread_t led1_thread = RT_NULL;
+```
+# 设置线程入口函数
+```csharp
+// 声明
+static void led1_thread_entry(void *parameter);
+// 实现
+static void led1_thread_entry(void *parameter){
+	while (1)
+	{
+		LED1_ON;
+		rt_thread_delay(1500); /* 延时 500 个 tick */
+		LED1_OFF;
+		rt_thread_delay(1500); /* 延时 500 个 tick */
+	}
+}
+```
+# 设置动态内存分配并启动
+```csharp
+// 设置线程参数
+led1_thread = rt_thread_create("led1",led1_thread_entry,RT_NULL,512, 3,20);
+/* 线程启动,进行调度 */
+	if (led1_thread != RT_NULL)
+		rt_thread_startup(led1_thread);
+	else
+		return -1;
+```
+# `main.c`
+
+```csharp
+#include "board.h"
+#include "rtthread.h"
+
+/*
+*************************************************************************
+*                               变量
+*************************************************************************
+*/
+/* 定义线程控制块 */
+//static struct rt_thread led1_thread;
+static rt_thread_t led1_thread = RT_NULL;
+static rt_thread_t led2_thread = RT_NULL;
+
+/******************************static memory*******************************/
+/* 定义线程控制块 */
+// static struct rt_thread led1_thread;
+/* 定义线程控栈时要求 RT_ALIGN_SIZE 个字节对齐 */
+// ALIGN(RT_ALIGN_SIZE)
+/* 定义线程栈 */
+// static rt_uint8_t rt_led1_thread_stack[1024];
+/****************************static memory end*****************************/
+/*
+*************************************************************************
+*                             函数声明
+*************************************************************************
+*/
+static void led1_thread_entry(void *parameter);
+static void led2_thread_entry(void *parameter);
+
+
+/*
+*************************************************************************
+*                             main 函数
+*************************************************************************
+
+int main(void)
+{
+	/* 暂时没有在main线程里面创建任务应用线程 */
+	// thread 1
+	led1_thread = rt_thread_create("led1",led1_thread_entry,RT_NULL,512, 3,20);
+	
+	/* 线程启动,进行调度 */
+	if (led1_thread != RT_NULL)
+		rt_thread_startup(led1_thread);
+	else
+		return -1;
+
+
+
+	// thread 2
+	led2_thread = rt_thread_create("led2", led2_thread_entry, RT_NULL, 512, 3, 20);
+
+	if (led2_thread != RT_NULL)
+		rt_thread_startup(led2_thread);
+	else
+		return -1;
+
+	/**********************************static memory demo ***************************************/
+	// rt_thread_init(&led1_thread,	  /* 线程控制块 */
+	// 			   "led1",			  /* 线程名字 */
+	// 			   led1_thread_entry, /* 线程入口函数 */
+	// 			   RT_NULL,			  /* 线程入口函数参数 */
+
+	// 			   &rt_led1_thread_stack[0],	 /* 线程栈起始地址 */
+	// 			   sizeof(rt_led1_thread_stack), /* 线程栈大小 */
+	// 			   3,							 /* 线程的优先级 */
+	// 			   20);							 /* 线程时间片 */
+	// rt_thread_startup(&led1_thread); /* 启动线程，开启调度 */
+	/******************************static memory demo end*************************************/
+}
+
+/*
+ *************************************************************************
+ * 									线程定义
+ *************************************************************************
+ */
+
+
+static void led1_thread_entry(void *parameter){
+	while (1)
+	{
+		LED1_ON;
+		rt_thread_delay(1500); /* 延时 500 个 tick */
+		LED1_OFF;
+		rt_thread_delay(1500); /* 延时 500 个 tick */
+	}
+}
+
+static void led2_thread_entry(void *parameter)
+{
+	while (1)
+	{
+		LED2_ON;
+		rt_thread_delay(500); /* 延时 500 个 tick */
+		LED2_OFF;
+		rt_thread_delay(500); /* 延时 500 个 tick */
+	}
+}
+```
+
+
+# `board.c`
+
+```csharp
+/*
+ * File      : board.c
+ * This file is part of RT-Thread RTOS
+ * COPYRIGHT (C) 2006, RT-Thread Development Team
+ *
+ * The license and distribution terms for this file may be
+ * found in the file LICENSE in this distribution or at
+ * http://www.rt-thread.org/license/LICENSE
+ *
+ * Change Logs:
+ * Date           Author       Notes
+ * 2017-07-24     Tanek        the first version
+ */
+#include "board.h"
+#include <rthw.h>
+#include <rtthread.h>
+
+
+
+
+
+
+#if defined(RT_USING_USER_MAIN) && defined(RT_USING_HEAP)
+#define RT_HEAP_SIZE 1024
+static uint32_t rt_heap[RT_HEAP_SIZE];	// heap default size: 4K(1024 * 4)
+
+
+RT_WEAK void *rt_heap_begin_get(void)
+{
+    return rt_heap;
+}
+
+RT_WEAK void *rt_heap_end_get(void)
+{
+    return rt_heap + RT_HEAP_SIZE;
+}
+#endif
+
+/**
+ * This function will initial your board.
+ */
+void rt_hw_board_init()
+{	
+    
+    /* 初始化 SysTick */
+    SysTick_Config(SystemCoreClock / RT_TICK_PER_SECOND);
+    /* 初始化开发板的 LED */
+    LED_GPIO_Config();
+   
+    /* 初始化测试部分, 测试完把代码删除*/
+    // LED2_ON;
+
+    // while (1)
+    // {
+    //     /* code */
+    // }
+    
+
+
+    /* Call components board initial (use INIT_BOARD_EXPORT()) */
+#ifdef RT_USING_COMPONENTS_INIT
+    rt_components_board_init();
+#endif
+    
+#if defined(RT_USING_CONSOLE) && defined(RT_USING_DEVICE)
+	rt_console_set_device(RT_CONSOLE_DEVICE_NAME);
+#endif
+    
+#if defined(RT_USING_USER_MAIN) && defined(RT_USING_HEAP)
+    rt_system_heap_init(rt_heap_begin_get(), rt_heap_end_get());
+#endif
+}
+
+void SysTick_Handler(void)
+{
+	/* enter interrupt */
+	rt_interrupt_enter();
+
+	rt_tick_increase();
+
+	/* leave interrupt */
+	rt_interrupt_leave();
+}
+
+```
+

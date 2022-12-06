@@ -1,0 +1,194 @@
+---
+title: "arch安装"
+author: "dd21"
+date: "2022-12-05" 
+categories: [linux]
+image: ../csdn.png
+---
+
+
+参考地址:[https://wiki.archlinux.org/title/Locale_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E7%B3%BB%E7%BB%9F%E5%8C%BA%E5%9F%9F%E8%AE%BE%E7%BD%AE](https://wiki.archlinux.org/title/Locale_%28%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%29#%E7%B3%BB%E7%BB%9F%E5%8C%BA%E5%9F%9F%E8%AE%BE%E7%BD%AE)
+
+# 链接网络
+
+```csharp
+ip link 						 		 // 查看网络信息
+ip link set wlan0 up   		 			// 打开网络
+```
+
+
+```csharp
+iwlist wlan0 scan | grep ESSID
+wpa_ passphrase 网络密码 >文件名
+wpa_supplicant -c 文件名 -i wlan0 &
+dhcpcd &  							// 动态分配ip
+```
+
+# 硬盘分区
+
+```csharp
+fdisk -l				// 查看硬盘信息
+fdisk /dev/xxx	// 进入指定硬盘
+```
+
+## 进入fdisk
+
+```csharp
+p 		// 打印信息
+g		// 设置disk类型为GPT
+n		// 创建一个新的分区
+```
+
+设置引导分区(boot分区),
+> 开始位置(直接回车,从开头),
+设置分区编号(1-128):默认为1  // 直接回车表示默认
+> 结束位置(+512M) 如果有提示覆盖,输入Y
+
+```csharp
+n			// 创建分区
+回车			// 默认编号为1
+回车			// 默认从头开始
++512M		// 向后512M
+```
+
+
+设置swap分区
+>  休眠, 虚拟内存
+>  位置从刚才的512MB开始向后1G
+
+
+```csharp
+n// 创建swap分区
+3// 编号为3
+回车// 默认从头开始
++1G	// 向后1G
+```
+
+设置主分区
+>存储系统数据
+
+```csharp
+n		// 创建swap分区
+2		// 编号为3
+回车		// 默认从头开始
+回车		// 向后所有
+```
+
+分区完成
+![在这里插入图片描述](https://img-blog.csdnimg.cn/cd8489fdc119413aa729668f9ae7a0f0.png)
+`保存设置!!!!`
+```csharp
+w		// 保存设置
+```
+修改文件系统格式
+
+```csharp
+mkfs.fat -F32 引导分区			// 引导分区支持fat32,
+mkfs.ext4 主分区					// linux主分区是ext4格式 
+mkswap swap分区					// swap分区
+swapon swap分区					// inux swapon命令用于激活Linux系统中交换空间，Linux系统的内存管理必须使用交换区来建立虚拟内存。
+```
+# 设置pacman的源
+```c
+vim pacman.conf
+vim /etc/pacman.d/mirrorlist		// 修改源 将距离近的源调上来
+```
+# 安装
+pacstrap脚本安装
+> 该脚本安装的方式是向一个文件夹内安装东西(我们需要将arch安装到硬盘中,
+> 不是现在的U盘中,所以我们需要将硬盘挂载到硬盘上的arch中的一个目录下)
+> 这里以mnt目录为例
+挂载硬盘
+`这里的挂载顺序一定不能变,先挂主分区再挂boot`
+```c
+mount /dev/sda2 /mnt 			// 将主分区挂载到/mnt下
+
+mkdir /mnt/boot					// 创建boot文件夹
+mount /dev/sda1	/mnt/boot		// 将硬盘上的boot分区挂载到mnt文件夹中的boot文件夹中
+vim /etc/pacman.d/mirrorlist	// 换源
+# Server = https://mirrors.ustc.edu.cn/blackarch/$repo/os/$arch
+
+pacstrap /mnt base linux linux-firmware		// 安装基础包, linux, linux内核
+```
+生成fstab文件(文件系统信息)
+```c
+genfstab -U /mnt >> /mnt/etc/fstab		// 生成文件系统配置信息,输出到硬盘上
+```
+
+chroot 到新安装的系统：
+```csharp
+arch-chroot /mnt
+```
+修改时区
+```c
+ln -sf /mnt/usr/share/zoneinfo/Asia/Shanghai /mnt/etc/localtime
+hwclock --systohc
+
+-->进入到硬盘系统中
+	locale-gen
+-->exit
+	vim /mnt/etc/locale.gen
+		-->取消掉 en_US.UTF-8 UTF-8
+	vim /mnt/etc/locale.conf
+		-->LANG=en_US.UTF-8
+
+```
+修改键盘设置
+
+```csharp
+vim /mnt/etc/vconsole.conf
+```
+
+修改hosts
+
+```csharp
+vim /mnt/etc/hosts
+```
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/d37938d7f23b4e6f8e7eb15da52d0357.png)
+进入硬盘系统修改密码
+
+```csharp
+passwd
+```
+# `安装引导程序!!!!`
+```csharp
+					[系统引导][uefi管理][cpu升级][多系统管理]
+pacman -S grub efibootmgr intel-ucode os-prober
+```
+>进入系统
+
+```csharp
+arch-chroot /mnt
+mkdir /boot/grub
+grub-mkconfig > /boot/grub/grub.cfg
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/6c84ac4e4b9e4cd9a747e5a8289d91ad.png)
+确认系统架构
+```csharp
+uname -m
+# 安装
+grub-install --target=x86_64-efi --efi-directory=/boot
+```
+安装基本软件
+```csharp
+pacman -S vim zsh wpa_supplicant dhcpcd neofetch
+升级系统和同步仓库
+pacman -Syyu
+# zsh 添加wheel用户
+useradd -m -G wheel -s /bin/zsh xxxx		//
+
+nvim /etc/pacman.confg 
+	--> multlilib  去掉注释
+
+
+```
+去掉滴滴滴滴
+
+```csharp
+[root@lc ~]# vim /etc/inputrc 
+把这一行的注释去掉重启即可
+-  #set bell-style none
+-> set bell-style none
+```
+

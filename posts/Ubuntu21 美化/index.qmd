@@ -1,0 +1,32 @@
+---
+title: "Ubuntu21 美化"
+author: "dd21"
+date: "2022-12-05" 
+categories: [linux]
+image: ../csdn.png
+---
+
+
+```bash
+sudo apt update
+
+sudo apt-get install gnome-tweak-tool
+
+sudo apt-get install gnome-shell-extensions
+
+sudo apt-get install gnome-shell-extension-dashtodock
+
+reboot
+```
+## 2、搜索优化
+打开`Dash to dock`
+根据需求修改设置
+打开`user theams`
+
+```bash
+# 重启
+reboot
+```
+
+## 3、挑选主题
+gnome网站：[主题网站](https://www.gnome-look.org/)

@@ -1,0 +1,109 @@
+---
+title: "stm32F103-RT-Thread-- 互斥量(mutex)"
+author: "dd21"
+date: "2022-12-05" 
+categories: [rtthread]
+image: ../csdn.png
+---
+
+
+## 互斥量(mutex)
+在编码前记得打开rtconfig.h中的IPC中的mutex设置
+> 互斥量访问的是同一个资源,且只可以有一个线程进行访问, 保证数据的一致性.
+```csharp
+
+#include "board.h"
+#include "rtthread.h"
+
+static int count=0, num=0;
+
+static rt_mutex_t mutex = RT_NULL;
+static rt_thread_t mutex_1_thread = RT_NULL;				// semaphore thread_1 control block
+static rt_thread_t mutex_2_thread = RT_NULL;				// semaphore thread_2 control block
+static rt_thread_t mutex_3_thread = RT_NULL;				// semaphore thread_2 control block
+
+
+static void mutex_thread_1_entry(void *parmaeter);
+static void mutex_thread_2_entry(void *parmaeter);
+static void mutex_thread_3_entry(void *parmaeter);
+
+
+int main(void)
+{
+	mutex = rt_mutex_create("mutex", RT_IPC_FLAG_FIFO);
+	mutex_1_thread = rt_thread_create("mutex_1_thread", mutex_thread_1_entry, RT_NULL, 512, 3, 20);
+	if (mutex_1_thread!= RT_NULL){
+		
+		rt_thread_startup(mutex_1_thread);
+	}
+	else{
+		return -1;
+	}
+
+	mutex_2_thread = rt_thread_create("metux_2_thread", mutex_thread_2_entry, RT_NULL, 512, 3, 30);
+	if (mutex_2_thread!= RT_NULL){
+		
+		rt_thread_startup(mutex_2_thread);
+	}
+	else{
+		return -1;
+	}
+
+	mutex_3_thread = rt_thread_create("mutex3_thread", mutex_thread_3_entry, RT_NULL,512, 3,20);
+	if(mutex_3_thread!=RT_NULL){
+		rt_thread_startup(mutex_3_thread);
+	}
+	else{
+		return -1;
+	}
+
+}
+
+
+
+
+/*this thread is release semaphore */
+static void mutex_thread_1_entry(void *parameter)
+{
+	while (1)	
+	{
+		rt_mutex_take(mutex,RT_WAITING_FOREVER);
+		count++;
+		rt_kprintf("thread_1 count is [%d]\n",count);
+		rt_thread_delay(500);
+		num++;
+		rt_kprintf("thread_1 num is [%d]\n",num);
+		rt_mutex_release(mutex);	
+	}
+}
+
+/*this thread is to get the semphore and do +1*/
+static void mutex_thread_2_entry(void *parameter)
+{
+
+	while (1)
+	{
+		rt_mutex_take(mutex,RT_WAITING_FOREVER);
+		count--;
+		rt_kprintf("thread_2 count is [%d]\n",count);
+		rt_thread_delay(700);
+		num--;
+		rt_kprintf("thread_2 num is [%d]\n",num);	
+		rt_mutex_release(mutex);	
+	}
+}
+
+static void mutex_thread_3_entry(void *parameter){
+
+	while (1)
+	{
+		rt_mutex_take(mutex,RT_WAITING_FOREVER);
+		count++;
+		rt_kprintf("thread_3 count is [%d]\n",count);
+		num++;
+		rt_kprintf("thread_3 num is [%d]\n",num);
+		rt_mutex_release(mutex);
+	}	
+}
+```
+

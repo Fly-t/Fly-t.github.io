@@ -1,0 +1,86 @@
+---
+title: "java--gui_简单计算器"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2e92c9ace0f04c5a8898cee1b5001b07.png)
+
+```java
+package cn.usts.edu.lesson02;
+
+import java.awt.*;
+import java.awt.event.*;
+
+public class Calculator {
+
+    public static void main(String[] args) {
+        // 开始
+        new MyFrame01();
+    }
+}
+
+class MyFrame01 extends Frame{
+    public MyFrame01(){
+        setLocation(400,400);
+        setVisible(true);
+        // 设置布局
+        setLayout(new FlowLayout());
+        // 设置文本框
+        TextField first = new TextField(10);    // 设置框的大小
+        TextField second = new TextField(10);
+        TextField result = new TextField(10);
+        // 按钮
+        Button button = new Button("=");
+        button.addActionListener(new CalculatorActionListener(first,second,result));
+        // 添加进frame
+        add(first);
+        add(second);
+        add(button);
+        add(result);
+
+        pack();
+
+        // 点击关闭
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+
+    }
+}
+
+
+// 监听器
+class  CalculatorActionListener implements ActionListener {
+    private TextField first,second,result;
+    public CalculatorActionListener(TextField first,TextField second,TextField result) {
+        this.first = first;
+        this.second = second;
+        this.result =result;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // 获取字符值
+        int num1 = Integer.parseInt(first.getText());
+        int num2 = Integer.parseInt(second.getText());
+        // 进行运算
+        result.setText(""+(num1+num2));
+        // 返回结果
+        first.setText("");
+        second.setText("");
+
+
+    }
+}
+
+
+```
+

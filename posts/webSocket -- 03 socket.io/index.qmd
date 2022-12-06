@@ -1,0 +1,72 @@
+---
+title: "webSocket -- 03 socket.io"
+author: "dd21"
+date: "2022-12-05" 
+categories: [nodejs]
+image: ../csdn.png
+---
+
+
+# socket.io
+为什么使用socket.io
+ 1. 简单
+ 2. 高效：连接池的管理比自己写的要高效（通常）
+
+
+# 客户端
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<script src="node_modules/socket.io/client-dist/socket.io.js"></script>
+
+</head>
+<body>
+    <div id="msg"></div>
+    <input type="text" id="text">
+    <input type="submit" value="发送" onclick="send()">
+    <script>
+      var socket = io.connect('http://127.0.0.1:3000')
+      function send() {
+        var text = document.getElementById('text').value
+
+          // 随机时间绑定 和服务端的写的一样
+        socket.emit('sendMsg',text)
+      }
+    </script>
+
+</body>
+</html>
+```
+
+
+# 服务端
+
+```js
+const { createServer } = require("http");
+const { Server } = require("socket.io");
+
+const httpServer = createServer();
+const io = new Server(httpServer, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+});
+
+io.on("connection", (socket) => {
+   socket.on('sendMsg',(data)=>{
+      console.log(data)
+   })
+});
+
+httpServer.listen(3000,function (){
+   console.log('http://127.0.0.1:3000')
+});
+```
+## 测试：
+![在这里插入图片描述](https://img-blog.csdnimg.cn/6de0e0d600a84f92a5730e7902a706a9.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+

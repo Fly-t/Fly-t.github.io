@@ -1,0 +1,49 @@
+---
+title: "javaGUI--浮动布局(FlowLayOut)"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+```java
+package cn.usts.edu.lesson01;
+
+import java.awt.*;
+
+public class TestFlowLayOut {
+
+    public static void main(String[] args) {
+        // 窗口
+        Frame frame = new Frame("myFlowLayOut");
+
+        // 按钮
+        Button button1 = new Button("button1");
+        Button button2 = new Button("button2");
+        Button button3 = new Button("button3");
+        Button button4 = new Button("button4");
+
+        frame.setSize(350,350);
+        frame.setVisible(true);
+
+        // 设置流失布局(默认居中)
+        frame.setLayout(new FlowLayout());
+        frame.add(button1);
+        frame.add(button2);
+        frame.add(button3);
+        frame.add(button4);
+    }
+}
+
+```
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/37281727f62343c88aec28d3c3b6e6da.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_14,color_FFFFFF,t_70,g_se,x_16)
+
+```java
+// 左对齐(右对齐......)
+frame.setLayout(new FlowLayout(FlowLayout.LEFT));
+```
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/5852cf3f42de4a4096be7bae23b823d1.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+

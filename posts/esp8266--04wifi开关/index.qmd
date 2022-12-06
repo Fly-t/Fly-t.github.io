@@ -1,0 +1,66 @@
+---
+title: "esp8266--04wifi开关"
+author: "dd21"
+date: "2022-12-05" 
+categories: [esp]
+image: ../csdn.png
+---
+
+
+`远程开关`
+```c
+
+#define BLINKER_WIFI
+
+#include <Blinker.h>
+
+char auth[] = "xxxx";
+char ssid[] = "Netcore";
+char pswd[] = "12345678";
+
+// 新建组件对象
+BlinkerButton Button_light("btn-abc");
+
+
+// 设置针脚
+int relaySwitch = 14;
+
+
+// 按下按键即会执行该函数
+void button_light_callback(const String & state)
+{
+    BLINKER_LOG("get button state: ", state);
+    if(state=="on"){
+       digitalWrite(relaySwitch,LOW); //设置继电器状态
+       Button_light.print("on"); //反馈按钮状态
+      }
+    else if(state == "off"){
+      digitalWrite(relaySwitch,HIGH);
+      Button_light.print("off");
+      }
+}
+
+
+
+void setup()
+{
+    // 初始化串口
+    Serial.begin(115200);
+    BLINKER_DEBUG.stream(Serial);
+    BLINKER_DEBUG.debugAll();
+    
+    // 初始化有LED的IO
+    pinMode(relaySwitch, OUTPUT);
+    digitalWrite(relaySwitch, LOW);
+    // 初始化blinker
+    Blinker.begin(auth, ssid, pswd);
+    //Blinker.attachData(dataRead);
+
+    Button_light.attach(button_light_callback);
+}
+
+void loop() {
+    Blinker.run();
+}
+```
+

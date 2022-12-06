@@ -1,0 +1,95 @@
+---
+title: "java常用类-- String、StringBuffer（StringBuilder）"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+## String的常见操作
+![在这里插入图片描述](https://img-blog.csdnimg.cn/8eabe80fb1824a4d9562ac3dd0e4c9f2.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+```java
+package cn.usts.edu.fly.StringAndStringBufferDemo;
+
+import java.util.Arrays;
+
+/**
+ * @author ：fly
+ * @description: String 类的常用操作
+ * @date ：2021/10/31 13:28
+ */
+public class StringDemo {
+    public static void main(String[] args) {
+        String a = "  hello world HELLO java hello fly ";
+        System.out.println( "长度"+a.length());// 长度
+        System.out.println("第0号索引位置上字符是啥"+a.charAt(0));
+        System.out.println("第一次出现的位置"+a.indexOf("ja"));
+        System.out.println("最后一次出现\"he\"的位置"+a.lastIndexOf("he"));
+
+        System.out.println("是否以fly为结尾"+a.endsWith("fly"));
+        System.out.println("字符串是否相同"+a.equals("asdfadsf"));// 这里区分== ,== 比较的是地址值
+        System.out.println("字符串是否为空"+a.isEmpty());
+        System.out.println("是否以..为开头"+ a.startsWith("hello"));
+        System.out.println("是否包含hello"+ a.contains("hello"));
+
+        System.out.println("将所有字符转换为大写"+a.toUpperCase());
+        System.out.println("将所有字符转换为小写"+a.toLowerCase());
+
+        System.out.println("将变量转换成string(字符串)"+String.valueOf(12));
+        System.out.println("将字符串转换成一个字符数组"+ Arrays.toString(a.toCharArray()));
+        char[] chars = a.toCharArray();
+        for (char aChar : chars) {
+            System.out.print(aChar+",");
+        }
+        System.out.println();
+
+        System.out.println("Hello替换掉hello-->"+a.replace("hello", "Hello"));
+        System.out.println("以空格为分割点:"+Arrays.toString(a.split(" ")));
+        System.out.println(a);
+        System.out.println("从第2号位置开始保留"+a.substring(2));
+        System.out.println("保留2-7号位置"+a.substring(2,7));
+        System.out.println("去掉首尾空格"+a.trim());
+    }
+}
+
+```
+## StringBuffer常用操作
+StringBuffer的出现是为了解决String无法修改的问题，`StringBuffer是一个可边长的字符串`，他的内容和长度都可以改变。
+#### 附加点
+StringBuffer 和 `StringBuilder`相似(使用方法一模一样,append,insert,delete,replace....)
+但是StringBuffer有线程安全,StringBuild没有,所以`StringBuild的性能略高`
+![在这里插入图片描述](https://img-blog.csdnimg.cn/e5dea4e402b54e2089f7eaf05faede1d.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSn5q-beg==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+```java
+package cn.usts.edu.fly.StringAndStringBufferDemo;
+
+/**
+ * @author ：fly
+ * @description: StringBuffer的常见操作
+ *                  StringBuffer 和 StringBuilder相似(使用方法一模一样,append,insert,delete,replace....)
+ *                  但是StringBuffer有线程安全,StringBuild没有,所以StringBuild的性能略高
+ * @date ：2021/10/31 14:25
+ */
+public class StringBufferDemo {
+    public static void main(String[] args) {
+        StringBuilder sb = new StringBuilder();
+        System.out.println(sb.append("像sb中写入字符串"));
+        System.out.println(sb.insert("像sb中写入字符串".length(), "6666"));// 插入6666
+
+        System.out.println(sb.delete(9,13));// StringBuffer中删除掉指定位置的字符串
+        System.out.println("索引为3的是:"+sb.charAt(3));
+        System.out.println(sb.replace(4,5,"替换"));// 开始,结束,替换的字符串
+        sb.setCharAt(0,'向');
+        System.out.println(sb);
+        System.out.println("逆序:"+sb.reverse());
+    }
+
+    public static void add(){
+
+    }
+}
+
+```
+

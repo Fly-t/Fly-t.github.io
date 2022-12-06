@@ -1,0 +1,133 @@
+---
+title: "TI_js脚本自动调试"
+author: "dd21"
+date: "2022-12-05" 
+categories: [mmwave]
+image: ../csdn.png
+---
+
+
+> ##### 脚本执行
+> 
+> 手动创建调试器`1642.xml`
+> 修改执行脚本`ccsdebug.js`
+>  - 修改脚本中的工作区
+>  - 修改脚本中的项目位置, 和编译后的img位置
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/683cc21f47884dae8d79b2a897695368.png)
+
+`ccsdebug.js`
+```c
+// Import the DSS packages into our namespace to save on typing
+
+importPackage(Packages.com.ti.debug.engine.scripting);
+
+importPackage(Packages.com.ti.ccstudio.scripting.environment);
+
+importPackage(Packages.java.lang);
+
+importPackage(Packages.java.io);
+
+
+
+function run_test(){
+//*******User must specify WORKSPACE_DIR***********
+
+var WORKSPACE_DIR = "D:/project/board/workspace_v10/";
+
+//*******User must specify WORKSPACE_DIR***********
+
+var PROJECT_DIR = WORKSPACE_DIR+"sdk_demo/";
+
+var R4F_OUT_FILE_PATH = PROJECT_DIR+"mmw_mss_16xx/Debug/xwr16xx_mmw_mss.xer4f";
+
+var DSS_OUT_FILE_PATH = PROJECT_DIR+"mmw_dss_16xx/Debug/xwr16xx_mmw_dss.xe674";
+
+var CCS_TARGET_CONFIGURATION_FILE = "AWR1642.ccxml";
+
+var script = ScriptingEnvironment.instance();
+
+//script.traceBegin("BreakpointsTestLog.xml", "DefaultStylesheet.xsl");
+//script.traceSetConsoleLevel(TraceLevel.ALL);
+//script.traceSetFileLevel(TraceLevel.ALL);
+
+
+script.setCurrentDirectory(PROJECT_DIR);
+debugServer = script.getServer("DebugServer.1");
+
+
+debugServer.setConfig(CCS_TARGET_CONFIGURATION_FILE);
+
+
+// debug session R4F
+print("Debug session R4F...");
+debugSession_MSS = debugServer.openSession("*","Cortex_R4_0");
+print("Connecting to R4F Core...");
+debugSession_MSS.target.connect();
+debugSession_MSS.target.reset();
+print("Done.");
+
+
+
+
+// debug session C674x
+print("Debug session C674x...");
+debugSession_DSS = debugServer.openSession("*","C674X_0");
+print("Connecting to C674x Core...");
+debugSession_DSS.target.connect();
+debugSession_DSS.target.reset();
+print("Done.");
+
+
+// Loading program - R4F...
+print("Loading program - R4F...");
+debugSession_MSS.memory.loadProgram(R4F_OUT_FILE_PATH);
+print("load R4F Done.");
+
+// Loading program - C674x...
+print("Loading program - C674x...");
+debugSession_DSS.memory.loadProgram(DSS_OUT_FILE_PATH);
+print("Loading C674x Done.");
+
+// run target
+var dsArray = new Array();
+dsArray[0] = debugSession_MSS;
+dsArray[1] = debugSession_DSS;
+
+//debugServer.simultaneous.run(dsArray); // Run CPUs 1 and 2
+print("please click run...");
+//debugServer.stop();
+
+//script.traceEnd();
+}
+
+hotmenu.addJSFunction("Run Test","run_test()");
+```
+
+>## View ->Scripting Console
+![在这里插入图片描述](https://img-blog.csdnimg.cn/cf694039ca7144e1b624b19db37c559b.png)
+
+在终端中输入以下指令,根据脚本所在位置填写脚本
+
+```c
+// 脚本位置
+loadJSFile "D:\project\board\workspace_v10\sdk_demo\ccsdebug.js"
+```
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/3b91e4c13e7c4db8b5ef15063b383c31.png)
+>## 点击script,然后运行脚本
+![在这里插入图片描述](https://img-blog.csdnimg.cn/25d1f8efc0014be5acb27f20f283843d.png)
+
+>##  程序启动需手动点击run按钮
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/b7f978a2ba7f4450b3a5ea38574b5149.png)
+> ## 断点调试
+> 需要设置`hardware breakpoint`, 普通的断点无法在mss上停止.
+然后就可查看到变量和单步调试了
+
+
+![](https://img-blog.csdnimg.cn/e0ca5caa00224610ab8039c0ed6903ef.png)
+稍微高级点的用法可以查看tools里面的工具
+![在这里插入图片描述](https://img-blog.csdnimg.cn/250730daac0d4963aa9c09745298897c.png)
+
+

@@ -1,0 +1,98 @@
+---
+title: "smt32-f103寄存器点灯"
+author: "dd21"
+date: "2022-12-05" 
+categories: [stm32]
+image: ../csdn.png
+---
+
+
+# STM32F103寄存器点灯
+通过寄存器中的状态来设置引脚状态
+	`LED在GPIOB的第5引脚`
+	
+```c
+// RCC_ENR RCC must be first otherwise the LED can not be lighted
+	*(unsigned int*)0x40021018 |= (1<<3);
+	// port B	base address 0x4001 0c00
+
+	// output type is pull and push
+	*(unsigned int*)0x40010C00 |= ((1)<<(4*0));
+	//*(unsigned int*)0x40010C00 |= ((1)<<(8*0));
+	
+
+	// port B odr address is base address add 0x0c	
+	*(unsigned int*)0x40010C0C &= ~(1<<0);
+	//*(unsigned int*)0x40010C0C &= ~(1<<2);
+
+```
+
+
+
+
+
+封装GPIO
+
+```c
+// REG mapping 
+#define PERIPH_BASE  			  	((unsigned int) 0x40000000)
+	
+#define APB1_PERIPH_BASE   		 PERIPH_BASE
+#define APB2_PERIPH_BASE  	 	(PERIPH_BASE+0x10000)
+#define AHB_PERIPH_BASE   		(PERIPH_BASE+0x20000)
+
+#define RCC_BASE  						(AHB_PERIPH_BASE+0x1000)
+#define GPIOB_BASE  					(APB2_PERIPH_BASE +0x0C00)
+
+#define RCC_APB2ENR  					*(unsigned int*)(RCC_BASE+0x18)
+	
+#define GPIOB_CRL    					*(unsigned int*)(GPIOB_BASE+0x00)
+#define GPIOB_CRH   					*(unsigned int*)(GPIOB_BASE+0x04)
+#define GPIOB_ODR   					*(unsigned int*)(GPIOB_BASE+0x0C)
+	
+#define GPIOB_BSRR    				*(unsigned int*)(GPIOB_BASE+0x10)
+#define GPIOB_BRR   					*(unsigned int*)(GPIOB_BASE+0x14)
+#define GPIOB_LOCK   					*(unsigned int*)(GPIOB_BASE+0x18)
+
+typedef unsigned int 		uint32_t;
+typedef unsigned short	uint16_t; 
+
+typedef struct{
+	uint32_t CRL; 
+	uint32_t CRH; 
+	uint32_t IDL; 
+	uint32_t ODR; 
+	uint32_t BSRR; 
+	uint32_t BRR; 
+	uint32_t LCKR; 	
+}GPIO_Struct; 
+
+// change the GPIO type to GPIO_Struct then can use the REG like [GPIO_Struct->RCC] 
+#define GPIOB ((GPIO_Struct*)GPIOB_BASE)
+
+
+```
+
+```c
+	RCC_APB2ENR |= (1<<3);
+
+	GPIOB->CRL |= ((1)<<(4*0));
+	
+	// open LED set 0
+	//GPIOB->ODR &= ~(1<<0);
+	// off LED set 1
+	GPIOB->ODR |= (1<<0);
+
+```
+简单封装
+
+```c
+	RCC_APB2ENR |= (1<<3);
+
+	GPIOB_CRL |= ((1)<<(4*0));
+	
+	// open LED set 0
+	GPIOB_ODR &= ~(1<<0);
+	// off LED set 1
+	//GPIOB_ODR |= (1<<0);
+```

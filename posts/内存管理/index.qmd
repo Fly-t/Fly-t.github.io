@@ -1,0 +1,15 @@
+---
+title: "内存管理"
+author: "dd21"
+date: "2022-12-05" 
+categories: [c]
+image: ../csdn.png
+---
+
+
+一个编译完成的程序包含很多段
+	.text [ 代码段 ]
+	.data [ 数据段 ]
+	.bss [ 未初始化数据段 ]
+	
+全局变量和static修饰的变量是在编译的时候分配空间的	

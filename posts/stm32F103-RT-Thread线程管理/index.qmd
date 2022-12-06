@@ -1,0 +1,146 @@
+---
+title: "stm32F103-RT-Thread线程管理"
+author: "dd21"
+date: "2022-12-05" 
+categories: [rtthread]
+image: ../csdn.png
+---
+
+
+> 系统总共支持 256 个优先级 (0 ~ 255，`数值越小的优先级越高，0 为最高优先级，255 分配给空闲线程使用,默认优先级32个`，一般用户不使用。在一些资源比较紧张的系统中，可以根据实,际情况选择只支持 8 个或 32 个优先级的系统配置)。在系统中，当有比当前线程优先级更高的线程就绪时，当前线程将立刻被换出，高优先级线程抢占处理器运行
+
+>RT-Thread 内核中也允许创建相同优先级的线程。相同优先级的线程采用时间片轮转方式进行调
+度（也就是通常说的分时调度器），时间片轮转调度仅在当前系统中无更高优先级就绪线程存在
+的情况下才有效。
+
+
+## `main.c`
+```c
+/*********************key1挂起线程,key2恢复线程*********************/
+#include "board.h"
+#include "rtthread.h"
+
+//static struct rt_thread led1_thread;
+static rt_thread_t led1_thread = RT_NULL;				// thread1 control block
+static rt_thread_t led2_thread = RT_NULL;				// thread2 control block
+static rt_thread_t pause_thread = RT_NULL;				// thread3 control block
+
+static rt_thread_t send_thread = RT_NULL;				// message queue send thread
+static rt_thread_t receive_thread = RT_NULL;			// messge queue receive thread
+
+int count = 0;
+
+
+
+
+
+
+
+static void led1_thread_entry(void *parameter);
+static void led2_thread_entry(void *parameter);
+static void pause_thread_entry(void *parameter);
+
+/*
+*************************************************************************
+*                             main ����
+*************************************************************************
+*/
+/**
+ * @brief  ������
+ * @param  ��
+ * @retval ��
+ */
+int main(void)
+{
+	
+	// if (led1_thread != RT_NULL)
+	// 	rt_thread_startup(led1_thread);
+	// else
+	// 	return -1;
+
+
+
+	// thread 2
+	// led2_thread = rt_thread_create("led2", led2_thread_entry, RT_NULL, 512, 3, 20);
+
+	// if (led2_thread != RT_NULL)
+	// 	rt_thread_startup(led2_thread);
+	// else
+	// 	return -1;
+
+	// thread 3 [pause thread]
+	pause_thread = rt_thread_create("pause", pause_thread_entry,RT_NULL,512,2,20);
+	if(pause_thread != RT_NULL){
+		rt_thread_startup(pause_thread);
+	}
+	else{
+		return -1;
+	}
+	
+
+
+static void led1_thread_entry(void *parameter){
+	while (1)
+	{
+		LED1_ON;
+		rt_thread_delay(500); /* ��ʱ 500 �� tick */
+		LED1_OFF;
+		rt_thread_delay(500); /* ��ʱ 500 �� tick */
+		rt_kprintf("thread --[1], Red  --count[%d]\r\n",count);
+	}
+}
+
+static void led2_thread_entry(void *parameter)
+{
+	while (1)
+	{
+		LED2_ON;
+		rt_thread_delay(500); /* ��ʱ 500 �� tick */
+		LED2_OFF;
+		rt_thread_delay(500); /* ��ʱ 500 �� tick */
+		rt_kprintf("thread --[2], Green --count[%d]\r\n",count);
+	}
+}
+
+static void pause_thread_entry(void *parameter)
+{
+	rt_err_t uwRet_1 = RT_EOK; // monitor the status
+
+	while (1)
+    {
+		
+		if (Key_Scan(KEY1_GPIO_PORT, KEY1_GPIO_PIN) == KEY_ON) /* K1 ���0�3��0�7�0�3�0�0 */
+		{
+			
+			uwRet_1 = rt_thread_suspend(led1_thread); /* �0�1�0�6�0�4�0�8LED1�0�3�0�8�0�6�0�0 */
+			if (RT_EOK == uwRet_1)
+			{
+				rt_kprintf("[suspend-][succes] led1\n");
+			}
+			else
+			{
+				rt_kprintf("[suspend-][faild] led1 Error Code is :%lx\n", uwRet_1);
+			}
+      	}
+
+		
+
+		if (Key_Scan(KEY2_GPIO_PORT, KEY2_GPIO_PIN) == KEY_ON) /* K1 ���0�3��0�7�0�3�0�0 */
+		{
+			
+			uwRet_1 = rt_thread_resume(led1_thread); /* �0�3�0�0�0�0�0�7LED1�0�3�0�8�0�6�0�0�0�5�0�3 */
+			if (RT_EOK == uwRet_1)
+			{
+				rt_kprintf("[resume-][succes] led1\n");
+			}
+			else
+			{
+				rt_kprintf("[resume-][faild] led1 Error Code is :%lx\n", uwRet_1);
+			}
+		}
+	  rt_thread_delay(20);
+	}
+}
+
+```
+

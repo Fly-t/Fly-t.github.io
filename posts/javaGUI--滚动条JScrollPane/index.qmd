@@ -1,0 +1,44 @@
+---
+title: "javaGUI--滚动条JScrollPane"
+author: "dd21"
+date: "2022-12-05" 
+categories: [java]
+image: ../csdn.png
+---
+
+
+`将区域加上滚动条,和文本域`
+![在这里插入图片描述](https://img-blog.csdnimg.cn/1e725df04ed0424e9b42cb827049b031.png)
+
+```java
+package cn.usts.edu.lesson05;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class JScrollDemo extends JFrame {
+    public JScrollDemo() {
+        this.setTitle("文本域");
+        this.setBounds(100,100,500,500);
+        this.setVisible(true);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        // 文本域
+        JTextArea textArea = new JTextArea(20,50);
+        textArea.setText("文本域默认输入的内容");
+
+        // JScroll带滚动条的
+        JScrollPane scrollPane = new JScrollPane(textArea);
+
+        Container container = this.getContentPane();
+        container.add(scrollPane);
+
+    }
+
+    public static void main(String[] args) {
+        new JScrollDemo();
+    }
+}
+
+```
+

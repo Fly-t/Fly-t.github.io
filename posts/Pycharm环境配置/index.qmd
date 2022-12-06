@@ -1,0 +1,23 @@
+---
+title: "Pycharm环境配置"
+author: "dd21"
+date: "2022-12-05" 
+categories: [ide]
+image: ../csdn.png
+---
+
+
+**一、打开设置**
+①file-->settings
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200430131339808.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+②File | Settings | Project: ‘项目名’| Project Interpreter
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200430131847724.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+
+**二、找到你的Python所在位置**
+①第一种：创建项目专属新环境
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2020043013253134.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+②找到python.exe所在位置
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200430131536426.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+①第二种：不使用新环境，使用旧的环境（这样搞容易出问题）
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200430132411412.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70)
+③最后点ok，pycharm基本上就ok了。

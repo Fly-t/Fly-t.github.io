@@ -1,0 +1,42 @@
+---
+title: "在Ubuntu下配置C语言编辑环境【gcc】,【gdb】，【build-essential】"
+author: "dd21"
+date: "2022-12-05" 
+categories: [c]
+image: ../csdn.png
+---
+
+
+## 0.安装前请确认配置正确的源
+【无法安装的问题大多是源没换好的问题导致的，注意Ubuntu版本和源地址要匹配！！！！！重要的事情说三遍】
+【无法安装的问题大多是源没换好的问题导致的，注意Ubuntu版本和源地址要匹配！！！！！重要的事情说三遍】
+【无法安装的问题大多是源没换好的问题导致的，注意Ubuntu版本和源地址要匹配！！！！！重要的事情说三遍】
+
+`不正确的源会导致找不到依赖的问题`
+
+Ubuntu18.4换阿里源参考：[Ubuntu18.4换阿里源](https://blog.csdn.net/qq_43619461/article/details/109078324)
+## 1.安装build-essential
+如果安装中出现资源占用参考：[解决资源占用](https://blog.csdn.net/qq_43619461/article/details/109058407)
+
+```bash
+sudo apt-get install build-essential
+```
+
+## 2.安装gcc
+
+```bash
+sudo apt-get install gcc
+```
+
+## 3.安装gdb
+
+```bash
+sudo apt-get install gdb
+```
+
+## 4.安装vim编辑器
+
+```bash
+sudo apt-get install vim
+```
+

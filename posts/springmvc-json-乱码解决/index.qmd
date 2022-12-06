@@ -1,0 +1,62 @@
+---
+title: "springmvc-json-乱码解决"
+author: "dd21"
+date: "2022-12-05" 
+categories: [spring]
+image: ../csdn.png
+---
+
+
+## 1、java对象转json
+
+```java
+
+@Controller
+public class UserController {
+
+//   
+    // 多数通过配置xml文件实现乱码过滤，这种方式不推荐，写起来太冗余
+    @RequestMapping(value = "/json1")
+    @ResponseBody // 让返回字符串对象，不走视图解析器
+    public String json1() throws JsonProcessingException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        User1 user1 = new User1("tom",12,"男");
+        // 将对象转换为字符串对象，如果出现500错误多数是 打包没打jackson的包
+        String st = mapper.writeValueAsString(user1);
+        // 打印转换过的json数据
+        System.out.println(st);
+        return st;
+    }
+
+}
+```
+
+## 2、spring解决中文乱码-方法1：
+
+```shell
+ @RequestMapping(value = "/json1",produces = "application/json;charset=utf-8")  解决乱码问题
+```
+
+## 3、mvc框架解决中文乱码-方法2：
+修改springmvc-servlet.xml
+
+```shell
+<!--    json 编码过滤器-->
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8"/>
+            </bean>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper">
+                    <bean class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+                        <property name="failOnEmptyBeans" value="false"/>
+                    </bean>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+```
+
+
