@@ -1,6 +1,6 @@
 ---
 title: "Infineon Radar Env Init"
-author: "fly-t"
+author: "dd21"
 date: "2022-12-05" 
 categories: [infineon, env]
 image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-05-15-03-28.png
