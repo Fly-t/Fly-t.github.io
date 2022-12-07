@@ -2,8 +2,9 @@
   {
     "listing": "/article.html",
     "items": [
+      "/posts/infineon_BTGR13C/idnex.html",
       "/posts/infineon_radar_init_env/index.html",
-      "/posts/infineon_how_to_use/index.html",
+      "/posts/infineon_MCU7_how_to_use/index.html",
       "/posts/frida对java hash类型打印/index.html",
       "/posts/javaGUI--浮动布局(FlowLayOut)/index.html",
       "/posts/esp8266--03 按钮次数计数/index.html",

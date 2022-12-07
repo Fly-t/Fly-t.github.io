@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="dd21">
+<meta name="dcterms.date" content="2022-12-06">
+
+<title>TengFei’s Blog - how to use infineon Radar</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">TengFei’s Blog</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../article.html">
+ <span class="menu-text">Article</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/fly-t"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://raw.githubusercontent.com/fly-t/images/main/blog/wechat-2022-11-27-16-30-56.png"><i class="bi bi-qr-code-scan" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">how to use infineon Radar</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">radar</div>
+                <div class="quarto-category">infineon</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>dd21 </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 6, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="description" class="level1">
+<h1>Description</h1>
+<p>infineon RadarBTG60 软件架构, 及如何移植</p>
+<p>该部分主要针对mcu7 进行展开</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-06-18-10-26.png" class="img-fluid"></p>
+</section>
+<section id="referance" class="level1">
+<h1>Referance</h1>
+<ul>
+<li><p><a href="https://infineon.github.io/sensor-xensiv-bgt60trxx/html/index.html">https://infineon.github.io/sensor-xensiv-bgt60trxx/html/index.html</a></p></li>
+<li><p><a href="AN599_Radar_Baseboard_MCU7_V2.6.pdf">AN599_Radar_Baseboard_MCU7_V2.6.pdf</a></p></li>
+</ul>
+<p>该文档主要写了MCU7的主要框架, 包括<code>原理框图</code>,<code>注意事项</code>, <code>硬件特性</code>,<code>如何调试</code>, <code>如何移植</code>, <code>各部分描述(usb-cdc, E²PROM.... )</code></p>
+</section>
+<section id="arduino-mkr-interface" class="level1">
+<h1>Arduino MKR interface</h1>
+<p>兼容<code>Arduino MKR</code></p>
+<ul>
+<li><p>MKR Zero 这个开发板可以放sd卡, 可以将原始数据存储在sd卡上</p></li>
+<li><p>MKR1000 这个开发板可以wifi传输数据</p></li>
+<li><p>MKR Vidor 4000 带有用于并行数据处理的 FPGA 和用于 RAM 扩展的 SDRAM 的电路板</p></li>
+<li><p>MKR2UNO 可以扩展更多</p></li>
+</ul>
+</section>
+<section id="固件" class="level1">
+<h1>固件</h1>
+<blockquote class="blockquote">
+<p>在mcu7上有固件将充当雷达和主机之间的桥梁, 主要的功能如下</p>
+</blockquote>
+<blockquote class="blockquote">
+<ul>
+<li>通过USB与主机通信</li>
+<li>读取和写入传感器寄存器</li>
+<li>通过 SPI 读取传感器数据</li>
+<li>检查传感器板是否插入连接器之一</li>
+<li>读写传感器板上的EEPROM（比如识别板子）</li>
+<li>控制一些辅助外围设备，例如基板和传感器板上的状态 LED。</li>
+</ul>
+</blockquote>
+<p>在当前状态下，固件不执行任何信号处理。它可以从主机接收消息，告诉它如何配置传感器，并且可以将获取的数据从传感器转发到主机。但是，如果需要信号处理，则可以添加此功能，因为 MCU 足够强大。固件的编写方式可最大限度地减少将其移植到其他微控制器的工作量。因此，固件结构分为以下层</p>
+<blockquote class="blockquote">
+<ul>
+<li>硬件抽象层 Hardware abstraction layer (HAL)</li>
+</ul>
+</blockquote>
+<p>这是最低层，实现了所有特定于 MCU 的逻辑，例如如何与 SPI、GPIO、定时器和其他 HW 模块接口。当移植到不同的 MCU 时，这一层应该是唯一受影响的层。它还实现了一个 USB CDC 串行接口，通信层使用该接口连接到主机设备</p>
+<blockquote class="blockquote">
+<ul>
+<li>驱动层( Driver layer)</li>
+</ul>
+</blockquote>
+<p>此层位于硬件层的顶部。它提供了参数化和读取的函数来自传感器的数据。它创建适当的SPI 数据包以将这些参数应用于传感器和从 HAL 调用 SPI 函数以启动数据传输。此外，它还解码SPI数据包来自 HAL 接收的传感器。因此，传感器测量值被提取并传递给上面的图层。驱动层独立于MCU。但是，它需要具体到每个型号的传感器, 根据传感器的型号进行配置</p>
+<blockquote class="blockquote">
+<ul>
+<li>通信层 ( Communication layer) 此层位于驱动程序层和硬件层的顶部。它接收通过 USB 接口从主机请求或命令消息。这些消息经过解码，并且提取包含的数据。这是通过调用驱动程序层的相应函数来完成的。当这些函数返回结果时，包含结果的响应消息将转发到主机。从驱动程序层接收传感器数据时，也会生成发往主机的消息。这一层也是独立于硬件的。它使用 HAL USB CDC 接口将数据传输到主机</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<p>-实际固件 (Actual firmware )</p>
+</blockquote>
+<p>它位于所有其他层之上。固件调用所有初始化函数启动时的较低层，用于配置SPI速度和GPIO方向等内容。一旦启动阶段已经完成，进入死循环，在其中调用通信层来获取并在主机之间传输消息。</p>
+</section>
+<section id="没有mcu7的时候-移植其他平台" class="level1">
+<h1>没有mcu7的时候( 移植其他平台 )</h1>
+<blockquote class="blockquote">
+<p>在没有雷达基板MCU7作为中介的情况下( 其他主控芯片配合radar芯片 )将传感器集成到自定义项目中时，需要在固件中执行以下步骤</p>
+</blockquote>
+<ul>
+<li><p>将整个固件移植到不同的 MCU 时，将 HAL 移植到该 MCU 应该就足够了. 或者将需要的application 移植</p></li>
+<li><p>驱动层可以照原样使用，不做任何修改</p></li>
+<li><p>如果通信层不需要, 算法可以放在该层</p></li>
+<li><p>不会使用雷达基板MCU7的固件代码;但是，初始化代码应为搬入项目的MCU</p></li>
+<li><p>将整个固件移植到其他 MCU 时，将 HAL 移植到该 MCU 就足够了</p></li>
+</ul>
+<p><b>可以把算法放到mcu上, 可以替换通信协议, 亦可以同时保</b></p>
+</section>
+<section id="usb" class="level1">
+<h1>USB</h1>
+<p>固件在 USB 接口上实现了一个通信设备类 communication device class(CDC) 设备。这意味着 USB 接口的工作方式类似于串行端口，实现双向接口，在两个方向上传输字节流</p>
+<p>在此串行数据流之上，通过在每条消息周围放置开始和结束标记来实现基于消息的协议。消息的第一个字节指定消息所针对的固件的目标模块。消息的字节 2 和 3 设置消息的长度。这样协议解码器就知道消息的长度。结合开始和结束标记，它能够将接收到的流拆分为其组成数据包。固件源代码包括可以集成到主机应用程序中的通信库的一部分，并提供创建和解码固件消息的功能</p>
+</section>
+<section id="eeprom" class="level1">
+<h1>EEPROM</h1>
+<p>固件利用 EEPROM 检测屏蔽类型。 EEPROM的结构如表2所示，其中还包含一个128位的电路板标识符，可以用来区分同一类型的不同电路板。除此之外，固件向主机提供命令以在 EEPROM 中存储和检索有限大小的键/值对。主机可以自由地为这些对分配它想要的任何含义（例如，特定键的值可能指雷达配置数据，而另一个键的值可能用于存储显示设置）。访问 EEPROM 的函数是随固件提供的通信库的一部分</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-06-18-13-48.png" class="img-fluid"></p>
+</section>
+<section id="rgb-指示灯" class="level1">
+<h1>RGB 指示灯</h1>
+<p>主板的当前状态指示在 R GB LED 上。在电路板启动后和电路板空闲时，board 状态如表 3 所示。处于活动状态时，电路板状态指示如下图</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-06-18-16-53.png" class="img-fluid"></p>
+</section>
+<section id="调试烧录" class="level1">
+<h1>调试烧录</h1>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-06-18-22-18.png" class="img-fluid"></p>
+<p>如果用户需要调试器连接器，该板具有两个选项，如图13所示。在顶部雷达基板MCU7的一侧，有一个标签连接调试器的布局。如果用户不想购买Tag Connect调试电缆，他们可以将普通的10针Arm调试连接器焊接到焊盘上雷达基板MCU7底部的组件J1</p>
+<p>使用调试器连接器时，可以直接从 Atmel Studio 7 使用Atmel-ICE 程序员或兼容工具</p>
+<section id="引导加载程序刷新" class="level2">
+<h2 class="anchored" data-anchor-id="引导加载程序刷新">引导加载程序刷新</h2>
+<p>微控制器包含一个引导加载程序。如果调试器是不可用。由于设备通常直接启动到固件而不进入引导加载程序，引导加载程序必须首先手动激活。这可以通过执行以下顺序来完成</p>
+<ol type="1">
+<li><p>断开设备与 USB 的连接</p></li>
+<li><p>通过将 TP1 连接到 3.3 V 将 MCU ERASE 引脚保持在高电平（参见图 13）</p></li>
+<li><p>在保持 TP1 高电平的同时再次将设备连接到 USB</p></li>
+<li><p>松开擦除引脚 （TP1）</p></li>
+<li><p>设备现在处于引导加载程序模式</p></li>
+</ol>
+<blockquote class="blockquote">
+<p>一旦设备处于引导加载程序模式，就可以使用可用于从Microchip下载（Microchip，SAM-BA启动助手，2019）</p>
+</blockquote>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
