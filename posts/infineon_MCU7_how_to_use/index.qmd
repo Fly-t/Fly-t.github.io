@@ -11,6 +11,8 @@ image: fusiongui.gif
 
 infineon RadarBTG60 软件架构, 及如何移植
 
+该部分主要针对mcu7 进行展开
+
 ![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-06-18-10-26.png)
 
 
@@ -20,6 +22,7 @@ infineon RadarBTG60 软件架构, 及如何移植
 
 - [AN599_Radar_Baseboard_MCU7_V2.6.pdf](AN599_Radar_Baseboard_MCU7_V2.6.pdf)
 
+该文档主要写了MCU7的主要框架, 包括`原理框图`,`注意事项`, `硬件特性`,`如何调试`, `如何移植`, `各部分描述(usb-cdc, E²PROM.... )`
 
 # Arduino MKR interface
 
