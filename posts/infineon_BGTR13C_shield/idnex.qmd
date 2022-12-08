@@ -1,5 +1,5 @@
 ---
-title: "infineon BTGR13C Radar" 
+title: "infineon BTGR13C Radar shield" 
 author: "dd21"
 date: "2022-12-07" 
 categories: [infineon]

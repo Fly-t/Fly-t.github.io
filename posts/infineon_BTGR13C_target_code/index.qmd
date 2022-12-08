@@ -1,0 +1,291 @@
+---
+title: "infineon BGTR13C target code" 
+author: "dd21"
+date: "2022-12-08" 
+categories: [infineon, radar]
+image: image
+---
+
+
+# Description
+
+1. infineon 下位机代码阅读
+2. 以MCU7为案例
+
+
+# Referance
+
+[Legacy](https://blog.csdn.net/awfiihmmmm/article/details/108852840)
+
+
+# 目录结构
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-08-18-09-36.png)
+
+``` 
+Radar Development Kit\3.3.1.202211181510\assets\software\firmware-rbb7\Firmware\sources\targets\atmel> tree .
+```
+
+``` 
+├─subprojects
+│  └─RadarBaseboardMCU7
+│      └─bsp
+│          ├─atr22
+│          ├─avian
+│          └─ltr11
+└─target_platform
+    ├─contrib
+    │  ├─ASF
+    │  │  ├─common
+    │  │  │  ├─boards
+    │  │  │  │  └─user_board
+    │  │  │  ├─services
+    │  │  │  │  ├─clock
+    │  │  │  │  │  └─sams70
+    │  │  │  │  ├─ioport
+    │  │  │  │  │  └─sam
+    │  │  │  │  ├─serial
+    │  │  │  │  │  └─sam_uart
+    │  │  │  │  ├─sleepmgr
+    │  │  │  │  │  └─sam
+    │  │  │  │  └─usb
+    │  │  │  │      ├─class
+    │  │  │  │      │  └─cdc
+    │  │  │  │      │      └─device
+    │  │  │  │      └─udc
+    │  │  │  └─utils
+    │  │  │      ├─interrupt
+    │  │  │      └─stdio
+    │  │  │          └─stdio_serial
+    │  │  ├─sam
+    │  │  │  ├─drivers
+    │  │  │  │  ├─afec
+    │  │  │  │  ├─efc
+    │  │  │  │  ├─matrix
+    │  │  │  │  ├─pio
+    │  │  │  │  ├─pmc
+    │  │  │  │  ├─pwm
+    │  │  │  │  ├─qspi
+    │  │  │  │  ├─rstc
+    │  │  │  │  │  └─example1
+    │  │  │  │  ├─spi
+    │  │  │  │  ├─tc
+    │  │  │  │  ├─twihs
+    │  │  │  │  ├─uart
+    │  │  │  │  ├─usart
+    │  │  │  │  ├─usbhs
+    │  │  │  │  └─xdmac
+    │  │  │  ├─services
+    │  │  │  │  └─flash_efc
+    │  │  │  └─utils
+    │  │  │      ├─cmsis
+    │  │  │      │  └─sams70
+    │  │  │      │      ├─include
+    │  │  │      │      │  ├─component
+    │  │  │      │      │  ├─instance
+    │  │  │      │      │  └─pio
+    │  │  │      │      └─source
+    │  │  │      │          └─templates
+    │  │  │      │              └─gcc
+    │  │  │      ├─fpu
+    │  │  │      ├─header_files
+    │  │  │      ├─linker_scripts
+    │  │  │      │  └─sams70
+    │  │  │      │      └─sams70q21
+    │  │  │      │          └─gcc
+    │  │  │      ├─make
+    │  │  │      ├─preprocessor
+    │  │  │      └─syscalls
+    │  │  │          └─gcc
+    │  │  └─thirdparty
+    │  │      └─CMSIS
+    │  │          ├─Include
+    │  │          └─Lib
+    │  │              └─GCC
+    │  ├─config
+    │  └─debug_scripts
+    │      └─gcc
+    └─impl
+        ├─custom
+        ├─ids
+        ├─peripherals
+        └─serial
+```
+# 进入到 RadarBaseboardMCU7
+
+这里一共对应三款雷达板
+1. atr22
+2. avian
+3. ltr11
+
+
+``` c
+RadarBaseboardMCU7
+└─bsp 
+    ├─atr22
+    ├─avian
+    └─ltr11
+```
+
+
+## RadarBaseboardMCU7:: main.c
+
+> 标题格式   `dir`::`file.c`or(`file.h`) :: function :: interfunction....
+
+进入到main函数中, main函数中结构很简单
+
+``` c
+int main(void)
+{
+    // Board构造函数, 只调用这里只调用一次
+    Board_Constructor();
+
+    /* Loop forever */
+    while (1)
+    {
+        Board_run();
+    }
+}
+```
+
+## RadarBaseboardMCU7:: main.c :: Board_Constructor
+
+该函数是board构造(init),  在该函数的`Platform_Constructor()`初始化平台, 创建低级接口
+``` c
+void Platform_Constructor(void)
+{
+    System_init();
+    System_disableWatchdog();
+
+    SysTimer_init();
+
+    System_startUSB();
+
+    PlatformInterfaces_Constructor();
+
+    Timer_Constructor();
+}
+```
+
+接下来是对底板(`atmel`)的判断, 判断地板的类型, 这些参数配置在`BoardDefinition.h`中, 后续如果添加版本,  只需要修改这里的定义即可.
+
+
+``` c
+// 如果不是Rev. A, 将原本BOARD_NAME_BASE的位置截断.
+if (!Sams70RevisionA())
+    {
+        // If this is not Rev. A, trim the suffix from the board name
+        boardInfo.name[sizeof(BOARD_NAME_BASE) - 1] = '\0';
+    }
+```
+
+`BoardDefinition.h`
+
+对板子信息进行描述, 方便后期移植工作. 
+
+``` c
+// BOARD_NAME will be trimmed to BOARD_NAME_BASE in Board.c depending on silicon revision
+#define BOARD_NAME_BASE "RadarBaseboardMCU7"
+#define BOARD_NAME      BOARD_NAME_BASE " (Rev. A)"
+#define BOARD_VID       0x058B
+#define BOARD_PID       0x0251
+
+//#define BOARD_EEPROM_ADDRESS_24CW128X 0x50
+
+#define COMMUNICATION_SERIAL
+
+
+#include "../../../version.h"
+```
+
+后边是对`gpio`, `spi`,`i2c` 的构造, 这里的代码写的很巧妙, 分别在上层创建对应各个外设的类(结构体), 但是实际上该类掉用的是`bsp`的接口, 这么做将bsp和上层接口进行分离, 使得bsp做出修改后, 只要接口不做调整, 上层应用也无需做出调整. `IGpio`前面的 `I`应该是`Interface`的意思.
+
+
+```c
+    IGpio *gpio = &PlatformGpio;
+    ISpi *spi   = &PlatformSpi;
+    II2c *i2c   = &PlatformI2c;
+```
+
+紧接着是对雷达接口的创建, 和上面的操作类似. 
+
+``` c
+ IRadar *radar = NULL;
+```
+
+下面是对, 板子的类型做出检测：HatvanPlus 或 HatvanLegacy
+
+是对板子的一个类型的判断, 判断有几个connecter, MCU7上, 有两个链接器, 但是只能初始化一个.
+
+
+``` c
+/* 检测板类型：HatvanPlus 或 HatvanLegacy。
+     *
+     * 用于检测的引脚：
+     * 在标记为 BoardID 并连接到下拉的 HatvanPlus 上;
+     * 在标记为S2_SPI_DIR并连接到引体向上的 HatvanLegacy 上，
+     * 作为第二电平转换器电路的一部分。
+     *
+     * 解决方法：需要使能 LDO2 以提供 3.3v
+     * 用于上拉偏置，实现精确检测。
+*/
+
+ const bool isHatvanLegacy = Board_isHatvanLegacy();
+
+//HatvanLegacy
+ if (isHatvanLegacy){
+        do something.....
+    }
+
+// HatvanPlus
+else  { 
+    if (Board_isHatvanPlusV9Connected())
+    {
+        do something.....
+    }
+    else
+    {
+        do something.....
+    }
+    m_shieldConnectorCount = 1;
+}
+```
+
+
+因为上面对板子类型进行判断, 所以才得到 `spi`的一个具体配置信息, 才能后进行初始化工作, 代码如下.
+
+
+``` c
+PlatformSpi_initialize(BoardSpiDefinition, m_shieldConnectorCount);
+```
+
+对`spi`配置完成后对led进行配置, 配置led的一个状态表, 以及当前状态的设置.
+
+``` c
+LedSequence_Constructor();
+    LedSequence_setStatus(LED_STATUS_OPERATING);
+```
+
+检查核心板(radar部分(shield))连接器是否存在配置错误
+    只有当扩展板具有 I2C 上拉时，才能检测到镜像连接
+    , OC 引脚上的其他意外电平被解释为错误的配置
+
+``` c
+ if (Board_detectShields() == E_SUCCESS)
+    {
+        /*
+                使用 SPI 和 I2C 检查已知设备是否存在, 
+                
+                尝试读取芯片 ID 并按以下顺序实例化相应的驱动程序
+                （每个实例化只有一个设备）
+
+                - Avian (SPI)  mcu 7 版本调用这个!!!!!
+                - LTR11 (SPI)
+                - ATR22 (I2C)
+        */
+
+        radar = Board_detectRadar(gpio, spi, i2c, &m_data);
+    }
+```
+
+

@@ -1,5 +1,5 @@
 ---
-title: "how to use infineon Radar" 
+title: "how to use infineon Radar MCU7" 
 author: "dd21"
 date: "2022-12-06" 
 categories: [radar, infineon]
