@@ -3,30 +3,28 @@ title: "infineon BGTR13C target code"
 author: "dd21"
 date: "2022-12-08" 
 categories: [infineon, radar]
-image: image
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-09-15-29-58.png 
 ---
 
 
-# Description
+# Abstract
 
-1. infineon 下位机代码阅读
-2. 以MCU7为案例
+infineon 下位机代码处理流程概览, 以MCU7为案例
 
 
 # Referance
 
-[Legacy](https://blog.csdn.net/awfiihmmmm/article/details/108852840)
+[Infineon-Infineon-XENSIVTM_KIT_CSK_BGT60TR13C-UserGuide-UserManual-v01_00-EN.pdf](Infineon-Infineon-XENSIVTM_KIT_CSK_BGT60TR13C-UserGuide-UserManual-v01_00-EN.pdf)
 
 
 # 目录结构
 
 ![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-08-18-09-36.png)
 
-``` 
-Radar Development Kit\3.3.1.202211181510\assets\software\firmware-rbb7\Firmware\sources\targets\atmel> tree .
-```
 
-``` 
+
+```bash
+Radar Development Kit\3.3.1.202211181510\assets\software\firmware-rbb7\Firmware\sources\targets\atmel> tree .
 ├─subprojects
 │  └─RadarBaseboardMCU7
 │      └─bsp
@@ -111,6 +109,8 @@ Radar Development Kit\3.3.1.202211181510\assets\software\firmware-rbb7\Firmware\
         ├─peripherals
         └─serial
 ```
+
+
 # 进入到 RadarBaseboardMCU7
 
 这里一共对应三款雷达板
@@ -288,4 +288,185 @@ LedSequence_Constructor();
     }
 ```
 
+通信协议等外设, 继续正常初始化，这样即使没有检测到设备，I2C、SPI、GPIO 等也可以使用. 是能通信接口.
 
+``` c
+// Enable communication interface
+    RequestHandler_Constructor(gpio, spi, m_data, i2c);
+    ProtocolHandler_Constructor();
+    CommandHandlerRadar_Constructor();
+```
+
+判断radar所有外设是否配置完成, 如果配置完成, 设置数据回调函数, 让回调函数来处理数据, 回调了函数`Board_dataCallback`, 其中封装了一帧的数据, 并发送给上层的操作.
+
+``` c
+ if (radar != NULL)
+    {
+        Commands_IRadar_register(radar);
+
+        // register callback function to handle arriving data
+        m_data->registerCallback(Board_dataCallback, NULL);
+    }
+```
+
+到此整块板子(`雷达`和`主控`) 的各部分件构造全部完成
+
+
+## RadarBaseboardMCU7:: main.c :: Board_run()
+
+> 该部分, 是雷达各部分初始化工作,以及使能完成后, 对各中操作的监听, 以及响应的中断处理函数. 
+
+``` c
+/* Loop forever */
+    while (1)
+    {
+        Board_run();
+    }
+```
+进入到`Board_run`函数中,  `Platform_run`函数中没有任何操作, 预留给用户进行编写运行过程中的相关状态操作(猜测).
+
+``` c
+// needs to be called for state machines, etc.
+Platform_run();
+```
+
+接下来的三个函数是针对三款不同的60G mmwave(`Avian`, `ltr11`, `atr22`)进行执行响应的操作, 但是如果没有创建对应的实力的话, 函数会直接返回, 不会执行任何操作.
+
+
+``` c
+// these run functions can just be called unconditionally, since they will immediately return by default if they are not initialized
+    DataAvian_run(); 
+    DataLtr11_run();
+    DataAtr22_run();
+```
+
+:::{.callout-tip}
+这里的案例是`avian`系列的, 所以进入到该函数中其他两个函数在该平台下, 直接返回, 无任何操作. 
+:::
+
+DataAvian_run函数中, 先判断是够构建该实力, 判断该变量是否被实例化, 如果没有实例化, 没有实例化的默认值为`NULL`, 所以该函数直接反回,  `DataLtr11_run` 和 `DataAtr22_run` 中的该部分操作也类似. 
+
+``` c
+if (!m_callback)
+    {
+        return;
+    }
+```
+
+接下来是将雷达数据区遍历, 这里最大支持一个数据. 
+
+
+``` c
+for (unsigned int index = 0; index < DATA_AVIAN_MAX_COUNT; index++)
+```
+
+检查雷达运行状态
+
+``` c
+if (!self->running)
+        {
+            continue;
+        }
+```
+
+检查数据队列中的数据, 是否有数据
+
+``` c
+ /* Check if new data packets have been fetched into the queue */
+        Queue_t *queue          = &self->queue;
+        const uint32_t written = queue->written;
+        const uint32_t read    = queue->read;
+        if (read == written)
+        {
+            // queue is empty
+            continue;
+        }
+```
+
+往上层发送数据, 上位机. 
+
+``` c
+ /* Transmit enqueued data packets to upper layers */
+        const uint32_t idx_read             = queue->idx_read;
+        const uint32_t max_packets          = queue->max_packets;
+        const uint32_t packet_size          = queue->packet_size;
+        const uint32_t payload_size         = queue->payload_size;
+        uint8_t *payload                    = &queue->buffer[idx_read * packet_size];
+        const queue_packet_header_t *header = &queue->packetHeaders[idx_read];
+        const uint64_t timestamp            = chrono_ticks_to_microseconds(header->ticks);
+
+```
+
+检查是否溢出, 数据可能来自不同的frame, 如果来自不同frame, 判断会不会导致FIFO溢出.
+
+``` c
+/* Check if FIFO overflow or underflow condition occurred */
+        bool errors = false;
+        if (self->frameSlices > 1)
+        {
+            // In case a frame is being aggregated, check all slices in the queue
+            uint32_t idx_write = queue->idx_write;
+            for (uint32_t i = idx_read; i < idx_write; i++)
+            {
+                const queue_packet_header_t *sliceHeader = &queue->packetHeaders[i];
+
+                errors = fifo_overflow(sliceHeader->gsr0);
+                if (errors)
+                {
+                    break;
+                }
+            }
+        }
+        else
+        {
+            // If no aggregation, just check the next slice in the queue
+            errors = fifo_overflow(header->gsr0);
+        }
+```
+
+如果存在错误, 将雷达停止, 回调溢出错误函数, 记录当前时间错, 和FIFO索引.然后继续往下运行
+
+``` c
+if (errors)
+        {
+            DataAvian_stop(self->index);
+            errorCallback(ERR_FIFO_OVERFLOW, self->index, timestamp);
+            continue;
+        }
+```
+
+检查队列中是否有完整的数据帧, 如果没有回调函数还不能被调用.
+
+``` c
+const uint32_t slicesAvailable = written - read;
+        if (slicesAvailable < self->frameSlices)
+        {
+            // complete frame is not yet available
+            这里的如果错误的逻辑还没有写, 就是错误与否都往上发送
+            continue;
+        }
+```
+
+将队列中的数据进行发送
+
+``` c
+m_callback(m_arg, payload, payload_size * self->frameSlices, self->index, timestamp);
+```
+
+更新读取的索引, 和已读数量, 并且释放上一帧已经发送的数据
+
+``` c
+queue->idx_read = (idx_read + self->frameSlices) % max_packets;
+        queue->read     = read + self->frameSlices;
+
+```
+
+如果数据队列已满, 数据获取请求可能会被挂起, 没有被挂起则每次回调后更新指针.
+
+``` c
+if (self->pending)
+        {
+            DataAvian_fetchCallback(self, false);
+            self->pending--;
+        }
+```

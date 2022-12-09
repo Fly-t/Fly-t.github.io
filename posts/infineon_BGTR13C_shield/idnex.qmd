@@ -11,7 +11,8 @@ image: https://raw.githubusercontent.com/fly-t/images/main/blog/idnex-2022-12-07
 # Description
 
 对雷达核心板进行具体描述, 主要包括
- 
+
+- 概念描述(shield, Avian,LTR11,ATR22,)
 - 功耗信息
 - 上电描述
 - 电源信号干扰
