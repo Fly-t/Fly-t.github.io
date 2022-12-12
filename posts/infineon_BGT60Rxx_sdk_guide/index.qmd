@@ -1,0 +1,104 @@
+---
+title: "Infineon BGT60Rxx SDK Guide" 
+author: "dd21"
+date: "2022-12-12" 
+categories: [infineon, radar]
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-12-14-34-42.png
+
+export_on_save:
+  pdf: true
+---
+
+
+# Abstract
+
+infineon 60 Ghz Radar SDK Guide, 现在手中只有infineonMCU760Ghz雷达Demo板, 所以, 按照现有方案进行开发.
+
+`MCU7` + `sensor-xensiv-bgt60trxx `
+
+主控MCU: atmel `ATSAMS70Q21`
+
+`Atmel` 被`MicroChip` 在MicroChip 中现在是`asm`系列, 两条产品线互为补充
+
+ > 主要分为两部分
+> - 设置microChip工程创建
+> - infineon雷达配置
+
+
+
+# Referance
+
+[infineon 60Ghz Radar sdk : https://github.com/Infineon/sensor-xensiv-bgt60trxx](https://github.com/Infineon/sensor-xensiv-bgt60trxx)
+
+[MicroChip Studio EXE: https://atmega32-avr.com/free-download-atmel-studio-7-latest-version-for-windows-macos/](https://atmega32-avr.com/free-download-atmel-studio-7-latest-version-for-windows-macos/)
+
+[microChip use Guide: https://onlinedocs.microchip.com/pr/GUID-4E095027-601A-4343-844F-2034603B4C9C-en-US-4/index.html?GUID-C3B1E8DA-FFC9-4DBB-9AB6-0C9C5214BB4A](https://onlinedocs.microchip.com/pr/GUID-4E095027-601A-4343-844F-2034603B4C9C-en-US-4/index.html?GUID-C3B1E8DA-FFC9-4DBB-9AB6-0C9C5214BB4A)
+
+[MPLAB download : https://www.microchip.com/en-us/tools-resources/develop/mplab-x-ide#tabs](https://www.microchip.com/en-us/tools-resources/develop/mplab-x-ide#tabs)
+
+
+[install MC ide demo: https://blog.csdn.net/ba_wang_mao/article/details/123633594](https://blog.csdn.net/ba_wang_mao/article/details/123633594)
+
+
+
+# 安装Microchip Studio
+
+
+
+## 普通的工程创建( 不推荐 )
+
+项目创建的很简单, 适合小型项目
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-12-16-39-16.png)
+
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-12-16-39-38.png)
+
+
+## 工程创建( 推荐 )
+
+进入到[atmel工程创建地址](https://start.atmel.com/#project), 搜索对应的芯片, 选择后进入相关配置. 
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-12-17-43-31.png)
+
+
+对项目具体时钟, 引脚进行配置
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-12-17-47-22.png)
+
+## 工程配置导出
+
+将当前的芯片配置进行导出成工程文件, 根据所需项目进行导出.
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-12-17-49-06.png)
+
+点击`Download`之后会看到一个`.atzip`文件
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-12-17-50-14.png)
+
+
+## ide导入配置完成的工程文件
+
+打开ide, 拖拉放入ide界面,弹出配置, 点击`ok`即可
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-12-17-58-47.png)
+
+
+### Build 
+
+编译项目 
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-12-18-00-21.png)
+
+
+编译完成, 到此项目创建完成, 下面进行雷达的相关配置. 
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-12-18-01-35.png)
+
+
+# infineon雷达配置
+
+
+
+
+
