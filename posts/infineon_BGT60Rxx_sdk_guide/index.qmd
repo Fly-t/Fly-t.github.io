@@ -2,11 +2,8 @@
 title: "Infineon BGT60Rxx SDK Guide" 
 author: "dd21"
 date: "2022-12-12" 
-categories: [infineon, radar]
+categories: [infineon, radar, microChip]
 image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-12-14-34-42.png
-
-export_on_save:
-  pdf: true
 ---
 
 
