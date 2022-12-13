@@ -2,7 +2,7 @@
 title: "Infineon BGT60Rxx SDK Guide" 
 author: "dd21"
 date: "2022-12-12" 
-categories: [infineon, radar, microChip]
+categories: [infineon, radar, env, microChip]
 image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-12-14-34-42.png
 ---
 
@@ -95,7 +95,7 @@ infineon 60 Ghz Radar SDK Guide, 现在手中只有infineonMCU760Ghz雷达Demo�
 
 # infineon雷达配置
 
-
+该部分在下个文档中
 
 
 

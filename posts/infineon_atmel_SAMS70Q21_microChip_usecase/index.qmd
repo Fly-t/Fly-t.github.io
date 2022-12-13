@@ -1,0 +1,102 @@
+---
+title: "infineon radar usecase with ATASMS70Q21" 
+author: "dd21"
+date: "2022-12-13" 
+categories: [infineon, atmel, microChip]
+image: image
+---
+
+
+# Abstract
+
+上个文档描述的是整个项目的创建原因, `工程创建`, `ide简单使用`, 和`生成的工程导入`, 
+
+这个文档是进行具体的项目的配置, 根据原理图进行引脚信息
+
+> 我们需要配置的项:
+> - uart
+> - spi
+> - ldo
+
+
+# Referance
+
+[rbb7原理图文件: RBB_MCU7_V2.2-schematics.pdf](RBB_MCU7_V2.2-schematics.pdf)
+
+
+
+# UART配置
+
+这里的uart预留的是`PD24`和`PD25`, 我们芯片的该引脚也配置为如图的`Rx`和`Tx`.
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-13-14-51-25.png)
+
+进入到可视化配置界面, 搜索选择`usart`, add
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-13-14-55-00.png)
+
+进行调整引脚, , 选择`uart2`配置到`PD25` 和 `PD26`
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-13-15-14-55.png)
+
+需要调整的位置
+
+>  USART_Sync 
+>  - 阻塞型
+
+>  USART_Async
+> - 中断型
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-13-15-17-57.png)
+
+## 配置SPI
+
+> **SPI的几种模式**
+> 1.  SPI_Slave_Sync: 
+> -  `同步模式`下的串行外设接口 （SPI）`从机通信`
+> 2.  SPI_Master_Sync
+> - `同步模式`下的串行外设接口 （SPI） `主机通信`
+> 3.   SPI_Master_Async
+> - `中断的异步模式`下串行外设接口（SPI）`主机通信`
+> 4.  SPI_Slave_Async
+> -  `中断的异步模式`下的串行外设接口（SPI）`从机通信`
+> 5.  SPI_Master_DMA
+> - `DMA 模式下`的串行外设接口 （SPI） `主机通信`
+> 6. SPI_Master_RTOS
+> -  `支持 RTOS模式下`串行外设接口 （SPI）  `主机通信`，
+
+
+> **Spi Key Word**
+> MISO : Master In Slave Out
+MOSI : Master Out Slave In
+CS: Chip Select 
+
+### SPI 分配
+在`rbb7`中的spi分配如下
+
+|  port    |   used  |
+| ------------- | ------------- |
+|  spi0   |   Arduino   |
+|  spi1   |   Connector1   |
+|  spi2   |   Connector2   |
+
+
+### SPI2原理图
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-13-16-41-41.png)
+
+
+
+### LDO配置
+
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-13-18-10-12.png)
+
+根据原理图进行LDO引脚设置, LDO的设置, 直接配置成默认拉高使能.
+
+
+
+
+
+
+
