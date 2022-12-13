@@ -2,6 +2,7 @@
   {
     "listing": "/article.html",
     "items": [
+      "/posts/infineon_atmel_SAMS70Q21_microChip_usecase/index.html",
       "/posts/infineon_BGT60Rxx_sdk_guide/index.html",
       "/posts/gcc_not_0x8048000_is_0x1060/index.html",
       "/posts/elf文件解析/index.html",
