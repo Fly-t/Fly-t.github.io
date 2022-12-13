@@ -214,7 +214,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="abstract" class="level1">
 <h1>Abstract</h1>
-<p>infineon 下位机代码处理流程概览, 以MCU7为案例</p>
+<p>infineon 下位机代码处理流程概览, 以 MCU7 为案例</p>
 </section>
 <section id="referance" class="level1">
 <h1>Referance</h1>
@@ -310,9 +310,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="进入到-radarbaseboardmcu7" class="level1">
 <h1>进入到 RadarBaseboardMCU7</h1>
-<p>这里一共对应三款雷达板 1. atr22 2. avian 3. ltr11</p>
+<p>这里一共对应三款雷达板</p>
+<ol type="1">
+<li>atr22</li>
+<li>avian</li>
+<li>ltr11</li>
+</ol>
 <div class="sourceCode" id="cb2"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>RadarBaseboardMCU7</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>└─bsp </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>└─bsp</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    ├─atr22</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    ├─avian</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    └─ltr11</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -321,7 +326,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <blockquote class="blockquote">
 <p>标题格式 <code>dir</code>::<code>file.c</code>or(<code>file.h</code>) :: function :: interfunction….</p>
 </blockquote>
-<p>进入到main函数中, main函数中结构很简单</p>
+<p>进入到 main 函数中, main 函数中结构很简单</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Board构造函数, 只调用这里只调用一次</span></span>
@@ -336,7 +341,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="radarbaseboardmcu7-main.c-board_constructor" class="level2">
 <h2 class="anchored" data-anchor-id="radarbaseboardmcu7-main.c-board_constructor">RadarBaseboardMCU7:: main.c :: Board_Constructor</h2>
-<p>该函数是board构造(init), 在该函数的<code>Platform_Constructor()</code>初始化平台, 创建低级接口</p>
+<p>该函数是 board 构造(init), 在该函数的<code>Platform_Constructor()</code>初始化平台, 创建低级接口</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> Platform_Constructor<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    System_init<span class="op">();</span></span>
@@ -371,14 +376,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">"../../../version.h"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>后边是对<code>gpio</code>, <code>spi</code>,<code>i2c</code> 的构造, 这里的代码写的很巧妙, 分别在上层创建对应各个外设的类(结构体), 但是实际上该类掉用的是<code>bsp</code>的接口, 这么做将bsp和上层接口进行分离, 使得bsp做出修改后, 只要接口不做调整, 上层应用也无需做出调整. <code>IGpio</code>前面的 <code>I</code>应该是<code>Interface</code>的意思.</p>
+<p>后边是对<code>gpio</code>, <code>spi</code>,<code>i2c</code> 的构造, 这里的代码写的很巧妙, 分别在上层创建对应各个外设的类(结构体), 但是实际上该类掉用的是<code>bsp</code>的接口, 这么做将 bsp 和上层接口进行分离, 使得 bsp 做出修改后, 只要接口不做调整, 上层应用也无需做出调整. <code>IGpio</code>前面的 <code>I</code>应该是<code>Interface</code>的意思.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>    IGpio <span class="op">*</span>gpio <span class="op">=</span> <span class="op">&amp;</span>PlatformGpio<span class="op">;</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    ISpi <span class="op">*</span>spi   <span class="op">=</span> <span class="op">&amp;</span>PlatformSpi<span class="op">;</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    II2c <span class="op">*</span>i2c   <span class="op">=</span> <span class="op">&amp;</span>PlatformI2c<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>紧接着是对雷达接口的创建, 和上面的操作类似.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a> IRadar <span class="op">*</span>radar <span class="op">=</span> NULL<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>下面是对, 板子的类型做出检测：HatvanPlus 或 HatvanLegacy</p>
-<p>是对板子的一个类型的判断, 判断有几个connecter, MCU7上, 有两个链接器, 但是只能初始化一个.</p>
+<p>是对板子的一个类型的判断, 判断有几个 connecter, MCU7 上, 有两个链接器, 但是只能初始化一个.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* 检测板类型：HatvanPlus 或 HatvanLegacy。</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">     *</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">     * 用于检测的引脚：</span></span>
@@ -398,7 +403,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
 <span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co">// HatvanPlus</span></span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>  <span class="op">{</span> </span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>  <span class="op">{</span></span>
 <span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>Board_isHatvanPlusV9Connected<span class="op">())</span></span>
 <span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
 <span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">do</span> something<span class="op">.....</span></span>
@@ -411,15 +416,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>因为上面对板子类型进行判断, 所以才得到 <code>spi</code>的一个具体配置信息, 才能后进行初始化工作, 代码如下.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>PlatformSpi_initialize<span class="op">(</span>BoardSpiDefinition<span class="op">,</span> m_shieldConnectorCount<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>对<code>spi</code>配置完成后对led进行配置, 配置led的一个状态表, 以及当前状态的设置.</p>
+<p>对<code>spi</code>配置完成后对 led 进行配置, 配置 led 的一个状态表, 以及当前状态的设置.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>LedSequence_Constructor<span class="op">();</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    LedSequence_setStatus<span class="op">(</span>LED_STATUS_OPERATING<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>检查核心板(radar部分(shield))连接器是否存在配置错误 只有当扩展板具有 I2C 上拉时，才能检测到镜像连接 , OC 引脚上的其他意外电平被解释为错误的配置</p>
+<p>检查核心板(radar 部分(shield))连接器是否存在配置错误 只有当扩展板具有 I2C 上拉时，才能检测到镜像连接 , OC 引脚上的其他意外电平被解释为错误的配置</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a> <span class="cf">if</span> <span class="op">(</span>Board_detectShields<span class="op">()</span> <span class="op">==</span> E_SUCCESS<span class="op">)</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">/*</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">                使用 SPI 和 I2C 检查已知设备是否存在, </span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">                </span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">                使用 SPI 和 I2C 检查已知设备是否存在,</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">                尝试读取芯片 ID 并按以下顺序实例化相应的驱动程序</span></span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">                （每个实例化只有一个设备）</span></span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
@@ -435,7 +440,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    RequestHandler_Constructor<span class="op">(</span>gpio<span class="op">,</span> spi<span class="op">,</span> m_data<span class="op">,</span> i2c<span class="op">);</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    ProtocolHandler_Constructor<span class="op">();</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    CommandHandlerRadar_Constructor<span class="op">();</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>判断radar所有外设是否配置完成, 如果配置完成, 设置数据回调函数, 让回调函数来处理数据, 回调了函数<code>Board_dataCallback</code>, 其中封装了一帧的数据, 并发送给上层的操作.</p>
+<p>判断 radar 所有外设是否配置完成, 如果配置完成, 设置数据回调函数, 让回调函数来处理数据, 回调了函数<code>Board_dataCallback</code>, 其中封装了一帧的数据, 并发送给上层的操作.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a> <span class="cf">if</span> <span class="op">(</span>radar <span class="op">!=</span> NULL<span class="op">)</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>        Commands_IRadar_register<span class="op">(</span>radar<span class="op">);</span></span>
@@ -458,9 +463,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>进入到<code>Board_run</code>函数中, <code>Platform_run</code>函数中没有任何操作, 预留给用户进行编写运行过程中的相关状态操作(猜测).</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">// needs to be called for state machines, etc.</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>Platform_run<span class="op">();</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>接下来的三个函数是针对三款不同的60G mmwave(<code>Avian</code>, <code>ltr11</code>, <code>atr22</code>)进行执行响应的操作, 但是如果没有创建对应的实力的话, 函数会直接返回, 不会执行任何操作.</p>
+<p>接下来的三个函数是针对三款不同的 60G mmwave(<code>Avian</code>, <code>ltr11</code>, <code>atr22</code>)进行执行响应的操作, 但是如果没有创建对应的实力的话, 函数会直接返回, 不会执行任何操作.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">// these run functions can just be called unconditionally, since they will immediately return by default if they are not initialized</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    DataAvian_run<span class="op">();</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    DataAvian_run<span class="op">();</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    DataLtr11_run<span class="op">();</span></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    DataAtr22_run<span class="op">();</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout-tip callout callout-style-simple">
@@ -473,7 +478,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p>DataAvian_run函数中, 先判断是够构建该实力, 判断该变量是否被实例化, 如果没有实例化, 没有实例化的默认值为<code>NULL</code>, 所以该函数直接反回, <code>DataLtr11_run</code> 和 <code>DataAtr22_run</code> 中的该部分操作也类似.</p>
+<p>DataAvian_run 函数中, 先判断是够构建该实力, 判断该变量是否被实例化, 如果没有实例化, 没有实例化的默认值为<code>NULL</code>, 所以该函数直接反回, <code>DataLtr11_run</code> 和 <code>DataAtr22_run</code> 中的该部分操作也类似.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(!</span>m_callback<span class="op">)</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span><span class="op">;</span></span>
@@ -504,7 +509,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>        <span class="dt">uint8_t</span> <span class="op">*</span>payload                    <span class="op">=</span> <span class="op">&amp;</span>queue<span class="op">-&gt;</span>buffer<span class="op">[</span>idx_read <span class="op">*</span> packet_size<span class="op">];</span></span>
 <span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">const</span> queue_packet_header_t <span class="op">*</span>header <span class="op">=</span> <span class="op">&amp;</span>queue<span class="op">-&gt;</span>packetHeaders<span class="op">[</span>idx_read<span class="op">];</span></span>
 <span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">const</span> <span class="dt">uint64_t</span> timestamp            <span class="op">=</span> chrono_ticks_to_microseconds<span class="op">(</span>header<span class="op">-&gt;</span>ticks<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>检查是否溢出, 数据可能来自不同的frame, 如果来自不同frame, 判断会不会导致FIFO溢出.</p>
+<p>检查是否溢出, 数据可能来自不同的 frame, 如果来自不同 frame, 判断会不会导致 FIFO 溢出.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Check if FIFO overflow or underflow condition occurred */</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>        <span class="dt">bool</span> errors <span class="op">=</span> false<span class="op">;</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>self<span class="op">-&gt;</span>frameSlices <span class="op">&gt;</span> <span class="dv">1</span><span class="op">)</span></span>
@@ -527,7 +532,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>            <span class="co">// If no aggregation, just check the next slice in the queue</span></span>
 <span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>            errors <span class="op">=</span> fifo_overflow<span class="op">(</span>header<span class="op">-&gt;</span>gsr0<span class="op">);</span></span>
 <span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>如果存在错误, 将雷达停止, 回调溢出错误函数, 记录当前时间错, 和FIFO索引.然后继续往下运行</p>
+<p>如果存在错误, 将雷达停止, 回调溢出错误函数, 记录当前时间错, 和 FIFO 索引.然后继续往下运行</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>errors<span class="op">)</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>            DataAvian_stop<span class="op">(</span>self<span class="op">-&gt;</span>index<span class="op">);</span></span>
