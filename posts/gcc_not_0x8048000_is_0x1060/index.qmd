@@ -17,7 +17,8 @@ gcc 直接链接，输出的位置是0x1060不是0x08048000
 # Referance
 
 gcc 手册：`man gcc`
-StackOverflow： [[text](https://stackoverflow.com/questions/66361767/why-does-not-entry-point-address-start-at-0x400000)]([https://](https://stackoverflow.com/questions/66361767/why-does-not-entry-point-address-start-at-0x400000))
+
+StackOverflow： [https://stackoverflow.com/questions/66361767/why-does-not-entry-point-address-start-at-0x400000](https://stackoverflow.com/questions/66361767/why-does-not-entry-point-address-start-at-0x400000)
 
 
 # 解决方案
