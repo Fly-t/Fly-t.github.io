@@ -1,0 +1,28 @@
+---
+title: "gcc entry point is 0x1600 not 0x08048000" 
+author: "dd21"
+date: "2022-12-11" 
+categories: [cs, gcc]
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-11-13-47-01.png
+---
+
+
+# Abstract
+
+gcc 直接链接，输出的位置是0x1060不是0x08048000
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-11-13-52-31.png)
+
+
+# Referance
+
+gcc 手册：`man gcc`
+StackOverflow： [[text](https://stackoverflow.com/questions/66361767/why-does-not-entry-point-address-start-at-0x400000)]([https://](https://stackoverflow.com/questions/66361767/why-does-not-entry-point-address-start-at-0x400000))
+
+
+# 解决方案
+
+该问题是 gcc默认的动态链接地址，使用`gcc -no-pie` 即可解决问题, 默认是64位, 可以直接通过`-32`指定32位
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-11-13-50-22.png)
+
