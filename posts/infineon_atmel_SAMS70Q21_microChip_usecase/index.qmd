@@ -1,33 +1,35 @@
 ---
-title: "infineon radar usecase with ATASMS70Q21" 
+title: "infineon radar usecase with ATASMS70Q21"
 author: "dd21"
-date: "2022-12-13" 
+date: "2022-12-13"
 categories: [infineon, atmel, microChip]
 image: image
 ---
 
-
 # Abstract
 
-上个文档描述的是整个项目的创建原因, `工程创建`, `ide简单使用`, 和`生成的工程导入`, 
+上个文档描述的是整个项目的创建原因, `工程创建`, `ide简单使用`, 和`生成的工程导入`,
 
 这个文档是进行具体的项目的配置, 根据原理图进行引脚信息
 
 > 我们需要配置的项:
+>
 > - uart
 > - spi
 > - ldo
 
-
 # Referance
 
-[rbb7原理图文件: RBB_MCU7_V2.2-schematics.pdf](RBB_MCU7_V2.2-schematics.pdf)
+[rbb7 原理图文件: RBB_MCU7_V2.2-schematics.pdf](RBB_MCU7_V2.2-schematics.pdf)
 
+[安森美 LDO dataSheet](NCP161_D-1551485.pdf)
+[TI Level Shifter dataSheet: ](sn74avc4t245.pdf)
 
+##
 
-# UART配置
+# UART 配置
 
-这里的uart预留的是`PD24`和`PD25`, 我们芯片的该引脚也配置为如图的`Rx`和`Tx`.
+这里的 uart 预留的是`PD24`和`PD25`, 我们芯片的该引脚也配置为如图的`Rx`和`Tx`.
 
 ![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-13-14-51-25.png)
 
@@ -41,62 +43,122 @@ image: image
 
 需要调整的位置
 
->  USART_Sync 
->  - 阻塞型
+> USART_Sync
+>
+> - 阻塞型
 
->  USART_Async
+> USART_Async
+>
 > - 中断型
 
 ![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-13-15-17-57.png)
 
-## 配置SPI
+:::{.callout-important}
+从此往下的内容, 是没有调试工具的时候的代码猜测, 不需要关注
+:::
 
-> **SPI的几种模式**
-> 1.  SPI_Slave_Sync: 
-> -  `同步模式`下的串行外设接口 （SPI）`从机通信`
-> 2.  SPI_Master_Sync
-> - `同步模式`下的串行外设接口 （SPI） `主机通信`
-> 3.   SPI_Master_Async
-> - `中断的异步模式`下串行外设接口（SPI）`主机通信`
-> 4.  SPI_Slave_Async
-> -  `中断的异步模式`下的串行外设接口（SPI）`从机通信`
-> 5.  SPI_Master_DMA
-> - `DMA 模式下`的串行外设接口 （SPI） `主机通信`
-> 6. SPI_Master_RTOS
-> -  `支持 RTOS模式下`串行外设接口 （SPI）  `主机通信`，
+---
 
+## shield 型号判断
+
+如果无法判断型号是 `HatvanLegacy` 和 `HatvanPlus` 时可以使能`ldo_en` 引脚
+
+| version      | LDO_en |
+| ------------ | ------ |
+| HatvanLegacy | C31    |
+| HatvanPlus   | C30    |
+
+> `connector.h`
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-15-11-20-30.png)
+
+然后到`connecter` 测量电压, 电平转换默认是正确配置, 查看是否能够检测到 LDO 电源(`最好使能前后对比测量`).
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-15-11-28-46.png)
+
+## 配置 SPI
 
 > **Spi Key Word**
 > MISO : Master In Slave Out
-MOSI : Master Out Slave In
-CS: Chip Select 
+> MOSI : Master Out Slave In
+> CS: Chip Select
+
+**SPI 的几种模式**
+
+| mode             | description                                        |
+| ---------------- | -------------------------------------------------- |
+| SPI_Master_Sync  | `同步模式`下的串行外设接口 （SPI） `主机通信`      |
+| SPI_Slave_Sync   | `同步模式`下的串行外设接口 （SPI）`从机通信`       |
+| SPI_Master_Async | `中断的异步模式`下串行外设接口（SPI）`主机通信`    |
+| SPI_Slave_Async  | `中断的异步模式`下的串行外设接口（SPI）`从机通信`  |
+| SPI_Master_DMA   | `DMA 模式下`的串行外设接口 （SPI） `主机通信`      |
+| SPI_Master_RTOS  | `支持 RTOS模式下`串行外设接口 （SPI） `主机通信`， |
 
 ### SPI 分配
-在`rbb7`中的spi分配如下
 
-|  port    |   used  |
-| ------------- | ------------- |
-|  spi0   |   Arduino   |
-|  spi1   |   Connector1   |
-|  spi2   |   Connector2   |
+在`rbb7`代码中的`QSPI`是原理图上的`S1_SPI`, 代码中的`SPI1`是原理图的`S2_SPI`, 代码中的`SPI2`是原理图中的 `SPI0` 分配如下.
 
+| 代码 | 原理图 |
+| ---- | ------ |
+| Qspi | S1_SPI |
+| spi1 | S2_SPI |
+| spi2 | SPI0   |
 
-### SPI2原理图
+在项目中的配置是按照如下代码部分进行配置的, `MCU7`是`Legacy`版本, 所以对应的是两个链接器. debug 和代码中显示的都是两个, 链接器, HatvanPlus 只有一个 LDO. ( 代码中的注释没看清楚, 一直以为是 `HatvanPlus` 其实是 `Legacy` )
+
+按照如下配置进行配置雷达的驱动引脚配置, 就是没问题的. 调整 mcu 也只需调整这几个配置即可.
+
+```c
+ // detect board type
+    const bool isHatvanLegacy = Board_isHatvanLegacy();
+    if (isHatvanLegacy)
+    {
+        ShieldConnectorDefinition = &ShieldConnectorDefinitionHatvanLegacy[0];
+        BoardSpiDefinition        = &BoardSpiDefinitionHatvanLegacy[0];
+        BoardRadarPinsConfigAvian = &BoardRadarPinsConfigAvianHatvanLegacy[0];
+        m_shieldConnectorCount    = ARRAY_SIZE(ShieldConnectorDefinitionHatvanLegacy);
+    }
+```
+
+下面进行相关的配置部分.
+
+### SPI2 原理图
 
 ![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-13-16-41-41.png)
 
+### LDO 配置
 
+> Chip enable: Applying VEN < 0.4 V disables the regulator, Pulling VEN > 1.2 V enables the LDO
 
-### LDO配置
+将 LDO 打开, 将输出的电源给到`levelShifter`, 进行下一步操作.
 
+| level | enable |
+| ----- | ------ |
+| Low   | False  |
+| High  | True   |
+
+根据原理图进行 LDO 引脚设置, LDO 的设置, 直接配置成默认拉高使能.
 
 ![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-13-18-10-12.png)
 
-根据原理图进行LDO引脚设置, LDO的设置, 直接配置成默认拉高使能.
+### 电平转化配置(Level Shifter Config)
 
+电平转换, 的功能是将 mcu 的 3.3v 电平转换为 1.8v 电平和 radar 芯片的 spi 进行通信.
 
+但是对于`SN74AVC4T245RSVR`这款电源芯片需要`等待电平稳定`后再输出, 所以使能`LDO`将电源提供给`LevelShifter`之后, 等待一段时间后再使能电平转换芯片.
 
+对于该款电平转换芯片, 不仅有使能引脚 ( `控制开关`) , 默认状态下是`low ` (`打开`)
 
+| `Sx_SPI_OEn` level | enable |
+| ------------------ | ------ |
+| high               | False  |
+| low                | True   |
 
+还有方向控制引脚 ( `控制转换方向` ), 默认状态下是`High`(`MCU → sensor `)
 
+| `Sx_SPI_DIR` level | direction    |
+| ------------------ | ------------ |
+| high               | MCU → sensor |
+| low                | MCU ← sensor |
 
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-14-15-49-58.png)
