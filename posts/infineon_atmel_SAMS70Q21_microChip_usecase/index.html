@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.2.280">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,6 +22,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -155,16 +218,25 @@ ul.task-list li input[type="checkbox"] {
 <p>上个文档描述的是整个项目的创建原因, <code>工程创建</code>, <code>ide简单使用</code>, 和<code>生成的工程导入</code>,</p>
 <p>这个文档是进行具体的项目的配置, 根据原理图进行引脚信息</p>
 <blockquote class="blockquote">
-<p>我们需要配置的项: - uart - spi - ldo</p>
+<p>我们需要配置的项:</p>
+<ul>
+<li>uart</li>
+<li>spi</li>
+<li>ldo</li>
+</ul>
 </blockquote>
 </section>
 <section id="referance" class="level1">
 <h1>Referance</h1>
-<p><a href="RBB_MCU7_V2.2-schematics.pdf">rbb7原理图文件: RBB_MCU7_V2.2-schematics.pdf</a></p>
+<p><a href="RBB_MCU7_V2.2-schematics.pdf">rbb7 原理图文件: RBB_MCU7_V2.2-schematics.pdf</a></p>
+<p><a href="NCP161_D-1551485.pdf">安森美 LDO dataSheet</a> <a href="sn74avc4t245.pdf">TI Level Shifter dataSheet:</a></p>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"></h2>
 </section>
-<section id="uart配置" class="level1">
-<h1>UART配置</h1>
-<p>这里的uart预留的是<code>PD24</code>和<code>PD25</code>, 我们芯片的该引脚也配置为如图的<code>Rx</code>和<code>Tx</code>.</p>
+</section>
+<section id="uart-配置" class="level1">
+<h1>UART 配置</h1>
+<p>这里的 uart 预留的是<code>PD24</code>和<code>PD25</code>, 我们芯片的该引脚也配置为如图的<code>Rx</code>和<code>Tx</code>.</p>
 <p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-13-14-51-25.png" class="img-fluid"></p>
 <p>进入到可视化配置界面, 搜索选择<code>usart</code>, add</p>
 <p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-13-14-55-00.png" class="img-fluid"></p>
@@ -172,54 +244,213 @@ ul.task-list li input[type="checkbox"] {
 <p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-13-15-14-55.png" class="img-fluid"></p>
 <p>需要调整的位置</p>
 <blockquote class="blockquote">
-<p>USART_Sync - 阻塞型</p>
+<p>USART_Sync</p>
+<ul>
+<li>阻塞型</li>
+</ul>
 </blockquote>
 <blockquote class="blockquote">
-<p>USART_Async - 中断型</p>
+<p>USART_Async</p>
+<ul>
+<li>中断型</li>
+</ul>
 </blockquote>
 <p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-13-15-17-57.png" class="img-fluid"></p>
-<section id="配置spi" class="level2">
-<h2 class="anchored" data-anchor-id="配置spi">配置SPI</h2>
-<blockquote class="blockquote">
-<p><strong>SPI的几种模式</strong> 1. SPI_Slave_Sync: - <code>同步模式</code>下的串行外设接口 （SPI）<code>从机通信</code> 2. SPI_Master_Sync - <code>同步模式</code>下的串行外设接口 （SPI） <code>主机通信</code> 3. SPI_Master_Async - <code>中断的异步模式</code>下串行外设接口（SPI）<code>主机通信</code> 4. SPI_Slave_Async - <code>中断的异步模式</code>下的串行外设接口（SPI）<code>从机通信</code> 5. SPI_Master_DMA - <code>DMA 模式下</code>的串行外设接口 （SPI） <code>主机通信</code> 6. SPI_Master_RTOS - <code>支持 RTOS模式下</code>串行外设接口 （SPI） <code>主机通信</code>，</p>
-</blockquote>
-<blockquote class="blockquote">
-<p><strong>Spi Key Word</strong> MISO : Master In Slave Out MOSI : Master Out Slave In CS: Chip Select</p>
-</blockquote>
-<section id="spi-分配" class="level3">
-<h3 class="anchored" data-anchor-id="spi-分配">SPI 分配</h3>
-<p>在<code>rbb7</code>中的spi分配如下</p>
+<div class="callout-important callout callout-style-simple">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>从此往下的内容, 是没有调试工具的时候的代码猜测, 不需要关注</p>
+</div>
+</div>
+</div>
+<hr>
+<section id="shield-型号判断" class="level2">
+<h2 class="anchored" data-anchor-id="shield-型号判断">shield 型号判断</h2>
+<p>如果无法判断型号是 <code>HatvanLegacy</code> 和 <code>HatvanPlus</code> 时可以使能<code>ldo_en</code> 引脚</p>
 <table class="table">
 <thead>
 <tr class="header">
-<th>port</th>
-<th>used</th>
+<th>version</th>
+<th>LDO_en</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>spi0</td>
-<td>Arduino</td>
+<td>HatvanLegacy</td>
+<td>C31</td>
 </tr>
 <tr class="even">
-<td>spi1</td>
-<td>Connector1</td>
-</tr>
-<tr class="odd">
-<td>spi2</td>
-<td>Connector2</td>
+<td>HatvanPlus</td>
+<td>C30</td>
 </tr>
 </tbody>
 </table>
+<blockquote class="blockquote">
+<p><code>connector.h</code></p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-15-11-20-30.png" class="img-fluid"></p>
+<p>然后到<code>connecter</code> 测量电压, 电平转换默认是正确配置, 查看是否能够检测到 LDO 电源(<code>最好使能前后对比测量</code>).</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-15-11-28-46.png" class="img-fluid"></p>
 </section>
-<section id="spi2原理图" class="level3">
-<h3 class="anchored" data-anchor-id="spi2原理图">SPI2原理图</h3>
+<section id="配置-spi" class="level2">
+<h2 class="anchored" data-anchor-id="配置-spi">配置 SPI</h2>
+<blockquote class="blockquote">
+<p><strong>Spi Key Word</strong> MISO : Master In Slave Out MOSI : Master Out Slave In CS: Chip Select</p>
+</blockquote>
+<p><strong>SPI 的几种模式</strong></p>
+<table class="table">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 75%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>mode</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SPI_Master_Sync</td>
+<td><code>同步模式</code>下的串行外设接口 （SPI） <code>主机通信</code></td>
+</tr>
+<tr class="even">
+<td>SPI_Slave_Sync</td>
+<td><code>同步模式</code>下的串行外设接口 （SPI）<code>从机通信</code></td>
+</tr>
+<tr class="odd">
+<td>SPI_Master_Async</td>
+<td><code>中断的异步模式</code>下串行外设接口（SPI）<code>主机通信</code></td>
+</tr>
+<tr class="even">
+<td>SPI_Slave_Async</td>
+<td><code>中断的异步模式</code>下的串行外设接口（SPI）<code>从机通信</code></td>
+</tr>
+<tr class="odd">
+<td>SPI_Master_DMA</td>
+<td><code>DMA 模式下</code>的串行外设接口 （SPI） <code>主机通信</code></td>
+</tr>
+<tr class="even">
+<td>SPI_Master_RTOS</td>
+<td><code>支持 RTOS模式下</code>串行外设接口 （SPI） <code>主机通信</code>，</td>
+</tr>
+</tbody>
+</table>
+<section id="spi-分配" class="level3">
+<h3 class="anchored" data-anchor-id="spi-分配">SPI 分配</h3>
+<p>在<code>rbb7</code>代码中的<code>QSPI</code>是原理图上的<code>S1_SPI</code>, 代码中的<code>SPI1</code>是原理图的<code>S2_SPI</code>, 代码中的<code>SPI2</code>是原理图中的 <code>SPI0</code> 分配如下.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>代码</th>
+<th>原理图</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Qspi</td>
+<td>S1_SPI</td>
+</tr>
+<tr class="even">
+<td>spi1</td>
+<td>S2_SPI</td>
+</tr>
+<tr class="odd">
+<td>spi2</td>
+<td>SPI0</td>
+</tr>
+</tbody>
+</table>
+<p>在项目中的配置是按照如下代码部分进行配置的, <code>MCU7</code>是<code>Legacy</code>版本, 所以对应的是两个链接器. debug 和代码中显示的都是两个, 链接器, HatvanPlus 只有一个 LDO. ( 代码中的注释没看清楚, 一直以为是 <code>HatvanPlus</code> 其实是 <code>Legacy</code> )</p>
+<p>按照如下配置进行配置雷达的驱动引脚配置, 就是没问题的. 调整 mcu 也只需调整这几个配置即可.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a> <span class="co">// detect board type</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">const</span> <span class="dt">bool</span> isHatvanLegacy <span class="op">=</span> Board_isHatvanLegacy<span class="op">();</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>isHatvanLegacy<span class="op">)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        ShieldConnectorDefinition <span class="op">=</span> <span class="op">&amp;</span>ShieldConnectorDefinitionHatvanLegacy<span class="op">[</span><span class="dv">0</span><span class="op">];</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        BoardSpiDefinition        <span class="op">=</span> <span class="op">&amp;</span>BoardSpiDefinitionHatvanLegacy<span class="op">[</span><span class="dv">0</span><span class="op">];</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        BoardRadarPinsConfigAvian <span class="op">=</span> <span class="op">&amp;</span>BoardRadarPinsConfigAvianHatvanLegacy<span class="op">[</span><span class="dv">0</span><span class="op">];</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        m_shieldConnectorCount    <span class="op">=</span> ARRAY_SIZE<span class="op">(</span>ShieldConnectorDefinitionHatvanLegacy<span class="op">);</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>下面进行相关的配置部分.</p>
+</section>
+<section id="spi2-原理图" class="level3">
+<h3 class="anchored" data-anchor-id="spi2-原理图">SPI2 原理图</h3>
 <p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-13-16-41-41.png" class="img-fluid"></p>
 </section>
-<section id="ldo配置" class="level3">
-<h3 class="anchored" data-anchor-id="ldo配置">LDO配置</h3>
+<section id="ldo-配置" class="level3">
+<h3 class="anchored" data-anchor-id="ldo-配置">LDO 配置</h3>
+<blockquote class="blockquote">
+<p>Chip enable: Applying VEN &lt; 0.4 V disables the regulator, Pulling VEN &gt; 1.2 V enables the LDO</p>
+</blockquote>
+<p>将 LDO 打开, 将输出的电源给到<code>levelShifter</code>, 进行下一步操作.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>level</th>
+<th>enable</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Low</td>
+<td>False</td>
+</tr>
+<tr class="even">
+<td>High</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+<p>根据原理图进行 LDO 引脚设置, LDO 的设置, 直接配置成默认拉高使能.</p>
 <p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-13-18-10-12.png" class="img-fluid"></p>
-<p>根据原理图进行LDO引脚设置, LDO的设置, 直接配置成默认拉高使能.</p>
+</section>
+<section id="电平转化配置level-shifter-config" class="level3">
+<h3 class="anchored" data-anchor-id="电平转化配置level-shifter-config">电平转化配置(Level Shifter Config)</h3>
+<p>电平转换, 的功能是将 mcu 的 3.3v 电平转换为 1.8v 电平和 radar 芯片的 spi 进行通信.</p>
+<p>但是对于<code>SN74AVC4T245RSVR</code>这款电源芯片需要<code>等待电平稳定</code>后再输出, 所以使能<code>LDO</code>将电源提供给<code>LevelShifter</code>之后, 等待一段时间后再使能电平转换芯片.</p>
+<p>对于该款电平转换芯片, 不仅有使能引脚 ( <code>控制开关</code>) , 默认状态下是<code>low</code> (<code>打开</code>)</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th><code>Sx_SPI_OEn</code> level</th>
+<th>enable</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>high</td>
+<td>False</td>
+</tr>
+<tr class="even">
+<td>low</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+<p>还有方向控制引脚 ( <code>控制转换方向</code> ), 默认状态下是<code>High</code>(<code>MCU → sensor</code>)</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th><code>Sx_SPI_DIR</code> level</th>
+<th>direction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>high</td>
+<td>MCU → sensor</td>
+</tr>
+<tr class="even">
+<td>low</td>
+<td>MCU ← sensor</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-14-15-49-58.png" class="img-fluid"></p>
 
 
 </section>
