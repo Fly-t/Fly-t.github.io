@@ -53,28 +53,6 @@ image: image
 
 ![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-13-15-17-57.png)
 
-:::{.callout-important}
-从此往下的内容, 是没有调试工具的时候的代码猜测, 不需要关注
-:::
-
----
-
-## shield 型号判断
-
-如果无法判断型号是 `HatvanLegacy` 和 `HatvanPlus` 时可以使能`ldo_en` 引脚
-
-| version      | LDO_en |
-| ------------ | ------ |
-| HatvanLegacy | C31    |
-| HatvanPlus   | C30    |
-
-> `connector.h`
-
-![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-15-11-20-30.png)
-
-然后到`connecter` 测量电压, 电平转换默认是正确配置, 查看是否能够检测到 LDO 电源(`最好使能前后对比测量`).
-
-![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-15-11-28-46.png)
 
 ## 配置 SPI
 
@@ -104,7 +82,7 @@ image: image
 | spi1 | S2_SPI |
 | spi2 | SPI0   |
 
-在项目中的配置是按照如下代码部分进行配置的, `MCU7`是`Legacy`版本, 所以对应的是两个链接器. debug 和代码中显示的都是两个, 链接器, HatvanPlus 只有一个 LDO. ( 代码中的注释没看清楚, 一直以为是 `HatvanPlus` 其实是 `Legacy` )
+在项目中的配置是按照如下代码部分进行配置的, `MCU7`是`Legacy`版本, 所以对应的是两个链接器. debug 和代码中显示的都是两个, 链接器, HatvanPlus 只有一个 LDO. ( 代码中的注释有点迷惑, 一直以为是 `HatvanPlus` 其实是 `Legacy` )
 
 按照如下配置进行配置雷达的驱动引脚配置, 就是没问题的. 调整 mcu 也只需调整这几个配置即可.
 
@@ -120,9 +98,243 @@ image: image
     }
 ```
 
+Hatvan Legacy Board Connector Definition, 我们这个是对`HatvanLegacy`的连接器做配置. 
+
+
+``` c
+ShieldConnectorDefinition_t ShieldConnectorDefinitionHatvanLegacy[] = {
+    [0] = {
+        .en_ldo      = GPIO_ID('C', 30),
+        .ls_spi_oe   = GPIO_ID('D', 24),
+        .ls_gpio_oe  = GPIO_ID('D', 14),
+        .ls_gpio_dir = GPIO_ID('D', 18),
+        .oc_led      = GPIO_ID('C', 1),
+        .oc1         = GPIO_ID('D', 16),
+        .oc2         = GPIO_ID('C', 9),
+        .oc3         = GPIO_ID('C', 28),
+        .oc4         = GPIO_ID('A', 27),
+    },  
+    [1] = {
+        .en_ldo      = GPIO_ID('C', 31),
+        .ls_spi_oe   = GPIO_ID('C', 3),
+        .ls_gpio_oe  = GPIO_ID('A', 1),
+        .ls_gpio_dir = GPIO_ID('C', 10),
+        .oc_led      = GPIO_ID('C', 2),
+        .oc1         = GPIO_ID('A', 22),
+        .oc2         = GPIO_ID('D', 10),
+        .oc3         = GPIO_ID('C', 29),
+        .oc4         = GPIO_ID('D', 15),
+    },
+```
+
+spi配置
+``` c
+PlatformSpiDefinition_t BoardSpiDefinitionHatvanLegacy[] = {
+    [0] = {
+        .peripheral_id   = ID_QSPI,
+        .baudrate        = 50000000,
+        .setup_interface = setup_qspi,
+
+        .addr = {
+            .peripheral = QSPI,
+            .tdr        = (uint32_t)&QSPI->QSPI_TDR,
+            .rdr        = (uint32_t)&QSPI->QSPI_RDR,
+        },
+        .pins = {
+            .csn        = PIO_PA11_IDX,
+            .clk        = PIO_PA14_IDX,
+            .clk_flags  = IOPORT_MODE_MUX_A,
+            .miso       = PIO_PA12_IDX,
+            .miso_flags = IOPORT_MODE_MUX_A,
+            .mosi       = PIO_PA13_IDX,
+            .mosi_flags = IOPORT_MODE_MUX_A,
+        },
+        .dma = {
+            .tx_dma_channel = HV_DMA_HW_CH_TX_1,
+            .tx_dma_hw_id   = HV_DMA_HW_INTF_TX_1,
+            .rx_dma_channel = HV_DMA_HW_CH_RX_1,
+            .rx_dma_hw_id   = HV_DMA_HW_INTF_RX_1,
+        },
+    },
+    [1] = {
+        .peripheral_id   = ID_SPI1,
+        .baudrate        = 50000000,
+        .setup_interface = setup_spi,
+
+        .addr = {
+            .peripheral = SPI1,
+            .tdr        = (uint32_t)&SPI1->SPI_TDR,
+            .rdr        = (uint32_t)&SPI1->SPI_RDR,
+        },
+        .pins = {
+            .csn        = PIO_PC25_IDX,
+            .clk        = PIO_PC24_IDX,
+            .clk_flags  = IOPORT_MODE_MUX_C,
+            .miso       = PIO_PC26_IDX,
+            .miso_flags = IOPORT_MODE_MUX_C,
+            .mosi       = PIO_PC27_IDX,
+            .mosi_flags = IOPORT_MODE_MUX_C,
+        },
+        .dma = {
+            .tx_dma_channel = HV_DMA_HW_CH_TX_2,
+            .tx_dma_hw_id   = HV_DMA_HW_INTF_TX_2,
+            .rx_dma_channel = HV_DMA_HW_CH_RX_2,
+            .rx_dma_hw_id   = HV_DMA_HW_INTF_RX_2,
+        },
+    },
+};
+```
+
+
+中断和复位设置
+
+``` c
+static const IPinsAvianConfig_t BoardRadarPinsConfigAvianHatvanLegacy[] = {
+    [0] = {
+        .gpioReset = GPIO_ID('A', 0),
+        .gpioIrq   = GPIO_ID('C', 6),
+    },
+    [1] = {
+        .gpioReset = GPIO_ID('A', 17),
+        .gpioIrq   = GPIO_ID('C', 11),
+    },
+};
+```
+
+平台初始化, 这里有点迷惑, 通常初始化都是按照上面的配置进行初始化, 但是这里的init是将所有的`spi`, `ldo`  , `LevelShifter`, `connector`都初始化. 就是全都配置出来, 没有连接的那边的引脚(另外一个`connector`)其实都是打开的, 只不过没有数据通路. 
+
+
+``` c
+PlatformSpi_initialize(BoardSpiDefinition, m_shieldConnectorCount);
+
+--> inter  PlatformSpi_initialize :
+ for (unsigned int i = 0; i < m_count; i++)
+    {
+        PlatformSpiDefinition_t *device = &m_definition[i];
+
+
+
+    return E_SUCCESS;
+```
+
+接下来就是对`LED`的常规设置
+
+``` c
+// initialize LedSequence to be used for potential error signaling during detection
+    LedSequence_Constructor();
+    LedSequence_setStatus(LED_STATUS_OPERATING);
+```
+
+再往后就是shield的错误检测, 如果shield没有错误就把LDO打开, 电平转换打开(使能connector)
+
+``` c
+static sr_t Board_detectShields(void)
+{
+    /* Checks both connectors for unsupported or wrongly connected shields.
+     * In case no errors are detected, both connectors will be enabled,
+     * in order to allow radar device detection.
+     */
+    for (uint8_t shieldId = 0; shieldId < m_shieldConnectorCount; shieldId++)
+    {
+        // detect the presence of a shield by probing the I2C lines
+        const sr_t detection = ShieldConnector_detect(&ShieldConnectorDefinition[shieldId], shieldId);
+        switch (detection)
+        {
+            case E_NOT_AVAILABLE:  // allow shields without I2C bus
+                /*  no break */
+            case E_SUCCESS:
+                break;
+            case E_NOT_POSSIBLE:
+                LedSequence_setRbbStatus(RBB_ERROR_HARDWARE_CONNECTED_WRONG);
+                return E_NOT_POSSIBLE;
+                break;
+            case E_NOT_SUPPORTED:
+                LedSequence_setRbbStatus(RBB_ERROR_HARDWARE_NOT_SUPPORTED);
+                return E_NOT_SUPPORTED;
+                break;
+            default:
+                LedSequence_setRbbStatus(RBB_ERROR_HARDWARE_INTERNAL_ERROR);
+                return detection;
+                break;
+        }
+
+        // power-up shield and configure its level shifters
+        ShieldConnector_enable(&ShieldConnectorDefinition[shieldId], shieldId, true);
+    }
+
+    return E_SUCCESS;
+}
+```
+
+`shield`没有问题利用所有配置创建雷达对象, 
+
+``` c
+ radar = Board_detectRadar(gpio, spi, i2c, &m_data);
+```
+下面是具体雷达对象创建
+
+``` c
+static IRadar *Board_detectRadar(IGpio *gpio, ISpi *spi, II2c *i2c, IData **data)
+{
+   // 遍历所有shield
+    for (uint8_t shieldId = 0; shieldId < m_shieldConnectorCount; shieldId++)
+    {
+        // 如果要是第二个shield, 就交换配置, 将配置交换到第一个配置位置
+        if (m_shieldConnectorCount == 2)
+        {
+            if (shieldId == 1)
+            {
+                PlatformInterfaces_swapI2cIds();
+                Board_swapSpiIds();
+            }
+        }
+
+        const sr_t avianDetection = Avian_Detect(spi, gpio, &BoardRadarConfigAvian[shieldId], &BoardRadarPinsConfigAvian[shieldId]);
+        if (avianDetection == E_SUCCESS)
+        {
+            Avian_Constructor(&m_avian, &DataAvian, gpio, spi, &BoardRadarConfigAvian[shieldId], &BoardRadarPinsConfigAvian[shieldId]);
+            DataAvian_Constructor(Board_acquisitionStatusCallback);
+            DataAvian_setBuffer(BoardRadarConfigAvian[shieldId].dataIndex, m_dataBuffer, DATA_BUFFER_SIZE);
+            DataAvian_registerInterrupt(BoardRadarConfigAvian[shieldId].dataIndex, &BoardIrqPinsConfigAvian[shieldId]);
+            *data = &DataAvian;
+
+            // 如果这里第一次配置成功就直接跳出该函数了, 就不会执行shield2 的配置.
+            return (IRadar *)&m_avian;
+        }
+```
+
+到此所有的脚位配置信息完成
+
+
+----------
+
+# 接下来进行定制配置项目的构建.
+
+> - 构建的部分包括`uart`, `LDO`, `SPI`, `IRQ`,`Rst`
+> - 使用`S2_SPI` 所以需要配置`LDO2`
+
+所需要的引脚配置如下
+
+|  option    |   PIn  |
+| ------------- | ------------- |
+| UART_RX   |   PD25   |
+| UART_TX   |   PD26  |
+|  LDO_2   |   PC31   |
+|   IRQ    |  PC11  (LOW)  |
+|   RST    |   PA17 (LOW)  |
+|   S2_SPI_CLK    |   PC24   |
+|   S2_SPI_CS    |   PC25(LOW)   |
+|   S2_SPI_ MOSI   |    PC27  |
+|   S2_SPI_ MISO   |    PC26  |
+
+
+
+
+
+
 下面进行相关的配置部分.
 
-### SPI2 原理图
+### S2_SPI 原理图
 
 ![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-13-16-41-41.png)
 
@@ -162,3 +374,30 @@ image: image
 | low                | MCU ← sensor |
 
 ![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-14-15-49-58.png)
+
+
+
+:::{.callout-important}
+从此往下的内容, 是没有调试工具的时候的代码猜测, 不需要关注
+:::
+
+---
+
+## shield 型号判断
+
+如果无法判断型号是 `HatvanLegacy` 和 `HatvanPlus` 时可以使能`ldo_en` 引脚, 这里是个人提供的方案. 
+
+> 官方方案是`使能LDO2`然后检测PA8引脚是否拉高来判断是否为Legacy
+
+| version      | LDO_en |
+| ------------ | ------ |
+| HatvanLegacy | C31    |
+| HatvanPlus   | C30    |
+
+> `connector.h`
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-15-11-20-30.png)
+
+然后到`connecter` 测量电压, 电平转换默认是正确配置, 查看是否能够检测到 LDO 电源(`最好使能前后对比测量`).
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-15-11-28-46.png)

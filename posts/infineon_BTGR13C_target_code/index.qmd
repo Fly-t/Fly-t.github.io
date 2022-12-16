@@ -205,7 +205,7 @@ if (!Sams70RevisionA())
  IRadar *radar = NULL;
 ```
 
-下面是对, 板子的类型做出检测：HatvanPlus 或 HatvanLegacy
+下面是对, 板子的类型做出检测：HatvanPlus 或 HatvanLegacy(`MCU7`)
 
 是对板子的一个类型的判断, 判断有几个 connecter, MCU7 上, 有两个链接器, 但是只能初始化一个.
 
@@ -221,25 +221,32 @@ if (!Sams70RevisionA())
      * 用于上拉偏置，实现精确检测。
 */
 
- const bool isHatvanLegacy = Board_isHatvanLegacy();
-
-//HatvanLegacy
- if (isHatvanLegacy){
-        do something.....
-    }
-
-// HatvanPlus
-else  {
-    if (Board_isHatvanPlusV9Connected())
+  // detect board type
+    const bool isHatvanLegacy = Board_isHatvanLegacy();
+    if (isHatvanLegacy)
     {
-        do something.....
+        ShieldConnectorDefinition = &ShieldConnectorDefinitionHatvanLegacy[0];
+        BoardSpiDefinition        = &BoardSpiDefinitionHatvanLegacy[0];
+        BoardRadarPinsConfigAvian = &BoardRadarPinsConfigAvianHatvanLegacy[0];
+        m_shieldConnectorCount    = ARRAY_SIZE(ShieldConnectorDefinitionHatvanLegacy);
     }
     else
     {
-        do something.....
+        // HatvanPlus has two different kinds of connectors and just one is initialized
+        if (Board_isHatvanPlusV9Connected())
+        {
+            ShieldConnectorDefinition = &ShieldConnectorDefinitionHatvanPlus[1];
+            BoardSpiDefinition        = &BoardSpiDefinitionHatvanPlus[1];
+            BoardRadarPinsConfigAvian = &BoardRadarPinsConfigAvianHatvanPlus[1];
+        }
+        else
+        {
+            ShieldConnectorDefinition = &ShieldConnectorDefinitionHatvanPlus[0];
+            BoardSpiDefinition        = &BoardSpiDefinitionHatvanPlus[0];
+            BoardRadarPinsConfigAvian = &BoardRadarPinsConfigAvianHatvanPlus[0];
+        }
+        m_shieldConnectorCount = 1;
     }
-    m_shieldConnectorCount = 1;
-}
 ```
 
 因为上面对板子类型进行判断, 所以才得到 `spi`的一个具体配置信息, 才能后进行初始化工作, 代码如下.
