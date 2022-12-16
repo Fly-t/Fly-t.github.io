@@ -382,7 +382,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    II2c <span class="op">*</span>i2c   <span class="op">=</span> <span class="op">&amp;</span>PlatformI2c<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>紧接着是对雷达接口的创建, 和上面的操作类似.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a> IRadar <span class="op">*</span>radar <span class="op">=</span> NULL<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>下面是对, 板子的类型做出检测：HatvanPlus 或 HatvanLegacy</p>
+<p>下面是对, 板子的类型做出检测：HatvanPlus 或 HatvanLegacy(<code>MCU7</code>)</p>
 <p>是对板子的一个类型的判断, 判断有几个 connecter, MCU7 上, 有两个链接器, 但是只能初始化一个.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* 检测板类型：HatvanPlus 或 HatvanLegacy。</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">     *</span></span>
@@ -395,25 +395,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">     * 用于上拉偏置，实现精确检测。</span></span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span></span>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a> <span class="dt">const</span> <span class="dt">bool</span> isHatvanLegacy <span class="op">=</span> Board_isHatvanLegacy<span class="op">();</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">//HatvanLegacy</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a> <span class="cf">if</span> <span class="op">(</span>isHatvanLegacy<span class="op">){</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">do</span> something<span class="op">.....</span></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co">// HatvanPlus</span></span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>  <span class="op">{</span></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>Board_isHatvanPlusV9Connected<span class="op">())</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="co">// detect board type</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">const</span> <span class="dt">bool</span> isHatvanLegacy <span class="op">=</span> Board_isHatvanLegacy<span class="op">();</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>isHatvanLegacy<span class="op">)</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        ShieldConnectorDefinition <span class="op">=</span> <span class="op">&amp;</span>ShieldConnectorDefinitionHatvanLegacy<span class="op">[</span><span class="dv">0</span><span class="op">];</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        BoardSpiDefinition        <span class="op">=</span> <span class="op">&amp;</span>BoardSpiDefinitionHatvanLegacy<span class="op">[</span><span class="dv">0</span><span class="op">];</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>        BoardRadarPinsConfigAvian <span class="op">=</span> <span class="op">&amp;</span>BoardRadarPinsConfigAvianHatvanLegacy<span class="op">[</span><span class="dv">0</span><span class="op">];</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>        m_shieldConnectorCount    <span class="op">=</span> ARRAY_SIZE<span class="op">(</span>ShieldConnectorDefinitionHatvanLegacy<span class="op">);</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
 <span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">do</span> something<span class="op">.....</span></span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">do</span> something<span class="op">.....</span></span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    m_shieldConnectorCount <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>        <span class="co">// HatvanPlus has two different kinds of connectors and just one is initialized</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>Board_isHatvanPlusV9Connected<span class="op">())</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>            ShieldConnectorDefinition <span class="op">=</span> <span class="op">&amp;</span>ShieldConnectorDefinitionHatvanPlus<span class="op">[</span><span class="dv">1</span><span class="op">];</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>            BoardSpiDefinition        <span class="op">=</span> <span class="op">&amp;</span>BoardSpiDefinitionHatvanPlus<span class="op">[</span><span class="dv">1</span><span class="op">];</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>            BoardRadarPinsConfigAvian <span class="op">=</span> <span class="op">&amp;</span>BoardRadarPinsConfigAvianHatvanPlus<span class="op">[</span><span class="dv">1</span><span class="op">];</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>            ShieldConnectorDefinition <span class="op">=</span> <span class="op">&amp;</span>ShieldConnectorDefinitionHatvanPlus<span class="op">[</span><span class="dv">0</span><span class="op">];</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>            BoardSpiDefinition        <span class="op">=</span> <span class="op">&amp;</span>BoardSpiDefinitionHatvanPlus<span class="op">[</span><span class="dv">0</span><span class="op">];</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>            BoardRadarPinsConfigAvian <span class="op">=</span> <span class="op">&amp;</span>BoardRadarPinsConfigAvianHatvanPlus<span class="op">[</span><span class="dv">0</span><span class="op">];</span></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>        m_shieldConnectorCount <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>因为上面对板子类型进行判断, 所以才得到 <code>spi</code>的一个具体配置信息, 才能后进行初始化工作, 代码如下.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>PlatformSpi_initialize<span class="op">(</span>BoardSpiDefinition<span class="op">,</span> m_shieldConnectorCount<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>对<code>spi</code>配置完成后对 led 进行配置, 配置 led 的一个状态表, 以及当前状态的设置.</p>

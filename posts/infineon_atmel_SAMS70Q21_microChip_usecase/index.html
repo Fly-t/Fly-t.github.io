@@ -256,45 +256,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 </blockquote>
 <p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-13-15-17-57.png" class="img-fluid"></p>
-<div class="callout-important callout callout-style-simple">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>从此往下的内容, 是没有调试工具的时候的代码猜测, 不需要关注</p>
-</div>
-</div>
-</div>
-<hr>
-<section id="shield-型号判断" class="level2">
-<h2 class="anchored" data-anchor-id="shield-型号判断">shield 型号判断</h2>
-<p>如果无法判断型号是 <code>HatvanLegacy</code> 和 <code>HatvanPlus</code> 时可以使能<code>ldo_en</code> 引脚</p>
-<table class="table">
-<thead>
-<tr class="header">
-<th>version</th>
-<th>LDO_en</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>HatvanLegacy</td>
-<td>C31</td>
-</tr>
-<tr class="even">
-<td>HatvanPlus</td>
-<td>C30</td>
-</tr>
-</tbody>
-</table>
-<blockquote class="blockquote">
-<p><code>connector.h</code></p>
-</blockquote>
-<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-15-11-20-30.png" class="img-fluid"></p>
-<p>然后到<code>connecter</code> 测量电压, 电平转换默认是正确配置, 查看是否能够检测到 LDO 电源(<code>最好使能前后对比测量</code>).</p>
-<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-15-11-28-46.png" class="img-fluid"></p>
-</section>
 <section id="配置-spi" class="level2">
 <h2 class="anchored" data-anchor-id="配置-spi">配置 SPI</h2>
 <blockquote class="blockquote">
@@ -364,7 +325,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<p>在项目中的配置是按照如下代码部分进行配置的, <code>MCU7</code>是<code>Legacy</code>版本, 所以对应的是两个链接器. debug 和代码中显示的都是两个, 链接器, HatvanPlus 只有一个 LDO. ( 代码中的注释没看清楚, 一直以为是 <code>HatvanPlus</code> 其实是 <code>Legacy</code> )</p>
+<p>在项目中的配置是按照如下代码部分进行配置的, <code>MCU7</code>是<code>Legacy</code>版本, 所以对应的是两个链接器. debug 和代码中显示的都是两个, 链接器, HatvanPlus 只有一个 LDO. ( 代码中的注释有点迷惑, 一直以为是 <code>HatvanPlus</code> 其实是 <code>Legacy</code> )</p>
 <p>按照如下配置进行配置雷达的驱动引脚配置, 就是没问题的. 调整 mcu 也只需调整这几个配置即可.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a> <span class="co">// detect board type</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">const</span> <span class="dt">bool</span> isHatvanLegacy <span class="op">=</span> Board_isHatvanLegacy<span class="op">();</span></span>
@@ -375,10 +336,241 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        BoardRadarPinsConfigAvian <span class="op">=</span> <span class="op">&amp;</span>BoardRadarPinsConfigAvianHatvanLegacy<span class="op">[</span><span class="dv">0</span><span class="op">];</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        m_shieldConnectorCount    <span class="op">=</span> ARRAY_SIZE<span class="op">(</span>ShieldConnectorDefinitionHatvanLegacy<span class="op">);</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>下面进行相关的配置部分.</p>
+<p>Hatvan Legacy Board Connector Definition, 我们这个是对<code>HatvanLegacy</code>的连接器做配置.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ShieldConnectorDefinition_t ShieldConnectorDefinitionHatvanLegacy<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>en_ldo      <span class="op">=</span> GPIO_ID<span class="op">(</span><span class="ch">'C'</span><span class="op">,</span> <span class="dv">30</span><span class="op">),</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>ls_spi_oe   <span class="op">=</span> GPIO_ID<span class="op">(</span><span class="ch">'D'</span><span class="op">,</span> <span class="dv">24</span><span class="op">),</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>ls_gpio_oe  <span class="op">=</span> GPIO_ID<span class="op">(</span><span class="ch">'D'</span><span class="op">,</span> <span class="dv">14</span><span class="op">),</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>ls_gpio_dir <span class="op">=</span> GPIO_ID<span class="op">(</span><span class="ch">'D'</span><span class="op">,</span> <span class="dv">18</span><span class="op">),</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>oc_led      <span class="op">=</span> GPIO_ID<span class="op">(</span><span class="ch">'C'</span><span class="op">,</span> <span class="dv">1</span><span class="op">),</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>oc1         <span class="op">=</span> GPIO_ID<span class="op">(</span><span class="ch">'D'</span><span class="op">,</span> <span class="dv">16</span><span class="op">),</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>oc2         <span class="op">=</span> GPIO_ID<span class="op">(</span><span class="ch">'C'</span><span class="op">,</span> <span class="dv">9</span><span class="op">),</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>oc3         <span class="op">=</span> GPIO_ID<span class="op">(</span><span class="ch">'C'</span><span class="op">,</span> <span class="dv">28</span><span class="op">),</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>oc4         <span class="op">=</span> GPIO_ID<span class="op">(</span><span class="ch">'A'</span><span class="op">,</span> <span class="dv">27</span><span class="op">),</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">},</span>  </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>en_ldo      <span class="op">=</span> GPIO_ID<span class="op">(</span><span class="ch">'C'</span><span class="op">,</span> <span class="dv">31</span><span class="op">),</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>ls_spi_oe   <span class="op">=</span> GPIO_ID<span class="op">(</span><span class="ch">'C'</span><span class="op">,</span> <span class="dv">3</span><span class="op">),</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>ls_gpio_oe  <span class="op">=</span> GPIO_ID<span class="op">(</span><span class="ch">'A'</span><span class="op">,</span> <span class="dv">1</span><span class="op">),</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>ls_gpio_dir <span class="op">=</span> GPIO_ID<span class="op">(</span><span class="ch">'C'</span><span class="op">,</span> <span class="dv">10</span><span class="op">),</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>oc_led      <span class="op">=</span> GPIO_ID<span class="op">(</span><span class="ch">'C'</span><span class="op">,</span> <span class="dv">2</span><span class="op">),</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>oc1         <span class="op">=</span> GPIO_ID<span class="op">(</span><span class="ch">'A'</span><span class="op">,</span> <span class="dv">22</span><span class="op">),</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>oc2         <span class="op">=</span> GPIO_ID<span class="op">(</span><span class="ch">'D'</span><span class="op">,</span> <span class="dv">10</span><span class="op">),</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>oc3         <span class="op">=</span> GPIO_ID<span class="op">(</span><span class="ch">'C'</span><span class="op">,</span> <span class="dv">29</span><span class="op">),</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>oc4         <span class="op">=</span> GPIO_ID<span class="op">(</span><span class="ch">'D'</span><span class="op">,</span> <span class="dv">15</span><span class="op">),</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="op">},</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>spi配置</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>PlatformSpiDefinition_t BoardSpiDefinitionHatvanLegacy<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>peripheral_id   <span class="op">=</span> ID_QSPI<span class="op">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>baudrate        <span class="op">=</span> <span class="dv">50000000</span><span class="op">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>setup_interface <span class="op">=</span> setup_qspi<span class="op">,</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>addr <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>peripheral <span class="op">=</span> QSPI<span class="op">,</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>tdr        <span class="op">=</span> <span class="op">(</span><span class="dt">uint32_t</span><span class="op">)&amp;</span>QSPI<span class="op">-&gt;</span>QSPI_TDR<span class="op">,</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>rdr        <span class="op">=</span> <span class="op">(</span><span class="dt">uint32_t</span><span class="op">)&amp;</span>QSPI<span class="op">-&gt;</span>QSPI_RDR<span class="op">,</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="op">},</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>pins <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>csn        <span class="op">=</span> PIO_PA11_IDX<span class="op">,</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>clk        <span class="op">=</span> PIO_PA14_IDX<span class="op">,</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>clk_flags  <span class="op">=</span> IOPORT_MODE_MUX_A<span class="op">,</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>miso       <span class="op">=</span> PIO_PA12_IDX<span class="op">,</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>miso_flags <span class="op">=</span> IOPORT_MODE_MUX_A<span class="op">,</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>mosi       <span class="op">=</span> PIO_PA13_IDX<span class="op">,</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>mosi_flags <span class="op">=</span> IOPORT_MODE_MUX_A<span class="op">,</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        <span class="op">},</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>dma <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>tx_dma_channel <span class="op">=</span> HV_DMA_HW_CH_TX_1<span class="op">,</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>tx_dma_hw_id   <span class="op">=</span> HV_DMA_HW_INTF_TX_1<span class="op">,</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>rx_dma_channel <span class="op">=</span> HV_DMA_HW_CH_RX_1<span class="op">,</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>rx_dma_hw_id   <span class="op">=</span> HV_DMA_HW_INTF_RX_1<span class="op">,</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>        <span class="op">},</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    <span class="op">},</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    <span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>peripheral_id   <span class="op">=</span> ID_SPI1<span class="op">,</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>baudrate        <span class="op">=</span> <span class="dv">50000000</span><span class="op">,</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>setup_interface <span class="op">=</span> setup_spi<span class="op">,</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>addr <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>peripheral <span class="op">=</span> SPI1<span class="op">,</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>tdr        <span class="op">=</span> <span class="op">(</span><span class="dt">uint32_t</span><span class="op">)&amp;</span>SPI1<span class="op">-&gt;</span>SPI_TDR<span class="op">,</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>rdr        <span class="op">=</span> <span class="op">(</span><span class="dt">uint32_t</span><span class="op">)&amp;</span>SPI1<span class="op">-&gt;</span>SPI_RDR<span class="op">,</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>        <span class="op">},</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>pins <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>csn        <span class="op">=</span> PIO_PC25_IDX<span class="op">,</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>clk        <span class="op">=</span> PIO_PC24_IDX<span class="op">,</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>clk_flags  <span class="op">=</span> IOPORT_MODE_MUX_C<span class="op">,</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>miso       <span class="op">=</span> PIO_PC26_IDX<span class="op">,</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>miso_flags <span class="op">=</span> IOPORT_MODE_MUX_C<span class="op">,</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>mosi       <span class="op">=</span> PIO_PC27_IDX<span class="op">,</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>mosi_flags <span class="op">=</span> IOPORT_MODE_MUX_C<span class="op">,</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>        <span class="op">},</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>dma <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>tx_dma_channel <span class="op">=</span> HV_DMA_HW_CH_TX_2<span class="op">,</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>tx_dma_hw_id   <span class="op">=</span> HV_DMA_HW_INTF_TX_2<span class="op">,</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>rx_dma_channel <span class="op">=</span> HV_DMA_HW_CH_RX_2<span class="op">,</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>rx_dma_hw_id   <span class="op">=</span> HV_DMA_HW_INTF_RX_2<span class="op">,</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>        <span class="op">},</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>    <span class="op">},</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>中断和复位设置</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> <span class="dt">const</span> IPinsAvianConfig_t BoardRadarPinsConfigAvianHatvanLegacy<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>gpioReset <span class="op">=</span> GPIO_ID<span class="op">(</span><span class="ch">'A'</span><span class="op">,</span> <span class="dv">0</span><span class="op">),</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>gpioIrq   <span class="op">=</span> GPIO_ID<span class="op">(</span><span class="ch">'C'</span><span class="op">,</span> <span class="dv">6</span><span class="op">),</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">},</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>gpioReset <span class="op">=</span> GPIO_ID<span class="op">(</span><span class="ch">'A'</span><span class="op">,</span> <span class="dv">17</span><span class="op">),</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>gpioIrq   <span class="op">=</span> GPIO_ID<span class="op">(</span><span class="ch">'C'</span><span class="op">,</span> <span class="dv">11</span><span class="op">),</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">},</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>平台初始化, 这里有点迷惑, 通常初始化都是按照上面的配置进行初始化, 但是这里的init是将所有的<code>spi</code>, <code>ldo</code> , <code>LevelShifter</code>, <code>connector</code>都初始化. 就是全都配置出来, 没有连接的那边的引脚(另外一个<code>connector</code>)其实都是打开的, 只不过没有数据通路.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>PlatformSpi_initialize<span class="op">(</span>BoardSpiDefinition<span class="op">,</span> m_shieldConnectorCount<span class="op">);</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="op">--&gt;</span> inter  PlatformSpi_initialize <span class="op">:</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a> <span class="cf">for</span> <span class="op">(</span><span class="dt">unsigned</span> <span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> m_count<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        PlatformSpiDefinition_t <span class="op">*</span>device <span class="op">=</span> <span class="op">&amp;</span>m_definition<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> E_SUCCESS<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>接下来就是对<code>LED</code>的常规设置</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">// initialize LedSequence to be used for potential error signaling during detection</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    LedSequence_Constructor<span class="op">();</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    LedSequence_setStatus<span class="op">(</span>LED_STATUS_OPERATING<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>再往后就是shield的错误检测, 如果shield没有错误就把LDO打开, 电平转换打开(使能connector)</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> sr_t Board_detectShields<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Checks both connectors for unsupported or wrongly connected shields.</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">     * In case no errors are detected, both connectors will be enabled,</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">     * in order to allow radar device detection.</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">     */</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">uint8_t</span> shieldId <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> shieldId <span class="op">&lt;</span> m_shieldConnectorCount<span class="op">;</span> shieldId<span class="op">++)</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">// detect the presence of a shield by probing the I2C lines</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        <span class="dt">const</span> sr_t detection <span class="op">=</span> ShieldConnector_detect<span class="op">(&amp;</span>ShieldConnectorDefinition<span class="op">[</span>shieldId<span class="op">],</span> shieldId<span class="op">);</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">switch</span> <span class="op">(</span>detection<span class="op">)</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>            <span class="cf">case</span> E_NOT_AVAILABLE<span class="op">:</span>  <span class="co">// allow shields without I2C bus</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>                <span class="co">/*  no break */</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">case</span> E_SUCCESS<span class="op">:</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>                <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">case</span> E_NOT_POSSIBLE<span class="op">:</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>                LedSequence_setRbbStatus<span class="op">(</span>RBB_ERROR_HARDWARE_CONNECTED_WRONG<span class="op">);</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> E_NOT_POSSIBLE<span class="op">;</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>                <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">case</span> E_NOT_SUPPORTED<span class="op">:</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>                LedSequence_setRbbStatus<span class="op">(</span>RBB_ERROR_HARDWARE_NOT_SUPPORTED<span class="op">);</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> E_NOT_SUPPORTED<span class="op">;</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>                <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>            <span class="cf">default</span><span class="op">:</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>                LedSequence_setRbbStatus<span class="op">(</span>RBB_ERROR_HARDWARE_INTERNAL_ERROR<span class="op">);</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> detection<span class="op">;</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>                <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>        <span class="co">// power-up shield and configure its level shifters</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>        ShieldConnector_enable<span class="op">(&amp;</span>ShieldConnectorDefinition<span class="op">[</span>shieldId<span class="op">],</span> shieldId<span class="op">,</span> true<span class="op">);</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> E_SUCCESS<span class="op">;</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>shield</code>没有问题利用所有配置创建雷达对象,</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a> radar <span class="op">=</span> Board_detectRadar<span class="op">(</span>gpio<span class="op">,</span> spi<span class="op">,</span> i2c<span class="op">,</span> <span class="op">&amp;</span>m_data<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>下面是具体雷达对象创建</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> IRadar <span class="op">*</span>Board_detectRadar<span class="op">(</span>IGpio <span class="op">*</span>gpio<span class="op">,</span> ISpi <span class="op">*</span>spi<span class="op">,</span> II2c <span class="op">*</span>i2c<span class="op">,</span> IData <span class="op">**</span>data<span class="op">)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>   <span class="co">// 遍历所有shield</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">uint8_t</span> shieldId <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> shieldId <span class="op">&lt;</span> m_shieldConnectorCount<span class="op">;</span> shieldId<span class="op">++)</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">// 如果要是第二个shield, 就交换配置, 将配置交换到第一个配置位置</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>m_shieldConnectorCount <span class="op">==</span> <span class="dv">2</span><span class="op">)</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>shieldId <span class="op">==</span> <span class="dv">1</span><span class="op">)</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>            <span class="op">{</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>                PlatformInterfaces_swapI2cIds<span class="op">();</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>                Board_swapSpiIds<span class="op">();</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        <span class="dt">const</span> sr_t avianDetection <span class="op">=</span> Avian_Detect<span class="op">(</span>spi<span class="op">,</span> gpio<span class="op">,</span> <span class="op">&amp;</span>BoardRadarConfigAvian<span class="op">[</span>shieldId<span class="op">],</span> <span class="op">&amp;</span>BoardRadarPinsConfigAvian<span class="op">[</span>shieldId<span class="op">]);</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>avianDetection <span class="op">==</span> E_SUCCESS<span class="op">)</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>            Avian_Constructor<span class="op">(&amp;</span>m_avian<span class="op">,</span> <span class="op">&amp;</span>DataAvian<span class="op">,</span> gpio<span class="op">,</span> spi<span class="op">,</span> <span class="op">&amp;</span>BoardRadarConfigAvian<span class="op">[</span>shieldId<span class="op">],</span> <span class="op">&amp;</span>BoardRadarPinsConfigAvian<span class="op">[</span>shieldId<span class="op">]);</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>            DataAvian_Constructor<span class="op">(</span>Board_acquisitionStatusCallback<span class="op">);</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>            DataAvian_setBuffer<span class="op">(</span>BoardRadarConfigAvian<span class="op">[</span>shieldId<span class="op">].</span>dataIndex<span class="op">,</span> m_dataBuffer<span class="op">,</span> DATA_BUFFER_SIZE<span class="op">);</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>            DataAvian_registerInterrupt<span class="op">(</span>BoardRadarConfigAvian<span class="op">[</span>shieldId<span class="op">].</span>dataIndex<span class="op">,</span> <span class="op">&amp;</span>BoardIrqPinsConfigAvian<span class="op">[</span>shieldId<span class="op">]);</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>            <span class="op">*</span>data <span class="op">=</span> <span class="op">&amp;</span>DataAvian<span class="op">;</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>            <span class="co">// 如果这里第一次配置成功就直接跳出该函数了, 就不会执行shield2 的配置.</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="op">(</span>IRadar <span class="op">*)&amp;</span>m_avian<span class="op">;</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>到此所有的脚位配置信息完成</p>
+<hr>
 </section>
-<section id="spi2-原理图" class="level3">
-<h3 class="anchored" data-anchor-id="spi2-原理图">SPI2 原理图</h3>
+</section>
+</section>
+<section id="接下来进行定制配置项目的构建." class="level1">
+<h1>接下来进行定制配置项目的构建.</h1>
+<blockquote class="blockquote">
+<ul>
+<li>构建的部分包括<code>uart</code>, <code>LDO</code>, <code>SPI</code>, <code>IRQ</code>,<code>Rst</code></li>
+<li>使用<code>S2_SPI</code> 所以需要配置<code>LDO2</code></li>
+</ul>
+</blockquote>
+<p>所需要的引脚配置如下</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>option</th>
+<th>PIn</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>UART_RX</td>
+<td>PD25</td>
+</tr>
+<tr class="even">
+<td>UART_TX</td>
+<td>PD26</td>
+</tr>
+<tr class="odd">
+<td>LDO_2</td>
+<td>PC31</td>
+</tr>
+<tr class="even">
+<td>IRQ</td>
+<td>PC11 (LOW)</td>
+</tr>
+<tr class="odd">
+<td>RST</td>
+<td>PA17 (LOW)</td>
+</tr>
+<tr class="even">
+<td>S2_SPI_CLK</td>
+<td>PC24</td>
+</tr>
+<tr class="odd">
+<td>S2_SPI_CS</td>
+<td>PC25(LOW)</td>
+</tr>
+<tr class="even">
+<td>S2_SPI_ MOSI</td>
+<td>PC27</td>
+</tr>
+<tr class="odd">
+<td>S2_SPI_ MISO</td>
+<td>PC26</td>
+</tr>
+</tbody>
+</table>
+<p>下面进行相关的配置部分.</p>
+<section id="s2_spi-原理图" class="level3">
+<h3 class="anchored" data-anchor-id="s2_spi-原理图">S2_SPI 原理图</h3>
 <p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-13-16-41-41.png" class="img-fluid"></p>
 </section>
 <section id="ldo-配置" class="level3">
@@ -451,9 +643,50 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-14-15-49-58.png" class="img-fluid"></p>
-
-
+<div class="callout-important callout callout-style-simple">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>从此往下的内容, 是没有调试工具的时候的代码猜测, 不需要关注</p>
+</div>
+</div>
+</div>
+<hr>
 </section>
+<section id="shield-型号判断" class="level2">
+<h2 class="anchored" data-anchor-id="shield-型号判断">shield 型号判断</h2>
+<p>如果无法判断型号是 <code>HatvanLegacy</code> 和 <code>HatvanPlus</code> 时可以使能<code>ldo_en</code> 引脚, 这里是个人提供的方案.</p>
+<blockquote class="blockquote">
+<p>官方方案是<code>使能LDO2</code>然后检测PA8引脚是否拉高来判断是否为Legacy</p>
+</blockquote>
+<table class="table">
+<thead>
+<tr class="header">
+<th>version</th>
+<th>LDO_en</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>HatvanLegacy</td>
+<td>C31</td>
+</tr>
+<tr class="even">
+<td>HatvanPlus</td>
+<td>C30</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p><code>connector.h</code></p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-15-11-20-30.png" class="img-fluid"></p>
+<p>然后到<code>connecter</code> 测量电压, 电平转换默认是正确配置, 查看是否能够检测到 LDO 电源(<code>最好使能前后对比测量</code>).</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-15-11-28-46.png" class="img-fluid"></p>
+
+
 </section>
 </section>
 
