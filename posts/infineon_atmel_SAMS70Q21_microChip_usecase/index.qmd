@@ -1,22 +1,26 @@
 ---
-title: "infineon radar usecase with ATASMS70Q21"
+title: "infineon radar usecase (RBB7 Demo)"
 author: "dd21"
 date: "2022-12-13"
 categories: [infineon, atmel, microChip]
-image: image
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-17-15-46-56.png
 ---
 
 # Abstract
 
-上个文档描述的是整个项目的创建原因, `工程创建`, `ide简单使用`, 和`生成的工程导入`,
+上个文档描述的是整个项目的创建原因, `工程创建`, `工程导入`. 
 
-这个文档是进行具体的项目的配置, 根据原理图进行引脚信息
+这个文档是进行具体的项目的配置, 根据原理图进行引脚信息, 从代码进行梳理, 一步一步确认引脚, 以及代码框架
 
 > 我们需要配置的项:
 >
 > - uart
 > - spi
 > - ldo
+> - RST
+> - IRQ
+
+## 编译该工程注意路径中不能有空格!!!!!
 
 # Referance
 

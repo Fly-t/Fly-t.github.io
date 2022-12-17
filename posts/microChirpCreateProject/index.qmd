@@ -1,5 +1,5 @@
 ---
-title: "Infineon BGT60Rxx SDK Guide" 
+title: "Micro Chirp Create Project" 
 author: "dd21"
 date: "2022-12-12" 
 categories: [infineon, radar, env, microChip]
