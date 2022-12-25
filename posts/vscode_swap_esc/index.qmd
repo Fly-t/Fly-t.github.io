@@ -1,0 +1,19 @@
+---
+title: "vsdoe fix can not swap esc and caps lock"
+author: "dd21"
+date: "2022-12-25"
+categories: [vscode, env]
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-25-20-14-54.png
+---
+
+# Abstract
+
+swap the esc and capsLock in system but can not work in vscode, we need to config something
+
+# Referance
+
+add this to setings that swap can work in vscode
+
+```c
+    "keyboard.dispatch": "keyCode"
+```

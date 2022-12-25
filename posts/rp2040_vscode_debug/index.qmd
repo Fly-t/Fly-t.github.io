@@ -1,29 +1,26 @@
 ---
-title: "rp2040 config vscode env" 
+title: "rp2040 config vscode env"
 author: "dd21"
-date: "2022-12-25" 
+date: "2022-12-25"
 categories: [rp2040, env]
 image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-25-15-32-18.png
 ---
-
 
 # Abstract
 
 using 2 pic pico to development
 
 ide is `vscode`, tools with openOCD.
-> 莓派作为调试器惊醒调试, ide使用vscode
+
+> 莓派作为调试器惊醒调试, ide 使用 vscode
 
 # Referance
 
 [getting-started-with-pico.pdf](extension://bfdogplmndidlpjfhoijckpakkdjkkil/pdf/viewer.html?file=https%3A%2F%2Fdatasheets.raspberrypi.com%2Fpico%2Fgetting-started-with-pico.pdf)
 
-
-
-
 # pico_setup_linux
-> pico set up on arch linux and config picoprobe for debug, flash, as serial port....
 
+> pico set up on arch linux and config picoprobe for debug, flash, as serial port....
 
 git clone https://github.com/raspberrypi/pico-sdk.git --branch master
 cd pico-sdk
@@ -31,61 +28,80 @@ git submodule update --init
 cd ..
 git clone https://github.com/raspberrypi/pico-examples.git --branch master
 
-
-
 # install toolChain
 
-sudo pacman -Sy 
-    arm-none-eabi-newlib
-    arm-none-eabi-gcc
-    cmake
-    base-devel
-
+sudo pacman -Sy
+arm-none-eabi-newlib
+arm-none-eabi-gcc
+cmake
+base-devel
 
 # flash with another pico `swd`
 
 pwd:
-  - pico/openocd/tcl
+
+- pico/openocd/tcl
 
 excute:
-  - sudo ../src/openocd -f interface/picoprobe.cfg -f target/rp2040.cfg -s tlc -c "program /home/dd21/Projects/github/pico/pico-examples/build/blink/blink.elf  verify reset exit"
 
+- sudo ../src/openocd -f interface/picoprobe.cfg -f target/rp2040.cfg -s tlc -c "program /home/dd21/Projects/github/pico/pico-examples/build/blink/blink.elf verify reset exit"
 
 # debug
 
 1.start openOCD
 
-- sudo ../src/openocd -f interface/picoprobe.cfg -f target/rp2040.cfg 
+- sudo ../src/openocd -f interface/picoprobe.cfg -f target/rp2040.cfg
 
-2.start remot gdb debug 
+  2.start remot gdb debug
 
-- install gdb-multiarch 
+- install gdb-multiarch
 - `gdb-multiarch blink.elf`
 
 if you see `guile2.2.so.1` no such file or dirtory
 
-please install your need version 
+please install your need version
 
-- pcman -S guile2.2 
+- pcman -S guile2.2
 
 then continue to excute above command
 
-3.enter the gdb 
+3.enter the gdb
 
 - target remote localhost:3333
 
-
 # config with vscode
 
-使用vscode 需要注意的点
-- `pico_sk_path` 
-- openOCD的调试器(我使用的是另外一块pico)
-- 复制vscode调试器配置的时候注意使用remote的那个配置, swd的我失败了
-- 修改vscode的launch.json中的`gdbTarget`我们使用的是`localhost:3333`
--<font color='red'> 需要先加载文件`sudo openocd -f interface/picoprobe.cfg -f target/rp2040.cfg -s xxxxxxx` </font> 
-- xxx 所指的是interface的位置,如果安装了openOCD, 则位置在`/usr/bin/local/share/openocd/script/`
-- local/ `share` 对应的还有一个local/`bin` bin中的都是可执行文件.
+使用 vscode 需要注意的点
+
+- `pico_sk_path`
+- openOCD 的调试器(我使用的是另外一块 pico)
+- 复制 vscode 调试器配置的时候注意使用 remote 的那个配置, swd 的我失败了
+- 修改 vscode 的 launch.json 中的`gdbTarget`我们使用的是`localhost:3333` -<font color='red'> 需要先加载文件`sudo openocd -f interface/picoprobe.cfg -f target/rp2040.cfg -s xxxxxxx` </font>
+- xxx 所指的是 interface 的位置,如果安装了 openOCD, 则位置在`/usr/bin/local/share/openocd/script/`
+- local/ `share` 对应的还有一个 local/`bin` bin 中的都是可执行文件.
 - 其他的问题大概率是线没有连接好.
-- warning: 修改runToMain为"entryPoin":"main"
+- warning: 修改 runToMain 为"entryPoin":"main"
 - error: cannot read svd file
+
+# create a pico project
+
+> cd pico-project-generator
+> excute:
+
+```c
+./pico_project.py --gui
+```
+
+if you see `    import _tkinter # If this fails your Python may not be configured for Tk` means you need to install "Tk"
+
+archLinux:
+
+```c
+sudo pacman -S install tk
+```
+
+then excute command above you will see a gui like this
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-25-19-37-03.png)
+
 
