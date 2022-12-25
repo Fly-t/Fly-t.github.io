@@ -198,7 +198,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="config-with-vscode" class="level1">
 <h1>config with vscode</h1>
-<p>使用vscode 需要注意的点 - <code>pico_sk_path</code> - openOCD的调试器(我使用的是另外一块pico) - 复制vscode调试器配置的时候注意使用remote的那个配置, swd的我失败了 - 修改vscode的launch.json中的<code>gdbTarget</code>我们使用的是<code>localhost:3333</code> -<font color="red"> 需要先加载文件<code>sudo openocd -f interface/picoprobe.cfg -f target/rp2040.cfg -s xxxxxxx</code> </font> - xxx 所指的是interface的位置,如果安装了openOCD, 则位置在<code>/usr/bin/local/share/openocd/script/</code> - local/ <code>share</code> 对应的还有一个local/<code>bin</code> bin中的都是可执行文件. - 其他的问题大概率是线没有连接好.</p>
+<p>使用vscode 需要注意的点 - <code>pico_sk_path</code> - openOCD的调试器(我使用的是另外一块pico) - 复制vscode调试器配置的时候注意使用remote的那个配置, swd的我失败了 - 修改vscode的launch.json中的<code>gdbTarget</code>我们使用的是<code>localhost:3333</code> -<font color="red"> 需要先加载文件<code>sudo openocd -f interface/picoprobe.cfg -f target/rp2040.cfg -s xxxxxxx</code> </font> - xxx 所指的是interface的位置,如果安装了openOCD, 则位置在<code>/usr/bin/local/share/openocd/script/</code> - local/ <code>share</code> 对应的还有一个local/<code>bin</code> bin中的都是可执行文件. - 其他的问题大概率是线没有连接好. - warning: 修改runToMain为”entryPoin”:“main” - error: cannot read svd file</p>
 
 
 </section>
