@@ -9,7 +9,7 @@
 <meta name="author" content="dd21">
 <meta name="dcterms.date" content="2022-12-25">
 
-<title>TengFei’s Blog - rp2040 config vscode env</title>
+<title>TengFei’s Blog - vsdoe fix can not swap esc and caps lock</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -173,9 +173,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">rp2040 config vscode env</h1>
+      <h1 class="title">vsdoe fix can not swap esc and caps lock</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">rp2040</div>
+                <div class="quarto-category">vscode</div>
                 <div class="quarto-category">env</div>
               </div>
                   </div>
@@ -214,84 +214,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="abstract" class="level1">
 <h1>Abstract</h1>
-<p>using 2 pic pico to development</p>
-<p>ide is <code>vscode</code>, tools with openOCD.</p>
-<blockquote class="blockquote">
-<p>莓派作为调试器惊醒调试, ide 使用 vscode</p>
-</blockquote>
+<p>swap the esc and capsLock in system but can not work in vscode, we need to config something</p>
 </section>
 <section id="referance" class="level1">
 <h1>Referance</h1>
-<p><a href="extension://bfdogplmndidlpjfhoijckpakkdjkkil/pdf/viewer.html?file=https%3A%2F%2Fdatasheets.raspberrypi.com%2Fpico%2Fgetting-started-with-pico.pdf">getting-started-with-pico.pdf</a></p>
-</section>
-<section id="pico_setup_linux" class="level1">
-<h1>pico_setup_linux</h1>
-<blockquote class="blockquote">
-<p>pico set up on arch linux and config picoprobe for debug, flash, as serial port….</p>
-</blockquote>
-<p>git clone https://github.com/raspberrypi/pico-sdk.git –branch master cd pico-sdk git submodule update –init cd .. git clone https://github.com/raspberrypi/pico-examples.git –branch master</p>
-</section>
-<section id="install-toolchain" class="level1">
-<h1>install toolChain</h1>
-<p>sudo pacman -Sy arm-none-eabi-newlib arm-none-eabi-gcc cmake base-devel</p>
-</section>
-<section id="flash-with-another-pico-swd" class="level1">
-<h1>flash with another pico <code>swd</code></h1>
-<p>pwd:</p>
-<ul>
-<li>pico/openocd/tcl</li>
-</ul>
-<p>excute:</p>
-<ul>
-<li>sudo ../src/openocd -f interface/picoprobe.cfg -f target/rp2040.cfg -s tlc -c “program /home/dd21/Projects/github/pico/pico-examples/build/blink/blink.elf verify reset exit”</li>
-</ul>
-</section>
-<section id="debug" class="level1">
-<h1>debug</h1>
-<p>1.start openOCD</p>
-<ul>
-<li><p>sudo ../src/openocd -f interface/picoprobe.cfg -f target/rp2040.cfg</p>
-<p>2.start remot gdb debug</p></li>
-<li><p>install gdb-multiarch</p></li>
-<li><p><code>gdb-multiarch blink.elf</code></p></li>
-</ul>
-<p>if you see <code>guile2.2.so.1</code> no such file or dirtory</p>
-<p>please install your need version</p>
-<ul>
-<li>pcman -S guile2.2</li>
-</ul>
-<p>then continue to excute above command</p>
-<p>3.enter the gdb</p>
-<ul>
-<li>target remote localhost:3333</li>
-</ul>
-</section>
-<section id="config-with-vscode" class="level1">
-<h1>config with vscode</h1>
-<p>使用 vscode 需要注意的点</p>
-<ul>
-<li><code>pico_sk_path</code></li>
-<li>openOCD 的调试器(我使用的是另外一块 pico)</li>
-<li>复制 vscode 调试器配置的时候注意使用 remote 的那个配置, swd 的我失败了</li>
-<li>修改 vscode 的 launch.json 中的<code>gdbTarget</code>我们使用的是<code>localhost:3333</code> -<font color="red"> 需要先加载文件<code>sudo openocd -f interface/picoprobe.cfg -f target/rp2040.cfg -s xxxxxxx</code> </font></li>
-<li>xxx 所指的是 interface 的位置,如果安装了 openOCD, 则位置在<code>/usr/bin/local/share/openocd/script/</code></li>
-<li>local/ <code>share</code> 对应的还有一个 local/<code>bin</code> bin 中的都是可执行文件.</li>
-<li>其他的问题大概率是线没有连接好.</li>
-<li>warning: 修改 runToMain 为”entryPoin”:“main”</li>
-<li>error: cannot read svd file</li>
-</ul>
-</section>
-<section id="create-a-pico-project" class="level1">
-<h1>create a pico project</h1>
-<blockquote class="blockquote">
-<p>cd pico-project-generator excute:</p>
-</blockquote>
-<div class="sourceCode" id="cb1"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">./</span>pico_project<span class="op">.</span>py <span class="op">--</span>gui</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>if you see <code>import _tkinter # If this fails your Python may not be configured for Tk</code> means you need to install “Tk”</p>
-<p>archLinux:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sudo pacman <span class="op">-</span>S install tk</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>then excute command above you will see a gui like this</p>
-<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-25-19-37-03.png" class="img-fluid"></p>
+<p>add this to setings that swap can work in vscode</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>    <span class="st">"keyboard.dispatch"</span><span class="op">:</span> <span class="st">"keyCode"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>

@@ -2,6 +2,7 @@
   {
     "listing": "/article.html",
     "items": [
+      "/posts/vscode_swap_esc/index.html",
       "/posts/rp2040_vscode_debug/index.html",
       "/posts/spi通信/index.html",
       "/posts/infineon_atmel_SAMS70Q21_microChip_usecase/index.html",
