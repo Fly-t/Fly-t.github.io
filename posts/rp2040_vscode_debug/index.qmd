@@ -86,6 +86,6 @@ then continue to excute above command
 - xxx 所指的是interface的位置,如果安装了openOCD, 则位置在`/usr/bin/local/share/openocd/script/`
 - local/ `share` 对应的还有一个local/`bin` bin中的都是可执行文件.
 - 其他的问题大概率是线没有连接好.
-
-
+- warning: 修改runToMain为"entryPoin":"main"
+- error: cannot read svd file
 
