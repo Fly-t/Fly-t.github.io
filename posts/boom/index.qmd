@@ -1,0 +1,39 @@
+---
+title: "binary bomb" 
+author: "dd21"
+date: "2023-01-04" 
+categories: [cs]
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-04-20-39-20.png
+---
+
+
+# Abstract
+
+do some practise of asm and disasm,  analazy the elf file and do some revserse things
+
+# Referance
+
+nju cs base lesson of  cs on MOOC
+
+
+# first we get the disassembly file of elf
+
+``` c
+objdump -d bomb > bomb.s
+```
+
+ # analazy the bomb.s and bomb.c file  
+
+enter the main function we can see like this
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-04-20-49-54.png)
+
+then we need to see the .s file to continue analazy the bomb
+
+# read the file of  bomb.s
+
+``` c
+vim bomb.s
+
+/pase_0
+```
