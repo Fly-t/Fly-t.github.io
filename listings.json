@@ -2,6 +2,7 @@
   {
     "listing": "/article.html",
     "items": [
+      "/posts/boom/index.html",
       "/posts/vscode_swap_esc/index.html",
       "/posts/rp2040_vscode_debug/index.html",
       "/posts/spi通信/index.html",
