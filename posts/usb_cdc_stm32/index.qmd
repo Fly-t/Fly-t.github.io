@@ -1,0 +1,71 @@
+---
+title: "stm32 usb cdc vitural serial port"
+author: "dd21"
+date: "2023-01-06"
+categories: [stm32]
+image: ./Programmer.ico
+---
+
+# Abstract
+
+when we are using stm32 development, we offen used the usart, but we don't want to add the usb2serial mode. we hope we can use the usb liner to connect with pc and stm32.
+
+this usb cdc stolve the proublem, we can use the usart easily.
+
+# Referance
+
+[texthttps://blog.csdn.net/qq_15504787/article/details/113787699](https://https://blog.csdn.net/qq_15504787/article/details/113787699)
+
+# careate project with CubeMx
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-06-14-56-05.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-06-14-55-01.png)
+
+## config usb clock
+
+the clock must be set to 48Mhz
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-06-14-56-49.png)
+
+# open the project 
+
+open the file `usbd_cdc_if.c`
+
+add the code like this
+``` c
+#include <stdarg.h>
+ 
+void usb_printf(const char *format, ...)
+{
+    va_list args;
+    uint32_t length;
+ 
+    va_start(args, format);
+    length = vsnprintf((char *)UserTxBufferFS, APP_TX_DATA_SIZE, (char *)format, args);
+    va_end(args);
+    CDC_Transmit_FS(UserTxBufferFS, length);
+}
+```
+
+add this to `.h` file to export this api, include this `.h`file in which `.c`file can use the `usb_printf` to print something with usb.
+`usbd_cdc_if.h`
+``` c
+void usb_printf(const char *format, ...);
+```
+
+# demo
+
+``` c
+#include "usbd_cdc_if.h"
+
+labelusb_printf("test:%f\n",0.1);
+```
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-06-15-08-36.png)
+
+
+# error
+if you can not see something output in serial assistant, you can try add the micLib
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-06-15-08-02.png)
