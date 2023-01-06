@@ -2,6 +2,7 @@
   {
     "listing": "/article.html",
     "items": [
+      "/posts/usb_cdc_stm32/index.html",
       "/posts/boom/index.html",
       "/posts/vscode_swap_esc/index.html",
       "/posts/rp2040_vscode_debug/index.html",
