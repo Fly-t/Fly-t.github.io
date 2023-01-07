@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.280">
+<meta name="generator" content="quarto-1.2.313">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -232,6 +232,138 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb2"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>vim bomb<span class="op">.</span>s</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">/</span>pase_0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-05-19-39-40.png" class="img-fluid"></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="er">0804946f</span> <span class="op">&lt;</span>phase_0<span class="op">&gt;:</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a> <span class="dv">804946</span><span class="er">f</span><span class="op">:</span>       <span class="dv">55</span>                      push   <span class="op">%</span>ebp         <span class="co">// 压栈</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a> <span class="dv">8049470</span><span class="op">:</span>       <span class="dv">89</span> e5                   mov    <span class="op">%</span>esp<span class="op">,%</span>ebp </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a> <span class="dv">8049472</span><span class="op">:</span>       <span class="dv">83</span> ec <span class="er">08</span>                sub    $<span class="bn">0x8</span><span class="op">,%</span>esp</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a> <span class="dv">8049475</span><span class="op">:</span>       <span class="dv">83</span> ec <span class="er">08</span>                sub    $<span class="bn">0x8</span><span class="op">,%</span>esp</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">8049478</span><span class="op">:</span>       <span class="dv">68</span> <span class="dv">98</span> a1 <span class="bn">04</span> <span class="er">08</span>          push   $<span class="bn">0x804a198</span>  <span class="co">// 压入对比的字符串</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">804947</span><span class="er">d</span><span class="op">:</span>       ff <span class="dv">75</span> <span class="er">08</span>                push   <span class="bn">0x8</span><span class="op">(%</span>ebp<span class="op">)</span> <span class="co">// 压入输入的字符串</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">8049480</span><span class="op">:</span>       e8 <span class="dv">52</span> <span class="bn">07</span> <span class="bn">00</span> <span class="bn">00</span>          call   <span class="dv">8049</span><span class="er">bd7</span> <span class="op">&lt;</span>strings_not_equal<span class="op">&gt;</span> <span class="co">// 调用string_not_rqual 函数</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">8049485</span><span class="op">:</span>       <span class="dv">83</span> c4 <span class="dv">10</span>                add    $<span class="bn">0x10</span><span class="op">,%</span>esp</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">8049488</span><span class="op">:</span>       <span class="dv">85</span> c0                   test   <span class="op">%</span>eax<span class="op">,%</span>eax <span class="co">// 测试eax是否为0</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a> <span class="dv">804948</span><span class="er">a</span><span class="op">:</span>       <span class="dv">74</span> <span class="dv">0</span><span class="er">c</span>                   je     <span class="dv">8049498</span> <span class="op">&lt;</span>phase_0<span class="op">+</span><span class="bn">0x29</span><span class="op">&gt;</span> <span class="co">// 判断是否等于 如果等于就跳转到8049498 如果不等于往下执行</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a> <span class="dv">804948</span><span class="er">c</span><span class="op">:</span>       e8 ae <span class="er">09</span> <span class="bn">00</span> <span class="bn">00</span>          call   <span class="fl">8049e3</span><span class="bu">f</span> <span class="op">&lt;</span>explode_bomb<span class="op">&gt;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a> <span class="dv">8049491</span><span class="op">:</span>       b8 <span class="bn">00</span> <span class="bn">00</span> <span class="bn">00</span> <span class="bn">00</span>          mov    $<span class="bn">0x0</span><span class="op">,%</span>eax</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a> <span class="dv">8049496</span><span class="op">:</span>       eb <span class="bn">05</span>                   jmp    <span class="dv">804949</span><span class="er">d</span> <span class="op">&lt;</span>phase_0<span class="op">+</span><span class="bn">0x2e</span><span class="op">&gt;</span> <span class="co">// 跳转出函数</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a> <span class="dv">8049498</span><span class="op">:</span>       b8 <span class="bn">01</span> <span class="bn">00</span> <span class="bn">00</span> <span class="bn">00</span>          mov    $<span class="bn">0x1</span><span class="op">,%</span>eax</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a> <span class="dv">804949</span><span class="er">d</span><span class="op">:</span>       c9                      leave</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a> <span class="dv">804949</span><span class="er">e</span><span class="op">:</span>       c3                      ret</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>label</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>这里需要进入到运行状态， 查看804a198进行查看该处的字符串</p>
+<p>将程序在断点设置在该处 <img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-05-19-54-27.png" class="img-fluid"></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>gdb bomb</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>b <span class="op">*</span><span class="bn">0x8049480</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>r</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>For help<span class="op">,</span> type <span class="st">"help"</span><span class="op">.</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>Type <span class="st">"apropos word"</span> to search <span class="cf">for</span> commands related to <span class="st">"word"</span><span class="op">...</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>Reading symbols from bomb<span class="op">...</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="op">(</span>gdb<span class="op">)</span> b <span class="op">*</span><span class="bn">0x8049480</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>Breakpoint <span class="dv">1</span> at <span class="bn">0x8049480</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="op">(</span>gdb<span class="op">)</span> r</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>Starting program<span class="op">:</span> <span class="op">/</span>home<span class="op">/</span>dd21<span class="op">/</span>Projects<span class="op">/</span>csBase<span class="op">/</span>base4<span class="op">/</span>boom<span class="op">/</span>bomb </span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>This GDB supports <span class="dt">auto</span><span class="op">-</span>downloading debuginfo from the following URLs<span class="op">:</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>https<span class="op">:</span><span class="co">//debuginfod.archlinux.org</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>Enable debuginfod <span class="cf">for</span> this session<span class="op">?</span> <span class="op">(</span>y or <span class="op">[</span>n<span class="op">])</span> n</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>Debuginfod has been disabled<span class="op">.</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>To make this setting permanent<span class="op">,</span> add 'set debuginfod enabled off' to <span class="op">.</span>gdbinit<span class="op">.</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="op">[</span>Thread debugging using libthread_db enabled<span class="op">]</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>Using host libthread_db library <span class="st">"/usr/lib/libthread_db.so.1"</span><span class="op">.</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>Welcome to my fiendish little bomb<span class="op">.</span> You have <span class="dv">7</span> phases with</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>which to blow yourself up<span class="op">.</span> Have a nice day<span class="op">!</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="op">[</span>input string<span class="op">:</span>xxxxxxx<span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>enter some string and the program will be borokened at <code>0x8049480</code></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>labelhello world</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>Breakpoint <span class="dv">1</span><span class="op">,</span> <span class="bn">0x8049480</span> in phase_0 <span class="op">()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>使用x查看内存中的值</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x<span class="op">/</span><span class="dv">40</span><span class="er">c</span>  <span class="bn">0x804a198</span>     <span class="co">// 将该地址处的数据解析为字符40 个字节</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>x<span class="op">/</span><span class="dv">1</span><span class="er">s</span> <span class="bn">0x804a198</span>        <span class="co">// 字符串输出</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>Breakpoint <span class="dv">1</span><span class="op">,</span> <span class="bn">0x08049480</span> in phase_0 <span class="op">()</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="op">(</span>gdb<span class="op">)</span> x<span class="op">/</span><span class="dv">1</span><span class="er">s</span> <span class="bn">0x804a198</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="bn">0x804a198</span><span class="op">:</span>      <span class="st">"Disks are constructed from platters."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>this means the answer is “Disks are constructed from platters.”</p>
+</section>
+<section id="next-bomb-of-ieee754浮点数表示" class="level1">
+<h1>next bomb of ieee754（浮点数表示）</h1>
+<p>ieee754 标准</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>符号</th>
+<th>阶码</th>
+<th>尾数</th>
+<th>偏置</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>float</td>
+<td>1bit</td>
+<td>8bit</td>
+<td>23bit</td>
+<td>127</td>
+</tr>
+<tr class="even">
+<td>double</td>
+<td>1bit</td>
+<td>11bit</td>
+<td>52bit</td>
+<td>1023</td>
+</tr>
+</tbody>
+</table>
+<p>非数(nan)：阶码255（SP）2047(DP) ,尾数非0 [ <code>0 11111111 1110 1110 0000 0000 0000 000</code>] +∞/-∞：阶码255（SP）2047(DP) ,尾数0[ -∞：<code>1  11111111 0000 0000 0000 0000 0000 000</code> ] 0: 阶码尾数全0 [ +0：<code>0 00000000 0000 0000 0000 0000 0000 000</code> ] 非规格化数(+-2^-126)： 尾数最高位为0， <font color="red"> 阶码为0 </font>[ -0.x: <code>1 00000000 1111 0000 0000 1111 0000 000</code>] 规格化数：尾数最高位为1（隐藏不写）, <font color="red"> 阶码为!=0 </font>[<code>0 10001010 1111 0000 1111 1111 0000 0000</code>]</p>
+<p>## 浮点数实验</p>
+<p>查看反汇编结果phase_1</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="er">0804949f</span> <span class="op">&lt;</span>phase_1<span class="op">&gt;:</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a> <span class="dv">804949</span><span class="er">f</span><span class="op">:</span>       <span class="dv">55</span>                      push   <span class="op">%</span>ebp</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">a0</span><span class="op">:</span>       <span class="dv">89</span> e5                   mov    <span class="op">%</span>esp<span class="op">,%</span>ebp</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">a2</span><span class="op">:</span>       <span class="dv">83</span> ec <span class="dv">28</span>                sub    $<span class="bn">0x28</span><span class="op">,%</span>esp</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">a5</span><span class="op">:</span>       c7 <span class="dv">45</span> f4 f6 cc <span class="dv">4</span><span class="er">e</span> <span class="dv">1</span><span class="er">a</span>    movl   $<span class="bn">0x1a4eccf6</span><span class="op">,-</span><span class="bn">0xc</span><span class="op">(%</span>ebp<span class="op">)</span>  <span class="co">// 将立即数压栈到ebp-0xc的位置</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">ac</span><span class="op">:</span>       db <span class="dv">45</span> f4                fildl  <span class="op">-</span><span class="bn">0xc</span><span class="op">(%</span>ebp<span class="op">)</span>   <span class="co">// 将ebp中的值加载到浮点计算器栈顶</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">af</span><span class="op">:</span>       dd <span class="dv">5</span><span class="er">d</span> e8                fstpl  <span class="op">-</span><span class="bn">0x18</span><span class="op">(%</span>ebp<span class="op">)</span>  <span class="co">// 将浮点寄存器的栈顶数据出栈放到ebp-0x18的位置上</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">b2</span><span class="op">:</span>       <span class="dv">8</span><span class="er">d</span> <span class="dv">45</span> e0                lea    <span class="op">-</span><span class="bn">0x20</span><span class="op">(%</span>ebp<span class="op">),%</span>eax <span class="co">// eax 压栈</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">b5</span><span class="op">:</span>       <span class="dv">50</span>                      push   <span class="op">%</span>eax</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">b6</span><span class="op">:</span>       <span class="dv">8</span><span class="er">d</span> <span class="dv">45</span> e4                lea    <span class="op">-</span><span class="bn">0x1c</span><span class="op">(%</span>ebp<span class="op">),%</span>eax</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">b9</span><span class="op">:</span>       <span class="dv">50</span>                      push   <span class="op">%</span>eax</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">ba</span><span class="op">:</span>       <span class="dv">68</span> bd a1 <span class="bn">04</span> <span class="er">08</span>          push   $<span class="bn">0x804a1bd</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">bf</span><span class="op">:</span>       ff <span class="dv">75</span> <span class="er">08</span>                push   <span class="bn">0x8</span><span class="op">(%</span>ebp<span class="op">)</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">c2</span><span class="op">:</span>       e8 <span class="er">09</span> fc ff ff          call   <span class="dv">80490</span><span class="er">d0</span> <span class="op">&lt;</span>__isoc99_sscanf@plt<span class="op">&gt;</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">c7</span><span class="op">:</span>       <span class="dv">83</span> c4 <span class="dv">10</span>                add    $<span class="bn">0x10</span><span class="op">,%</span>esp</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">ca</span><span class="op">:</span>       <span class="dv">83</span> f8 <span class="bn">02</span>                cmp    $<span class="bn">0x2</span><span class="op">,%</span>eax <span class="co">// 判断是否输入的是两个数</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">cd</span><span class="op">:</span>       <span class="dv">74</span> <span class="dv">0</span><span class="er">c</span>                   je     <span class="dv">80494</span><span class="er">db</span> <span class="op">&lt;</span>phase_1<span class="op">+</span><span class="bn">0x3c</span><span class="op">&gt;</span>  <span class="co">// 如果等于 就跳转到80494db</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">cf</span><span class="op">:</span>       e8 <span class="dv">6</span><span class="er">b</span> <span class="er">09</span> <span class="bn">00</span> <span class="bn">00</span>          call   <span class="fl">8049e3</span><span class="bu">f</span> <span class="op">&lt;</span>explode_bomb<span class="op">&gt;</span>  <span class="co">// 不相等</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">d4</span><span class="op">:</span>       b8 <span class="bn">00</span> <span class="bn">00</span> <span class="bn">00</span> <span class="bn">00</span>          mov    $<span class="bn">0x0</span><span class="op">,%</span>eax</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">d9</span><span class="op">:</span>       eb <span class="dv">2</span><span class="er">c</span>                   jmp    <span class="dv">8049507</span> <span class="op">&lt;</span>phase_1<span class="op">+</span><span class="bn">0x68</span><span class="op">&gt;</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">db</span><span class="op">:</span>       <span class="dv">8</span><span class="er">d</span> <span class="dv">45</span> e8                lea    <span class="op">-</span><span class="bn">0x18</span><span class="op">(%</span>ebp<span class="op">),%</span>eax</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">de</span><span class="op">:</span>       <span class="dv">8</span><span class="er">b</span> <span class="dv">10</span>                   mov    <span class="op">(%</span>eax<span class="op">),%</span>edx</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a> <span class="fl">80494e0</span><span class="op">:</span>       <span class="dv">8</span><span class="er">b</span> <span class="dv">45</span> e4                mov    <span class="op">-</span><span class="bn">0x1c</span><span class="op">(%</span>ebp<span class="op">),%</span>eax</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a> <span class="fl">80494e3</span><span class="op">:</span>       <span class="dv">39</span> c2                   cmp    <span class="op">%</span>eax<span class="op">,%</span>edx</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a> <span class="fl">80494e5</span><span class="op">:</span>       <span class="dv">75</span> <span class="dv">0</span><span class="er">f</span>                   jne    <span class="dv">80494</span><span class="er">f6</span> <span class="op">&lt;</span>phase_1<span class="op">+</span><span class="bn">0x57</span><span class="op">&gt;</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a> <span class="fl">80494e7</span><span class="op">:</span>       <span class="dv">8</span><span class="er">d</span> <span class="dv">45</span> e8                lea    <span class="op">-</span><span class="bn">0x18</span><span class="op">(%</span>ebp<span class="op">),%</span>eax</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">ea</span><span class="op">:</span>       <span class="dv">83</span> c0 <span class="bn">04</span>                add    $<span class="bn">0x4</span><span class="op">,%</span>eax</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">ed</span><span class="op">:</span>       <span class="dv">8</span><span class="er">b</span> <span class="dv">10</span>                   mov    <span class="op">(%</span>eax<span class="op">),%</span>edx</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">ef</span><span class="op">:</span>       <span class="dv">8</span><span class="er">b</span> <span class="dv">45</span> e0                mov    <span class="op">-</span><span class="bn">0x20</span><span class="op">(%</span>ebp<span class="op">),%</span>eax</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">f2</span><span class="op">:</span>       <span class="dv">39</span> c2                   cmp    <span class="op">%</span>eax<span class="op">,%</span>edx</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">f4</span><span class="op">:</span>       <span class="dv">74</span> <span class="dv">0</span><span class="er">c</span>                   je     <span class="dv">8049502</span> <span class="op">&lt;</span>phase_1<span class="op">+</span><span class="bn">0x63</span><span class="op">&gt;</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">f6</span><span class="op">:</span>       e8 <span class="dv">44</span> <span class="er">09</span> <span class="bn">00</span> <span class="bn">00</span>          call   <span class="fl">8049e3</span><span class="bu">f</span> <span class="op">&lt;</span>explode_bomb<span class="op">&gt;</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">fb</span><span class="op">:</span>       b8 <span class="bn">00</span> <span class="bn">00</span> <span class="bn">00</span> <span class="bn">00</span>          mov    $<span class="bn">0x0</span><span class="op">,%</span>eax</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a> <span class="dv">8049500</span><span class="op">:</span>       eb <span class="bn">05</span>                   jmp    <span class="dv">8049507</span> <span class="op">&lt;</span>phase_1<span class="op">+</span><span class="bn">0x68</span><span class="op">&gt;</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a> <span class="dv">8049502</span><span class="op">:</span>       b8 <span class="bn">01</span> <span class="bn">00</span> <span class="bn">00</span> <span class="bn">00</span>          mov    $<span class="bn">0x1</span><span class="op">,%</span>eax</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a> <span class="dv">8049507</span><span class="op">:</span>       c9                      leave</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a> <span class="dv">8049508</span><span class="op">:</span>       c3                      ret</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The bomb has blown up. -167772160 1102728908 Phase 1 defused. How about the next one?</p>
 
 
 </section>
