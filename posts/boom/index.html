@@ -222,7 +222,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="first-we-get-the-disassembly-file-of-elf" class="level1">
 <h1>first we get the disassembly file of elf</h1>
 <div class="sourceCode" id="cb1"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>objdump <span class="op">-</span>d bomb <span class="op">&gt;</span> bomb<span class="op">.</span>s</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p># analazy the bomb.s and bomb.c file</p>
+</section>
+<section id="analazy-the-bomb.s-and-bomb.c-file" class="level1">
+<h1>analazy the bomb.s and bomb.c file</h1>
 <p>enter the main function we can see like this</p>
 <p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-04-20-49-54.png" class="img-fluid"></p>
 <p>then we need to see the .s file to continue analazy the bomb</p>
@@ -235,7 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-05-19-39-40.png" class="img-fluid"></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="er">0804946f</span> <span class="op">&lt;</span>phase_0<span class="op">&gt;:</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a> <span class="dv">804946</span><span class="er">f</span><span class="op">:</span>       <span class="dv">55</span>                      push   <span class="op">%</span>ebp         <span class="co">// 压栈</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a> <span class="dv">8049470</span><span class="op">:</span>       <span class="dv">89</span> e5                   mov    <span class="op">%</span>esp<span class="op">,%</span>ebp </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a> <span class="dv">8049470</span><span class="op">:</span>       <span class="dv">89</span> e5                   mov    <span class="op">%</span>esp<span class="op">,%</span>ebp</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a> <span class="dv">8049472</span><span class="op">:</span>       <span class="dv">83</span> ec <span class="er">08</span>                sub    $<span class="bn">0x8</span><span class="op">,%</span>esp</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a> <span class="dv">8049475</span><span class="op">:</span>       <span class="dv">83</span> ec <span class="er">08</span>                sub    $<span class="bn">0x8</span><span class="op">,%</span>esp</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">8049478</span><span class="op">:</span>       <span class="dv">68</span> <span class="dv">98</span> a1 <span class="bn">04</span> <span class="er">08</span>          push   $<span class="bn">0x804a198</span>  <span class="co">// 压入对比的字符串</span></span>
@@ -251,7 +253,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a> <span class="dv">804949</span><span class="er">d</span><span class="op">:</span>       c9                      leave</span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a> <span class="dv">804949</span><span class="er">e</span><span class="op">:</span>       c3                      ret</span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>label</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>这里需要进入到运行状态， 查看804a198进行查看该处的字符串</p>
+<p>这里需要进入到运行状态， 查看 804a198 进行查看该处的字符串</p>
 <p>将程序在断点设置在该处 <img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-05-19-54-27.png" class="img-fluid"></p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>gdb bomb</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -265,7 +267,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="op">(</span>gdb<span class="op">)</span> b <span class="op">*</span><span class="bn">0x8049480</span></span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>Breakpoint <span class="dv">1</span> at <span class="bn">0x8049480</span></span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="op">(</span>gdb<span class="op">)</span> r</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>Starting program<span class="op">:</span> <span class="op">/</span>home<span class="op">/</span>dd21<span class="op">/</span>Projects<span class="op">/</span>csBase<span class="op">/</span>base4<span class="op">/</span>boom<span class="op">/</span>bomb </span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>Starting program<span class="op">:</span> <span class="op">/</span>home<span class="op">/</span>dd21<span class="op">/</span>Projects<span class="op">/</span>csBase<span class="op">/</span>base4<span class="op">/</span>boom<span class="op">/</span>bomb</span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>This GDB supports <span class="dt">auto</span><span class="op">-</span>downloading debuginfo from the following URLs<span class="op">:</span></span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>https<span class="op">:</span><span class="co">//debuginfod.archlinux.org</span></span>
@@ -283,7 +285,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb5"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>labelhello world</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>Breakpoint <span class="dv">1</span><span class="op">,</span> <span class="bn">0x8049480</span> in phase_0 <span class="op">()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>使用x查看内存中的值</p>
+<p>使用 x 查看内存中的值</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x<span class="op">/</span><span class="dv">40</span><span class="er">c</span>  <span class="bn">0x804a198</span>     <span class="co">// 将该地址处的数据解析为字符40 个字节</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>x<span class="op">/</span><span class="dv">1</span><span class="er">s</span> <span class="bn">0x804a198</span>        <span class="co">// 字符串输出</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -323,9 +325,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<p>非数(nan)：阶码255（SP）2047(DP) ,尾数非0 [ <code>0 11111111 1110 1110 0000 0000 0000 000</code>] +∞/-∞：阶码255（SP）2047(DP) ,尾数0[ -∞：<code>1  11111111 0000 0000 0000 0000 0000 000</code> ] 0: 阶码尾数全0 [ +0：<code>0 00000000 0000 0000 0000 0000 0000 000</code> ] 非规格化数(+-2^-126)： 尾数最高位为0， <font color="red"> 阶码为0 </font>[ -0.x: <code>1 00000000 1111 0000 0000 1111 0000 000</code>] 规格化数：尾数最高位为1（隐藏不写）, <font color="red"> 阶码为!=0 </font>[<code>0 10001010 1111 0000 1111 1111 0000 0000</code>]</p>
-<p>## 浮点数实验</p>
-<p>查看反汇编结果phase_1</p>
+<p>非数(nan)：阶码 255（SP）2047(DP) ,尾数非 0 [ <code>0 11111111 1110 1110 0000 0000 0000 000</code>] +∞/-∞：阶码 255（SP）2047(DP) ,尾数 0[ -∞：<code>1 11111111 0000 0000 0000 0000 0000 000</code> ] 0: 阶码尾数全 0 [ +0：<code>0 00000000 0000 0000 0000 0000 0000 000</code> ] 非规格化数(+-2^-126)： 尾数最高位为 0， <font color="red"> 阶码为 0 </font>[ -0.x: <code>1 00000000 1111 0000 0000 1111 0000 000</code>] 规格化数：尾数最高位为 1（隐藏不写）, <font color="red"> 阶码为!=0 </font>[<code>0 10001010 1111 0000 1111 1111 0000 0000</code>]</p>
+<section id="浮点数实验" class="level2">
+<h2 class="anchored" data-anchor-id="浮点数实验">浮点数实验</h2>
+<p>查看反汇编结果 phase_1</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="er">0804949f</span> <span class="op">&lt;</span>phase_1<span class="op">&gt;:</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a> <span class="dv">804949</span><span class="er">f</span><span class="op">:</span>       <span class="dv">55</span>                      push   <span class="op">%</span>ebp</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a> <span class="dv">80494</span><span class="er">a0</span><span class="op">:</span>       <span class="dv">89</span> e5                   mov    <span class="op">%</span>esp<span class="op">,%</span>ebp</span>
@@ -366,6 +369,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The bomb has blown up. -167772160 1102728908 Phase 1 defused. How about the next one?</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

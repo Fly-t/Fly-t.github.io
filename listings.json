@@ -2,6 +2,7 @@
   {
     "listing": "/article.html",
     "items": [
+      "/posts/config_nvim/index.html",
       "/posts/usb_cdc_stm32/index.html",
       "/posts/boom/index.html",
       "/posts/vscode_swap_esc/index.html",
