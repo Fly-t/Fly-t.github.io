@@ -1,0 +1,36 @@
+---
+title: "vscode candidate key: tab && shift tab"
+author: "dd21"
+date: "2023-01-08"
+categories: []
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2022-12-25-20-14-54.png
+---
+
+# Abstract
+
+vscode use ↑↓↔ to choose the candidate item, that makes me so crazy.
+i want to candidate as vim: tab
+
+# Referance
+
+[texthttps://blog.csdn.net/juzipidemimi/article/details/106755117](https://https://blog.csdn.net/juzipidemimi/article/details/106755117)
+
+# fix the proublem
+
+we need to config the `keyboard shortcuts`
+
+config -> `keyboard shortcuts` --> append the following code block to `keyboard shortcuts.json`
+
+```c
+{
+       "key": "tab",
+       "command": "selectnextsuggestion",
+       "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
+},
+{
+       "key": "shift+tab",
+       "command": "selectPrevSuggestion",
+       "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
+}
+```
+
