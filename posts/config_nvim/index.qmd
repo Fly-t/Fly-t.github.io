@@ -1,0 +1,90 @@
+---
+title: "neovim install and config"
+author: "dd21"
+date: "2023-01-07"
+categories: [vim]
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-07-21-57-02.png
+---
+
+# Abstract
+
+i want to code with vim but i haven't configt that for a long time. today i make up mine mind to config vim.
+
+# Referance
+
+[https://www.youtube.com/watch?v=ctH-a-1eUME&list=PLhoH5vyxr6Qq41NFL4GvhFp-WLd5xzIzZ
+](https://www.youtube.com/watch?v=ctH-a-1eUME&list=PLhoH5vyxr6Qq41NFL4GvhFp-WLd5xzIzZ)
+
+[https://github.com/LunarVim/Neovim-from-scratch](https://github.com/LunarVim/Neovim-from-scratch)
+
+# install nvim & config
+
+```c
+sudo pacman -S neovim
+
+git clone https://github.com/LunarVim/Neovim-from-scratch
+
+cd neovim-from-scratch/usr
+
+git checkout 01-options
+
+nvim options.lua
+```
+
+you can read and help from this command
+
+```c
+:help options
+
+:help bachup
+
+...
+```
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-07-22-11-59.png)
+
+# key map
+
+key map is very usefull this will make vim like some ide
+
+```c
+git checkout -b 02-keymap
+```
+
+# vimPlug
+
+plug will make you vim becom more powerfull
+
+nvim pulg install path is 
+
+``` c
+～/.local/share/nvim/site/pack/packer/start
+
+：packerXXXX
+```
+install plugs
+
+``` c
+cd /home/dd21/.config/nvim/lua/user
+
+```
+add pulg link this
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-08-00-55-39.png)
+
+install `markdownPreview`
+
+``` c
+use "iamcco/markdown-preview.nvim"  -- 这里按照官方的命令发生vim：492错误不知道怎么回事，不添加选项没有任何问题
+
+:w
+
+cd /home/dd21/.local/share/nvim/site/pack/packer/opt/markdown-preview.nvim/app
+
+sudo pacman -S yarn 
+
+yarn install 
+
+nvim README.md
+    :MarkDownPreview
+```

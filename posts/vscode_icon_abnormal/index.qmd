@@ -1,0 +1,29 @@
+---
+title: "vscode icon abnormal"
+author: "dd21"
+date: "2023-01-08"
+categories: [ide]
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-08-14-19-52.png
+---
+
+# Abstract
+
+vscode terminal icon abnormal, shown as box.to fix this problem we nedd to set this `font family` as the terminal font.
+
+# Referance
+
+[texthttps://arch.icekylin.online/advanced/beauty-3.html#\_2-1-powerlevel10k](https://https://arch.icekylin.online/advanced/beauty-3.html#_2-1-powerlevel10k)
+
+check the terminal font
+
+ksonl --> 设置 --> 管理配色方案 --> 外观 --> font
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-08-14-52-57.png)
+
+set the font same as terminal
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-08-14-37-40.png)
+
+then you will see successful
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-08-14-53-28.png)

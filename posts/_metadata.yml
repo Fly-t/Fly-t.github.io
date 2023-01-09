@@ -8,4 +8,5 @@ freeze: true
 title-block-banner: true
 website:
   page-navigation: true
+
 callout-appearance: simple
