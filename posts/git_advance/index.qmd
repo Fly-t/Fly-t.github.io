@@ -1,0 +1,73 @@
+---
+title: "git advanced operate"
+author: "dd21"
+date: "2023-01-10"
+categories: [git]
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-10-13-10-48.png
+---
+
+# Abstract
+
+learn some advanced operate of git, make manage code easily
+
+# Referance
+
+[https://learngitbranching.js.org/](https://learngitbranching.js.org/)
+
+# HEAD
+
+this can jump to which `commit`, you can get the log of per commit log.
+
+```c
+git log
+
+git checkout HASH
+
+# previous one of HEAD
+git checkout HEAD^
+
+# previous x of HEAD
+git checkout ~n
+```
+
+# revert &reset
+
+`revert` is for <font color='red'> remot </font>
+
+```c
+git revert BRANCH
+git revert HEAD
+```
+
+`reset` is for <font color='red'> local </font>
+
+```c
+git reset HEAD~1
+git reset BRANCH^
+```
+
+# cherry-pick
+
+copy the select scope commit to current BRANCH(HEAD)
+
+```c
+git cherry-pick HASH_1 HASH_2
+
+git cherry-pick c1 c2
+```
+
+# interactive rebase
+
+you can choose rebase branch with ui
+
+reabse default to current branch(HEAD)
+
+```c
+git rebase -i HEAD~4
+```
+
+# forced to change branch
+
+```c
+git branch -f xxxx
+```
