@@ -71,3 +71,93 @@ git rebase -i HEAD~4
 ```c
 git branch -f xxxx
 ```
+
+
+# develop demo
+
+we need to branch
+
+|  branch    |   description  |
+| ------------- | ------------- |
+|  master   |   develop branch   |
+|  bugFix   |   bugFix branch   |
+
+when we develop at master branch, bug we want to test or debug somethig.
+
+we need checkout to `bugFix` branch to test something, when we test over we checkout to `master`.
+
+``` bash
+# ------------------------ first times to fix bug --------------------------------
+
+# first time, create and checkout to bugFix branch
+git checkout -b bugFix
+
+#do something on bugFix branch
+....
+
+# we want to update the fixthing to master
+git checkout master 
+git merge bugFix
+```
+
+``` bash
+# ------------------------ n times to fix bug --------------------------------
+
+# second time to test some thing, we still nedd to checkout bugFix branch
+#  if excute this command
+git checkout bugFix
+git merge master
+# you will see something like this
+
+"""
+Auto-merging index.txt
+CONFLICT (content): Merge conflict in index.txt
+Automatic merge failed; fix conflicts and then commit the result.
+""
+
+# the right command like this
+
+# siwtch to bugFix then merge the branch what you wanto test or debug
+git checkout bugFix
+# -f means forced to excute 
+git branch -f master
+
+# then you can test on debug branch
+....
+
+# when we test over 
+git checkout master 
+git merge bugFix
+```
+
+
+# what difference between HEAD~ and HEAD^
+
+[https://stackoverflow.com/questions/2221658/whats-the-difference-between-head-and-head-in-git](https://stackoverflow.com/questions/2221658/whats-the-difference-between-head-and-head-in-git)
+
+HEAD~ is  
+ - Use most of the time — to go back a number of generations, usually what you want`~`
+ - Use on merge commits — because they have two or more (immediate) parents `^`
+
+``` bash
+G   H   I   J
+ \ /     \ /
+  D   E   F
+   \  |  / \
+    \ | /   |
+     \|/    |
+      B     C
+       \   /
+        \ /
+         A
+A =      = A^0
+B = A^   = A^1     = A~1
+C = A^2
+D = A^^  = A^1^1   = A~2
+E = B^2  = A^^2
+F = B^3  = A^^3
+G = A^^^ = A^1^1^1 = A~3
+H = D^2  = B^^2    = A^^^2  = A~2^2
+I = F^   = B^3^    = A^^3^
+J = F^2  = B^3^2   = A^^3^2
+```
