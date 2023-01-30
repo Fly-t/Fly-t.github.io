@@ -1,0 +1,66 @@
+---
+title: "stm32 add dsp" 
+author: "dd21"
+date: "2023-01-30" 
+categories: [stm32]
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-30-11-27-54.png
+---
+
+
+# Abstract
+
+stm32 add dsp, add with 2 functions
+1. add with cubeMx(lib)
+2. add with MDK(sourceCode)
+
+recommand function is function 2.
+
+# Referance
+
+[video](https://https://www.bilibili.com/video/BV1Wu411R7Hc/?spm_id_from=333.337.search-card.all.click&vd_source=c0157a4afd2e47c7662431fd9d2739fb)
+
+[article](https://blog.csdn.net/qq_34022877/article/details/117855263)
+
+# create project whit cubeMx
+
+create base configure then open with keil
+
+# add dsp
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-30-11-36-04.png)
+
+<font color='red'> then you need to remove this item</font>
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-30-11-33-14.png)
+
+if you not delete this you will see like this 
+
+ - too many errors
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-30-11-41-46.png)
+
+
+# add macro
+
+``` c
+,ARM_MATH_CM4//H7是CM7，F4是CM4，F1是CM3
+```
+
+
+# use dsp
+
+``` c
+#include "arm_math.h"
+#include "arm_const_structs.h"
+```
+
+# build 
+
+you need to <font color='red'> rebuild </font>  not `build`
+
+if you see like this means you succesfull
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-30-11-45-43.png)
+
+there are many warnings, don't care this  this means lack of an empty line
+
