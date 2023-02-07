@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="dd21">
-<meta name="dcterms.date" content="2022-12-05">
+<meta name="dcterms.date" content="2023-02-07">
 
-<title>TengFei’s Blog - 小米刷机</title>
+<title>TengFei’s Blog - design an esp32 development Board</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -110,9 +110,9 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">小米刷机</h1>
+      <h1 class="title">design an esp32 development Board</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">clutter</div>
+                <div class="quarto-category">esp32</div>
               </div>
                   </div>
   </div>
@@ -130,7 +130,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">December 5, 2022</p>
+        <p class="date">February 7, 2023</p>
       </div>
     </div>
     
@@ -148,23 +148,35 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="官方教程" class="level1">
-<h1>官方教程</h1>
-<p><a href="https://miuiver.com/how-to-flash-xiaomi-phone/">https://miuiver.com/how-to-flash-xiaomi-phone/</a></p>
+<section id="abstract" class="level1">
+<h1>Abstract</h1>
+<p>learning so much mcu with development Board of official. this time i want to learn how to design a</p>
+<p>develemopment board. This need EDA software like AD. But LCEDA is very sample to use.</p>
 </section>
-<section id="rom地址" class="level1">
-<h1>ROM地址</h1>
-<p><a href="https://xiaomirom.com/">https://xiaomirom.com/</a></p>
+<section id="referance" class="level1">
+<h1>Referance</h1>
+<p><a href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32s3/hw-reference/esp32s3/user-guide-devkitm-1.html">esp32 IDF</a></p>
+<p><a href="https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_cn.pdf">ESP32-S3 技术规格书 (PDF)</a></p>
+<p><a href="https://dl.espressif.com/dl/schematics/SCH_ESP32-S3-DevKitC-1_V1.1_20221130.pdf">ESP32-S3-DevKitC-1 原理图 (PDF)</a></p>
+<p><a href="https://www.bilibili.com/read/cv4647226/#:~:text=%E5%9C%A83.3V%E4%BE%9B%E7%94%B5%E6%97%B6%EF%BC%8CV3%E8%84%9A%E5%92%8CVCC%E8%84%9A%E7%9B%B4%E6%8E%A5%E7%9B%B8%E8%BF%9E%EF%BC%8C%E5%90%8C%E6%97%B6%E7%BB%993.3V%E7%94%B5%E5%8E%8B%E5%8D%B3%E5%8F%AF%EF%BC%8C%E5%89%A9%E4%B8%8B%E7%9A%84%E5%92%8C5V%E7%94%B5%E8%B7%AF%E5%9F%BA%E6%9C%AC%E4%B8%80%E8%87%B4,CH340%E5%BC%95%E8%84%9A%E5%8A%9F%E8%83%BD%E8%A7%A3%E9%87%8A">CH340 设计要点</a></p>
+<p><a href="https://blog.csdn.net/qq_33177268/article/details/108340215">usb pins definenation</a></p>
 </section>
-<section id="miflash地址" class="level1">
-<h1>miflash地址</h1>
-<p><a href="https://miuiver.com/miflash/">https://miuiver.com/miflash/</a></p>
-<section id="右下角注意别选择第三项重新上bl锁" class="level2">
-<h2 class="anchored" data-anchor-id="右下角注意别选择第三项重新上bl锁"><code>右下角注意别选择第三项</code>(重新上BL锁)</h2>
-<p><img src="https://img-blog.csdnimg.cn/5adc467cc6a04134923632b1a3e09034.png" class="img-fluid" alt="在这里插入图片描述"> # bilibili视频地址 <a href="https://www.bilibili.com/video/BV1BY4y1H7Mc?spm_id_from=333.337.search-card.all.click&amp;vd_source=c0157a4afd2e47c7662431fd9d2739fb">https://www.bilibili.com/video/BV1BY4y1H7Mc?spm_id_from=333.337.search-card.all.click&amp;vd_source=c0157a4afd2e47c7662431fd9d2739fb</a></p>
+<section id="设计要点some-considerrations" class="level1">
+<h1>设计要点(some considerrations)</h1>
+<ul>
+<li>电源</li>
+<li>上电时序与复位</li>
+<li>Flash 及 SRAM</li>
+<li>晶振</li>
+<li>射频</li>
+<li>UART</li>
+<li>ADC</li>
+<li>USB</li>
+<li>触摸传感器</li>
+<li>Strapping 管脚</li>
+</ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
