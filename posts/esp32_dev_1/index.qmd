@@ -1,0 +1,38 @@
+---
+title: "design an esp32 development Board"
+author: "dd21"
+date: "2023-02-07"
+categories: [esp32]
+image: https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32s3/_images/esp32-s3-devkitc-1-v1.1-isometric.png
+---
+
+# Abstract
+
+learning so much mcu with development Board of official. this time i want to learn how to design a
+
+develemopment board. This need EDA software like AD. But LCEDA is very sample to use.
+
+# Referance
+
+[esp32 IDF](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32s3/hw-reference/esp32s3/user-guide-devkitm-1.html)
+
+[ESP32-S3 技术规格书 (PDF)](https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_cn.pdf)
+
+[ESP32-S3-DevKitC-1 原理图 (PDF)](https://dl.espressif.com/dl/schematics/SCH_ESP32-S3-DevKitC-1_V1.1_20221130.pdf)
+
+[CH340 设计要点](https://www.bilibili.com/read/cv4647226/#:~:text=%E5%9C%A83.3V%E4%BE%9B%E7%94%B5%E6%97%B6%EF%BC%8CV3%E8%84%9A%E5%92%8CVCC%E8%84%9A%E7%9B%B4%E6%8E%A5%E7%9B%B8%E8%BF%9E%EF%BC%8C%E5%90%8C%E6%97%B6%E7%BB%993.3V%E7%94%B5%E5%8E%8B%E5%8D%B3%E5%8F%AF%EF%BC%8C%E5%89%A9%E4%B8%8B%E7%9A%84%E5%92%8C5V%E7%94%B5%E8%B7%AF%E5%9F%BA%E6%9C%AC%E4%B8%80%E8%87%B4,CH340%E5%BC%95%E8%84%9A%E5%8A%9F%E8%83%BD%E8%A7%A3%E9%87%8A)
+
+[usb pins definenation](https://blog.csdn.net/qq_33177268/article/details/108340215)
+
+# 设计要点(some considerrations)
+
+- 电源
+- 上电时序与复位
+- Flash 及 SRAM
+- 晶振
+- 射频
+- UART
+- ADC
+- USB
+- 触摸传感器
+- Strapping 管脚
