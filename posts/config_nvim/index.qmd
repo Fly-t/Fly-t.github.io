@@ -86,5 +86,52 @@ sudo pacman -S yarn
 yarn install 
 
 nvim README.md
-    :MarkDownPreview
+# then input 
+:MarkDownPreview
+```
+
+# color theme
+
+you can use defualt nvim color theme
+
+open the init.lua
+
+``` bash
+nvim options.lua
+
+# open the line 19 annotation
+termguicolors = true
+
+# set the colortheme in terminal
+:colorscheme tokyonight
+```
+
+you open nvim per time to setup color theme, if you want to set for ever
+
+nvim `./lua/user/colorscheme.lua`
+``` bash
+local colorscheme = "tokyonight"
+
+local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
+if not status_ok then
+  vim.notify("colorscheme " .. colorscheme .. " not found!")
+  return
+end
+```
+
+# lsp install
+
+``` c
+cd plug.lua
+
+# install plug
+:w
+
+# show lsp install info window
+lspinstall
+
+# add with `i`
+# remove with `x`
+
+
 ```
