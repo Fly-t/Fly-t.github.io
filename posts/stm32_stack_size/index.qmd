@@ -1,0 +1,46 @@
+---
+title: "how to set stack size of stm32"
+author: "dd21"
+date: "2023-02-08"
+categories: [stm32]
+image: image
+---
+
+# Abstract
+
+stm32 project default stack size is: 0x1000 Byte, is 4KB if we want to use more biger stack.
+we need to adjust the stack size, but we only know the RAM size, if we set the RAM size of stack,
+the MCU doesn't work.
+
+# Referance
+
+none
+
+# how to set stack
+
+the max stack size is: Rotal_RAM = RAM1 + RAM2(is ram2 is none you can assign the whole RAM to RAM1(stack))
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-08-14-35-08.png)
+
+<font color='red'>set the stack accroding to the RAM1</font>
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-08-14-30-29.png)
+
+# MAX demo with RAM2
+
+| name      | size         |
+| --------- | ------------ |
+| Total_RAM | 0x10000(64k) |
+| RAM1      | 0xc000       |
+| RAM2      | 0x4000       |
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-08-14-30-29.png)
+
+# MAX demo without RAM2
+
+| name      | size         |
+| --------- | ------------ |
+| Total_RAM | 0x10000(64k) |
+| RAM1      | 0x10000      |
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-08-14-45-16.png)
