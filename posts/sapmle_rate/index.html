@@ -232,7 +232,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>采样点数</li>
 </ul>
 <blockquote class="blockquote">
-<p>采样点数（number of samples）表示对信号进行的采样次数，它与采样频率关系密切，因为采样点数就等于采样时间×采样频率。</p>
+<p>采样点数（number of samples）表示对信号进行的采样次数，它与采样频率关系密切，因为采样点数就等于采样时间 × 采样频率。</p>
 <p>采样分辨率取决于采样频率和采样点数，通常使用采样频率作为指标。在数字信号处理中，一般要求采样频率大于信号最高频率的两倍，这是为了保证采样完整地反映了信号的特征。</p>
 </blockquote>
 </section>
@@ -245,46 +245,50 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="va">f0</span><span class="op">=</span><span class="fl">1</span><span class="op">;</span>           <span class="co">% 信号的频率, 1hz表示在1秒中内可以有1个周期变化, 但是根据采样率,所能分辨的频率和采样率有关,如果采样率没有</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="va">plot</span>(<span class="va">sin</span>(<span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">*</span><span class="va">f0</span><span class="op">*</span><span class="va">ts</span>))<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>10hz采样频率采样1hz的信号.</p>
+<p>10hz 采样频率采样 1hz 的信号.</p>
 <p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-11-14-18-43.png" class="img-fluid"></p>
-<p>这样看起来是没有问题的, 但是我们把信号调整为2hz, 采样率不变.如下图, 好像看起来没有太大问题.</p>
+<p>这样看起来是没有问题的, 但是我们把信号调整为 2hz, 采样率不变.如下图, 好像看起来没有太大问题.</p>
 <p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-11-14-34-46.png" class="img-fluid"></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode matlab code-with-copy"><code class="sourceCode matlab"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="va">close</span> <span class="va">all</span>    </span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode matlab code-with-copy"><code class="sourceCode matlab"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="va">close</span> <span class="va">all</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="va">fs</span> <span class="op">=</span> <span class="fl">10</span><span class="op">;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="va">t</span> <span class="op">=</span> <span class="fl">1</span><span class="op">;</span>       </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="va">t</span> <span class="op">=</span> <span class="fl">1</span><span class="op">;</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="va">ts</span> <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">1</span><span class="op">/</span><span class="va">fs</span><span class="op">:</span><span class="va">t</span><span class="op">;</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="va">f0</span><span class="op">=</span><span class="fl">2</span><span class="op">;</span>              <span class="co">% &lt;------------          </span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="va">f0</span><span class="op">=</span><span class="fl">2</span><span class="op">;</span>              <span class="co">% &lt;------------</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="va">plot</span>(<span class="va">sin</span>(<span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">*</span><span class="va">f0</span><span class="op">*</span><span class="va">ts</span>))<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>3hz的信号呢?</strong></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode matlab code-with-copy"><code class="sourceCode matlab"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="va">close</span> <span class="va">all</span>  </span>
+<p><strong>3hz 的信号呢?</strong></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode matlab code-with-copy"><code class="sourceCode matlab"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="va">close</span> <span class="va">all</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="va">fs</span> <span class="op">=</span> <span class="fl">10</span><span class="op">;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="va">t</span> <span class="op">=</span> <span class="fl">1</span><span class="op">;</span>       </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="va">t</span> <span class="op">=</span> <span class="fl">1</span><span class="op">;</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="va">ts</span> <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">1</span><span class="op">/</span><span class="va">fs</span><span class="op">:</span><span class="va">t</span><span class="op">;</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="va">f0</span><span class="op">=</span><span class="fl">3</span><span class="op">;</span>           </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="va">f0</span><span class="op">=</span><span class="fl">3</span><span class="op">;</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="va">plot</span>(<span class="va">sin</span>(<span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">*</span><span class="va">f0</span><span class="op">*</span><span class="va">ts</span>))<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><font color="red"> 好像有点不对劲了 </font></p>
 <p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-11-14-37-03.png" class="img-fluid"></p>
-<p><strong>5hz呢?</strong></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode matlab code-with-copy"><code class="sourceCode matlab"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">close</span> <span class="va">all</span>  </span>
+<p><strong>5hz 呢?</strong></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode matlab code-with-copy"><code class="sourceCode matlab"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">close</span> <span class="va">all</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="va">fs</span> <span class="op">=</span> <span class="fl">10</span><span class="op">;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="va">t</span> <span class="op">=</span> <span class="fl">1</span><span class="op">;</span>       </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="va">t</span> <span class="op">=</span> <span class="fl">1</span><span class="op">;</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="va">ts</span> <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">1</span><span class="op">/</span><span class="va">fs</span><span class="op">:</span><span class="va">t</span><span class="op">;</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="va">f0</span><span class="op">=</span><span class="fl">5</span><span class="op">;</span>           </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="va">f0</span><span class="op">=</span><span class="fl">5</span><span class="op">;</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="va">plot</span>(<span class="va">sin</span>(<span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">*</span><span class="va">f0</span><span class="op">*</span><span class="va">ts</span>))<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><font color="red">彻底不对劲了, 怎么少了一个(应该说是无法分辨了), 好像奈奎斯特还真有点道理了 </font></p>
 <p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-11-14-41-09.png" class="img-fluid"></p>
-<p>所以采样大于2倍还是有道理的, 但是遇到问题就要解决问题, 该怎么解决这个问题呢.</p>
-<p>增加采样点数哇, 增加采样点数有两种方法. 1. 增减采样频率.(增减采样频率那肯定时硬件升级了, 经费燃起来了.) 2. 增加采样时间.(经费差了点, 时间不差事, 给我上寿元.)<font color="red"> 还是需要根据具体应用来</font></p>
+<p>所以采样大于 2 倍还是有道理的, 但是遇到问题就要解决问题, 该怎么解决这个问题呢.</p>
+<p>增加采样点数哇, 增加采样点数有两种方法.</p>
+<ol type="1">
+<li>增减采样频率.(增减采样频率那肯定时硬件升级了, 经费燃起来了.)</li>
+<li>增加采样时间.(经费差了点, 时间不差事, 给我上寿元.)<font color="red"> 还是需要根据具体应用来</font></li>
+</ol>
 <p><font color="red"> 我选择先上寿元(拉长采样时间)</font></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode matlab code-with-copy"><code class="sourceCode matlab"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="va">close</span> <span class="va">all</span>  </span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode matlab code-with-copy"><code class="sourceCode matlab"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="va">close</span> <span class="va">all</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="va">fs</span> <span class="op">=</span> <span class="fl">10</span><span class="op">;</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="va">t</span> <span class="op">=</span> <span class="fl">2</span><span class="op">;</span>       <span class="co">% &lt;----------------</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="va">ts</span> <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">1</span><span class="op">/</span><span class="va">fs</span><span class="op">:</span><span class="va">t</span><span class="op">;</span></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="va">f0</span><span class="op">=</span><span class="fl">5</span><span class="op">;</span>           </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="va">f0</span><span class="op">=</span><span class="fl">5</span><span class="op">;</span></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="va">plot</span>(<span class="va">sin</span>(<span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">*</span><span class="va">f0</span><span class="op">*</span><span class="va">ts</span>))<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>大意了, 寿元白烧了(时间拉长增加采样点无效[此实验]). <img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-11-14-56-03.png" class="img-fluid"></p>
 <p>增加采样率试试, 这有点香.</p>
