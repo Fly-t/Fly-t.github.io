@@ -3,6 +3,7 @@
     "listing": "/article.html",
     "items": [
       "/posts/sapmle_rate/index.html",
+      "/posts/fft_demo/index.html",
       "/posts/stm32_stack_size/index.html",
       "/posts/esp32_dev_1/index.html",
       "/posts/stm32_add_dsp/index.html",
