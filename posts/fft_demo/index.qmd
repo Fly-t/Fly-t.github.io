@@ -1,0 +1,111 @@
+---
+title: "fft demo"
+author: "dd21"
+date: "2023-02-11"
+categories: [dsp, matlab]
+image: https://www.google.com/imgres?imgurl=https%3A%2F%2Fwww.nti-audio.com%2Fportals%2F0%2Fpic%2Fnews%2FFFT-Time-Frequency-View-540.png&imgrefurl=https%3A%2F%2Fwww.nti-audio.com%2Fen%2Fsupport%2Fknow-how%2Ffast-fourier-transform-fft&tbnid=d4_Ll665NPknWM&vet=12ahUKEwjSkMXL9Iz9AhWBB4gKHRfYAFoQMygBegUIARDBAQ..i&docid=IyuAG8Dg7l-MjM&w=540&h=378&q=fft&ved=2ahUKEwjSkMXL9Iz9AhWBB4gKHRfYAFoQMygBegUIARDBAQ
+---
+
+# Abstract
+
+learning how to use fft of matlab.
+
+# Referance
+
+[参考视频](https://www.bilibili.com/video/BV11T4y167Xz?t=1001.4)
+
+# 唠唠
+
+将时序信号转换为频域信号, 还是太抽象不太好理解, 对着干巴巴的公式更是一脸懵, 还是实践出真知, 上手操作了才知道.
+
+# 上手
+
+直接上手处理实际的信号, 感觉很 diao, 可是很不友好.
+
+我是菜鸡, 我选择稳一手, 生成模拟信号, 测试 fft 好不好用, 小酌一下 fft.
+
+1. 生成一个模拟信号
+
+```matlab
+close all
+
+fs = 100;                   % 采样率100hz
+t = 10;                      % 采样时间1s;
+ts = 0:1/fs:t;              % 时间矢量;
+
+f1=2; f2=10; f3=40;         % 三个频率的信号,2hz,10hz,40hz
+
+sig1 = 3*sin(2*pi*f1*ts + 0.75*pi);  % 频率2, 相位角0.75pi, 幅值3
+sig2 = 1*sin(2*pi*f2*ts + 0   *pi);        % 频率10, 相位角0, 幅值1
+sig3 = 2*sin(2*pi*f3*ts + 1.5 *pi);       % 频率40, 相位角1.5pi, 幅值2
+
+signal = sig1+sig2+sig3;    % 混频
+plot(signal);
+```
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-11-17-59-29.png)
+
+<font color='red'> 从时域的分析中, 我们无法确切的知道信号中有多少成分(包括[频率,幅值,相位]), 所以我们引入了 fft </font>
+
+> FFT 的本质就是通过无穷多个正弦函数来对任意一段信号进行无穷的逼近, 在实际应用中, 经过 FFT 变换后,该信号中有多少种三角数就有多少种成分(包括[频率,幅值,相位])
+
+1. FFT
+
+# FFT
+
+```matlab
+L = length(signal);         % 长度表示
+P = abs(fft(signal));       % fft后 取模
+P1 = P(1:L/2+1);            % 取出正频部分,负频没有物理意义, 但是要遵循能量守恒, 将其放到正频部分.
+
+P1(2:end-1) = 2*P1(2:end-1); % 将负频部分幅值追加到正频部分, 能量还原.
+```
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-11-18-54-28.png)
+
+## 幅值矫正
+
+为什么要将 fft 变换后的值进行矫正才能得到正确的幅值, 是因为横坐标是以时间为单位划分的频率, 也就意味着将频率也划分同样的份数,
+
+```matlab
+P1 = P1/(L);                 % 幅值矫正, 时间为单位
+f = fs*(0:L/2)/L;            % 频率矫正. 100hz分成500份,/L没明白.
+figure ;plot(f,P1);
+```
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-11-18-54-51.png)
+
+可以使用`doc fft`调出 fft 手册.
+
+# Other
+
+在傅里叶变换的结果中，频率可以分为正频和负频, 成为了图上对称的两部分。
+
+正频是指信号频率从零开始增加到一半的采样频率（即 Nyquist 频率）的频率。这些频率代表了信号的正常周期，即信号的频率从低到高递增。
+
+负频是指信号频率从采样频率的一半开始从大到小的频率。这些频率不代表信号的真实频率，而是傅里叶变换算法所需要的频率范围。(<font color='red'> 负频无物理意义 </font>)
+
+总的来说，正频和负频是傅里叶变换的频率结果的两个重要部分，它们提供了对信号的详细频率分析。正频提供了信号在正常周期下的表现，而负频提供了在傅里叶变换算法所需的周期下的表现。
+
+
+
+
+
+
+
+fft频率矫正为什么需要再除以长度?
+
+在 FFT 变换中，频率矫正通常需要再次除以信号的长度，这是因为 FFT 变换出来的频域信号是以离散频率为单位的，但是我们通常需要得到连续的频率。
+
+频率矫正的方法是将 FFT 变换出来的频域信号的频率乘以信号长度，以得到连续的频率。
+
+最终的矫正频率可以用以下公式表示：
+
+f = k * Fs / N
+``` matlab
+f = 0:499*100/L                %  /L 是将离散的数据还原回去
+f = (0:L/2)*fs/L;            % 频率矫正.
+```
+其中，f 表示矫正频率，k 表示频域信号的编号，N 表示信号的长度，Fs 表示采样频率。
+
+矫正频率实际上表示了在时域中该频率分量的真实频率。因此，频率矫正是对 FFT 变换出来的频域信号的频率的必要处理。
