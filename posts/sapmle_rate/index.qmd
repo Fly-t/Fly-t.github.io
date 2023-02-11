@@ -1,0 +1,116 @@
+---
+title: "sample rate how to set" 
+author: "dd21"
+date: "2023-02-11" 
+categories: [matlab,dsp]
+image: https://www.bing.com/images/search?view=detailV2&ccid=iBPgoGCu&id=91BEA2D42A2ECBFFA1172BD17D385D7928429D71&thid=OIP.iBPgoGCuGg3uvQdwWMT3wQHaDd&mediaurl=https%3a%2f%2fpic4.zhimg.com%2fv2-5c7beb43ec0e932bb90bc3992c472197_1440w.jpg%3fsource%3d172ae18b&exph=418&expw=896&q=%e6%95%b0%e5%ad%97%e4%bf%a1%e5%8f%b7%e5%a4%84%e7%90%86&simid=608003954649140442&FORM=IRPRST&ck=0D06B51B3E06C625AA12C7D019A751E1&selectedIndex=3
+---
+
+
+# Abstract
+
+sample rate how to set and set it reaseon.  
+
+# Referance
+
+[bilibi:爱用显微镜看世界](https://space.bilibili.com/481081325/video?tid=0&page=2&keyword=&order=pubdate)
+[频域信号绘制](https://www.bilibili.com/video/BV1MS4y1B79R?t=3.4)
+
+
+
+# 名词
+ - 采样频率
+
+> 采样频率（sampling rate）表示一秒内对信号进行的采样次数，单位是赫兹（Hz）。如果采样频率越高，就代表采样的次数越多，信号的分辨率就越高。
+
+ - 采样点数
+
+> 采样点数（number of samples）表示对信号进行的采样次数，它与采样频率关系密切，因为采样点数就等于采样时间×采样频率。
+>
+> 采样分辨率取决于采样频率和采样点数，通常使用采样频率作为指标。在数字信号处理中，一般要求采样频率大于信号最高频率的两倍，这是为了保证采样完整地反映了信号的特征。
+
+
+
+# 采样点数和采样率的关系
+
+```matlab
+close all       % 关闭所有窗口.
+fs = 10;        % 采样频率 10hz 表示, 将1秒分成10份, 采样率越高时间越,曲线越平滑[这里10个点, 不知道为什么会多一个]
+t = 1;          % 1秒, 表示采样时间1秒,这样1s就采样10个点 这样采样的时间就越长,信号的周期也越多
+ts = 0:1/fs:t;  % 时间矢量(采样点数),将10s的时间按照采样率平均分, 那就是每次0.1时间步进.
+
+f0=1;           % 信号的频率, 1hz表示在1秒中内可以有1个周期变化, 但是根据采样率,所能分辨的频率和采样率有关,如果采样率没有
+plot(sin(2*pi*f0*ts));
+```
+10hz采样频率采样1hz的信号.
+
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-11-14-18-43.png)
+
+这样看起来是没有问题的, 但是我们把信号调整为2hz, 采样率不变.如下图, 好像看起来没有太大问题.
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-11-14-34-46.png)
+
+``` matlab
+close all    
+fs = 10;
+t = 1;       
+ts = 0:1/fs:t;
+
+f0=2;              % <------------          
+plot(sin(2*pi*f0*ts));
+```
+
+**3hz的信号呢?**
+``` matlab
+close all  
+fs = 10;
+t = 1;       
+ts = 0:1/fs:t;
+
+f0=3;           
+plot(sin(2*pi*f0*ts));
+```
+<font color='red'> 好像有点不对劲了 </font>
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-11-14-37-03.png)
+
+
+**5hz呢?**
+``` matlab
+close all  
+fs = 10;
+t = 1;       
+ts = 0:1/fs:t;
+
+f0=5;           
+plot(sin(2*pi*f0*ts));
+```
+<font color='red'>彻底不对劲了, 怎么少了一个(应该说是无法分辨了), 好像奈奎斯特还真有点道理了 </font>
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-11-14-41-09.png)
+
+所以采样大于2倍还是有道理的, 但是遇到问题就要解决问题, 该怎么解决这个问题呢.
+
+增加采样点数哇, 增加采样点数有两种方法.
+1. 增减采样频率.(增减采样频率那肯定时硬件升级了, 经费燃起来了.)
+2. 增加采样时间.(经费差了点, 时间不差事, 给我上寿元.)<font color='red'> 还是需要根据具体应用来</font>
+
+<font color='red'> 我选择先上寿元(拉长采样时间)</font>
+
+``` matlab
+close all  
+fs = 10;
+t = 2;       % <----------------
+ts = 0:1/fs:t;
+
+f0=5;           
+plot(sin(2*pi*f0*ts));
+```
+大意了, 寿元白烧了(时间拉长增加采样点无效[此实验]).
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-11-14-56-03.png)
+
+增加采样率试试, 这有点香.
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-11-15-00-12.png)
+
