@@ -1,0 +1,54 @@
+---
+title: " Empirical Mode Decomposition"
+author: "dd21"
+date: "2023-02-12"
+categories: [algrithm]
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-30-50.png
+---
+
+# Abstract
+
+An unsupervised signal analysis method for decomposing and feature extraction of complex signals. The algorithm decomposes signals iteratively by constructing modal functions.
+
+# Referance
+
+[bilibil](https://www.bilibili.com/video/BV13B4y127Ja?t=247.4)
+
+# 引言
+
+为什么需要该算法, 该算法是为了解决普通傅里叶变化无法解决的问题, 即无法得到更高的时间分辨率,无法得出准确时间点的频率成分, 所以出现了`短时傅里叶变换`, 短时傅里叶变换将整段信号进行加窗划分为一段一段的信号,对每一段信号进行傅里叶变化,这样我们就有了时间的概念, `但是由于短时傅里叶变化的窗长是固定的, 如果窗长设置的过短就无法分辨低频信号, 反之窗长过长高频信号的响应就会不及时` 所以出现了`经验模态分解`和`离散晓波变换`这两种方法来应变时变的非稳态的数字信号.
+
+## 生成信号
+
+```matlab
+t = 2;  % 2 s
+fs = 1000;      % 采样1000hz
+ts = 0:1/fs:t;
+
+sig_low2high = chirp(ts,50,2,300);  %50hz 升频道300hz  时间2s
+sig_high2low = chirp(ts,300,2,50);  %300hz 降频道50hz  时间2s
+
+```
+
+## 打开信号分析器
+
+### 1. 导入信号
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-50-34.png)
+
+### 2. 设置采样率
+
+左侧变量窗口, 右键-> 设置时间.
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-52-13.png)
+
+导入完成
+
+从频谱图上我们很难看出他们的频率变化, 所以有了短时傅里叶变换.
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-56-27.png)
+
+打开是频图, 就能够很清晰的看到各个时间的频率变化.
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-53-54.png)
+
+
