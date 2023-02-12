@@ -1,0 +1,123 @@
+---
+title: "Filter Design & Analysis Tool(FdaTool)" 
+author: "dd21"
+date: "2023-02-12" 
+categories: [matlab]
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-14-51-41.png
+---
+
+
+# Abstract
+learning how to use fdatool to design filter. 
+
+
+# Referance
+
+[bilibil video](https://www.bilibili.com/video/BV1mS4y1h7WU?t=97.9)
+
+
+# 滤波器种类
+## 1. 低通滤波器
+> 用于从信号中删除高频成分，从而只保留低频成分. [高频成分的幅度变小，而低频成分的幅度则不变或变大。]
+
+## 2. 高通滤波器
+> 用于从信号中删除低频成分，从而只保留高频成分.[使得低频成分的幅度变小，而高频成分的幅度则不变或变大。]
+
+## 3. 带通滤波器
+> 让某一个连续范围内的通过, 旁边的都是要衰减的.(凸)
+
+## 4. 带阻滤波器
+> 和带通滤波器相反, 让某一个连续范围内阻碍其通过,旁边的让其通过. (凹)
+
+## 5. 陷波滤波器
+> 特殊的滤波器
+>
+
+# 设计方法
+
+## 1. IIR (Infinite Impulse Response)
+
+IIR 滤波器的输出不仅与其当前输入样本有关，还与其过去的输出样本有关，因此它是一种无限冲激响应滤波器。它通常具有非线性相位，并且比 FIR 滤波器具有更低的时延。
+> 响应快, 输出和当前和过去都有关,具有反馈的, 能够对滤波进行很好的调节, 弊端是不稳定.
+<font color='red'> 各频率之间的相位变化是非线性的 </font>
+
+## 2. FIR (Finite Impulse Response)
+
+FIR 滤波器的输出只与其输入的有限个样本有关，因此它是一种有限冲激响应滤波器。它通常具有线性相位，但可以实现任意频率响应。
+> 有限脉冲内进行响应, 没有反馈, 所以输出稳定, 但是弊端是计算量大.
+<font color='red'> 各频率之间的相位变化是线性的(a,b滤波前相差90度, 滤波后a,b之间的相位差还是90度.iir就不一定是了.[这里有勘误说是fir的设计通常是设计成线性的,并不是fir本身就是线性的.]) </font>
+
+## 阶数
+
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-15-30-43.png)
+### 1. IIR 
+
+IIR通常不超过5阶. 通常选Minimal,<font color='red'> 如果设置阶数太高了就会发散,无法实现效果 </font> 
+
+
+### 2. FIR
+
+阶数越高越好, 阶数和算力成正比.通常 50,100,200都是常见的.
+
+
+## 频率域
+
+通过频率域进行滤波.
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-15-31-36.png)
+
+
+## 低通滤波器案例
+
+### 低通滤波器的IIR方法
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-04-20.png)
+
+#### 相位变化
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-05-46.png)
+
+### 低通滤波器的FIR方法
+
+
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-07-43.png)
+
+
+#### 相位变化
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-06-47.png)
+
+
+## 高通滤波器
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-13-01.png)
+
+
+阶数越大效果越好, 但是算力要求也越高
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-15-25.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-16-09.png)
+
+
+
+## 带通滤波器
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-18-42.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-19-03.png)
+
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-19-20.png)
+
+
+## 带阻滤波器
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-21-37.png)
+
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-21-52.png)
+
+## Other
+> 在实际应用中，FIR 滤波器通常用于实现精确的频率响应，例如在图像处理和音频处理中；而 IIR 滤波器通常用于实现低时延的动态信号处理，例如在通信系统和生物医学工程中。
+> 
+> 总之，FIR 和 IIR 滤波器的选择取决于特定应用的需求和性能要求，应该根据实际需要进行合理选择。
+
