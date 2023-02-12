@@ -2,6 +2,7 @@
   {
     "listing": "/article.html",
     "items": [
+      "/posts/fdatool/index.html",
       "/posts/sapmle_rate/index.html",
       "/posts/fft_demo/index.html",
       "/posts/stm32_stack_size/index.html",

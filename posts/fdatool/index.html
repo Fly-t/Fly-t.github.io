@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="dd21">
+<meta name="dcterms.date" content="2023-02-12">
+
+<title>TengFei’s Blog - Filter Design &amp; Analysis Tool(FdaTool)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">TengFei’s Blog</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../article.html">
+ <span class="menu-text">Article</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/fly-t"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://raw.githubusercontent.com/fly-t/images/main/blog/wechat-2022-11-27-16-30-56.png"><i class="bi bi-qr-code-scan" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Filter Design &amp; Analysis Tool(FdaTool)</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">matlab</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>dd21 </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 12, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="abstract" class="level1">
+<h1>Abstract</h1>
+<p>learning how to use fdatool to design filter.</p>
+</section>
+<section id="referance" class="level1">
+<h1>Referance</h1>
+<p><a href="https://www.bilibili.com/video/BV1mS4y1h7WU?t=97.9">bilibil video</a></p>
+</section>
+<section id="滤波器种类" class="level1">
+<h1>滤波器种类</h1>
+<section id="低通滤波器" class="level2">
+<h2 class="anchored" data-anchor-id="低通滤波器">1. 低通滤波器</h2>
+<blockquote class="blockquote">
+<p>用于从信号中删除高频成分，从而只保留低频成分. [高频成分的幅度变小，而低频成分的幅度则不变或变大。]</p>
+</blockquote>
+</section>
+<section id="高通滤波器" class="level2">
+<h2 class="anchored" data-anchor-id="高通滤波器">2. 高通滤波器</h2>
+<blockquote class="blockquote">
+<p>用于从信号中删除低频成分，从而只保留高频成分.[使得低频成分的幅度变小，而高频成分的幅度则不变或变大。]</p>
+</blockquote>
+</section>
+<section id="带通滤波器" class="level2">
+<h2 class="anchored" data-anchor-id="带通滤波器">3. 带通滤波器</h2>
+<blockquote class="blockquote">
+<p>让某一个连续范围内的通过, 旁边的都是要衰减的.(凸)</p>
+</blockquote>
+</section>
+<section id="带阻滤波器" class="level2">
+<h2 class="anchored" data-anchor-id="带阻滤波器">4. 带阻滤波器</h2>
+<blockquote class="blockquote">
+<p>和带通滤波器相反, 让某一个连续范围内阻碍其通过,旁边的让其通过. (凹)</p>
+</blockquote>
+</section>
+<section id="陷波滤波器" class="level2">
+<h2 class="anchored" data-anchor-id="陷波滤波器">5. 陷波滤波器</h2>
+<blockquote class="blockquote">
+<p>特殊的滤波器</p>
+</blockquote>
+</section>
+</section>
+<section id="设计方法" class="level1">
+<h1>设计方法</h1>
+<section id="iir-infinite-impulse-response" class="level2">
+<h2 class="anchored" data-anchor-id="iir-infinite-impulse-response">1. IIR (Infinite Impulse Response)</h2>
+<p>IIR 滤波器的输出不仅与其当前输入样本有关，还与其过去的输出样本有关，因此它是一种无限冲激响应滤波器。它通常具有非线性相位，并且比 FIR 滤波器具有更低的时延。 &gt; 响应快, 输出和当前和过去都有关,具有反馈的, 能够对滤波进行很好的调节, 弊端是不稳定. <font color="red"> 各频率之间的相位变化是非线性的 </font></p>
+</section>
+<section id="fir-finite-impulse-response" class="level2">
+<h2 class="anchored" data-anchor-id="fir-finite-impulse-response">2. FIR (Finite Impulse Response)</h2>
+<p>FIR 滤波器的输出只与其输入的有限个样本有关，因此它是一种有限冲激响应滤波器。它通常具有线性相位，但可以实现任意频率响应。 &gt; 有限脉冲内进行响应, 没有反馈, 所以输出稳定, 但是弊端是计算量大. <font color="red"> 各频率之间的相位变化是线性的(a,b滤波前相差90度, 滤波后a,b之间的相位差还是90度.iir就不一定是了.[这里有勘误说是fir的设计通常是设计成线性的,并不是fir本身就是线性的.]) </font></p>
+</section>
+<section id="阶数" class="level2">
+<h2 class="anchored" data-anchor-id="阶数">阶数</h2>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-15-30-43.png" class="img-fluid"> ### 1. IIR</p>
+<p>IIR通常不超过5阶. 通常选Minimal,<font color="red"> 如果设置阶数太高了就会发散,无法实现效果 </font></p>
+<section id="fir" class="level3">
+<h3 class="anchored" data-anchor-id="fir">2. FIR</h3>
+<p>阶数越高越好, 阶数和算力成正比.通常 50,100,200都是常见的.</p>
+</section>
+</section>
+<section id="频率域" class="level2">
+<h2 class="anchored" data-anchor-id="频率域">频率域</h2>
+<p>通过频率域进行滤波.</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-15-31-36.png" class="img-fluid"></p>
+</section>
+<section id="低通滤波器案例" class="level2">
+<h2 class="anchored" data-anchor-id="低通滤波器案例">低通滤波器案例</h2>
+<section id="低通滤波器的iir方法" class="level3">
+<h3 class="anchored" data-anchor-id="低通滤波器的iir方法">低通滤波器的IIR方法</h3>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-04-20.png" class="img-fluid"></p>
+<section id="相位变化" class="level4">
+<h4 class="anchored" data-anchor-id="相位变化">相位变化</h4>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-05-46.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="低通滤波器的fir方法" class="level3">
+<h3 class="anchored" data-anchor-id="低通滤波器的fir方法">低通滤波器的FIR方法</h3>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-07-43.png" class="img-fluid"></p>
+<section id="相位变化-1" class="level4">
+<h4 class="anchored" data-anchor-id="相位变化-1">相位变化</h4>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-06-47.png" class="img-fluid"></p>
+</section>
+</section>
+</section>
+<section id="高通滤波器-1" class="level2">
+<h2 class="anchored" data-anchor-id="高通滤波器-1">高通滤波器</h2>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-13-01.png" class="img-fluid"></p>
+<p>阶数越大效果越好, 但是算力要求也越高 <img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-15-25.png" class="img-fluid"></p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-16-09.png" class="img-fluid"></p>
+</section>
+<section id="带通滤波器-1" class="level2">
+<h2 class="anchored" data-anchor-id="带通滤波器-1">带通滤波器</h2>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-18-42.png" class="img-fluid"></p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-19-03.png" class="img-fluid"></p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-19-20.png" class="img-fluid"></p>
+</section>
+<section id="带阻滤波器-1" class="level2">
+<h2 class="anchored" data-anchor-id="带阻滤波器-1">带阻滤波器</h2>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-21-37.png" class="img-fluid"></p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-16-21-52.png" class="img-fluid"></p>
+</section>
+<section id="other" class="level2">
+<h2 class="anchored" data-anchor-id="other">Other</h2>
+<blockquote class="blockquote">
+<p>在实际应用中，FIR 滤波器通常用于实现精确的频率响应，例如在图像处理和音频处理中；而 IIR 滤波器通常用于实现低时延的动态信号处理，例如在通信系统和生物医学工程中。</p>
+<p>总之，FIR 和 IIR 滤波器的选择取决于特定应用的需求和性能要求，应该根据实际需要进行合理选择。</p>
+</blockquote>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
