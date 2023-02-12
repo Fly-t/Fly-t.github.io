@@ -3,7 +3,7 @@ title: "sample rate how to set"
 author: "dd21"
 date: "2023-02-11"
 categories: [matlab, dsp]
-image: https://www.bing.com/images/search?view=detailV2&ccid=iBPgoGCu&id=91BEA2D42A2ECBFFA1172BD17D385D7928429D71&thid=OIP.iBPgoGCuGg3uvQdwWMT3wQHaDd&mediaurl=https%3a%2f%2fpic4.zhimg.com%2fv2-5c7beb43ec0e932bb90bc3992c472197_1440w.jpg%3fsource%3d172ae18b&exph=418&expw=896&q=%e6%95%b0%e5%ad%97%e4%bf%a1%e5%8f%b7%e5%a4%84%e7%90%86&simid=608003954649140442&FORM=IRPRST&ck=0D06B51B3E06C625AA12C7D019A751E1&selectedIndex=3
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-14-45-07.png
 ---
 
 # Abstract
@@ -94,7 +94,7 @@ plot(sin(2*pi*f0*ts));
 增加采样点数哇, 增加采样点数有两种方法.
 
 1. 增减采样频率.(增减采样频率那肯定时硬件升级了, 经费燃起来了.)
-2. 增加采样时间.(经费差了点, 时间不差事, 给我上寿元.)<font color='red'> 还是需要根据具体应用来</font>
+2. 增加采样时间.(经费差了点, 时间不差事.)<font color='red'> 还是需要根据具体应用来</font>
 
 <font color='red'> 我选择先上寿元(拉长采样时间)</font>
 
