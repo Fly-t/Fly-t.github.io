@@ -1117,7 +1117,14 @@
     "href": "posts/esp32_dev_1/index.html",
     "title": "design an esp32 development Board",
     "section": "",
-    "text": "Abstract\nlearning so much mcu with development Board of official. this time i want to learn how to design a\ndevelemopment board. This need EDA software like AD. But LCEDA is very sample to use.\n\n\nReferance\nesp32 IDF\nESP32-S3 技术规格书 (PDF)\nESP32-S3-DevKitC-1 原理图 (PDF)\nCH340 设计要点\nusb pins definenation\n\n\n设计要点(some considerrations)\n\n电源\n上电时序与复位\nFlash 及 SRAM\n晶振\n射频\nUART\nADC\nUSB\n触摸传感器\nStrapping 管脚"
+    "text": "learning so much mcu with development Board of official. this time i want to learn how to design a\ndevelemopment board. This need EDA software like AD. But LCEDA is very sample to use."
+  },
+  {
+    "objectID": "posts/esp32_dev_1/index.html#电源power",
+    "href": "posts/esp32_dev_1/index.html#电源power",
+    "title": "design an esp32 development Board",
+    "section": "1.电源（power）",
+    "text": "1.电源（power）"
   },
   {
     "objectID": "posts/TI_icboost+IWR6843/index.html",
