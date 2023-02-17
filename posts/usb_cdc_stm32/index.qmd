@@ -16,6 +16,8 @@ this usb cdc stolve the proublem, we can use the usart easily.
 
 [texthttps://blog.csdn.net/qq_15504787/article/details/113787699](https://https://blog.csdn.net/qq_15504787/article/details/113787699)
 
+[fix usb cdc continues bug](https://blog.csdn.net/qq_37919644/article/details/99616638)
+
 # careate project with CubeMx
 
 ![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-06-14-56-05.png)
@@ -28,19 +30,20 @@ the clock must be set to 48Mhz
 
 ![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-06-14-56-49.png)
 
-# open the project 
+# open the project
 
 open the file `usbd_cdc_if.c`
 
 add the code like this
-``` c
+
+```c
 #include <stdarg.h>
- 
+
 void usb_printf(const char *format, ...)
 {
     va_list args;
     uint32_t length;
- 
+
     va_start(args, format);
     length = vsnprintf((char *)UserTxBufferFS, APP_TX_DATA_SIZE, (char *)format, args);
     va_end(args);
@@ -50,13 +53,14 @@ void usb_printf(const char *format, ...)
 
 add this to `.h` file to export this api, include this `.h`file in which `.c`file can use the `usb_printf` to print something with usb.
 `usbd_cdc_if.h`
-``` c
+
+```c
 void usb_printf(const char *format, ...);
 ```
 
 # demo
 
-``` c
+```c
 #include "usbd_cdc_if.h"
 
 labelusb_printf("test:%f\n",0.1);
@@ -64,8 +68,44 @@ labelusb_printf("test:%f\n",0.1);
 
 ![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-06-15-08-36.png)
 
-
 # error
+
 if you can not see something output in serial assistant, you can try add the micLib
 
 ![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-06-15-08-02.png)
+
+# Other
+
+if you want to send continues data with `CDC_Transmit_FS` like this
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-17-15-07-26.png)
+
+you will need to fix this bug, otherwise you will get same data of which one you send.
+
+## fix usb_cdc continues send bug
+
+update the the `CDC_Transmit_FS` function. if you don't want to fix you can try `hal_delay()`
+
+```c
+uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len)
+{
+  uint8_t result = USBD_OK;
+	uint32_t Timeout = HAL_GetTick();
+  /* USER CODE BEGIN 7 */
+  USBD_CDC_HandleTypeDef *hcdc = (USBD_CDC_HandleTypeDef*)hUsbDeviceFS.pClassData;
+  if (hcdc->TxState != 0){
+    return USBD_BUSY;
+  }
+  USBD_CDC_SetTxBuffer(&hUsbDeviceFS, Buf, Len);
+  result = USBD_CDC_TransmitPacket(&hUsbDeviceFS);
+  /* USER CODE END 7 */
+	while(hcdc->TxState)
+	{
+		if(HAL_GetTick() - Timeout >=10)//超时
+		{
+			break;
+		}
+	}
+  return result;
+}
+```
