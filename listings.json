@@ -2,6 +2,7 @@
   {
     "listing": "/article.html",
     "items": [
+      "/posts/numpy/index.html",
       "/posts/fdatool/index.html",
       "/posts/EMD/index.html",
       "/posts/fft_demo/index.html",
