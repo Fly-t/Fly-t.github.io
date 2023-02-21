@@ -213,7 +213,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="abstract" class="level1">
 <h1>Abstract</h1>
-<p>stm32 add dsp, add with 2 functions 1. add with cubeMx(lib) 2. add with MDK(sourceCode)</p>
+<p>stm32 add dsp, add with 2 functions</p>
+<ol type="1">
+<li>add with cubeMx(lib)</li>
+<li>add with MDK(sourceCode)</li>
+</ol>
 <p>recommand function is function 2.</p>
 </section>
 <section id="referance" class="level1">
@@ -236,15 +240,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>too many errors</li>
 </ul>
 <p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-30-11-41-46.png" class="img-fluid"></p>
+<p>then add the <code>arm_math.h</code> to which file you want to add . <code>don't need to add Macro ARM_MATH_CMx</code> can use is directly. this time reduced about 34% than matlab coder.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// arm 通过输入的参数类型将fft分为2大类[real,complex]分别对应的函数名为:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">// arm_rfft_xxxx</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">// arm_cfft_xxxx</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>float32_t output<span class="op">[</span><span class="dv">128</span><span class="op">];</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>float32_t input<span class="op">[</span><span class="dv">128</span><span class="op">];</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">// 初始化FFT状态</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>arm_rfft_fast_instance_f32 fft_inst<span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>arm_rfft_fast_init_f32<span class="op">(&amp;</span>fft_inst<span class="op">,</span> <span class="dv">128</span><span class="op">);</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">// 执行FFT</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>arm_rfft_fast_f32<span class="op">(&amp;</span>fft_inst<span class="op">,</span> input<span class="op">,</span> output<span class="op">,</span><span class="dv">0</span><span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="other" class="level1">
+<h1>Other</h1>
+<p><font color="red"> Wrong method, don’t see below this line </font></p>
+<hr>
 </section>
 <section id="add-macro" class="level1">
 <h1>add macro</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">,</span>ARM_MATH_CM4<span class="co">//H7是CM7，F4是CM4，F1是CM3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">,</span>ARM_MATH_CM4<span class="co">//H7是CM7，F4是CM4，F1是CM3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="use-dsp" class="level1">
 <h1>use dsp</h1>
-<div class="sourceCode" id="cb2"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">"arm_math.h"</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">"arm_const_structs.h"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">"arm_math.h"</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">"arm_const_structs.h"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="build" class="level1">
 <h1>build</h1>
