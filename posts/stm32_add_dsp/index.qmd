@@ -1,15 +1,15 @@
 ---
-title: "stm32 add dsp" 
+title: "stm32 add dsp"
 author: "dd21"
-date: "2023-01-30" 
+date: "2023-01-30"
 categories: [stm32]
 image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-30-11-27-54.png
 ---
 
-
 # Abstract
 
 stm32 add dsp, add with 2 functions
+
 1. add with cubeMx(lib)
 2. add with MDK(sourceCode)
 
@@ -35,34 +35,55 @@ create base configure then open with keil
 
 ![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-30-11-33-14.png)
 
-if you not delete this you will see like this 
+if you not delete this you will see like this
 
- - too many errors
+- too many errors
 
 ![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-30-11-41-46.png)
 
+then add the `arm_math.h` to which file you want to add . `don't need to add Macro ARM_MATH_CMx` can use is directly. this time reduced about 34% than matlab coder.
+
+```c
+// arm 通过输入的参数类型将fft分为2大类[real,complex]分别对应的函数名为:
+// arm_rfft_xxxx
+// arm_cfft_xxxx
+
+float32_t output[128];
+float32_t input[128];
+
+// 初始化FFT状态
+arm_rfft_fast_instance_f32 fft_inst;
+arm_rfft_fast_init_f32(&fft_inst, 128);
+
+// 执行FFT
+arm_rfft_fast_f32(&fft_inst, input, output,0);
+```
+
+# Other
+
+<font color='red'> Wrong method, don't see below this line </font>
+
+<hr>
 
 # add macro
 
-``` c
+```c
 ,ARM_MATH_CM4//H7是CM7，F4是CM4，F1是CM3
 ```
 
-
 # use dsp
 
-``` c
+```c
 #include "arm_math.h"
 #include "arm_const_structs.h"
 ```
 
-# build 
+# build
 
-you need to <font color='red'> rebuild </font>  not `build`
+you need to <font color='red'> rebuild </font> not `build`
 
 if you see like this means you succesfull
 
 ![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-30-11-45-43.png)
 
-there are many warnings, don't care this  this means lack of an empty line
-
+there are many warnings, don't care this this means lack of an empty line
