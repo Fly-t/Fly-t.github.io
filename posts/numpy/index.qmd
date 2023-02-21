@@ -1,0 +1,182 @@
+---
+title: "learning numpy" 
+author: "dd21"
+date: "2023-02-21" 
+categories: [python]
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-21-18-26-32.png
+---
+
+
+# Abstract
+
+learing some  basic operation of numpy
+
+# Referance
+[mofan python](https://mofanpy.com/tutorials/data-manipulation/np-pd/np-array)
+# 属性
+- ndim：维度
+- shape：行数和列数
+- size：元素个数
+
+
+导入模块
+
+``` python
+import numpy as np #为了方便使用numpy 采用np简写
+
+```
+列表转矩阵
+
+``` python
+array = np.array([[1,2,3],[2,3,4]])  #列表转化为矩阵
+print(array)
+"""
+array([[1, 2, 3],
+       [2, 3, 4]])
+"""
+```
+
+属性
+
+``` python
+print('number of dim:',array.ndim)  # 维度
+# number of dim: 2
+
+print('shape :',array.shape)    # 行数和列数
+# shape : (2, 3)
+
+print('size:',array.size)   # 元素个数
+# size: 6
+```
+
+
+# Numpy 的创建 array
+- array：创建数组
+- dtype：指定数据类型
+- zeros：创建数据全为0
+- ones：创建数据全为1
+- empty：创建数据接近0
+- arrange：按指定范围创建数据
+- linspace：创建线段
+
+## 创建数组
+
+``` python
+a = np.array([2,23,4])  # list 1d
+print(a)
+# [2 23 4]
+```
+
+## 指定数据 dtype
+
+根据指定数据类型, 更高的精度速度会更慢,储存大小也随之扩大.
+``` python
+# specify the type of parameters
+arr_int64 = np.array([1,2,3],dtype=np.int64)
+print(arr_int64.dtype) # int64
+```
+
+## 创建特定数据
+
+普通创建2d矩阵
+``` python
+a = np.array([[2,23,4],[2,32,4]])  # 2d 矩阵 2行3列
+print(a)
+"""
+[[ 2 23  4]
+ [ 2 32  4]]
+"""
+```
+创建全零数组
+
+``` python
+a = np.zeros((3,4)) # 数据全为0，3行4列
+"""
+array([[ 0.,  0.,  0.,  0.],
+       [ 0.,  0.,  0.,  0.],
+       [ 0.,  0.,  0.,  0.]])
+"""
+```
+
+创建全一数组, 同时也能指定这些特定数据的 dtype:
+
+``` python
+a = np.ones((3,4),dtype = np.int)   # 数据为1，3行4列
+"""
+array([[1, 1, 1, 1],
+       [1, 1, 1, 1],
+       [1, 1, 1, 1]])
+"""
+```
+创建全空数组, 其实每个值都是接近于零的数:
+> empty不像zeros一样，并不会将数组的元素值设定为0，因此运行起来可能快一些。在另一方面，它要求用户人为地给数组中的每一个元素赋值，所以应该谨慎使用。
+``` python
+a = np.empty((3,4)) # 数据为empty，3行4列
+"""
+array([[  0.00000000e+000,   4.94065646e-324,   9.88131292e-324,
+          1.48219694e-323],
+       [  1.97626258e-323,   2.47032823e-323,   2.96439388e-323,
+          3.45845952e-323],
+       [  3.95252517e-323,   4.44659081e-323,   4.94065646e-323,
+          5.43472210e-323]])
+"""
+```
+
+用 arange 创建连续数组:
+``` python
+a = np.arange(10,20,2) # 10-19 的数据，2步长
+"""
+array([10, 12, 14, 16, 18])
+"""
+```
+使用 reshape 改变数据的形状
+``` python
+# reshape code
+base_arr = np.arange(12)
+print(base_arr)
+# [ 0  1  2  3  4  5  6  7  8  9 10 11]
+reshape_arr = np.reshape(base_arr,(3,4))
+reshape_arr_1 = base_arr.reshape((3,4))
+
+print(reshape_arr_1)
+# [[ 0  1  2  3]
+#  [ 4  5  6  7]
+#  [ 8  9 10 11]]
+```
+
+用 linspace 创建线段型数据:
+> 等分区间
+
+``` python
+a = np.linspace(1,10,20)    # 开始端1，结束端10，且分割成20个数据，生成线段
+"""
+array([  1.        ,   1.47368421,   1.94736842,   2.42105263,
+         2.89473684,   3.36842105,   3.84210526,   4.31578947,
+         4.78947368,   5.26315789,   5.73684211,   6.21052632,
+         6.68421053,   7.15789474,   7.63157895,   8.10526316,
+         8.57894737,   9.05263158,   9.52631579,  10.        ])
+"""
+```
+[属性.py](./0_property.py)
+
+
+
+
+# numpy 的几种基本运算
+让我们从一个脚本开始了解相应的计算以及表示形式 ：
+``` python
+import numpy as np
+a=np.array([10,20,30,40])   # array([10, 20, 30, 40])
+b=np.arange(4)              # array([0, 1, 2, 3])
+```
+## numpy 的几种基本运算
+上述代码中的 a 和 b 是两个属性为 array 也就是矩阵的变量，而且二者都是1行4列的矩阵， 其中b矩阵中的元素分别是从0到3。 如果我们想要求两个矩阵之间的减法，你可以尝试着输入：
+
+
+
+
+
+
+
+
+# Numpy 基础运算2
