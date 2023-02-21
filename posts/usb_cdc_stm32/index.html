@@ -219,6 +219,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="referance" class="level1">
 <h1>Referance</h1>
 <p><a href="https://https://blog.csdn.net/qq_15504787/article/details/113787699">texthttps://blog.csdn.net/qq_15504787/article/details/113787699</a></p>
+<p><a href="https://blog.csdn.net/qq_37919644/article/details/99616638">fix usb cdc continues bug</a></p>
 </section>
 <section id="careate-project-with-cubemx" class="level1">
 <h1>careate project with CubeMx</h1>
@@ -235,12 +236,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>open the file <code>usbd_cdc_if.c</code></p>
 <p>add the code like this</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdarg.h&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> usb_printf<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>format<span class="op">,</span> <span class="op">...)</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">va_list</span> args<span class="op">;</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint32_t</span> length<span class="op">;</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    va_start<span class="op">(</span>args<span class="op">,</span> format<span class="op">);</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    length <span class="op">=</span> vsnprintf<span class="op">((</span><span class="dt">char</span> <span class="op">*)</span>UserTxBufferFS<span class="op">,</span> APP_TX_DATA_SIZE<span class="op">,</span> <span class="op">(</span><span class="dt">char</span> <span class="op">*)</span>format<span class="op">,</span> args<span class="op">);</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    va_end<span class="op">(</span>args<span class="op">);</span></span>
@@ -260,8 +261,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1>error</h1>
 <p>if you can not see something output in serial assistant, you can try add the micLib</p>
 <p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-01-06-15-08-02.png" class="img-fluid"></p>
+</section>
+<section id="other" class="level1">
+<h1>Other</h1>
+<p>if you want to send continues data with <code>CDC_Transmit_FS</code> like this</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-17-15-07-26.png" class="img-fluid"></p>
+<p>you will need to fix this bug, otherwise you will get same data of which one you send.</p>
+<section id="fix-usb_cdc-continues-send-bug" class="level2">
+<h2 class="anchored" data-anchor-id="fix-usb_cdc-continues-send-bug">fix usb_cdc continues send bug</h2>
+<p>update the the <code>CDC_Transmit_FS</code> function. if you don’t want to fix you can try <code>hal_delay()</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">uint8_t</span> CDC_Transmit_FS<span class="op">(</span><span class="dt">uint8_t</span><span class="op">*</span> Buf<span class="op">,</span> <span class="dt">uint16_t</span> Len<span class="op">)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">uint8_t</span> result <span class="op">=</span> USBD_OK<span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint32_t</span> Timeout <span class="op">=</span> HAL_GetTick<span class="op">();</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* USER CODE </span><span class="re">BEGIN</span><span class="co"> 7 */</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  USBD_CDC_HandleTypeDef <span class="op">*</span>hcdc <span class="op">=</span> <span class="op">(</span>USBD_CDC_HandleTypeDef<span class="op">*)</span>hUsbDeviceFS<span class="op">.</span>pClassData<span class="op">;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>hcdc<span class="op">-&gt;</span>TxState <span class="op">!=</span> <span class="dv">0</span><span class="op">){</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> USBD_BUSY<span class="op">;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  USBD_CDC_SetTxBuffer<span class="op">(&amp;</span>hUsbDeviceFS<span class="op">,</span> Buf<span class="op">,</span> Len<span class="op">);</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  result <span class="op">=</span> USBD_CDC_TransmitPacket<span class="op">(&amp;</span>hUsbDeviceFS<span class="op">);</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* USER CODE </span><span class="re">END</span><span class="co"> 7 */</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span><span class="op">(</span>hcdc<span class="op">-&gt;</span>TxState<span class="op">)</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span><span class="op">(</span>HAL_GetTick<span class="op">()</span> <span class="op">-</span> Timeout <span class="op">&gt;=</span><span class="dv">10</span><span class="op">)</span><span class="co">//超时</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> result<span class="op">;</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
