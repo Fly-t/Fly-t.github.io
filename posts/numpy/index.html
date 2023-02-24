@@ -332,6 +332,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="numpy-的几种基本运算-1" class="level2">
 <h2 class="anchored" data-anchor-id="numpy-的几种基本运算-1">numpy 的几种基本运算</h2>
 <p>上述代码中的 a 和 b 是两个属性为 array 也就是矩阵的变量，而且二者都是1行4列的矩阵， 其中b矩阵中的元素分别是从0到3。 如果我们想要求两个矩阵之间的减法，你可以尝试着输入：</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>c<span class="op">=</span>a<span class="op">-</span>b  <span class="co"># array([10, 19, 28, 37])****</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>有所不同的是，在Numpy中，想要求出矩阵中各个元素的乘方需要依赖双星符号 **，以二次方举例，即：</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>c<span class="op">=</span>b<span class="op">**</span><span class="dv">2</span>  <span class="co"># array([0, 1, 4, 9])</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>另外，Numpy中具有很多的数学函数工具，比如三角函数等，当我们需要对矩阵中每一项元素进行函数运算时，可以很简便的调用它们（以sin函数为例）：</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>c<span class="op">=</span><span class="dv">10</span><span class="op">*</span>np.sin(a)  </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># array([-5.44021111,  9.12945251, -9.88031624,  7.4511316 ])</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p>此时由于进行逻辑判断，返回的是一个bool类型的矩阵，即对满足要求的返回True，不满足的返回False。上述程序执行后得到的结果是[True True True False]。 需要注意的是，如果想要执行是否相等的判断， 依然需要输入 == 而不是 = 来完成相应的逻辑判断。</p>
+</blockquote>
+<p>角度弧度转换以及判断输出</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sin cos tan ... 0~360°: angle =&gt; radian</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>sin_arr <span class="op">=</span> np.arange(<span class="dv">0</span>,<span class="dv">360</span>,<span class="dv">1</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> np.sin(sin_arr<span class="op">*</span>np.pi<span class="op">/</span><span class="dv">180</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(h)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">abs</span>(h)<span class="op">&gt;</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>上述运算均是建立在一维矩阵，即只有一行的矩阵上面的计算，如果我们想要对多行多维度的矩阵进行操作，需要对开始的脚本进行一些修改：</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># multi dimensional array</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>aa <span class="op">=</span> np.array([[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>],[<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>]])</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>bb <span class="op">=</span> np.arange(<span class="dv">6</span>).reshape(<span class="dv">2</span>,<span class="dv">3</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(aa)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(bb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>此时构造出来的矩阵a和b便是2行2列的，其中 reshape 操作是对矩阵的形状进行重构， 其重构的形状便是括号中给出的数字。 稍显不同的是，Numpy中的矩阵乘法分为两种， 其一是前文中的对应元素相乘，其二是标准的矩阵乘法运算，即对应行乘对应列得到相应元素： ## 点积(数量积) <img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-22-10-52-30.png" class="img-fluid"></p>
+<ol type="1">
+<li><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-22-11-47-49.png" class="img-fluid"></li>
+<li><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-22-11-48-38.png" class="img-fluid"></li>
+<li><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-22-11-49-41.png" class="img-fluid"></li>
+<li><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-22-11-50-56.png" class="img-fluid"></li>
+</ol>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>c_dot <span class="op">=</span> np.dot(a,b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="叉积" class="level2">
+<h2 class="anchored" data-anchor-id="叉积">叉积</h2>
 </section>
 </section>
 <section id="numpy-基础运算2" class="level1">

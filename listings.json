@@ -2,6 +2,7 @@
   {
     "listing": "/article.html",
     "items": [
+      "/posts/ubuntu_create_pico_env/index.html",
       "/posts/numpy/index.html",
       "/posts/fdatool/index.html",
       "/posts/EMD/index.html",
