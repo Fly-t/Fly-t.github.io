@@ -172,6 +172,61 @@ b=np.arange(4)              # array([0, 1, 2, 3])
 ## numpy 的几种基本运算
 上述代码中的 a 和 b 是两个属性为 array 也就是矩阵的变量，而且二者都是1行4列的矩阵， 其中b矩阵中的元素分别是从0到3。 如果我们想要求两个矩阵之间的减法，你可以尝试着输入：
 
+``` python
+c=a-b  # array([10, 19, 28, 37])****
+```
+有所不同的是，在Numpy中，想要求出矩阵中各个元素的乘方需要依赖双星符号 **，以二次方举例，即：
+
+``` python
+c=b**2  # array([0, 1, 4, 9])
+```
+
+另外，Numpy中具有很多的数学函数工具，比如三角函数等，当我们需要对矩阵中每一项元素进行函数运算时，可以很简便的调用它们（以sin函数为例）：
+
+``` python
+c=10*np.sin(a)  
+# array([-5.44021111,  9.12945251, -9.88031624,  7.4511316 ])
+```
+> 此时由于进行逻辑判断，返回的是一个bool类型的矩阵，即对满足要求的返回True，不满足的返回False。上述程序执行后得到的结果是[True True True False]。 需要注意的是，如果想要执行是否相等的判断， 依然需要输入 == 而不是 = 来完成相应的逻辑判断。
+
+
+角度弧度转换以及判断输出
+
+``` python
+# sin cos tan ... 0~360°: angle => radian
+sin_arr = np.arange(0,360,1)
+h = np.sin(sin_arr*np.pi/180)
+print(h)
+print(abs(h)>0.5)
+```
+
+上述运算均是建立在一维矩阵，即只有一行的矩阵上面的计算，如果我们想要对多行多维度的矩阵进行操作，需要对开始的脚本进行一些修改：
+``` python
+# multi dimensional array
+aa = np.array([[1,2,3],[4,5,6]])
+bb = np.arange(6).reshape(2,3)
+print(aa)
+print(bb)
+```
+此时构造出来的矩阵a和b便是2行2列的，其中 reshape 操作是对矩阵的形状进行重构， 其重构的形状便是括号中给出的数字。 稍显不同的是，Numpy中的矩阵乘法分为两种， 其一是前文中的对应元素相乘，其二是标准的矩阵乘法运算，即对应行乘对应列得到相应元素：
+## 点积(数量积)
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-22-10-52-30.png)
+
+1. ![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-22-11-47-49.png)
+2. ![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-22-11-48-38.png)
+3. ![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-22-11-49-41.png)
+4. ![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-22-11-50-56.png)
+
+``` python
+c_dot = np.dot(a,b)
+```
+## 叉积
+
+
+
+
+
+
 
 
 

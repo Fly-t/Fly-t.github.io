@@ -1,0 +1,79 @@
+---
+title: "create env on ubuntu"
+author: "dd21"
+date: "2023-02-23"
+categories: [pico]
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-24-11-15-40.png
+---
+
+# Abstract
+
+config rp2040 on ubuntu with daplink. use picolab debuger.
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-24-11-21-52.png)
+
+# Referance
+
+[dap with pico clk error and jtag error](https://acassis.wordpress.com/2020/06/27/error-cmsis-dap-command-cmd_dap_swj_clock-failed/)
+
+# use daplink to debug rp2040
+
+```bash
+cd ~/pico
+sudo apt install automake autoconf build-essential texinfo libtool libftdi-dev libusb-1.0-0-dev
+git clone https://github.com/raspberrypi/openocd.git --recursive --branch rp2040 --depth=1
+cd openocd
+
+# install usb Hid and Bluetooth driver
+sudo apt-get update
+sudo apt-get install libhidapi-dev
+
+./bootstrap
+./configure --enable-cmsis-dap
+make -j4
+sudo make install
+```
+
+# update the `cmsis-dap.cfg`
+
+```c
+#
+# ARM CMSIS-DAP compliant adapter
+#
+# http://www.keil.com/support/man/docs/dapdebug/
+#
+
+adapter driver cmsis-dap
+
+# Optionally specify the serial number of CMSIS-DAP usb device.
+#cmsis_dap_serial 02200201E6661E601B98E3B9
+transport select swd
+
+adapter_khz 10000
+
+```
+
+# flash program with daplink
+
+cd `opocd` path then cd `tcl`
+
+<font color='red'> sudo is very important </font>
+
+```bash
+sudo openocd -f interface/cmsis-dap.cfg -f target/rp2040.cfg -c "program /home/dd21/Project/pico/pico-examples/build/blink/blink.hex reset exit"
+```
+
+## minicom
+
+> ttyACM0 是一个 Linux 系统中的串行设备节点，它通常用于连接 USB 模拟串行设备，例如 Arduino 开发板、3D 打印机或其他类似设备。ACM 代表“Abstract Control Model”，是指通常用于模拟串行通信的 USB 设备类型。
+
+> 当 Linux 系统检测到一个 USB 模拟串行设备时，它会将其分配给 ttyACM0 节点。通过这个节点，用户可以与设备进行串口通信，例如通过命令行工具或编程语言（如 C/C++、Python 等）读取和写入数据。
+
+> 值得注意的是，如果有多个 USB 模拟串行设备连接到 Linux 系统，那么它们可能会分配给不同的 ttyACM 节点，例如 ttyACM1、ttyACM2 等
+
+```c
+minicom -s => serial port config => device /dev/ttyACM0
+sudo minicom    // startup
+Ctl + a  => e  // open warp
+Ctl + a  => x  // exit
+```
