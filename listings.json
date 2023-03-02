@@ -2,6 +2,7 @@
   {
     "listing": "/article.html",
     "items": [
+      "/posts/linux_device_auth/index.html",
       "/posts/pico_power_supply/index.html",
       "/posts/cmake_demo/index.html",
       "/posts/ubuntu_create_pico_env/index.html",
