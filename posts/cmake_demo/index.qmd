@@ -1,0 +1,191 @@
+---
+title: "cmdke use case"
+author: "dd21"
+date: "2023-02-24"
+categories: [cmake]
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-24-11-26-21.png
+---
+
+# Abstract
+
+cmake can cross-platform, we only need to writeen once cmakefie.
+this is so cool so it worth to learning.
+
+# Referance
+
+# demo04 条件判断
+
+## `set (VALUE_1 "value 1")` 和 `set (VALUE_2 ${VALUE_2} "value 2")` 的不同.
+
+参考:[https://www.coder.work/article/6981794](https://www.coder.work/article/6981794)
+
+> 第一种情况 #A 您分配 "value 1"到变量 VALUE_1 ，但在第二种情况下，您分配给变量 VALUE_2 此变量已存在的值与 "value 2" 连接.
+
+```c
+set (VALUE_1 "default value")
+set (VALUE_2 "default value")
+
+set (VALUE_1 "value 1")  # A
+set (VALUE_2 ${VALUE_2} "value 2")  # B
+
+message("value 1:" ${VALUE_1})
+message("value 2:" ${VALUE_2})
+```
+
+output
+
+```c
+...
+value 1:value 1
+value 2:default valuevalue 2
+...
+```
+
+> 从中可以找到刚刚定义的 USE_MYMATH 选项，按键盘的方向键可以在不同的选项窗口间跳转，按下 `enter` 键可以修改该选项。修改完成后可以按下` c` 选项完成配置，之后再按`g`键确认生成 Makefile 。ccmake 的其他操作可以参考窗口下方给出的指令提示。
+
+# demo05 安装
+
+在刚的`demo04`的基础上修改根目录下的`CMakeLists.txt`文件和子目录下的`CMakeLists.txt`
+子目录`CMakeLists.txt`
+
+```cmake
+# 查找当前目录下的所有源文件
+# 并将名称保存到 DIR_LIB_SRCS 变量
+aux_source_directory(. DIR_LIB_SRCS)
+
+# 指定生成 MathFunctions 链接库
+add_library (mathlib ${DIR_LIB_SRCS})
+
+# 指定 MathFunctions 库的安装路径
+install (TARGETS mathlib DESTINATION lib)    # 安装到 `/usr/local/lib`
+install (FILES MathFunctions.h DESTINATION include)
+```
+
+根目录`CMakeLists.txt`
+
+```cmake
+# CMake 最低版本号要求
+cmake_minimum_required (VERSION 2.8)
+
+# 项目信息
+project (Demo4)
+
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+# 是否使用自己的 MathFunctions 库
+option (USE_MYMATH
+	   "use my math" ON)
+
+# copy config.h.in to config.h
+configure_file (
+  "${PROJECT_SOURCE_DIR}/config.h.in"
+  "${PROJECT_BINARY_DIR}/config.h"
+  )
+
+
+# 是否加入 MathFunctions 库
+if (USE_MYMATH)
+  include_directories ("${PROJECT_SOURCE_DIR}/math")
+  add_subdirectory (math)
+  set (EXTRA_LIBS ${EXTRA_LIBS} mathlib)
+  message(${EXTRA_LIBS})
+endif (USE_MYMATH)
+
+# 查找当前目录下的所有源文件
+# 并将名称保存到 DIR_SRCS 变量
+aux_source_directory(. DIR_SRCS)
+
+# 指定生成目标
+add_executable (demo04 ${DIR_SRCS})
+target_link_libraries (demo04  ${EXTRA_LIBS})
+
+
+# 指定安装路径
+install (TARGETS demo04 DESTINATION bin)         # 安装到 `/usr/local/bin`
+install (FILES "${PROJECT_BINARY_DIR}/config.h"  # 安装到 `/usr/loacal/include`
+         DESTINATION include)
+```
+
+更新 makefile 后, 执行安装.
+
+> 通过上面的定制，生成的 Demo 文件和 MathFunctions 函数库 libMathFunctions.o 文件将会被复制到 /usr/local/bin 中，而 MathFunctions.h 和生成的 config.h 文件则会被复制到 /usr/local/include 中。我们可以验证一下（顺带一提的是，这里的 /usr/local/ 是默认安装到的根目录，可以通过修改 CMAKE_INSTALL_PREFIX 变量的值来指定这些文件应该拷贝到哪个根目录）：
+
+```bash
+sudo make install
+```
+
+output
+
+```bash
+Consolidate compiler generated dependencies of target mathlib
+[ 50%] Built target mathlib
+Consolidate compiler generated dependencies of target demo04
+[100%] Built target demo04
+Install the project...
+-- Install configuration: ""
+-- Installing: /usr/local/bin/demo04
+-- Installing: /usr/local/include/config.h
+-- Up-to-date: /usr/local/lib/libmathlib.a
+-- Up-to-date: /usr/local/include/MathFunctions.h
+```
+
+# demo05-2 测试
+
+```cmake
+# 启用测试
+enable_testing()
+
+# 添加测试
+add_test(test demo04)
+# 设置测试返回结果, 如果不是测试失败
+set_tests_properties (test
+ PROPERTIES PASS_REGULAR_EXPRESSION "mymath...")
+```
+
+output
+
+```bash
+Running tests...
+Test project /home/dd21/Project/cmake/demo05/build
+    Start 1: test
+1/2 Test #1: test .............................   Passed    0.00 sec
+    Start 2: test_2
+2/2 Test #2: test_2 ...........................   Passed    0.00 sec
+
+100% tests passed, 0 tests failed out of 2
+```
+
+> 如果要测试更多的输入数据，像上面那样一个个写测试用例未免太繁琐。这时可以通过编写宏来实现(一个 add_test, 一个 set_tests_properties 有点麻烦)：
+
+```cmake
+# 定义一个宏，用来简化测试工作
+macro (do_test arg1 arg2 result)
+  add_test (test_${arg1}_${arg2} Demo ${arg1} ${arg2})
+  set_tests_properties (test_${arg1}_${arg2}
+    PROPERTIES PASS_REGULAR_EXPRESSION ${result})
+endmacro (do_test)
+
+# 使用该宏进行一系列的数据测试
+do_test (arg1 arg2 "result")
+do_test (xxx xx "res1")
+do_test (xxx xx "res2")
+```
+
+# 支持 GDB
+
+默认的 make 出来的是 release 版本的, 没有 debug 信息
+
+这里不知道为什么要写很 RELEASE
+
+```cmake
+set(CMAKE_BUILD_TYPE "Debug")
+set(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g -ggdb")
+set(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
+```
+
+chatgpt 的答案测试也是可以的
+
+```cmake
+set(CMAKE_BUILD_TYPE "Debug")
+set(CMAKE_CXX_FLAGS_DEBUG "-g")
+```
