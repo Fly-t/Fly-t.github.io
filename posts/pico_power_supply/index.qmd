@@ -9,6 +9,10 @@ image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-28
 
 # Abstract
 
-power 
+power supply of pico and how to set power of application.
 
 # Referance
+
+[pico sdk datasheet](https://datasheets.raspberrypi.org/rp2040/rp2040_datasheet.pdf)
+
+

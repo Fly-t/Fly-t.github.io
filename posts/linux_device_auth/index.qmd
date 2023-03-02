@@ -1,0 +1,99 @@
+---
+title: "linux usb or other device auth how to control"
+author: "dd21"
+date: "2023-03-02"
+categories: [linux, pico]
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-02-10-26-38.png
+---
+
+# Abstract
+
+debug with pico in linux i meet such trouble. the auth of usb is a big trouble.
+i got some answer from chatGpt,and stolve the proublem.
+
+# Referance
+
+chatGPT
+
+# some tools
+
+```bash
+lsusb
+```
+
+you wiil get some info like this.
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-02-10-36-27.png)
+
+# set the auth
+
+then add `99-my-usb-serial.rules`file to `/etc/udev/rules.d/`
+
+```bash
+SUBSYSTEM=="tty", ATTRS{idVendor}=="xxxx", ATTRS{idProduct}=="xxxx", MODE="0666", GROUP="adm"
+```
+
+set `GROUP` you need.
+
+```bash
+groups USERNAME
+
+# output: you can add which one below this.
+dd21 : dd21 adm cdrom sudo dip plugdev lpadmin lxd sambashare
+```
+
+reload the rules file
+
+```bash
+sudo udevadm control --reload-rules && sudo udevadm trigger
+```
+
+## why named the file like `99-xxxxx.rules`
+
+> `99` means priority of those rules file of this dir. 0 means the highest priority.
+
+## what is `udev`path
+
+> udev 是 Linux 系统中的一个动态设备管理系统。udev 系统的主要目的是为了方便内核中的驱动程序管理和设备节点的创建与删除。在 Linux 系统中，udev 系统会负责将 Linux 系统中所有的硬件设备（包括磁盘、USB 设备、网卡、键盘、鼠标等等）都转换成相应的设备文件（如/dev/sda、/dev/ttyUSB0 等等）。
+>
+> udev 系统的配置文件和规则文件都存放在 /etc/udev/rules.d/ 目录下。在这个目录下，可以添加或修改 udev 规则文件，以便根据需要对设备进行自定义的配置和管理
+
+## how many kinds of `SUBSYSTEM`
+
+> SUBSYSTEM 参数的取值可以有很多种，以下是一些常见的取值及其含义：
+
+- block：块设备，如硬盘、U 盘等。
+- input：输入设备，如鼠标、键盘等。
+- net：网络设备，如网卡、无线网卡等。
+- tty：终端设备，如串口、串口转 USB 等。
+- usb：USB 设备。
+- sound：声音设备，如扬声器、麦克风等。
+
+> 除了以上这些常见的子系统外，还有一些其他的子系统，如 drm、hid、video4linux 等，它们的含义和用途也各不相同。
+>
+> 需要注意的是，SUBSYSTEM 参数的取值不是固定的，具体取值取决于您要匹配的设备类型。可以通过 lsusb、lspci 等命令查看设备的相关信息，来确定要使用哪种子系统进行匹配。
+
+## why is `0666` not `666`
+
+> 在 udev 规则中，使用 MODE 来指定设备节点的权限。MODE 的值必须是八进制数。因此，如果要设置一个文件或设备节点的权限为 666，在八进制中就是 0666。
+>
+> 因此，MODE="0666" 与 MODE="666" 的效果是一样的，都是将文件或设备节点的权限设置为所有用户都可读可写。
+
+## auth of `NODE`
+
+> 在 Linux 系统中，mode 是一种用于控制文件和目录权限的参数。它的取值是一串三位数字，分别代表文件所有者、文件所有者所在组、其他用户对文件或目录的权限。其中，每一位的值分别可以是以下几个值：
+
+- 0：表示没有任何权限。
+- 1：表示执行权限。
+- 2：表示写权限。
+- 3：表示执行权限和写权限。
+- 4：表示读权限。
+- 5：表示执行权限和读权限。
+- 6：表示读权限和写权限。
+- 7：表示读权限、写权限和执行权限。
+
+> 使用 chmod 命令可以修改文件或目录的权限，例如：
+>
+> chmod 777 file.txt：将 file.txt 文件的权限设置为所有用户都可以读、写、执行。
+> chmod 755 dir：将 dir 目录的权限设置为所有者可读、写、执行，其他用户可读、执行。
+> chmod u+x script.sh：将 script.sh 脚本文件的权限添加给文件所有者，即添加执行权限。
+> 除了上述的基本权限之外，还有一些特殊权限，如 SUID、SGID、SBIT 等，可以用于特殊的权限管理需求
