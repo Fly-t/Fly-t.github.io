@@ -1,0 +1,13 @@
+---
+title: "rp2040 power supply" 
+author: "dd21"
+date: "2023-02-28" 
+categories: [pico]
+image: ![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-28-11-33-04.png)
+---
+
+
+# Abstract
+
+
+# Referance
