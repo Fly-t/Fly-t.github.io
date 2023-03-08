@@ -155,6 +155,44 @@ ul.task-list li input[type="checkbox"] {
 <section id="referance" class="level1">
 <h1>Referance</h1>
 <p><a href="https://datasheets.raspberrypi.org/rp2040/rp2040_datasheet.pdf">pico sdk datasheet</a></p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>name</th>
+<th>level</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>IOVDD</td>
+<td>1.8~3.3v</td>
+</tr>
+<tr class="even">
+<td>DVDD</td>
+<td>1.1v</td>
+</tr>
+<tr class="odd">
+<td>VIN</td>
+<td>3.3v</td>
+</tr>
+<tr class="even">
+<td>VIOUT</td>
+<td>1.1v</td>
+</tr>
+<tr class="odd">
+<td>USB</td>
+<td>3.3v</td>
+</tr>
+<tr class="even">
+<td>ADC</td>
+<td>1.8 or 3.3v(√)</td>
+</tr>
+</tbody>
+</table>
+<p>VIN,VOUT是内部降压芯片可用可不用, 但是不用也要有个输入.</p>
+<p>USB的供电是3.3v 如果应用没有usb的需求和话随便给电</p>
+<p>ADC推荐3.3v</p>
+<p>DVDD 是内部电压 1.1v IOVDD 可以设1.8~3.3v都行,但是设置为1.8的时候再给上3.3v可能会导致芯片报废.</p>
 
 
 </section>

@@ -2594,7 +2594,7 @@
     "href": "posts/pico_power_supply/index.html",
     "title": "rp2040 power supply",
     "section": "",
-    "text": "Abstract\npower supply of pico and how to set power of application.\n\n\nReferance\npico sdk datasheet"
+    "text": "Abstract\npower supply of pico and how to set power of application.\n\n\nReferance\npico sdk datasheet\n\n\n\nname\nlevel\n\n\n\n\nIOVDD\n1.8~3.3v\n\n\nDVDD\n1.1v\n\n\nVIN\n3.3v\n\n\nVIOUT\n1.1v\n\n\nUSB\n3.3v\n\n\nADC\n1.8 or 3.3v(√)\n\n\n\nVIN,VOUT是内部降压芯片可用可不用, 但是不用也要有个输入.\nUSB的供电是3.3v 如果应用没有usb的需求和话随便给电\nADC推荐3.3v\nDVDD 是内部电压 1.1v IOVDD 可以设1.8~3.3v都行,但是设置为1.8的时候再给上3.3v可能会导致芯片报废."
   },
   {
     "objectID": "posts/arch yay安装qq/index.html",
