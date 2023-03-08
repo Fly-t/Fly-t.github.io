@@ -1,11 +1,10 @@
 ---
-title: "rp2040 power supply" 
+title: "rp2040 power supply"
 author: "dd21"
-date: "2023-02-28" 
+date: "2023-02-28"
 categories: [pico]
-image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-28-11-33-04.png
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-02-11-00-51.png
 ---
-
 
 # Abstract
 
@@ -15,4 +14,21 @@ power supply of pico and how to set power of application.
 
 [pico sdk datasheet](https://datasheets.raspberrypi.org/rp2040/rp2040_datasheet.pdf)
 
+| name  | level          |
+| ----- | -------------- |
+| IOVDD | 1.8~3.3v       |
+| DVDD  | 1.1v           |
+| VIN   | 3.3v           |
+| VIOUT | 1.1v           |
+| USB   | 3.3v           |
+| ADC   | 1.8 or 3.3v(√) |
 
+
+VIN,VOUT是内部降压芯片可用可不用, 但是不用也要有个输入.
+
+USB的供电是3.3v 如果应用没有usb的需求和话随便给电
+
+ADC推荐3.3v
+
+DVDD 是内部电压 1.1v
+IOVDD 可以设1.8~3.3v都行,但是设置为1.8的时候再给上3.3v可能会导致芯片报废.
