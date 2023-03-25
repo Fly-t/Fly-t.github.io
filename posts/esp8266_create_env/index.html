@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="dd21">
-<meta name="dcterms.date" content="2022-12-05">
+<meta name="dcterms.date" content="2023-03-25">
 
-<title>TengFei’s Blog - smt32-f103寄存器点灯</title>
+<title>TengFei’s Blog - create esp8266 env with IDF</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -173,9 +173,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">smt32-f103寄存器点灯</h1>
+      <h1 class="title">create esp8266 env with IDF</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">stm32</div>
+                <div class="quarto-category">esp8266</div>
               </div>
                   </div>
   </div>
@@ -193,7 +193,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">December 5, 2022</p>
+        <p class="date">March 25, 2023</p>
       </div>
     </div>
     
@@ -211,75 +211,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<section id="stm32f103寄存器点灯" class="level1">
-<h1>STM32F103寄存器点灯</h1>
-<p>通过寄存器中的状态来设置引脚状态 <code>LED在GPIOB的第5引脚</code></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// RCC_ENR RCC must be first otherwise the LED can not be lighted</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">*(</span><span class="dt">unsigned</span> <span class="dt">int</span><span class="op">*)</span><span class="bn">0x40021018</span> <span class="op">|=</span> <span class="op">(</span><span class="dv">1</span><span class="op">&lt;&lt;</span><span class="dv">3</span><span class="op">);</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// port B   base address 0x4001 0c00</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// output type is pull and push</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">*(</span><span class="dt">unsigned</span> <span class="dt">int</span><span class="op">*)</span><span class="bn">0x40010C00</span> <span class="op">|=</span> <span class="op">((</span><span class="dv">1</span><span class="op">)&lt;&lt;(</span><span class="dv">4</span><span class="op">*</span><span class="dv">0</span><span class="op">));</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">//*(unsigned int*)0x40010C00 |= ((1)&lt;&lt;(8*0));</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">// port B odr address is base address add 0x0c  </span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">*(</span><span class="dt">unsigned</span> <span class="dt">int</span><span class="op">*)</span><span class="bn">0x40010C0C</span> <span class="op">&amp;=</span> <span class="op">~(</span><span class="dv">1</span><span class="op">&lt;&lt;</span><span class="dv">0</span><span class="op">);</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">//*(unsigned int*)0x40010C0C &amp;= ~(1&lt;&lt;2);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>封装GPIO</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// REG mapping </span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define PERIPH_BASE                 ((unsigned int) 0x40000000)</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#define APB1_PERIPH_BASE         PERIPH_BASE</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#define APB2_PERIPH_BASE        (PERIPH_BASE+0x10000)</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="pp">#define AHB_PERIPH_BASE         (PERIPH_BASE+0x20000)</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="pp">#define RCC_BASE                        (AHB_PERIPH_BASE+0x1000)</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="pp">#define GPIOB_BASE                      (APB2_PERIPH_BASE +0x0C00)</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="pp">#define RCC_APB2ENR                     *(unsigned int*)(RCC_BASE+0x18)</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="pp">#define GPIOB_CRL                       *(unsigned int*)(GPIOB_BASE+0x00)</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="pp">#define GPIOB_CRH                       *(unsigned int*)(GPIOB_BASE+0x04)</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="pp">#define GPIOB_ODR                       *(unsigned int*)(GPIOB_BASE+0x0C)</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="pp">#define GPIOB_BSRR                  *(unsigned int*)(GPIOB_BASE+0x10)</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="pp">#define GPIOB_BRR                       *(unsigned int*)(GPIOB_BASE+0x14)</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="pp">#define GPIOB_LOCK                      *(unsigned int*)(GPIOB_BASE+0x18)</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="dt">unsigned</span> <span class="dt">int</span>        <span class="dt">uint32_t</span><span class="op">;</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="dt">unsigned</span> <span class="dt">short</span>  <span class="dt">uint16_t</span><span class="op">;</span> </span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="kw">struct</span><span class="op">{</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint32_t</span> CRL<span class="op">;</span> </span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint32_t</span> CRH<span class="op">;</span> </span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint32_t</span> IDL<span class="op">;</span> </span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint32_t</span> ODR<span class="op">;</span> </span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint32_t</span> BSRR<span class="op">;</span> </span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint32_t</span> BRR<span class="op">;</span> </span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint32_t</span> LCKR<span class="op">;</span>  </span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="op">}</span>GPIO_Struct<span class="op">;</span> </span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="co">// change the GPIO type to GPIO_Struct then can use the REG like [GPIO_Struct-&gt;RCC] </span></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="pp">#define GPIOB ((GPIO_Struct*)GPIOB_BASE)</span></span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>    RCC_APB2ENR <span class="op">|=</span> <span class="op">(</span><span class="dv">1</span><span class="op">&lt;&lt;</span><span class="dv">3</span><span class="op">);</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    GPIOB<span class="op">-&gt;</span>CRL <span class="op">|=</span> <span class="op">((</span><span class="dv">1</span><span class="op">)&lt;&lt;(</span><span class="dv">4</span><span class="op">*</span><span class="dv">0</span><span class="op">));</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// open LED set 0</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">//GPIOB-&gt;ODR &amp;= ~(1&lt;&lt;0);</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">// off LED set 1</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    GPIOB<span class="op">-&gt;</span>ODR <span class="op">|=</span> <span class="op">(</span><span class="dv">1</span><span class="op">&lt;&lt;</span><span class="dv">0</span><span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>简单封装</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>    RCC_APB2ENR <span class="op">|=</span> <span class="op">(</span><span class="dv">1</span><span class="op">&lt;&lt;</span><span class="dv">3</span><span class="op">);</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    GPIOB_CRL <span class="op">|=</span> <span class="op">((</span><span class="dv">1</span><span class="op">)&lt;&lt;(</span><span class="dv">4</span><span class="op">*</span><span class="dv">0</span><span class="op">));</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// open LED set 0</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    GPIOB_ODR <span class="op">&amp;=</span> <span class="op">~(</span><span class="dv">1</span><span class="op">&lt;&lt;</span><span class="dv">0</span><span class="op">);</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">// off LED set 1</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">//GPIOB_ODR |= (1&lt;&lt;0);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="abstract" class="level1">
+<h1>Abstract</h1>
+<p>create esp8266 env with IDF on ArchLinux.</p>
+</section>
+<section id="referance" class="level1">
+<h1>Referance</h1>
+<p><a href="https://xuhong.blog.csdn.net/article/details/104736261">esp8266 linux env</a></p>
+<p><a href="https://github.com/espressif/ESP8266_RTOS_SDK">github repo</a></p>
+<p><a href="https://dl.espressif.com/dl/xtensa-lx106-elf-gcc8_4_0-esp-2020r3-linux-amd64.tar.gz">tool-chain</a></p>
+</section>
+<section id="add-esp8266_rtos_sdk-and-tool-to-env" class="level1">
+<h1>add ESP8266_RTOS_SDK and tool to env</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">vim</span> ~/.zshrc</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">IDF_PATH</span> <span class="op">=</span>  ~/esp/ESP8266_RTOS_SDK/</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">expoer</span> PATH=<span class="st">"</span><span class="va">$PATH</span><span class="st">:~/esp/xtensa-lx106...."</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ESP8266_RTOS_SDK </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> submodule update <span class="at">--init</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/esp/ESP8266_RTOS_SDK/examples/get-started/hello_world</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> menuconfig</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ex">spi</span> flash size 4MB</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> request.txt</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> all</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> <span class="at">-E</span> make flash</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># serial Assistant</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="ex">yay</span> <span class="at">-S</span> cutecom</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># set baud is 74880</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cutecom</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p>you can see like this</p>
+<p>load 0x40100000, len 7544, room 16 tail 8 chksum 0xc3 load 0x3ffe8408, len 24, room 0 tail 8 chksum 0x2a load 0x3ffe8420, len 3468, room 0 tail 12 chksum 0x47 csum 0x47 &lt;0x1b&gt;[0;32mI (46) boot: ESP-IDF v3.4-75-g7973d71b 2nd stage bootloader&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (46) boot: compile time 19:49:47&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (46) qio_mode: Enabling default flash chip QIO&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (54) boot: SPI Speed : 40MHz&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (60) boot: SPI Mode : QIO&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (67) boot: SPI Flash Size : 4MB&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (73) boot: Partition Table:&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (78) boot: ## Label Usage Type ST Offset &gt; Length&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (90) boot: 0 nvs WiFi data 01 02 00009000 &gt; 00006000&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (101) boot: 1 phy_init RF data 01 01 0000f000 &gt; 00001000&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (113) boot: 2 factory factory app 00 00 00010000 &gt; 000f0000&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (124) boot: End of partition table&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (131) esp_image: segment 0: paddr=0x00010010 vaddr=0x40210010 &gt; size=0x1cca0 (117920) map&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (184) esp_image: segment 1: paddr=0x0002ccb8 vaddr=0x4022ccb0 &gt; size=0x07188 ( 29064) map&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (194) esp_image: segment 2: paddr=0x00033e48 vaddr=0x3ffe8000 &gt; size=0x00544 ( 1348) load&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (195) esp_image: segment 3: paddr=0x00034394 vaddr=0x40100000 &gt; size=0x00080 ( 128) load&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (209) esp_image: segment 4: paddr=0x0003441c vaddr=0x40100080 &gt; size=0x050c0 ( 20672) load&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (229) boot: Loaded app from partition at offset 0x10000&lt;0x1b&gt;[0m Hello world! This is ESP8266 chip with 1 CPU cores, WiFi, silicon revision 1, 4MB external flash Restarting in 10 seconds… Restarting in 9 seconds… Restarting in 8 seconds… Restarting in 7 seconds… Restarting in 6 seconds… Restarting in 5 seconds… Restarting in 4 seconds… Restarting in 3 seconds… Restarting in 2 seconds… Restarting in 1 seconds… Restarting in 0 seconds… Restarting now.</p>
+<p>ets Jan 8 2013,rst cause:2, boot mode:(3,6)</p>
+<p>load 0x40100000, len 7544, room 16 tail 8 chksum 0xc3 load 0x3ffe8408, len 24, room 0 tail 8 chksum 0x2a load 0x3ffe8420, len 3468, room 0 tail 12 chksum 0x47 csum 0x47 &lt;0x1b&gt;[0;32mI (86) boot: ESP-IDF v3.4-75-g7973d71b 2nd stage bootloader&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (86) boot: compile time 19:49:47&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (86) qio_mode: Enabling default flash chip QIO&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (102) boot: SPI Speed : 40MHz&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (115) boot: SPI Mode : QIO&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (128) boot: SPI Flash Size : 4MB&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (140) boot: Partition Table:&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (152) boot: ## Label Usage Type ST Offset &gt; Length&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (174) boot: 0 nvs WiFi data 01 02 00009000 &gt; 00006000&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (198) boot: 1 phy_init RF data 01 01 0000f000 &gt; 00001000&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (221) boot: 2 factory factory app 00 00 00010000 &gt; 000f0000&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (244) boot: End of partition table&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (257) esp_image: segment 0: paddr=0x00010010 vaddr=0x40210010 &gt; size=0x1cca0 (117920) map&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (340) esp_image: segment 1: paddr=0x0002ccb8 vaddr=0x4022ccb0 &gt; size=0x07188 ( 29064) map&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (355) esp_image: segment 2: paddr=0x00033e48 vaddr=0x3ffe8000 &gt; size=0x00544 ( 1348) load&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (363) esp_image: segment 3: paddr=0x00034394 vaddr=0x40100000 &gt; size=0x00080 ( 128) load&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (390) esp_image: segment 4: paddr=0x0003441c vaddr=0x40100080 &gt; size=0x050c0 ( 20672) load&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (426) boot: Loaded app from partition at offset 0x10000&lt;0x1b&gt;[0m Hello world! This is ESP8266 chip with 1 CPU cores, WiFi, silicon revision 1, 4MB external flash Restarting in 10 seconds… Restarting in 9 seconds… Restarting in 8 seconds… Restarting in 7 seconds… Restarting in 6 seconds… Restarting in 5 seconds… Restarting in 4 seconds… Restarting in 3 seconds… Restarting in 2 seconds…</p>
+</blockquote>
 
 
 </section>
