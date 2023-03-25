@@ -18,6 +18,7 @@ create esp8266 env with IDF on ArchLinux.
 
 [tool-chain](https://dl.espressif.com/dl/xtensa-lx106-elf-gcc8_4_0-esp-2020r3-linux-amd64.tar.gz)
 
+[ai-thinker](https://docs.ai-thinker.com/esp8266)
 # add ESP8266_RTOS_SDK and tool to env
 
 ``` bash
@@ -46,7 +47,7 @@ yay -S cutecom
 # set baud is 74880
 sudo cutecom
 ```
-> you can see like this 
+> # you can see like this 
 >
 > 
 > load 0x40100000, len 7544, room 16 
