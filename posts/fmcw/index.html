@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="dd21">
-<meta name="dcterms.date" content="2023-03-25">
+<meta name="dcterms.date" content="2023-02-12">
 
-<title>TengFei’s Blog - create esp8266 env with IDF</title>
+<title>TengFei’s Blog - FMCW</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,69 +22,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -173,9 +110,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">create esp8266 env with IDF</h1>
+      <h1 class="title">FMCW</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">esp8266</div>
+                <div class="quarto-category">radar</div>
               </div>
                   </div>
   </div>
@@ -193,7 +130,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">March 25, 2023</p>
+        <p class="date">February 12, 2023</p>
       </div>
     </div>
     
@@ -213,44 +150,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="abstract" class="level1">
 <h1>Abstract</h1>
-<p>create esp8266 env with IDF on ArchLinux.</p>
+<p>basic knowledge of mmwave radar</p>
 </section>
 <section id="referance" class="level1">
 <h1>Referance</h1>
-<p><a href="https://xuhong.blog.csdn.net/article/details/104736261">esp8266 linux env</a></p>
-<p><a href="https://github.com/espressif/ESP8266_RTOS_SDK">github repo</a></p>
-<p><a href="https://dl.espressif.com/dl/xtensa-lx106-elf-gcc8_4_0-esp-2020r3-linux-amd64.tar.gz">tool-chain</a></p>
-<p><a href="https://docs.ai-thinker.com/esp8266">ai-thinker</a> # add ESP8266_RTOS_SDK and tool to env</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">vim</span> ~/.zshrc</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">IDF_PATH</span> <span class="op">=</span>  ~/esp/ESP8266_RTOS_SDK/</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">expoer</span> PATH=<span class="st">"</span><span class="va">$PATH</span><span class="st">:~/esp/xtensa-lx106...."</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ESP8266_RTOS_SDK </span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> submodule update <span class="at">--init</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/esp/ESP8266_RTOS_SDK/examples/get-started/hello_world</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> menuconfig</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ex">spi</span> flash size 4MB</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> request.txt</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> all</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> <span class="at">-E</span> make flash</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># serial Assistant</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="ex">yay</span> <span class="at">-S</span> cutecom</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># set baud is 74880</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cutecom</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<blockquote class="blockquote">
-<h1 id="you-can-see-like-this">you can see like this</h1>
-<p>load 0x40100000, len 7544, room 16 tail 8 chksum 0xc3 load 0x3ffe8408, len 24, room 0 tail 8 chksum 0x2a load 0x3ffe8420, len 3468, room 0 tail 12 chksum 0x47 csum 0x47 &lt;0x1b&gt;[0;32mI (46) boot: ESP-IDF v3.4-75-g7973d71b 2nd stage bootloader&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (46) boot: compile time 19:49:47&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (46) qio_mode: Enabling default flash chip QIO&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (54) boot: SPI Speed : 40MHz&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (60) boot: SPI Mode : QIO&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (67) boot: SPI Flash Size : 4MB&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (73) boot: Partition Table:&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (78) boot: ## Label Usage Type ST Offset &gt; Length&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (90) boot: 0 nvs WiFi data 01 02 00009000 &gt; 00006000&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (101) boot: 1 phy_init RF data 01 01 0000f000 &gt; 00001000&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (113) boot: 2 factory factory app 00 00 00010000 &gt; 000f0000&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (124) boot: End of partition table&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (131) esp_image: segment 0: paddr=0x00010010 vaddr=0x40210010 &gt; size=0x1cca0 (117920) map&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (184) esp_image: segment 1: paddr=0x0002ccb8 vaddr=0x4022ccb0 &gt; size=0x07188 ( 29064) map&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (194) esp_image: segment 2: paddr=0x00033e48 vaddr=0x3ffe8000 &gt; size=0x00544 ( 1348) load&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (195) esp_image: segment 3: paddr=0x00034394 vaddr=0x40100000 &gt; size=0x00080 ( 128) load&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (209) esp_image: segment 4: paddr=0x0003441c vaddr=0x40100080 &gt; size=0x050c0 ( 20672) load&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (229) boot: Loaded app from partition at offset 0x10000&lt;0x1b&gt;[0m Hello world! This is ESP8266 chip with 1 CPU cores, WiFi, silicon revision 1, 4MB external flash Restarting in 10 seconds… Restarting in 9 seconds… Restarting in 8 seconds… Restarting in 7 seconds… Restarting in 6 seconds… Restarting in 5 seconds… Restarting in 4 seconds… Restarting in 3 seconds… Restarting in 2 seconds… Restarting in 1 seconds… Restarting in 0 seconds… Restarting now.</p>
-<p>ets Jan 8 2013,rst cause:2, boot mode:(3,6)</p>
-<p>load 0x40100000, len 7544, room 16 tail 8 chksum 0xc3 load 0x3ffe8408, len 24, room 0 tail 8 chksum 0x2a load 0x3ffe8420, len 3468, room 0 tail 12 chksum 0x47 csum 0x47 &lt;0x1b&gt;[0;32mI (86) boot: ESP-IDF v3.4-75-g7973d71b 2nd stage bootloader&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (86) boot: compile time 19:49:47&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (86) qio_mode: Enabling default flash chip QIO&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (102) boot: SPI Speed : 40MHz&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (115) boot: SPI Mode : QIO&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (128) boot: SPI Flash Size : 4MB&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (140) boot: Partition Table:&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (152) boot: ## Label Usage Type ST Offset &gt; Length&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (174) boot: 0 nvs WiFi data 01 02 00009000 &gt; 00006000&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (198) boot: 1 phy_init RF data 01 01 0000f000 &gt; 00001000&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (221) boot: 2 factory factory app 00 00 00010000 &gt; 000f0000&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (244) boot: End of partition table&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (257) esp_image: segment 0: paddr=0x00010010 vaddr=0x40210010 &gt; size=0x1cca0 (117920) map&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (340) esp_image: segment 1: paddr=0x0002ccb8 vaddr=0x4022ccb0 &gt; size=0x07188 ( 29064) map&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (355) esp_image: segment 2: paddr=0x00033e48 vaddr=0x3ffe8000 &gt; size=0x00544 ( 1348) load&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (363) esp_image: segment 3: paddr=0x00034394 vaddr=0x40100000 &gt; size=0x00080 ( 128) load&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (390) esp_image: segment 4: paddr=0x0003441c vaddr=0x40100080 &gt; size=0x050c0 ( 20672) load&lt;0x1b&gt;[0m &lt;0x1b&gt;[0;32mI (426) boot: Loaded app from partition at offset 0x10000&lt;0x1b&gt;[0m Hello world! This is ESP8266 chip with 1 CPU cores, WiFi, silicon revision 1, 4MB external flash Restarting in 10 seconds… Restarting in 9 seconds… Restarting in 8 seconds… Restarting in 7 seconds… Restarting in 6 seconds… Restarting in 5 seconds… Restarting in 4 seconds… Restarting in 3 seconds… Restarting in 2 seconds…</p>
-</blockquote>
+<p><a href="https://zhuanlan.zhihu.com/p/416269210">zhihu</a></p>
+</section>
+<section id="调频连续波雷达fmcw-radar" class="level1">
+<h1>调频连续波雷达（FMCW radar）</h1>
+<p>调频连续波集各种雷达优点。</p>
+<p>发射频率随着时间的变化而线性变化， <img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-21-10-39.png" class="img-fluid"></p>
+<ol type="1">
+<li>合成器发生线性调频信号</li>
+<li>通过发射天线发射出该信号</li>
+<li>接收天线接收回波信号</li>
+<li>通过混频器进行将回波信号和当前合成器的信号进行混频</li>
+<li>混频后产生中频信号（if）</li>
+</ol>
+</section>
+<section id="单个物体距离检测" class="level1">
+<h1>单个物体距离检测</h1>
+<p>接收的回波信号即是发射信号的副本，由于时间原因发生了偏移。</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-21-17-16.png" class="img-fluid"></p>
+<p>从发射到接收到回波信号一共花费时间为τ，频率的变化为Sτ。 混频器的输出IF信号为将两信号重合区（即图(a)中垂直虚线之间的时段）内的两信号相减即可。因为这两个信号是相同的，所以该中频信号只有一个单音频率。</p>
+<p>所以该频率为：<code>f = τ*S</code>(频率=时间*斜率) = <code>2d/c*S</code>=<code>2dS/c</code></p>
+</section>
+<section id="频率分辨率" class="level1">
+<h1>频率分辨率</h1>
+<p>是指将两个相邻谱峰分开的能力。在实际应用中是指分辨两个不同频率信号的最小间隔，观察窗越长越好，可以更准确的分辨不同频率 <font color="red"> 一般来说，观察时长为T的一个观察窗可以分离相隔超过1/T Hz的频率分量 </font></p>
+</section>
+<section id="距离分辨率" class="level1">
+<h1>距离分辨率</h1>
+<p>距离分辨率是雷达在距离维度上辨别两个或更多物体的能力(发射垂直方向【正前方上的距离】)。当两个物体相对于雷达的距离近到某个特定值时，雷达便不能再将二者区分开，将两个物体分辨为同一个物体。</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-21-58-55.png" class="img-fluid"></p>
+<p>雷达探测到多个目标，接收天线会接收到多个回波信号，即会有多个if（中频信号），经过fft后就是多个峰， <img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-21-59-05.png" class="img-fluid"></p>
 
 
 </section>
