@@ -1,0 +1,51 @@
+---
+title: "FMCW" 
+author: "dd21"
+date: "2023-02-12" 
+categories: [radar]
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-21-05-19.png
+---
+
+
+# Abstract
+basic knowledge of mmwave radar
+
+# Referance
+
+
+[zhihu](https://zhuanlan.zhihu.com/p/416269210)
+
+# 调频连续波雷达（FMCW radar）
+调频连续波集各种雷达优点。
+
+发射频率随着时间的变化而线性变化，
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-21-10-39.png)
+
+1. 合成器发生线性调频信号
+2. 通过发射天线发射出该信号
+3. 接收天线接收回波信号
+4. 通过混频器进行将回波信号和当前合成器的信号进行混频
+5. 混频后产生中频信号（if）
+
+# 单个物体距离检测
+
+接收的回波信号即是发射信号的副本，由于时间原因发生了偏移。
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-21-17-16.png)
+
+从发射到接收到回波信号一共花费时间为τ，频率的变化为Sτ。 混频器的输出IF信号为将两信号重合区（即图(a)中垂直虚线之间的时段）内的两信号相减即可。因为这两个信号是相同的，所以该中频信号只有一个单音频率。
+
+所以该频率为：`f = τ*S`(频率=时间*斜率) = `2d/c*S`=`2dS/c`
+
+# 频率分辨率
+
+是指将两个相邻谱峰分开的能力。在实际应用中是指分辨两个不同频率信号的最小间隔，观察窗越长越好，可以更准确的分辨不同频率 <font color='red'> 一般来说，观察时长为T的一个观察窗可以分离相隔超过1/T Hz的频率分量 </font>
+
+# 距离分辨率
+
+距离分辨率是雷达在距离维度上辨别两个或更多物体的能力(发射垂直方向【正前方上的距离】)。当两个物体相对于雷达的距离近到某个特定值时，雷达便不能再将二者区分开，将两个物体分辨为同一个物体。
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-21-58-55.png)
+
+雷达探测到多个目标，接收天线会接收到多个回波信号，即会有多个if（中频信号），经过fft后就是多个峰，
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-02-12-21-59-05.png)
