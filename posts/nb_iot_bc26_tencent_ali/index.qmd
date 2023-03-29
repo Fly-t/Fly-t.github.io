@@ -1,0 +1,163 @@
+---
+title: "how to use bc26 with tencent&ali iot platform" 
+author: "dd21"
+date: "2023-03-29" 
+categories: [nb-iot]
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-10-31-47.png
+---
+
+
+# Abstract
+This is a topic related to the Internet of Things and related technologies. NB-IoT is a low-power, wide-area coverage communication technology for the Internet of Things, while the BC260 module is a hardware device that supports NB-IoT communication. Tencent IoT Platform and Alibaba Cloud IoT Platform are two major IoT cloud platforms that provide functions such as IoT device access, data storage, and processing. With these keywords, it can be seen that the topic is discussing how to connect NB-IoT devices to IoT cloud platforms to achieve IoT applications.
+
+# Referance
+
+[BC260Y MQTT 指令](https://www.quectel.com/wp-content/uploads/2021/06/Quectel_BC260Y-CN_MQTT_%E5%BA%94%E7%94%A8%E6%8C%87%E5%AF%BC_V1.0.pdf)
+[腾讯云 (发送的数据格式)物模型协议](https://cloud.tencent.com/document/product/1081/34916)
+[BC260Y-CN AT 命令手册]([https://](https://www.quectel.com/wp-content/uploads/2021/06/Quectel_BC260Y-CN_AT%E5%91%BD%E4%BB%A4%E6%89%8B%E5%86%8C_V1.0.pdf))
+[善学坊温湿度采集教程](https://zhuanlan.zhihu.com/p/573098981)
+[善学坊nb-iot教程](https://z7po9bxpe4.k.topthink.com/@nb-iot/3.caijichuanganqishujudaotengxunyun.html)
+
+
+# how to read the AT datasheet
+``` bash
+AT+QMTCONN=<TCP_connectID>,<clientID>[,<username>[,<password>]]
+
+- []内的参数为可选参数, 可以填也可以不填写
+
+Ep:
+    AT+QMTCONN= <TCP_connectID>,   <clientID>    [,<username>                                      [,<password>]]        
+    AT+QMTCONN=       0,           "device22",
+    AT+QMTCONN=       0,           "sensor01",   "03P1H9CN2Esensor01;12010126;6PD93;1970357231",     "0a79340c5ccf7121b4e49b3f2089adf259b579ebc10ee9fa8a36202d15b86399;hmacsha256"
+```
+
+# test script
+qcom可以去善学坊的资料里面找 
+>https://pan.baidu.com/s/1oFpSJltDWPtv1Uuszk37Zg
+密码：3n8u
+
+
+测试模块能否连接到网络, 其实默认会连接到网络, 如果有IP地址返回就说明可以联网, 但是测试卡除外,测试卡过期了依旧可以获取到ip地址,但是返回的网络连接结果是0,7 查看手册也不知道这个是什么结果.
+
+``` bash
+# 测试bc260是否和pc连接成功
+ATI
+# 关闭睡眠模式
+AT+QSCLK=0
+# 查看是否打开全功能 1 表示打开
+AT+CFUN?
+# 查看手机卡号, 如果没有卡返回ERROR
+AT+CIMI
+# 查看绑定的运营商 3,5,8 联通, 电信, 移动
+AT+QBAND?
+# 设置所有频率3,5,8都扫描一遍, 这样就不用设置卡了, 连接可能有点慢
+AT+QBAND=0
+# 查看网络附着情况
+AT+CGATT?
+# 网络附着
+AT+CGATT=1
+# 查看IP地址
+AT+CGPADDR?
+# 查看网络获取的结果
+AT+CEREG?
+```
+
+使用Qcom或者普通的串口助手都行.
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-10-51-25.png)
+
+# config Tencent-iot Platform
+
+https://console.cloud.tencent.com/iotexplorer
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-07-57.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-09-18.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-09-36.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-09-47.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-10-47.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-11-06.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-11-27.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-12-26.png)
+
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-12-46.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-13-07.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-13-23.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-14-30.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-15-02.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-16-29.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-17-08.png)
+
+auto update data
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-15-27.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-17-28.png)
+
+
+> 可选: 虚拟设备调试
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-18-52.png)
+
+打开腾讯连连或者微信扫码
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-20-23.png)
+
+点击`上报`之前
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-21-14.jpg)
+
+点击`上报`之后
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-22-29.jpg)
+
+>### <font color='red'>到此软件模拟测试都ok, 接下来使用bc260y发送数据</font> 
+>使用Qcom或者普通的串口助手发送AT指令
+
+新建设备
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-29-32.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-30-21.png)
+
+这里使用`善学坊`提供的mqtt 用户名和密码生成工具
+也可以使用 [腾讯官方脚本示范](https://cloud.tencent.com/document/product/634/32546)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-27-10.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-30-39.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-32-53.png)
+将对应的数据填写到对应的位置, 点击生成后残生`username`和`password`待会发送的时候使用.
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-03-29-11-32-10.png)
+
+
+
+一共发送5条指令
+
+``` bash
+AT+QMTOPEN=0,"DN2HGX3J4C.iotcloud.tencentdevices.com",1883
+AT+QMTCONN=0,"device00","DN2HGX3J4Cdevice00;12010126;VO8NZ;1970364699","91dc0e02b637ba9771d0046da6b16f21b753ec6aaabcb63bc2901ff594c7ae14;hmacsha256"
+AT+QMTPUB=0,1,1,0,"$thing/up/property/DN2HGX3J4C/device00"
+
+{"method":"report","clientToken":"123","timestamp":1628646783,"params":{"temp":25}}
+
+# 使用qcom的时候ctrl+z表示按照二进制发送和发送0x1a效果一致
+0x1a
+```
+[mqtt.c](./mqtt.c)
+[mqtt.h](./mqtt.h)
+
+
+
