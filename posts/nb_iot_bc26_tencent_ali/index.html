@@ -307,6 +307,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 使用qcom的时候ctrl+z表示按照二进制发送和发送0x1a效果一致</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="ex">0x1a</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><a href="./mqtt.c">mqtt.c</a> <a href="./mqtt.h">mqtt.h</a></p>
+</section>
+<section id="注意要点" class="level1">
+<h1>注意要点</h1>
+<p>使用腾讯连连进行公众号消息推送时务必保证发送的数据格式正确，错误的数据格式可能会有显示，但是后台记录中会有报错信息，这将会导致公众号消息无法推送，使用虚拟设备调试没有问题。</p>
 
 
 </section>
