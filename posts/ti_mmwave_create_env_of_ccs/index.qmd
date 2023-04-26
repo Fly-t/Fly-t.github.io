@@ -1,0 +1,117 @@
+---
+title: "create env of mmwave radar of ccs" 
+author: "dd21"
+date: "2023-04-26" 
+categories: [ti,radar]
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-04-26-18-55-26.png
+---
+
+
+# Abstract
+
+This article discusses how to install and configure TI's mmWave Radar Software Development Kit (SDK) in the Code Composer Studio (CCS) development environment, so that developers can use this toolkit to implement their own radar applications. In the article, the author introduces the basic features and functions of the mmWave Radar SDK, as well as how to configure the relevant environment variables and paths in CCS to successfully install and use the SDK. The article also provides some practical tips and suggestions to help readers better understand and use this toolkit. Overall, this article provides useful information and guidance for developers who want to use CCS and TI mmWave radar to develop their own radar applications
+
+# Referance
+
+[with out dependency lib ](https://blog.csdn.net/super0peng/article/details/121475963)
+
+[ccs12.3](https://www.ti.com.cn/tool/cn/download/CCSTUDIO/12.3.0)
+
+[mmwave sdk](https://www.ti.com.cn/tool/cn/MMWAVE-SDK?keyMatch=MMWAVE%20SDK)
+
+[mmwave all sdk](https://www.ti.com.cn/tool/cn/download/MMWAVE-SDK/03.05.00.04)
+# install 
+
+## 1. install `ccs.exe`
+ 
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-04-26-19-06-45.png)
+
+## 2. install `mmwave_sdk.exe`
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-04-26-19-06-26.png)
+
+## 3. install `radar tool box`
+
+open `ccs.exe` -> `view` -> `resources Explorer`
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-04-26-19-08-34.png)
+
+-> install 
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-04-26-19-11-50.png)
+
+# import lib to ccs
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-04-26-19-12-55.png)
+
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-04-26-19-13-19.png)
+
+choose the path of ti install path.
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-04-26-19-13-38.png)
+
+restart the ccs then import some demo
+
+# import demo to ccs
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-04-26-19-15-43.png)
+
+browse the demo path
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-04-26-19-16-32.png)
+
+choice the demo which you want , this show level sensoring.
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-04-26-19-18-52.png)
+
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-04-26-19-19-27.png)
+
+if you see this means sdk version is not correctly, just `download the tips version` can stolve this.
+[mmwave all sdk](https://www.ti.com.cn/tool/cn/download/MMWAVE-SDK/03.05.00.04)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-04-26-19-23-15.png)
+
+
+install the tips version sdk
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-04-26-19-29-09.png)
+
+reinstall lib of mmwave_sdk tips version
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-04-26-19-36-08.png)
+
+
+make sure the tips version already install 
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-04-26-19-39-59.png)
+
+
+
+reload project, reload successful.
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-04-26-19-40-26.png)
+
+
+# other 
+change the color theme of ccs.
+
+[tutorial address](https://blog.csdn.net/qq_40692629/article/details/124703454)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-04-26-19-51-41.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
