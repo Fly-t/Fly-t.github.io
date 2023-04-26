@@ -14,7 +14,7 @@ do some notes of learing ti mmwave sdk.
 # Referance
 
 [mmwave_sdk_user_guide.pdf](./mmwave_sdk_user_guide.pdf)
-
+[overviw all radar](https://www.ti.com/sensors/mmwave-radar/overview.html)
 
 # 2. 系统概览
 
@@ -81,12 +81,6 @@ SDK提供了描述mmWave应用程序的各种控制和数据处理方面的演�
 
 
 3. 2. Loading images onto mmWave EVM
-
-
-
-
-
-
 
 
 

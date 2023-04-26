@@ -1,0 +1,321 @@
+---
+title: "mmwave level sensing demo notes" 
+author: "dd21"
+date: "2023-04-26" 
+categories: [ti,radar]
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-04-26-21-18-44.png
+---
+
+
+# Abstract
+
+TI has developed the IWR1843 mmWave radar sensor for industrial and automotive applications, including level sensing. A guide with notes on how to design and implement level sensing systems using the IWR1843 is available, covering topics such as signal processing, antenna design, and calibration techniques. This guide helps users understand and optimize the IWR1843's level sensing capabilities.
+
+# Referance
+
+[high_accuracy_user_guide.html](high_accuracy_user_guide.html)
+
+# 原理
+
+这个实验配置了一个发射天线和一个接收天线，并利用Zoom FFT技术进行操作，这种技术包含两个步骤。第一步是进行一维粗略FFT以搜索峰值。第二步是进行第二个放大FFT，它以更高的分辨率分析峰值频谱的一部分
+
+# 对比`14xx` 和  `16xx/68xx` 
+
+由于16xx/68xx设备包括片上DSP，而14xx设备没有，因此需要注意一些差异。由于片上FFT加速器的硬件限制，14xx版本的最大FFT大小为16K。因此，14xx版本将具有更低的处理延迟以及更低的功耗。16xx/68xx版本使用片上DSP，因此分辨率更高，FFT大小也更大.
+
+
+
+# 配置命令解析
+命令 RangeLimitCfg 使用以下参数结构 ，其中：
+``` bash
+RangeLimitCfg <numRangeBinZoomIn> <dis/enable> <min range limited> <max range limited>
+
+<numRangeBinZoomIn >（仅限 16xx/68xx）：是在粗峰两侧放大的箱数。注意：这是一个优化值，不建议进行更改。
+<dis/enable>：0 表示禁用，1 表示已启用
+<min range limited>：以米为单位
+<max range limited>：以米为单位
+```
+
+E: RangeLimitCfg 2 1 1.0 3.0
+
+
+# MSS发送数据代码解析
+
+
+这里整体的发送逻辑是`dss`通过`mailBox`发送一个`Semaphore`给`mss`, 然后`mss`查看`Semaphore`的类型,
+如果是`MMWDEMO_DSS2MSS_DETOBJ_READY`就去共享内存中将`dss`处理好的数据拷贝出来, 拷贝到`mss`的全局变量中,
+然后`mss`就对`mss`这边的这个全局变量做操作. 
+
+src: `mss_main.c`
+
+``` c
+/*z:这个是mailbox的函数, dsp和mss进行通信的工具 */
+static void MmwDemo_mboxReadTask(UArg arg0, UArg arg1)
+{
+    MmwDemo_message      message;
+    int32_t              retVal = 0;
+    uint32_t             timeStart;
+
+    /* wait for new message and process all the messages received from the peer */
+    while(1)
+    {
+        /* 一直等待mailbox发送发过来数据, 如果没有数据就一直挂起. */
+        Semaphore_pend(gMmwMssMCB.mboxSemHandle, BIOS_WAIT_FOREVER);
+
+        /* Read the message from the peer mailbox: We are not trying to protect the read
+         * from the peer mailbox because this is only being invoked from a single thread */
+       
+        /* 这段代码是从一个消息邮箱 (Mailbox) 中读取消息，并将消息内容保存到一个名为 message 
+         * 的变量中。在这段代码中，使用了 Mailbox_read() 函数来从名为 gMmwMssMCB 的全局变量所
+         * 表示的邮箱中读取消息。该函数的第一个参数是待读取的邮箱，第二个参数是存储消息的缓冲区
+         * 的指针，第三个参数是要读取的消息的长度。该函数将返回一个表示操作结果的值。在这段代码中，
+         * 变量 retVal 将被用于存储该函数的返回值。
+
+         * 需要注意的是，在这段代码中，并没有进行任何多线程保护措施，因为该代码被假定只会从一个
+         * 单一的线程中被调用。如果有多个线程可能会同时访问同一个邮箱，那么就需要在访问邮箱的过程
+         * 中采取适当的同步措施来确保线程安全性 */
+        retVal = Mailbox_read(gMmwMssMCB.peerMailbox, (uint8_t*)&message, sizeof(MmwDemo_message));
+        if (retVal < 0)
+        {
+            /* Error: Unable to read the message. Setup the error code and return values */
+            System_printf ("Error: Mailbox read failed [Error code %d]\n", retVal);
+        }
+        else if (retVal == 0)
+        {
+            /* We are done: There are no messages available from the peer execution domain. */
+            continue;
+        }
+        else
+        {
+            /* Flush out the contents of the mailbox to indicate that we are done with the message. This will
+             * allow us to receive another message in the mailbox while we process the received message. */
+            
+            /* 刷新邮箱准备后续接收 */
+            Mailbox_readFlush (gMmwMssMCB.peerMailbox);
+
+            /* Process the received message: */
+            /* 查看消息类型 */ 
+            switch (message.type)
+            {
+                /* 如果类型是 "MMWDEMO_DSS2MSS_DETOBJ_READY" */
+                case MMWDEMO_DSS2MSS_DETOBJ_READY:
+                    /* Got detetced objectes , shipped out through UART */
+
+                    /* 把接收到的数据中的大小信息提取出来,提取到下面这个变量中 */
+                	gMmwMssMCB.mssDataPathObj.inputInfoBuffSize = message.body.detObj.detObjOutsize;
+
+                    /* 到共享内存中地址将检测的dsp处理好的数据拷贝到"gMmwMssMCB.mssDataPathObj.inputInfo"中*/
+					memcpy((void *)&(gMmwMssMCB.mssDataPathObj.inputInfo),
+                			(uint8_t*)SOC_translateAddress(message.body.detObj.detObjOutAddress, SOC_TranslateAddr_Dir_FROM_OTHER_CPU,NULL),
+							message.body.detObj.detObjOutsize);
+                    
+                    /* 记录时间戳 */
+                	timeStart = Cycleprofiler_getTimeStamp();
+                	/* 当前时间花费在将处理结果从 DSP 中的共享内存复制到主机内存中的时间, 这里有点疑问, 为什么直接设置1和2 */
+                    gMmwMssMCB.mssDataPathObj.cycleLog.copyResultsTimeCurrInusec = 1.f;
+                    /* uart发送数据 */
+                	MmwDemo_transmitProcessedOutput();
+                	gMmwMssMCB.mssDataPathObj.cycleLog.copyResultsTimeCurrInusec = 2.f;
+                	/* 计算发送时间 */
+                    gMmwMssMCB.mssDataPathObj.cycleLog.sendingToUARTTimeCurrInusec = ((float)(Cycleprofiler_getTimeStamp() -  timeStart)/(float)R4F_CLOCK_MHZ);
+
+
+                    /* Send a message to MSS to log the output data */
+                    /* 清空message中的数据为后续重新接收做准备 */
+                    memset((void *)&message, 0, sizeof(MmwDemo_message));
+
+                    /* 将消息设置为"MMWDEMO_MSS2DSS_DETOBJ_SHIPPED"为别的操作做准备 */
+                    message.type = MMWDEMO_MSS2DSS_DETOBJ_SHIPPED;
+
+                    if (MmwDemo_mboxWrite(&message) != 0)
+                    {
+                        System_printf ("Error: Mailbox send message id=%d failed \n", message.type);
+                    }
+                    break;
+                default:
+                {
+                    /* Message not support */
+                    System_printf ("Error: unsupport Mailbox message id=%d\n", message.type);
+                    break;
+                }
+            }
+        }
+    }
+}
+```
+
+这里就是接收到数据后,将数据赋值给mss的变量然后调整通信格式(按照`TLV`的格式发送). TLV格式ti的文档中有说明.
+
+``` c
+
+/** @brief Transmits detection data over UART
+*
+*    The following data is transmitted:
+*    1. Header (size = 32bytes), including "Magic word", (size = 8 bytes)
+*       and icluding the number of TLV items
+*    TLV Items:
+*    2. If detectedObjects flag is set, pbjOut structure containing range,
+*       doppler, and X,Y,Z location for detected objects,
+*       size = sizeof(objOut_t) * number of detected objects
+*    3. If logMagRange flag is set,  rangeProfile,
+*       size = number of range bins * sizeof(uint16_t)
+*    4. If noiseProfile flag is set,  noiseProfile,
+*       size = number of range bins * sizeof(uint16_t)
+*    7. If rangeAzimuthHeatMap flag is set, the zero Doppler column of the
+*       range cubed matrix, size = number of Rx Azimuth virtual antennas *
+*       number of chirps per frame * sizeof(uint32_t)
+*    8. If rangeDopplerHeatMap flag is set, the log magnitude range-Doppler matrix,
+*       size = number of range bins * number of Doppler bins * sizeof(uint16_t)
+*    9. If statsInfo flag is set, the stats information
+*   @param[in] uartHandle   UART driver handle
+*   @param[in] obj          Pointer data path object MmwDemo_DataPathObj
+*/
+
+void MmwDemo_transmitProcessedOutput()
+{
+    MmwDemo_output_message_header header;
+    uint32_t tlvIdx = 0;
+    uint32_t numPaddingBytes;
+    uint32_t packetLen;
+    uint8_t padding[MMWDEMO_OUTPUT_MSG_SEGMENT_LEN];
+	MmwDemo_detOutputHdr           *ptrDetOutputHdr;
+	radarProcessOutput_t * outputData;
+    MmwDemo_output_message_tl   tl[MMWDEMO_OUTPUT_MSG_MAX];
+	uint32_t fft1D_length;
+	MmwDemo_MSS_DataPathObj     *obj = &gMmwMssMCB.mssDataPathObj;
+	MmwDemo_GuiMonSel   guiMonSel = gMmwMssMCB.cfg.guiMonSel;
+	UART_Handle uartHandle = gMmwMssMCB.loggingUartHandle;
+
+    ptrDetOutputHdr = (MmwDemo_detOutputHdr *)&obj->inputInfo.header;
+    outputData      = (radarProcessOutput_t *)&obj->inputInfo.pointCloudBuf;
+
+    fft1D_length	=	outputData->fft1DSize;
+
+    /* Clear message header */
+    memset((void *)&header, 0, sizeof(MmwDemo_output_message_header));
+    /* Header: */
+    header.platform = 0xA1642;
+    header.magicWord[0] = 0x0102;
+    header.magicWord[1] = 0x0304;
+    header.magicWord[2] = 0x0506;
+    header.magicWord[3] = 0x0708;
+    header.numDetectedObj = 1;
+    header.version =    MMWAVE_SDK_VERSION_BUILD |   //DEBUG_VERSION
+                        (MMWAVE_SDK_VERSION_BUGFIX << 8) |
+                        (MMWAVE_SDK_VERSION_MINOR << 16) |
+                        (MMWAVE_SDK_VERSION_MAJOR << 24);
+
+    packetLen = sizeof(MmwDemo_output_message_header);
+    //detectedObjects
+    {
+        tl[tlvIdx].type = MMWDEMO_OUTPUT_MSG_DETECTED_POINTS;
+        tl[tlvIdx].length = sizeof(MmwDemo_detectedObj) * 1 +
+                            sizeof(MmwDemo_output_message_dataObjDescr);
+        packetLen += sizeof(MmwDemo_output_message_tl) + tl[tlvIdx].length;
+        tlvIdx++;
+    }
+    //Range FFT input
+    if(guiMonSel.logRangeInput)
+    {
+        tl[tlvIdx].type = MMWDEMO_OUTPUT_MSG_RANGE_PROFILE;
+        tl[tlvIdx].length = 2 * sizeof(float) * fft1D_length;
+        packetLen += sizeof(MmwDemo_output_message_tl) + tl[tlvIdx].length;
+        tlvIdx++;
+    }
+    //statsInfo
+    {
+        tl[tlvIdx].type = MMWDEMO_OUTPUT_MSG_STATS;
+        tl[tlvIdx].length = sizeof(MmwDemo_output_message_stats);
+        packetLen += sizeof(MmwDemo_output_message_tl) + tl[tlvIdx].length;
+        tlvIdx++;
+    }
+
+    header.numTLVs = tlvIdx;
+    /* Round up packet length to multiple of MMWDEMO_OUTPUT_MSG_SEGMENT_LEN */
+    header.totalPacketLen = MMWDEMO_OUTPUT_MSG_SEGMENT_LEN *
+            ((packetLen + (MMWDEMO_OUTPUT_MSG_SEGMENT_LEN-1))/MMWDEMO_OUTPUT_MSG_SEGMENT_LEN);
+    header.timeCpuCycles =  Pmu_getCount(0);
+    header.frameNumber = 0;
+
+
+    UART_writePolling (uartHandle,
+                       (uint8_t*)&header,
+                       sizeof(MmwDemo_output_message_header));
+
+    tlvIdx = 0;
+    /* Send detected Objects */
+    {
+        MmwDemo_output_message_dataObjDescr descr;
+        MmwDemo_detectedObj dummyDetectionOut; //work around the current format
+        int32_t tempRange;
+
+        memset((void *)&dummyDetectionOut, 0, sizeof(MmwDemo_detectedObj));
+
+        tempRange                       =   (int32_t)(outputData->rangeEst * 1048576.f);
+
+        dummyDetectionOut.dopplerIdx    =   0;
+        dummyDetectionOut.peakVal       =   0;
+        dummyDetectionOut.rangeIdx      =   (uint16_t) tempRange & 0xFFFF;
+        dummyDetectionOut.x             =   tempRange >> 16;
+        dummyDetectionOut.y             =   0;
+        dummyDetectionOut.z             =   0;
+
+        UART_writePolling (uartHandle,
+                           (uint8_t*)&tl[tlvIdx],
+                           sizeof(MmwDemo_output_message_tl));
+        /* Send objects descriptor */
+        descr.numDetetedObj = 1;
+        descr.xyzQFormat = 20;
+        UART_writePolling (uartHandle, (uint8_t*)&descr, sizeof(MmwDemo_output_message_dataObjDescr));
+
+        /*Send array of objects */
+        UART_writePolling (uartHandle, (uint8_t*)&dummyDetectionOut, sizeof(MmwDemo_detectedObj) * 1);
+        tlvIdx++;
+    }
+
+    /* Send Range FFT input */
+    if(guiMonSel.logRangeInput)
+    {
+        UART_writePolling (uartHandle,
+                           (uint8_t*)&tl[tlvIdx],
+                           sizeof(MmwDemo_output_message_tl));
+
+        UART_writePolling (uartHandle, (uint8_t*)outputData->fft1Dinput, 2 * fft1D_length * sizeof(float));
+        tlvIdx++;
+    }
+
+    /* Send stats information */
+    {
+        MmwDemo_output_message_stats stats;
+        stats.interChirpProcessingMargin = (uint32_t) ptrDetOutputHdr->chirpProcessingMarginInUsec;
+        stats.interFrameProcessingMargin = (uint32_t) ptrDetOutputHdr->frameProcessingMarginInUsec;
+        stats.interFrameProcessingTime = 0;
+        stats.transmitOutputTime = (uint32_t) obj->cycleLog.sendingToUARTTimeCurrInusec;
+        stats.activeFrameCPULoad = (uint32_t) ptrDetOutputHdr->chirpProcessingLoading;
+        stats.interFrameCPULoad = (uint32_t) ptrDetOutputHdr->frameProcessingLoading;
+
+        UART_writePolling (uartHandle,
+                           (uint8_t*)&tl[tlvIdx],
+                           sizeof(MmwDemo_output_message_tl));
+        UART_writePolling (uartHandle,
+                           (uint8_t*)&stats,
+                           tl[tlvIdx].length);
+        tlvIdx++;
+    }
+
+    /* Send padding bytes */
+    numPaddingBytes = MMWDEMO_OUTPUT_MSG_SEGMENT_LEN - (packetLen & (MMWDEMO_OUTPUT_MSG_SEGMENT_LEN-1));
+    if (numPaddingBytes<MMWDEMO_OUTPUT_MSG_SEGMENT_LEN)
+    {
+        UART_writePolling (uartHandle,
+                            (uint8_t*)padding,
+                            numPaddingBytes);
+    }
+
+
+}
+```
+
+
+
+
