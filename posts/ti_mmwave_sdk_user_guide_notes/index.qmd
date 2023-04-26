@@ -1,13 +1,238 @@
 ---
-title: "ti mmwave sdk user guide notes" 
+title: "ti mmwave sdk notes" 
 author: "dd21"
 date: "2023-04-25" 
 categories: [ti,radar]
-image: 
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-04-25-09-44-39.png
 ---
 
 
 # Abstract
 
+do some notes of learing ti mmwave sdk. 
 
 # Referance
+
+[mmwave_sdk_user_guide.pdf](./mmwave_sdk_user_guide.pdf)
+
+
+# 2. 系统概览
+
+> 系统被分为两个部分: `雷达套件`和`演示案例`
+
+## 2.1 毫米波雷达套件
+- 驱动 (Drivers)
+- OSAL(OSAL)
+- mmWaveLink(mmWaveLink)
+- mmWaveLib(mmWaveLib)
+- mmWave API(mmWave API)
+- 数据处理层(Data processing layer (manager, processing units))
+- 雷达固件(RADARSS Firmware)
+- 板子设置和烧写程序(Board Setup and Flash Utilities)
+
+## 2.2 雷达示例
+
+SDK提供了描述mmWave应用程序的各种控制和数据处理方面的演示。演示输出在PC上的数据可视化是这些演示的一部分。这些演示是提供给客户的示例代码，用于了解毫米波设备和SDK的内部工作原理，并帮助他们开始开发自己的应用程序
+
+- outOfBoxdemo的图形界面程序 [https://dev.ti.com/mmWaveDemoVisualizer](https://dev.ti.com/mmWaveDemoVisualizer)
+
+## 2.3 额外的依赖
+
+构建mmwave sdk的所有工具和组件都在mmwave sdk的安装目录下.但是以下组件不在包括在目录中.
+
+- ccs
+- DCA100EVM cli in [mmwave studio](http://software-dl.ti.com/ra-processors/esd/MMWAVE-STUDIO/latest/index_FDS.html)
+
+## 2.4 本文档中使用的术语
+
+|  术语    |   解释   |
+| ------------- | ------------- |
+|  xWR   |   各WR系列(IWR, AWR..)   |
+|  BSS   |   这在源代码中使用，在本文档中很少使用, 文档中使用`RADARS`表示。它也可替换地称为毫米波前端   |
+|  MSS   |   `Master Sub-system`控制端, 负责数据发送和外部交互等操作,内核是` Cortex R4F`   |
+|  DSS   |   `DSP Sub-system`数据处理端, 内核` C674x core`   |
+
+
+## 2.5 相关文档链接
+
+除了mmwave_sdk包中包含的文档外，以下文档/链接是重要的参考资料。
+- 芯片链接 (SoC links)
+    -  [汽车毫米波雷达芯片](https://www.ti.com/sensors/mmwave-radar/automotive/overview.html)(`Automotive mmWave radar sensors`=>`AWR`)
+    -  [工业毫米波雷达芯片](https://www.ti.com/sensors/mmwave-radar/industrial/overview.html)(`Industrial mmWave radar sensors`=>`IWR`)
+- 开发板链接(Evaluation Modules (EVM) links)
+    - [汽车毫米波雷达开发板](https://www.ti.com/design-resources/embedded-development/automotive-mmwave-radar-sensors.html#Evaluation)
+    - [工业毫米波雷达开发板](https://www.ti.com/design-resources/embedded-development/industrial-mmwave-radar-sensors.html#Development)
+
+# 3. 入门
+
+最好的入门方式就是将各种各样的示例程序都跑一遍, 示例程序的位置`C:\ti\mmwave_sdk_03_05_00_04\packages\ti\demo\xwr18xx\mmw`,烧录程序到板子上之后, 使用`visualizer`发送配置即可启动程序.
+
+## 3.1 设备编程
+
+在`ccs`中有个`Getting started`,有些指南.
+
+**xWR14xx**
+
+只有一个`R4F`的内核, 具体编程细节查看`R4F`的编程手册
+
+**xWR16xx/xWR18xx/xWR68xx/xWR64xx**
+
+有连个内核`cortex R4F`,`DSP C674x`, 编程细节分别查看对应的编程手册.示例程序中放了两个部分的文件, 一个用于`mss/R4F`, 一个用于`dss/C674`, 这两个部分都是独立的, 他们之间的通信是通过`MailBox`进行通信, `MailBox`有一个测试单元叫`test_mss_dss_msg_exchange`, 有很多测试包括`datapath manager (DPM)`, `完整测试`, `最小测试`等
+
+
+3. 2. Loading images onto mmWave EVM
+
+
+
+
+
+
+
+
+
+# append
+
+``` bash
+								IWR6843vitalsign配置解析															
+																-2022-11-15 dd21
+sensorStop
+	- 传感器停止
+
+flushCfg
+	- 刷新配置
+	
+dfeDataOutputMode 1
+	 - 数据输出模式
+		|-1 基于帧的chirp模式
+		|-2 连续chirp模式
+		|-3 高级帧模式		
+	
+	
+channelCfg 15 3 0
+	- 通道设置
+		|-15 => (0x1111)b 接收天线掩码, 表示打开 4个接收天线  
+		|-3  => (0x11)b	  发射天线掩码, 表示打开 2个发射天线
+		|-0 soc级联(目前不可用[V3.5.4]), 设置为0
+		
+
+adcCfg 2 1
+	- ADC配置
+		|-<具体信息查看mmwaveLink 文档>
+		|-2 adc采样位数(只支持16bits)
+			|-0 12bits
+			|-1 14bits
+			|-2 16bits
+			
+		|-1 adc输出格式
+			|-0 real(实数)
+			|-1 complex 1x (image band filtered output)
+			|-2 complex 2x (image band visible)
+			
+ 
+adcbufCfg -1 0 0 1 0
+	- Adc_buffer配置
+		|--1子帧索引
+			|-传统模式 设置为-1
+			|-高级帧模式 根据需求配置, 若依旧设置为-1, 则表示子帧采取相同的配置
+			
+		|- 0 ADCBUF adcBuffer输出模式
+			|-0 复数模式
+			|-1 实数模式
+			
+		|- 1 采样交换选择(只支持1)
+			|-0-I in LSB, Q in MSB
+			|-1-Q in LSB, I in MSB
+			
+		|- 1 ADCbuffer通道交错(只支持1)
+			|-0 交错
+			|-1 不交错
+			
+		|- 1 chrip 阈值, 用于 ADCBUF 缓冲区触发 ping /pong 缓冲区开关的 Chirp 阈值配置
+			|-[0-8] 16xx, 将dsp用于1D-fft处理,如果使用lvds使用的话, 1也是可以的
+			|-[1] 68xx,64xx,18xx, 有HWA(fft硬件加速) 
+	
+profileCfg 0 60 7 6 60 0 0 65 1 100 2000 0 0 40
+	- 雷达前段和数据处理配置
+		|-0    标识符, 区别第几个配置
+		|-60   起始频率(GHz,允许浮点数)
+		|-7    idle time  空闲时间(us)
+		|-6    adc有效起始时间(us)
+		|-60   斜坡结束时间(us)
+		|-0    发射天线功率返回码(只有0测试过)
+		|-0    发射天线移相器(只有0测试过)
+		|-65   每个chirp的变化率,MHz/us
+		|-1    发射天线开始时间(us)
+		|-100  adc采样数
+		|-2000 adc采样率
+		|-0	   高通滤波器1
+			|-0: 175 KHz
+			|-1: 235 KHz
+			|-2: 350 KHz
+			|-3: 700 KHz
+		|-0	   高通滤波器2
+			|-0: 350 KHz
+			|-1: 700 KHz
+			|-2: 1.4 MHz
+			|-3: 2.8 MHz
+		|-40  接收增益 以 dB 为单位的 RX 增益和 RF 增益目标的或值
+		
+
+chirpCfg 0 0 0 0 0 0 0 1
+chirpCfg 1 1 0 0 0 0 0 2
+	- 对雷达前段和数据处理的chirp配置
+		|- 0 chirp开始索引
+		|- 0 chirp结束索引
+		|- 0 配置文件标识符
+		|- 0 起始频率变化(Hz)		[只支持0]
+		|- 0 频率斜率变化(kHz/us)	[只支持0]
+		|- 0 空闲时间(us)			[只支持0]
+		|- 0 ADC 启动时间变化(us)	[只支持0]
+		|- 1 (0x01)b => tx 天线掩码, 打开天线1
+		
+
+frameCfg 0 1 1 0 50 1 0
+	- fram配置
+		|-0  chrip 开始索引(0-511)
+		|-1  chrip 结束索引(开始索引-511)
+		|-1  循环次数(1-255), 如果用dsp进行计算多普勒chirp, 循环次数必须是4的倍数, 否则需要调整窗的大小
+		|-0  frame的数量(0-65535),0表示无穷
+		|-50 frame的周期50ms
+		|-1  触发选择
+			|-1:软件触发(只支持软件触发) 
+			|-2:硬件触发
+		|-0	 frame触发延时(ms)
+		
+		
+lowPower 0 0
+	- 低功耗模式
+		|- 0 don’t_care
+		|-ADC Mode
+			|-0 : 常规模式
+			|-1 : 低功耗adc模式 (不支持 xwr6xxx)
+			
+guiMonitor -1 0 0 0 0 0 1
+	- 图形界面监视器(所有配置0表示关闭, 1表示开启)
+		|- -1  所有frame配置相同(-1)
+		|- 0   检测到的物体
+		|- 0   log magnitude range
+		|- 0   noise profile
+		|- 0   各种热图
+		|- 0   距离多普勒热图
+		|- 1   CPU 负载、余量、设备温度读数等
+		
+		
+calibDcRangeSig -1 0 0 0 0
+	- 补偿参数
+		|- -1  所有frame配置相同(-1)
+		|- Enable DC removal using first few chirps
+		|-
+		|-
+		|-
+		|-
+		
+
+
+vitalSignsCfg 0.3 0.9 256 512 4 0.1 0.05 100000 300000
+motionDetection 1 20 2.0 0
+sensorStart
+```
