@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.475">
+<meta name="generator" content="quarto-1.3.340">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,9 +19,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -48,43 +49,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -141,30 +112,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <span class="navbar-title">TengFei’s Blog</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../article.html">
+    <a class="nav-link" href="../../article.html" rel="" target="">
  <span class="menu-text">Article</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/fly-t"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/fly-t" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://raw.githubusercontent.com/fly-t/images/main/blog/wechat-2022-11-27-16-30-56.png"><i class="bi bi-qr-code-scan" role="img">
+    <a class="nav-link" href="https://raw.githubusercontent.com/fly-t/images/main/blog/wechat-2022-11-27-16-30-56.png" rel="" target=""><i class="bi bi-qr-code-scan" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div class="quarto-toggle-container">
-                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-              </div>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -273,11 +244,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">// 报错</span></span>
 <span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>Building x86<span class="op">-</span>nemu<span class="op">-</span>interpreter</span>
 <span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>make <span class="op">-</span>C <span class="op">/</span>home<span class="op">/</span>ubuntu<span class="op">/</span>ics<span class="op">/</span>ics2020<span class="op">/</span>nemu<span class="op">/</span>tools<span class="op">/</span>kvm<span class="op">-</span>diff </span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>make<span class="op">[</span><span class="dv">1</span><span class="op">]:</span> Entering directory '<span class="op">/</span>home<span class="op">/</span>ubuntu<span class="op">/</span>ics<span class="op">/</span>ics2020<span class="op">/</span>nemu<span class="op">/</span>tools<span class="op">/</span>kvm<span class="op">-</span>diff'</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>make<span class="op">[</span><span class="dv">1</span><span class="op">]:</span> Nothing to be done <span class="cf">for</span> 'app'<span class="op">.</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>make<span class="op">[</span><span class="dv">1</span><span class="op">]:</span> Leaving directory '<span class="op">/</span>home<span class="op">/</span>ubuntu<span class="op">/</span>ics<span class="op">/</span>ics2020<span class="op">/</span>nemu<span class="op">/</span>tools<span class="op">/</span>kvm<span class="op">-</span>diff'</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>make<span class="op">[</span><span class="dv">1</span><span class="op">]:</span> Entering directory <span class="ch">'/</span><span class="er">home/ubuntu/ics/ics2020/nemu/tools/kvm-diff</span><span class="ch">'</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>make<span class="op">[</span><span class="dv">1</span><span class="op">]:</span> Nothing to be done <span class="cf">for</span> <span class="ch">'a</span><span class="er">pp</span><span class="ch">'</span><span class="op">.</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>make<span class="op">[</span><span class="dv">1</span><span class="op">]:</span> Leaving directory <span class="ch">'/</span><span class="er">home/ubuntu/ics/ics2020/nemu/tools/kvm-diff</span><span class="ch">'</span></span>
 <span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="op">./</span>build<span class="op">/</span>x86<span class="op">-</span>nemu<span class="op">-</span>interpreter <span class="op">--</span>log<span class="op">=./</span>build<span class="op">/</span>nemu<span class="op">-</span>log<span class="op">.</span>txt <span class="op">--</span>diff<span class="op">=/</span>home<span class="op">/</span>ubuntu<span class="op">/</span>ics<span class="op">/</span>ics2020<span class="op">/</span>nemu<span class="op">/</span>tools<span class="op">/</span>kvm<span class="op">-</span>diff<span class="op">/</span>build<span class="op">/</span>x86<span class="op">-</span>kvm<span class="op">-</span>so </span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>x86<span class="op">-</span>nemu<span class="op">-</span>interpreter<span class="op">:</span> src<span class="op">/</span>isa<span class="op">/</span>x86<span class="op">/</span>reg<span class="op">.</span>c<span class="op">:</span><span class="dv">20</span><span class="op">:</span> reg_test<span class="op">:</span> Assertion `reg_w<span class="op">(</span>i<span class="op">)</span> <span class="op">==</span> <span class="op">(</span>sample<span class="op">[</span>i<span class="op">]</span> <span class="op">&amp;</span> <span class="bn">0xffff</span><span class="op">)</span>' failed<span class="op">.</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>x86<span class="op">-</span>nemu<span class="op">-</span>interpreter<span class="op">:</span> src<span class="op">/</span>isa<span class="op">/</span>x86<span class="op">/</span>reg<span class="op">.</span>c<span class="op">:</span><span class="dv">20</span><span class="op">:</span> reg_test<span class="op">:</span> Assertion `reg_w<span class="op">(</span>i<span class="op">)</span> <span class="op">==</span> <span class="op">(</span>sample<span class="op">[</span>i<span class="op">]</span> <span class="op">&amp;</span> <span class="bn">0xffff</span><span class="op">)</span><span class="ch">' </span><span class="er">failed.</span></span>
 <span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>make<span class="op">:</span> <span class="op">***</span> <span class="op">[</span>Makefile<span class="op">:</span><span class="dv">108</span><span class="op">:</span> run<span class="op">]</span> Aborted <span class="op">(</span>core dumped<span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>查看<code>src/isa/x86/reg.c:20:</code></li>
@@ -325,7 +296,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <div class="sourceCode" id="cb7"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">// -E 我们都懂的, 可是-MF是什么,google一下,这里我是废物, 我又被google到的中文结果吸引进去了</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>@$<span class="op">(</span>CC<span class="op">)</span> $<span class="op">(</span>CFLAGS<span class="op">)</span> <span class="op">-</span>E <span class="op">-</span>MF <span class="op">/</span>dev<span class="op">/</span>null $<span class="op">&lt;</span> <span class="op">|</span> \</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    grep <span class="op">-</span>ve '<span class="op">^</span>#' <span class="op">|</span> \</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    grep <span class="op">-</span>ve <span class="ch">'^</span><span class="er">#</span><span class="ch">'</span> <span class="op">|</span> \</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    clang<span class="op">-</span>format <span class="op">-</span> <span class="op">&gt;</span> $<span class="op">(</span>basename $@<span class="op">).</span>i</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><a href="https://blog.csdn.net/eydwyz/article/details/90296048">gcc -MF</a> <a href="https://blog.csdn.net/weixin_42615308/article/details/82996779">$&lt;</a> - 看完之后我又行了, 不就是建立个文件夹, 然后把每个<code>.c</code>的文件都预编译成<code>.i</code>文件, 我又拿捏了, 走着</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ubuntu@VM<span class="op">-</span><span class="dv">12</span><span class="op">-</span><span class="dv">14</span><span class="op">-</span>ubuntu<span class="op">:~/</span>ics<span class="op">/</span>ics2020<span class="op">/</span>nemu$ make <span class="op">-</span>B</span>
@@ -360,7 +331,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>After this operation<span class="op">,</span> <span class="fl">29.7</span> kB of additional disk space will be used<span class="op">.</span></span>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>Selecting previously unselected package clang<span class="op">-</span>format<span class="op">.</span></span>
 <span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="op">(</span>Reading database <span class="op">...</span> <span class="dv">143254</span> files and directories currently installed<span class="op">.)</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>Preparing to unpack <span class="op">.../</span>clang<span class="op">-</span>format_1<span class="op">%</span><span class="dv">3</span><span class="er">a10</span><span class="fl">.0</span><span class="op">-</span><span class="dv">50</span><span class="op">~</span>exp1_amd64<span class="op">.</span>deb <span class="op">...</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>Preparing to unpack <span class="op">.../</span>clang<span class="op">-</span>format_1<span class="op">%</span><span class="dv">3</span><span class="er">a10.0</span><span class="op">-</span><span class="dv">50</span><span class="op">~</span>exp1_amd64<span class="op">.</span>deb <span class="op">...</span></span>
 <span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>Unpacking clang<span class="op">-</span>format <span class="op">(</span><span class="dv">1</span><span class="op">:</span><span class="fl">10.0</span><span class="op">-</span><span class="dv">50</span><span class="op">~</span>exp1<span class="op">)</span> <span class="op">...</span></span>
 <span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>Setting up clang<span class="op">-</span>format <span class="op">(</span><span class="dv">1</span><span class="op">:</span><span class="fl">10.0</span><span class="op">-</span><span class="dv">50</span><span class="op">~</span>exp1<span class="op">)</span> <span class="op">...</span></span>
 <span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>Processing triggers <span class="cf">for</span> man<span class="op">-</span>db <span class="op">(</span><span class="fl">2.9</span><span class="er">.1</span><span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="op">...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -453,7 +424,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span><span class="op">(</span>args <span class="op">==</span> NULL<span class="op">)</span> step<span class="op">=</span><span class="dv">1</span><span class="op">;</span></span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">// format string and move to a new vable  </span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> sscanf<span class="op">(</span>args<span class="op">,</span><span class="st">"%d"</span><span class="op">,&amp;</span>step<span class="op">);</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> sscanf<span class="op">(</span>args<span class="op">,</span><span class="st">"</span><span class="sc">%d</span><span class="st">"</span><span class="op">,&amp;</span>step<span class="op">);</span></span>
 <span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">// excute num</span></span>
 <span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  cpu_exec<span class="op">(</span>step<span class="op">);</span></span>
@@ -470,9 +441,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> isa_reg_display<span class="op">()</span> <span class="op">{</span></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> R_EAX<span class="op">;</span> i <span class="op">&lt;</span> R_EDI<span class="op">;</span> i<span class="op">++)</span></span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">{</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"$%s</span><span class="sc">\t</span><span class="st">0x%08x</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> regsl<span class="op">[</span>i<span class="op">]</span> <span class="op">,</span>reg_l<span class="op">(</span>i<span class="op">));</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"$</span><span class="sc">%s\t</span><span class="st">0x</span><span class="sc">%08x\n</span><span class="st">"</span><span class="op">,</span> regsl<span class="op">[</span>i<span class="op">]</span> <span class="op">,</span>reg_l<span class="op">(</span>i<span class="op">));</span></span>
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"$pc</span><span class="sc">\t</span><span class="st">0x%08x</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span>cpu<span class="op">.</span>pc<span class="op">);</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"$pc</span><span class="sc">\t</span><span class="st">0x</span><span class="sc">%08x\n</span><span class="st">"</span><span class="op">,</span>cpu<span class="op">.</span>pc<span class="op">);</span></span>
 <span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>ui.c</code></p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> <span class="dt">int</span> cmd_info<span class="op">(</span><span class="dt">char</span><span class="op">*</span> args<span class="op">){</span></span>
@@ -502,12 +473,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span><span class="op">*</span> N    <span class="op">=</span>  strtok<span class="op">(</span>NULL<span class="op">,</span><span class="st">" "</span><span class="op">);</span></span>
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span><span class="op">*</span> EXPR <span class="op">=</span>  strtok<span class="op">(</span>NULL<span class="op">,</span><span class="st">" "</span><span class="op">);</span></span>
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  sscanf<span class="op">(</span>N<span class="op">,</span><span class="st">"%d"</span><span class="op">,&amp;</span>len<span class="op">);</span></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  sscanf<span class="op">(</span>EXPR<span class="op">,</span><span class="st">"%x"</span><span class="op">,&amp;</span>addr<span class="op">);</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  sscanf<span class="op">(</span>N<span class="op">,</span><span class="st">"</span><span class="sc">%d</span><span class="st">"</span><span class="op">,&amp;</span>len<span class="op">);</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  sscanf<span class="op">(</span>EXPR<span class="op">,</span><span class="st">"</span><span class="sc">%x</span><span class="st">"</span><span class="op">,&amp;</span>addr<span class="op">);</span></span>
 <span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i<span class="op">=</span>addr<span class="op">;</span>i<span class="op">&lt;</span>addr<span class="op">+(</span>len<span class="op">*</span><span class="dv">4</span><span class="op">);</span>i<span class="op">+=</span><span class="dv">4</span><span class="op">){</span></span>
 <span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    word_t value <span class="op">=</span> vaddr_read<span class="op">(</span>i<span class="op">,</span><span class="dv">4</span><span class="op">);</span></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"$0x%08x:</span><span class="sc">\t</span><span class="st">0x%08x</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> i<span class="op">,</span>value<span class="op">);</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"$0x</span><span class="sc">%08x</span><span class="st">:</span><span class="sc">\t</span><span class="st">0x</span><span class="sc">%08x\n</span><span class="st">"</span><span class="op">,</span> i<span class="op">,</span>value<span class="op">);</span></span>
 <span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
 <span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
@@ -518,7 +489,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://img-blog.csdnimg.cn/09e4bcdc0c5e465daa7ba1b0b401a452.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">在这里插入图片描述</figcaption><p></p>
+<figcaption class="figure-caption">在这里插入图片描述</figcaption>
 </figure>
 </div>
 <p>gdb中文参考：<a href="https://wizardforcel.gitbooks.io/100-gdb-tips/content/examine-memory.html">https://wizardforcel.gitbooks.io/100-gdb-tips/content/examine-memory.html</a></p>
@@ -684,9 +655,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -751,6 +736,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {

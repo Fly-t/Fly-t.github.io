@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.475">
+<meta name="generator" content="quarto-1.3.340">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,9 +19,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -48,43 +49,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -141,30 +112,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <span class="navbar-title">TengFei’s Blog</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../article.html">
+    <a class="nav-link" href="../../article.html" rel="" target="">
  <span class="menu-text">Article</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/fly-t"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/fly-t" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://raw.githubusercontent.com/fly-t/images/main/blog/wechat-2022-11-27-16-30-56.png"><i class="bi bi-qr-code-scan" role="img">
+    <a class="nav-link" href="https://raw.githubusercontent.com/fly-t/images/main/blog/wechat-2022-11-27-16-30-56.png" rel="" target=""><i class="bi bi-qr-code-scan" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div class="quarto-toggle-container">
-                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-              </div>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -259,7 +230,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>ll                          <span class="co">// 列出详细信息</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>ls <span class="op">-</span>lrt                     <span class="co">// 时间排序</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>别名修改</code> 修改家目录下的<code>bachrc</code>文件设置命令别名,想当于快捷方式</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>alias lt<span class="op">=</span>'ls <span class="op">-</span>lrt'          <span class="co">// 修改别名为lt </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>alias lt<span class="op">=</span><span class="ch">'l</span><span class="er">s -lrt</span><span class="ch">'</span>          <span class="co">// 修改别名为lt </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>文件查找</code></p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>find <span class="op">./</span> <span class="op">-</span>name <span class="st">"xxx"</span>         <span class="co">// 在当前目录查找xxx, xxx可以是正则表达式</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>文件内容查看</code></p>
@@ -271,8 +242,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>tail <span class="op">-</span>f xxx                 <span class="co">// 动态显示文本最新信息</span></span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>diff xx<span class="op">-</span><span class="dv">1</span> xx<span class="op">-</span><span class="dv">2</span>              <span class="co">// 文件对比</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>查找文件内容</code></p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>egrep 'str' file            <span class="co">// 查找文件内容</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>egrep 'str' file <span class="op">&gt;</span> outFile  <span class="co">// 将查找到的内容输出到outFile</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>egrep <span class="ch">'s</span><span class="er">tr</span><span class="ch">'</span> file            <span class="co">// 查找文件内容</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>egrep <span class="ch">'s</span><span class="er">tr</span><span class="ch">'</span> file <span class="op">&gt;</span> outFile  <span class="co">// 将查找到的内容输出到outFile</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>权限修改</code></p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>chown user file             <span class="co">// 修改文件拥有者</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>chmod a<span class="op">+</span>x  file             <span class="co">// 所用用户添加可执行权限a(all) u(user) g(group) o(other)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -336,7 +307,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb25"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="op">-</span>exec <span class="op">./</span>commands<span class="op">.</span>sh <span class="op">{}</span> \<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>-print的定界符</code> 默认使用’’作为文件的定界符； -print0 使用’\0’作为文件的定界符，这样就可以搜索包含空格的文件；</p>
 <p><code>grep文本搜索</code> -o 只输出匹配的文本行 -v 只输出没有匹配的文本行 -c 统计文件中包含文本的次数 grep -c “text” filename -n 打印匹配的行号 -i 搜索时忽略大小写 -l 只打印文件名</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>grep <span class="op">-</span>i <span class="op">-</span>n 'hello' a<span class="op">.</span>txt                        <span class="co">// 查找文本中hello的位置, 忽略大小写</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>grep <span class="op">-</span>i <span class="op">-</span>n <span class="ch">'h</span><span class="er">ello</span><span class="ch">'</span> a<span class="op">.</span>txt                        <span class="co">// 查找文本中hello的位置, 忽略大小写</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>在多级目录中对文本递归搜索(程序员搜代码的最爱）:</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>grep <span class="st">"class"</span> <span class="op">.</span> <span class="op">-</span>R <span class="op">-</span>n</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>xargs命令行参数转换</code></p>
@@ -360,47 +331,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>wc <span class="op">-</span>c xxxx                                      <span class="co">// 统计字符数</span></span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>wc xxx                                          <span class="co">// 返回[行数, 单词数, 字符数]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>文本替换 - sed</code></p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>sed 's<span class="op">/</span>xxx<span class="co">/***/</span>' <span class="dt">FILE</span>                           <span class="co">// 替换每行第一个匹配的字符[将FILE中的xxx替换为***]</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>sed 's<span class="op">/</span>xxx<span class="co">/***/</span>g' <span class="dt">FILE</span>                          <span class="co">// 替换匹配到的所有的字符</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>sed <span class="op">-</span>i 's<span class="op">/</span>xxx<span class="co">/***/</span>' <span class="dt">FILE</span>                        <span class="co">// 直接修改原文[上面的写法需要将修改后的内容重定位输出到新的文件才可以保存]</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>sed <span class="op">-</span>i '<span class="op">/^</span>$<span class="op">/</span>d' <span class="dt">FILE</span>                             <span class="co">// 直接将文件中的空白行删除[文本末尾的空白行没有删除]                   </span></span>
+<div class="sourceCode" id="cb32"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>sed <span class="ch">'s</span><span class="er">/xxx/***/</span><span class="ch">'</span> <span class="dt">FILE</span>                           <span class="co">// 替换每行第一个匹配的字符[将FILE中的xxx替换为***]</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>sed <span class="ch">'s</span><span class="er">/xxx/***/g</span><span class="ch">'</span> <span class="dt">FILE</span>                          <span class="co">// 替换匹配到的所有的字符</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>sed <span class="op">-</span>i <span class="ch">'s</span><span class="er">/xxx/***/</span><span class="ch">'</span> <span class="dt">FILE</span>                        <span class="co">// 直接修改原文[上面的写法需要将修改后的内容重定位输出到新的文件才可以保存]</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>sed <span class="op">-</span>i <span class="ch">'/</span><span class="er">^$/d</span><span class="ch">'</span> <span class="dt">FILE</span>                             <span class="co">// 直接将文件中的空白行删除[文本末尾的空白行没有删除]                   </span></span>
 <span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>str <span class="op">=</span> <span class="dv">9999</span></span>
 <span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>sed  <span class="st">"s/xx/$str/"</span> <span class="dt">FILE</span>                          <span class="co">// 双引号会替换变量的值, 单引号不会, 会将str替换为9999</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>awk数据流处理</code> awk脚本结构</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>awk ' BEGIN<span class="op">{</span> statements <span class="op">}</span> statements2 END<span class="op">{</span> statements <span class="op">}</span> '</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>awk <span class="ch">' </span><span class="er">BEGIN{ statements } statements2 END{ statements } </span><span class="ch">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>工作方式 1.执行begin中语句块； 2.从文件或stdin中读入一行，然后执行statements2，重复这个过程，直到文件全部被读取完毕； 3.执行end语句块；</li>
 </ul>
-<div class="sourceCode" id="cb34"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>echo <span class="dv">123</span> <span class="op">|</span> awk 'BEGIN <span class="op">{</span>print <span class="st">"Start"</span><span class="op">}{</span> print <span class="op">}</span> END<span class="op">{</span>print <span class="st">"END"</span><span class="op">}</span>'    <span class="co">// 格式很关键,标点,大小写</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>echo <span class="dv">123</span> <span class="op">|</span> awk <span class="ch">'B</span><span class="er">EGIN {print "Start"}{ print } END{print "END"}</span><span class="ch">'</span>    <span class="co">// 格式很关键,标点,大小写</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="https://img-blog.csdnimg.cn/ed7afe6f1f3840e6a93b8ea34a35e0d6.png" class="img-fluid" alt="在这里插入图片描述"> print 以逗号分割时，参数以空格定界;</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>echo<span class="op">|</span>awk '<span class="op">{</span>a<span class="op">=</span><span class="dv">1</span><span class="op">;</span>b<span class="op">=</span><span class="dv">2</span><span class="op">;</span>c<span class="op">=</span><span class="st">"dasdsa"</span><span class="op">;</span>print a<span class="op">,</span>b<span class="op">,</span>c<span class="op">;}</span>'</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>echo<span class="op">|</span>awk <span class="ch">'{</span><span class="er">a=1;b=2;c="dasdsa";print a,b,c;}</span><span class="ch">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="https://img-blog.csdnimg.cn/11a941c25ebb42d0b50b63fe037813b0.png" class="img-fluid" alt="在这里插入图片描述"> print字符串拼接</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>echo<span class="op">|</span>awk '<span class="op">{</span>a<span class="op">=</span><span class="dv">1</span><span class="op">;</span>b<span class="op">=</span><span class="dv">2</span><span class="op">;</span>c<span class="op">=</span><span class="st">"dasdsa"</span><span class="op">;</span>print a<span class="st">" ----***"</span> b<span class="st">"----**   "</span> c<span class="op">;}</span>'</span>
+<div class="sourceCode" id="cb36"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>echo<span class="op">|</span>awk <span class="ch">'{</span><span class="er">a=1;b=2;c="dasdsa";print a" ----***" b"----**   " c;}</span><span class="ch">'</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="co">// 输出</span></span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="op">----***</span><span class="dv">2</span><span class="op">----**</span>   dasdsa</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>awk - 特殊变量： NR NF $0 $1 $2</code> NR:表示记录数量，在执行过程中对应当前行号；</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>cat xxx<span class="op">.</span>txt <span class="op">|</span> awk '<span class="op">{</span>print NR<span class="op">}</span>'                          <span class="co">// 输出执行到的行数</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>cat xxx<span class="op">.</span>txt <span class="op">|</span> awk '<span class="op">{</span>print NF<span class="op">}</span>'                          <span class="co">// 输出执行的当前行的单词数</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>cat xxx<span class="op">.</span>txt <span class="op">|</span> awk '<span class="op">{</span>print $<span class="dv">2</span><span class="op">}</span>'                          <span class="co">// 输出当前行的第2个单词</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>cat xxx<span class="op">.</span>txt <span class="op">|</span> awk <span class="ch">'{</span><span class="er">print NR}</span><span class="ch">'</span>                          <span class="co">// 输出执行到的行数</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>cat xxx<span class="op">.</span>txt <span class="op">|</span> awk <span class="ch">'{</span><span class="er">print NF}</span><span class="ch">'</span>                          <span class="co">// 输出执行的当前行的单词数</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>cat xxx<span class="op">.</span>txt <span class="op">|</span> awk <span class="ch">'{</span><span class="er">print $2}</span><span class="ch">'</span>                          <span class="co">// 输出当前行的第2个单词</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>NF:表示字段数量，在执行过程总对应当前行的字段数；</p>
 <p>$0:这个变量包含执行过程中当前行的文本内容；</p>
 <p>$1:第一个字段的文本内容；</p>
 <p>$2:第二个字段的文本内容；</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 每行求和 -e是将转移字符输出出来</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>echo <span class="op">-</span>e <span class="st">"1</span><span class="sc">\n</span><span class="st"> 2</span><span class="sc">\n</span><span class="st"> 3</span><span class="sc">\n</span><span class="st"> 4</span><span class="sc">\n</span><span class="st">"</span> <span class="op">|</span>awk 'BEGIN<span class="op">{</span>sum<span class="op">=</span><span class="dv">0</span><span class="op">;}{</span>sum<span class="op">+=</span>$<span class="dv">1</span><span class="op">;}</span>END<span class="op">{</span>print sum<span class="op">}</span>'          <span class="co">// 输出10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>echo <span class="op">-</span>e <span class="st">"1</span><span class="sc">\n</span><span class="st"> 2</span><span class="sc">\n</span><span class="st"> 3</span><span class="sc">\n</span><span class="st"> 4</span><span class="sc">\n</span><span class="st">"</span> <span class="op">|</span>awk <span class="ch">'B</span><span class="er">EGIN{sum=0;}{sum+=$1;}END{print sum}</span><span class="ch">'</span>          <span class="co">// 输出10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>awk - 传递外部变量</code></p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>var <span class="op">=</span> <span class="dv">9999</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>echo <span class="op">|</span> awk vara<span class="op">=</span>$var '<span class="op">{</span>print vara<span class="op">}</span>'                     <span class="co">// 传递外部变量, 变量放前后都行,但是不能加括号, 默认来自输入</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>echo <span class="op">|</span> awk vara<span class="op">=</span>$var '<span class="op">{</span>print vara<span class="op">}</span>' <span class="dt">FILE</span>                <span class="co">// 个人使用失败,可能是语法哪里写错了</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>echo <span class="op">|</span> awk vara<span class="op">=</span>$var <span class="ch">'{</span><span class="er">print vara}</span><span class="ch">'</span>                     <span class="co">// 传递外部变量, 变量放前后都行,但是不能加括号, 默认来自输入</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>echo <span class="op">|</span> awk vara<span class="op">=</span>$var <span class="ch">'{</span><span class="er">print vara}</span><span class="ch">'</span> <span class="dt">FILE</span>                <span class="co">// 个人使用失败,可能是语法哪里写错了</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>用样式对awk处理的行进行过滤</code></p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>awk 'NR <span class="op">&lt;</span> <span class="dv">5</span><span class="er">'</span> #行号小于<span class="dv">5</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>awk 'NR<span class="op">==</span><span class="dv">1</span><span class="op">,</span>NR<span class="op">==</span><span class="dv">4</span> <span class="op">{</span>print<span class="op">}</span>' file #行号等于<span class="dv">1</span>和<span class="dv">4</span>的打印出来</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>awk '<span class="op">/</span>linux<span class="op">/</span>' #包含linux文本的行（可以用正则表达式来指定，超级强大）</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>awk '<span class="op">!/</span>linux<span class="op">/</span>' #不包含linux文本的行</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>awk <span class="ch">'N</span><span class="er">R &lt; 5</span><span class="ch">'</span> #行号小于<span class="dv">5</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>awk <span class="ch">'N</span><span class="er">R==1,NR==4 {print}</span><span class="ch">'</span> file #行号等于<span class="dv">1</span>和<span class="dv">4</span>的打印出来</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>awk <span class="ch">'/</span><span class="er">linux/</span><span class="ch">'</span> #包含linux文本的行（可以用正则表达式来指定，超级强大）</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>awk <span class="ch">'!</span><span class="er">/linux/</span><span class="ch">'</span> #不包含linux文本的行</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>使用-F来设置定界符（默认为空格）</code></p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>awk <span class="op">-</span>F<span class="op">:</span> '<span class="op">{</span>print $NF<span class="op">}</span>' <span class="op">/</span>etc<span class="op">/</span>passwd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>awk <span class="op">-</span>F<span class="op">:</span> <span class="ch">'{</span><span class="er">print $NF}</span><span class="ch">'</span> <span class="op">/</span>etc<span class="op">/</span>passwd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="磁盘管理" class="level2">
 <h2 class="anchored" data-anchor-id="磁盘管理">4. 磁盘管理</h2>
@@ -685,9 +656,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -752,6 +737,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
