@@ -97,6 +97,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -210,9 +212,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>max <span class="ex">range</span> limited<span class="op">&gt;</span>：以米为单位</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>E: RangeLimitCfg 2 1 1.0 3.0</p>
 </section>
-<section id="mss发送数据代码解析" class="level1">
-<h1>MSS发送数据代码解析</h1>
+<section id="mss通过uart发送数据代码解析" class="level1">
+<h1>1. MSS通过UART发送数据代码解析</h1>
 <p>这里整体的发送逻辑是<code>dss</code>通过<code>mailBox</code>发送一个<code>Semaphore</code>给<code>mss</code>, 然后<code>mss</code>查看<code>Semaphore</code>的类型, 如果是<code>MMWDEMO_DSS2MSS_DETOBJ_READY</code>就去共享内存中将<code>dss</code>处理好的数据拷贝出来, 拷贝到<code>mss</code>的全局变量中, 然后<code>mss</code>就对<code>mss</code>这边的这个全局变量做操作.</p>
+<section id="mailbox发送数据的操作流程" class="level2">
+<h2 class="anchored" data-anchor-id="mailbox发送数据的操作流程">1.2 MailBox发送数据的操作流程</h2>
 <p>src: <code>mss_main.c</code></p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">/*z:这个是mailbox的函数, dsp和mss进行通信的工具 */</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> <span class="dt">void</span> MmwDemo_mboxReadTask<span class="op">(</span>UArg arg0<span class="op">,</span> UArg arg1<span class="op">)</span></span>
@@ -307,6 +311,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
 <span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
 <span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="uart发送数据" class="level2">
+<h2 class="anchored" data-anchor-id="uart发送数据">1.2 UART发送数据</h2>
 <p>这里就是接收到数据后,将数据赋值给mss的变量然后调整通信格式(按照<code>TLV</code>的格式发送). TLV格式ti的文档中有说明. <a href="https://dev.ti.com/tirex/explore/node?a=VLyFKFf__2.4.0&amp;node=A__AJXx96rI7gxMSeZVEpNFrw__radar_toolbox__1AslXXD__LATEST">TLV format guide</a></p>
 <p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-04-27-09-18-39.png" class="img-fluid"></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -491,8 +498,326 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-180"><a href="#cb3-180" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-181"><a href="#cb3-181" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-182"><a href="#cb3-182" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="液位数据处理部分" class="level1">
+<h1>2. 液位数据处理部分</h1>
+<p>雷达前端接收数据, 然后将数据在dsp上处理</p>
+<p><strong>存储在L2内存中所有的控制结构体</strong>, 所有的操作都是基于该结构体进行展开的</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> _RADARDEMO_highAccuRangeProc_handle_</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> <span class="op">*</span> twiddle<span class="op">;</span>                    <span class="co">/**&lt; 1DFFT使用的扭曲因子。*/</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> <span class="op">*</span> wnCoarse<span class="op">;</span>                   <span class="co">/**&lt; 粗级别的频率扭曲因子。*/</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> <span class="op">*</span> wnFine<span class="op">;</span>                     <span class="co">/**&lt; 细级别的频率扭曲因子。*/</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> <span class="op">*</span> inputSig<span class="op">;</span>                   <span class="co">/**&lt; 用于累积帧内所有chirp信号的缓冲区。*/</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> <span class="op">*</span> demodSig<span class="op">;</span>                   <span class="co">/**&lt; 指向相位解调信号的指针。*/</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> <span class="op">*</span> scratchPad<span class="op">;</span>                 <span class="co">/**&lt; 模块的缓存内存。*/</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> <span class="op">*</span> fft1DOutSig<span class="op">;</span>                <span class="co">/**&lt; 指向1D FFT输出信号的指针。*/</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> maxBeatFreq<span class="op">;</span>                  <span class="co">/**&lt; 最大拍频。*/</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> chirpBandwidth<span class="op">;</span>               <span class="co">/**&lt; chirp带宽。*/</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> chirpRampTime<span class="op">;</span>                <span class="co">/**&lt; chirp斜坡时间。*/</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> fc<span class="op">;</span>                           <span class="co">/**&lt; chirp起始频率。*/</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> chirpSlope<span class="op">;</span>                   <span class="co">/**&lt; chirp斜率。*/</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> adcStartTimeConst<span class="op">;</span>            <span class="co">/**&lt; ADC启动时间常量。*/</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> adcSampleRate<span class="op">;</span>                <span class="co">/**&lt; ADC采样率。*/</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int32_t</span> coarseRangeInd<span class="op">;</span>             <span class="co">/**&lt; 粗略频率估计的索引。*/</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint32_t</span> fft1DSize<span class="op">;</span>                 <span class="co">/**&lt; 1D FFT大小。*/</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint32_t</span> log2fft1DSize<span class="op">;</span>             <span class="co">/**&lt; 1D FFT大小的log2值。*/</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint32_t</span> nSamplesPerChirp<span class="op">;</span>          <span class="co">/**&lt; 每个chirp中的采样数。*/</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint32_t</span> numChirpsPerFrame<span class="op">;</span>         <span class="co">/**&lt; 每帧中的chirp数。*/</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> <span class="op">*</span> win1D<span class="op">;</span>                      <span class="co">/**&lt; 指向1D窗函数的指针。*/</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int16_t</span> win1DLength<span class="op">;</span>                <span class="co">/**&lt; 1D窗函数的一半长度。*/</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint8_t</span> numRangeBinZoomIn<span class="op">;</span>          <span class="co">/**&lt; 用于频率估计缩小范围的bin数。*/</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint8_t</span> enablePhaseEst<span class="op">;</span>             <span class="co">/**&lt; 启用相位校正进行估计。*/</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint8_t</span> enableLinearFit<span class="op">;</span>            <span class="co">/**&lt; 在相位估计中启用线性拟合。*/</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint8_t</span> enableFilter<span class="op">;</span>               <span class="co">/**&lt; 在相位估计中启用滤波。*/</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint16_t</span> skipLeft<span class="op">;</span>                  <span class="co">/**&lt; 从左侧跳过的样本数。*/</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint16_t</span> skipRight<span class="op">;</span>                 <span class="co">/**&lt; 从右侧跳过的样本数。*/</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span>      skipMin<span class="op">;</span>                 <span class="co">/* 从0到最小范围（m）要跳过的样本数 */</span>   </span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span>      skipMax<span class="op">;</span>                 <span class="co">/* 从最大范围（m）到远处要跳过的样本数 */</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> RADARDEMO_highAccuRangeProc_handle<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>雷达配置配置结构体</strong>, 雷达所有的相关配置都在这个结构体中, 主要的处理操作是将该配置结构体传递到上面的控制结构体中. 然后进行相关操作. 这大大降低了代码的耦合性.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> _RADARDEMO_highAccuRangeProc_config_</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint32_t</span>     fft1DSize<span class="op">;</span>                     <span class="co">/**&lt; 1D FFT size，                                      一维FFT的大小*/</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint32_t</span>     nSamplesPerChirp<span class="op">;</span>              <span class="co">/**&lt; number of samples per chirp，                      每个chirp中的采样点数*/</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint32_t</span>     numChirpsPerFrame<span class="op">;</span>             <span class="co">/**&lt; number of chirp per frame，                        每帧中的chirp数量*/</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span>        maxBeatFreq<span class="op">;</span>                   <span class="co">/**&lt; maximum beat frequency，                           最大拍频*/</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span>        chirpBandwidth<span class="op">;</span>                <span class="co">/**&lt; chirp bandwidth，                                  chirp带宽*/</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span>        chirpRampTime<span class="op">;</span>                 <span class="co">/**&lt; chirp ramp duration，                              chirp的斜变时间*/</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span>        fc<span class="op">;</span>                            <span class="co">/**&lt; chirp start frequency，                            chirp的起始频率*/</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span>        chirpSlope<span class="op">;</span>                    <span class="co">/**&lt; chirp slope，                                      chirp的斜率*/</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span>        adcStartTimeConst<span class="op">;</span>             <span class="co">/**&lt; ADC start constant，                               ADC启动常数*/</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span>        adcSampleRate<span class="op">;</span>                 <span class="co">/**&lt; ADC sampling rate，                                ADC采样率*/</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span>       <span class="op">*</span>win1D<span class="op">;</span>                         <span class="co">/**&lt; pointer to 1D windowing function，                 指向一维窗函数的指针*/</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int16_t</span>      win1DLength<span class="op">;</span>                   <span class="co">/**&lt; half length of the 1D windowing function，         一维窗函数的一半长度*/</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint8_t</span>      numRangeBinZoomIn<span class="op">;</span>             <span class="co">/**&lt; number of bins to zoom in for frequenc estimation，进行频率估计的缩放的范围*/</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint8_t</span>      enablePhaseEst<span class="op">;</span>                <span class="co">/**&lt; enable estimation using phase correction，         使用相位校正进行估计的开关*/</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint8_t</span>      enableLinearFit<span class="op">;</span>               <span class="co">/**&lt; enable linear fit in phase estimation，            在相位估计中开启线性拟合*/</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint8_t</span>      enableFilter<span class="op">;</span>                  <span class="co">/**&lt; enable filtering in phase estimation，             在相位估计中开启滤波*/</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint16_t</span>     skipLeft<span class="op">;</span>                      <span class="co">/**&lt; number of samples to skip from the left，          从左侧跳过的样本数*/</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint16_t</span>     skipRight<span class="op">;</span>                     <span class="co">/**&lt; number of samples to skip from the right，         从右侧跳过的样本数*/</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span>       <span class="op">*</span>fft1DIn<span class="op">;</span>                       <span class="co">/**&lt; pointer to 1D FFT input，                          指向一维FFT输入的指针*/</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint8_t</span>      enableRangeLimit<span class="op">;</span>              <span class="co">/**&lt; enable RangeLimit，                                开启范围限制*/</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span>        skipMin<span class="op">;</span>                       <span class="co">/**&lt; number of samples to skip from 0 to min range(m)， 从0到最小范围跳过的样本数（米）*/</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span>        skipMax<span class="op">;</span>                       <span class="co">/**&lt; number of samples to skip from the max range(m) to faraway，从最大范围（米）到远处跳过的样本数*/</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> RADARDEMO_highAccuRangeProc_config<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="创建和初始化-液位高度demo" class="level2">
+<h2 class="anchored" data-anchor-id="创建和初始化-液位高度demo">2.1 创建和初始化 液位高度Demo</h2>
+<p>调制斜率为handle-&gt;chirpSlope、1D FFT尺寸为handle-&gt;fft1DSize时的距离分辨率。距离分辨率是雷达测距系统中的一个参数，表示能够分辨出两个物体之间的最小距离。</p>
+<p>距离分辨率公式</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-04-27-13-22-28.png" class="img-fluid"></p>
+<p>其中，<span class="math inline">\(\Delta r\)</span>为距离分辨率，<span class="math inline">\(c\)</span>为光速，<span class="math inline">\(B\)</span>为调制带宽，<span class="math inline">\(N\)</span>为FFT点数。在代码中，将光速<span class="math inline">\(c\)</span>和调制带宽<span class="math inline">\(B\)</span>用常数<code>3.0e8</code>和<code>handle-&gt;adcSampleRate</code>表示，FFT点数<span class="math inline">\(N\)</span>用handle-&gt;fft1DSize表示。将这些参数代入距离分辨率公式计算即可.</p>
+<p>src: <code>RADARDEMO_highAccuRangeProc.c</code></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span>    <span class="op">*</span> RADARDEMO_highAccuRangeProc_create<span class="op">(</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                            IN  RADARDEMO_highAccuRangeProc_config <span class="op">*</span> moduleConfig<span class="op">,</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                            OUT RADARDEMO_highAccuRangeProc_errorCode <span class="op">*</span> errorCode<span class="op">)</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                            </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int32_t</span>     i<span class="op">,</span> itemp<span class="op">;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span>      real<span class="op">,</span> imag<span class="op">;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> PI <span class="op">=</span> <span class="fl">3.14159265358979323846</span><span class="op">;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span>      denom<span class="op">;</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint8_t</span> enableRangeLimit<span class="op">;</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> skipMin<span class="op">;</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> skipMax<span class="op">;</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> rangeResolution<span class="op">;</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    RADARDEMO_highAccuRangeProc_handle <span class="op">*</span> handle<span class="op">;</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span>errorCode      <span class="op">=</span>   RADARDEMO_HIGHACCURANGEPROC_NO_ERROR<span class="op">;</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    handle                      <span class="op">=</span>   <span class="op">(</span>RADARDEMO_highAccuRangeProc_handle <span class="op">*)</span> radarOsal_memAlloc<span class="op">((</span><span class="dt">uint8_t</span><span class="op">)</span> RADARMEMOSAL_HEAPTYPE_LL2<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>RADARDEMO_highAccuRangeProc_handle<span class="op">),</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>handle <span class="op">==</span> NULL<span class="op">)</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>        <span class="op">*</span>errorCode  <span class="op">=</span>   RADARDEMO_HIGHACCURANGEPROC_FAIL_ALLOCATE_HANDLE<span class="op">;</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">(</span>handle<span class="op">);</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    handle<span class="op">-&gt;</span>nSamplesPerChirp    <span class="op">=</span>   moduleConfig<span class="op">-&gt;</span>nSamplesPerChirp<span class="op">;</span><span class="co">//512</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    handle<span class="op">-&gt;</span>fft1DSize           <span class="op">=</span>   moduleConfig<span class="op">-&gt;</span>fft1DSize<span class="op">;</span><span class="co">//512</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    handle<span class="op">-&gt;</span>numChirpsPerFrame   <span class="op">=</span>   moduleConfig<span class="op">-&gt;</span>numChirpsPerFrame<span class="op">;</span><span class="co">//200</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    handle<span class="op">-&gt;</span>win1DLength         <span class="op">=</span>   moduleConfig<span class="op">-&gt;</span>win1DLength<span class="op">;</span><span class="co">//16</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    handle<span class="op">-&gt;</span>maxBeatFreq         <span class="op">=</span>   moduleConfig<span class="op">-&gt;</span>maxBeatFreq<span class="op">;</span><span class="co">//5000k</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    handle<span class="op">-&gt;</span>chirpBandwidth      <span class="op">=</span>   moduleConfig<span class="op">-&gt;</span>chirpBandwidth<span class="op">;</span><span class="co">//3450805504Hz</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    handle<span class="op">-&gt;</span>chirpRampTime       <span class="op">=</span>   moduleConfig<span class="op">-&gt;</span>chirpRampTime<span class="op">;</span><span class="co">//102.4us</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    handle<span class="op">-&gt;</span>fc                  <span class="op">=</span>   moduleConfig<span class="op">-&gt;</span>fc<span class="op">;</span><span class="co">//77GHz</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    handle<span class="op">-&gt;</span>chirpSlope          <span class="op">=</span>   moduleConfig<span class="op">-&gt;</span>chirpSlope<span class="op">;</span><span class="co">//33.699MHz/us</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    handle<span class="op">-&gt;</span>adcStartTimeConst   <span class="op">=</span>   moduleConfig<span class="op">-&gt;</span>adcStartTimeConst<span class="op">;</span><span class="co">//0</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    handle<span class="op">-&gt;</span>adcSampleRate       <span class="op">=</span>   moduleConfig<span class="op">-&gt;</span>adcSampleRate<span class="op">;</span><span class="co">//500K</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    handle<span class="op">-&gt;</span>numRangeBinZoomIn   <span class="op">=</span>   moduleConfig<span class="op">-&gt;</span>numRangeBinZoomIn<span class="op">;</span><span class="co">//2</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    handle<span class="op">-&gt;</span>enablePhaseEst      <span class="op">=</span>   moduleConfig<span class="op">-&gt;</span>enablePhaseEst<span class="op">;</span><span class="co">//0</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    handle<span class="op">-&gt;</span>enableLinearFit     <span class="op">=</span>   moduleConfig<span class="op">-&gt;</span>enableLinearFit<span class="op">;</span><span class="co">//0</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>    handle<span class="op">-&gt;</span>enableFilter        <span class="op">=</span>   moduleConfig<span class="op">-&gt;</span>enableFilter<span class="op">;</span><span class="co">//0</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>    handle<span class="op">-&gt;</span>skipLeft            <span class="op">=</span>   moduleConfig<span class="op">-&gt;</span>skipLeft<span class="op">;</span><span class="co">//0</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>    handle<span class="op">-&gt;</span>skipRight           <span class="op">=</span>   moduleConfig<span class="op">-&gt;</span>skipRight<span class="op">;</span><span class="co">//0</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>    enableRangeLimit            <span class="op">=</span>   moduleConfig<span class="op">-&gt;</span>enableRangeLimit<span class="op">;</span><span class="co">//0</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>    skipMin                     <span class="op">=</span>   moduleConfig<span class="op">-&gt;</span>skipMin<span class="op">;</span><span class="co">//0.26</span></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>    skipMax                     <span class="op">=</span>   moduleConfig<span class="op">-&gt;</span>skipMax<span class="op">;</span><span class="co">//6.00</span></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>    itemp                       <span class="op">=</span>   handle<span class="op">-&gt;</span>fft1DSize<span class="op">;</span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>    i                           <span class="op">=</span>   <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 计算距离分辨率 */</span></span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>    rangeResolution <span class="op">=</span> <span class="op">(</span><span class="fl">3.0</span><span class="op">*</span><span class="fl">1e8</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="dt">float</span><span class="op">)</span>handle<span class="op">-&gt;</span>adcSampleRate<span class="op">/(</span><span class="dv">2</span> <span class="op">*</span> <span class="op">(</span><span class="dt">float</span><span class="op">)</span>handle<span class="op">-&gt;</span>chirpSlope <span class="op">*</span> <span class="op">(</span><span class="dt">float</span><span class="op">)</span>handle<span class="op">-&gt;</span>fft1DSize<span class="op">);</span><span class="co">//0.043468</span></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a><span class="co">//    printf("DSS:win1DLength=%d\n",handle-&gt;fft1DSize);</span></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a><span class="co">//    printf("DSS:digOutSampleRate=%f\n",handle-&gt;adcSampleRate);</span></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a><span class="co">//    printf("DSS:freqSlopeConst=%f\n",handle-&gt;chirpSlope);</span></span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a><span class="co">//    printf("DSS:rangeResolution=%f\n",rangeResolution);</span></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint16_t</span> RangeBinfft1DSize<span class="op">,</span>RangeBinMin<span class="op">,</span>RangeBinMax<span class="op">;</span></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 如果设置距离限制值 */</span></span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>enableRangeLimit<span class="op">)</span></span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* fft大小:512, 这里根据限制的距离范围进一步限制处理数据, 提高数据处理的效率 */</span></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>        RangeBinfft1DSize           <span class="op">=</span>   handle<span class="op">-&gt;</span>fft1DSize<span class="op">;</span></span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* 对计算出的rangebin进行四舍五入 */</span></span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>        RangeBinMin                 <span class="op">=</span> <span class="op">(</span><span class="dt">uint16_t</span><span class="op">)(</span>skipMin<span class="op">/</span>rangeResolution <span class="op">+</span> <span class="dv">0</span><span class="er">.5</span><span class="op">);</span></span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>        RangeBinMax                 <span class="op">=</span> <span class="op">(</span><span class="dt">uint16_t</span><span class="op">)(</span>skipMax<span class="op">/</span>rangeResolution <span class="op">+</span> <span class="dv">0</span><span class="er">.5</span><span class="op">);</span></span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* 如果rangebin下溢就设置为0 */</span></span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span><span class="op">(</span>RangeBinMin <span class="op">&gt;</span> RangeBinfft1DSize<span class="op">)</span></span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>            RangeBinMin <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* 如果rangebin上溢就设置为rangebin最大值 */</span></span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span><span class="op">(</span>RangeBinMax <span class="op">&gt;</span> RangeBinfft1DSize<span class="op">)</span></span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>            RangeBinMax <span class="op">=</span> RangeBinfft1DSize<span class="op">;</span></span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* 限制的rangeBin左右区间 */</span></span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>        handle<span class="op">-&gt;</span>skipLeft            <span class="op">=</span>   RangeBinMin<span class="op">;</span><span class="co">//6</span></span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>        handle<span class="op">-&gt;</span>skipRight           <span class="op">=</span>   RangeBinfft1DSize <span class="op">-</span> RangeBinMax<span class="op">;</span><span class="co">//374</span></span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"DSS:enableRangeLimit=</span><span class="sc">%d</span><span class="st">,skipMin=</span><span class="sc">%.2f</span><span class="st">,skipMax=</span><span class="sc">%.2f</span><span class="st">,rangeResolution=</span><span class="sc">%.4f</span><span class="st">,skipLeft=</span><span class="sc">%d</span><span class="st">,skipRight=</span><span class="sc">%d\n</span><span class="st">"</span><span class="op">,</span>enableRangeLimit<span class="op">,</span>skipMin<span class="op">,</span>skipMax<span class="op">,</span>rangeResolution<span class="op">,</span>handle<span class="op">-&gt;</span>skipLeft<span class="op">,</span>handle<span class="op">-&gt;</span>skipRight<span class="op">);</span></span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"DSS:enableRangeLimit=</span><span class="sc">%d\n</span><span class="st">"</span><span class="op">,</span>enableRangeLimit<span class="op">);</span></span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 同价itemp在二进制格式下有多少个1, 然后存储在i变量中 */</span></span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span><span class="op">(</span><span class="dv">1</span><span class="op">)</span></span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span><span class="op">(</span>itemp <span class="op">==</span> <span class="dv">1</span><span class="op">)</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a>        itemp <span class="op">=</span> itemp <span class="op">&gt;&gt;</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a>        i<span class="op">++;</span></span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* fft级联次数log2(64)=6 */</span></span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a>    handle<span class="op">-&gt;</span>log2fft1DSize       <span class="op">=</span>   i<span class="op">;</span></span>
+<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 在L2内存中申请一块`窗`句柄空间 */</span></span>
+<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a>    handle<span class="op">-&gt;</span>win1D               <span class="op">=</span>   <span class="op">(</span><span class="dt">float</span> <span class="op">*)</span> radarOsal_memAlloc<span class="op">((</span><span class="dt">uint8_t</span><span class="op">)</span> RADARMEMOSAL_HEAPTYPE_LL2<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> moduleConfig<span class="op">-&gt;</span>win1DLength <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span><span class="dt">float</span><span class="op">),</span> <span class="dv">8</span><span class="op">);</span></span>
+<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a>     <span class="co">/* 返回错误码 */</span></span>
+<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>handle<span class="op">-&gt;</span>win1D <span class="op">==</span> NULL<span class="op">)</span></span>
+<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a>        <span class="op">*</span>errorCode  <span class="op">=</span>   RADARDEMO_HIGHACCURANGEPROC_FAIL_ALLOCATE_LOCALINSTMEM<span class="op">;</span></span>
+<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">(</span>handle<span class="op">);</span></span>
+<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 拿到dss_data_path中的窗参数 */</span></span>
+<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="op">(</span><span class="dt">int32_t</span><span class="op">)</span>moduleConfig<span class="op">-&gt;</span>win1DLength<span class="op">;</span> i<span class="op">++</span> <span class="op">)</span></span>
+<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a>        handle<span class="op">-&gt;</span>win1D<span class="op">[</span>i<span class="op">]</span>        <span class="op">=</span>   moduleConfig<span class="op">-&gt;</span>win1D<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 首先在内存中为handle-&gt;twiddle(旋转因子, 为fft做准备)分配一块空间，大小为2 * handle-&gt;fft1DSize *sizeof(float) */</span></span>
+<span id="cb6-113"><a href="#cb6-113" aria-hidden="true" tabindex="-1"></a>    handle<span class="op">-&gt;</span>twiddle         <span class="op">=</span>   <span class="op">(</span><span class="dt">float</span> <span class="op">*)</span>radarOsal_memAlloc<span class="op">((</span><span class="dt">uint8_t</span><span class="op">)</span> RADARMEMOSAL_HEAPTYPE_LL2<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">2</span> <span class="op">*</span> handle<span class="op">-&gt;</span>fft1DSize <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span><span class="dt">float</span><span class="op">),</span> <span class="dv">8</span><span class="op">);</span></span>
+<span id="cb6-114"><a href="#cb6-114" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 判断并返回错误码 */</span></span>
+<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-117"><a href="#cb6-117" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 调用tw_gen_float函数生成1D FFT所需的旋转因子，存储在handle-&gt;twiddle中,旋转因子可以用于快速傅里叶变换（FFT）算法，它能够快速地将时域采样转换为频域信号 */</span></span>
+<span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a>    tw_gen_float<span class="op">(</span>handle<span class="op">-&gt;</span>twiddle<span class="op">,</span> handle<span class="op">-&gt;</span>fft1DSize<span class="op">);</span></span>
+<span id="cb6-119"><a href="#cb6-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-120"><a href="#cb6-120" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 为即将做fft的输入信号(数据)申请空间 */</span></span>
+<span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a>    handle<span class="op">-&gt;</span>inputSig        <span class="op">=</span>   <span class="op">(</span><span class="dt">float</span> <span class="op">*)</span>radarOsal_memAlloc<span class="op">((</span><span class="dt">uint8_t</span><span class="op">)</span> RADARMEMOSAL_HEAPTYPE_LL2<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">2</span> <span class="op">*</span> handle<span class="op">-&gt;</span>fft1DSize <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span><span class="dt">float</span><span class="op">),</span> <span class="dv">8</span><span class="op">);</span></span>
+<span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 判断并返回错误码 */</span></span>
+<span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-124"><a href="#cb6-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-125"><a href="#cb6-125" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 在L2中申请内存, 用作傅里叶变换运算过程中的中间计算结果 */</span></span>
+<span id="cb6-126"><a href="#cb6-126" aria-hidden="true" tabindex="-1"></a>    handle<span class="op">-&gt;</span>scratchPad      <span class="op">=</span>   <span class="op">(</span><span class="dt">float</span> <span class="op">*)</span>radarOsal_memAlloc<span class="op">((</span><span class="dt">uint8_t</span><span class="op">)</span> RADARMEMOSAL_HEAPTYPE_LL2<span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span> <span class="op">*</span> <span class="dv">2</span> <span class="op">*</span> handle<span class="op">-&gt;</span>fft1DSize <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span><span class="dt">float</span><span class="op">),</span> <span class="dv">8</span><span class="op">);</span></span>
+<span id="cb6-127"><a href="#cb6-127" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 判断并返回错误码 */</span></span>
+<span id="cb6-128"><a href="#cb6-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-129"><a href="#cb6-129" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* `FFT1D输出结果` 和 `相位解调`的结果都存放在缓冲scratchPad变量中 */</span></span>
+<span id="cb6-130"><a href="#cb6-130" aria-hidden="true" tabindex="-1"></a>    handle<span class="op">-&gt;</span>fft1DOutSig     <span class="op">=</span>   handle<span class="op">-&gt;</span>scratchPad<span class="op">;</span></span>
+<span id="cb6-131"><a href="#cb6-131" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 相位解调:将调制信号从复数域映射到实数域，并通过这种映射 `去除相位信息`。在解调之后，得到的信号 `只包含振幅信息` */</span></span>
+<span id="cb6-132"><a href="#cb6-132" aria-hidden="true" tabindex="-1"></a>    handle<span class="op">-&gt;</span>demodSig        <span class="op">=</span>   handle<span class="op">-&gt;</span>scratchPad<span class="op">;</span></span>
+<span id="cb6-133"><a href="#cb6-133" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-134"><a href="#cb6-134" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 将所有的fft原始数据放到 `fft1DIn` 这个指针变量中带回去 */</span></span>
+<span id="cb6-135"><a href="#cb6-135" aria-hidden="true" tabindex="-1"></a>    moduleConfig<span class="op">-&gt;</span>fft1DIn   <span class="op">=</span> handle<span class="op">-&gt;</span>inputSig<span class="op">;</span></span>
+<span id="cb6-136"><a href="#cb6-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-137"><a href="#cb6-137" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 分配一块内存，用于存储 `粗` 调的旋转因子（wnCoarse） */</span></span>
+<span id="cb6-138"><a href="#cb6-138" aria-hidden="true" tabindex="-1"></a>    handle<span class="op">-&gt;</span>wnCoarse        <span class="op">=</span>   <span class="op">(</span><span class="dt">float</span> <span class="op">*)</span>radarOsal_memAlloc<span class="op">((</span><span class="dt">uint8_t</span><span class="op">)</span> RADARMEMOSAL_HEAPTYPE_LL2<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">2</span> <span class="op">*</span> handle<span class="op">-&gt;</span>fft1DSize <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span><span class="dt">float</span><span class="op">),</span> <span class="dv">8</span><span class="op">);</span></span>
+<span id="cb6-139"><a href="#cb6-139" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-140"><a href="#cb6-140" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 生成一组用于傅里叶变换的`粗`调旋转因子, 存储在 `wnCoarse` 中 */</span></span>
+<span id="cb6-141"><a href="#cb6-141" aria-hidden="true" tabindex="-1"></a>    denom <span class="op">=</span> <span class="fl">1.0</span><span class="op">/((</span><span class="dt">double</span><span class="op">)</span>handle<span class="op">-&gt;</span>fft1DSize<span class="op">);</span></span>
+<span id="cb6-142"><a href="#cb6-142" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="op">(</span><span class="dt">int32_t</span><span class="op">)</span>handle<span class="op">-&gt;</span>fft1DSize<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb6-143"><a href="#cb6-143" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb6-144"><a href="#cb6-144" aria-hidden="true" tabindex="-1"></a>        real        <span class="op">=</span>   cos<span class="op">(-</span><span class="dv">2</span> <span class="op">*</span> PI <span class="op">*</span> i <span class="op">*</span>denom<span class="op">);</span></span>
+<span id="cb6-145"><a href="#cb6-145" aria-hidden="true" tabindex="-1"></a>        imag        <span class="op">=</span>   sin<span class="op">(-</span><span class="dv">2</span> <span class="op">*</span> PI <span class="op">*</span> i <span class="op">*</span>denom<span class="op">);</span></span>
+<span id="cb6-146"><a href="#cb6-146" aria-hidden="true" tabindex="-1"></a>        handle<span class="op">-&gt;</span>wnCoarse<span class="op">[</span><span class="dv">2</span><span class="op">*</span>i<span class="op">]</span>       <span class="op">=</span>   imag<span class="op">;</span></span>
+<span id="cb6-147"><a href="#cb6-147" aria-hidden="true" tabindex="-1"></a>        handle<span class="op">-&gt;</span>wnCoarse<span class="op">[</span><span class="dv">2</span><span class="op">*</span>i<span class="op">+</span> <span class="dv">1</span> <span class="op">]</span>   <span class="op">=</span>   real<span class="op">;</span></span>
+<span id="cb6-148"><a href="#cb6-148" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-149"><a href="#cb6-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-150"><a href="#cb6-150" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 分配一块内存，用于存储 `细` 调的旋转因子（wnCoarse） */</span></span>
+<span id="cb6-151"><a href="#cb6-151" aria-hidden="true" tabindex="-1"></a>    handle<span class="op">-&gt;</span>wnFine      <span class="op">=</span>   <span class="op">(</span><span class="dt">float</span> <span class="op">*)</span>radarOsal_memAlloc<span class="op">((</span><span class="dt">uint8_t</span><span class="op">)</span> RADARMEMOSAL_HEAPTYPE_LL2<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">2</span> <span class="op">*</span> handle<span class="op">-&gt;</span>fft1DSize <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span><span class="dt">float</span><span class="op">),</span> <span class="dv">8</span><span class="op">);</span></span>
+<span id="cb6-152"><a href="#cb6-152" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-153"><a href="#cb6-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-154"><a href="#cb6-154" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 用于生成一组用于傅里叶变换的`细`调旋转因子, 存储在 `wnFine` 中 */</span></span>
+<span id="cb6-155"><a href="#cb6-155" aria-hidden="true" tabindex="-1"></a>    denom <span class="op">=</span> <span class="fl">1.0</span><span class="op">/</span> <span class="op">((</span><span class="dt">double</span><span class="op">)(</span>handle<span class="op">-&gt;</span>fft1DSize <span class="op">*</span> handle<span class="op">-&gt;</span>fft1DSize<span class="op">));</span> <span class="co">// 将旋转因子限制在单位圆上</span></span>
+<span id="cb6-156"><a href="#cb6-156" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="op">(</span><span class="dt">int32_t</span><span class="op">)</span>handle<span class="op">-&gt;</span>fft1DSize<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb6-157"><a href="#cb6-157" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb6-158"><a href="#cb6-158" aria-hidden="true" tabindex="-1"></a>        real        <span class="op">=</span>   cos<span class="op">(-</span><span class="dv">2</span> <span class="op">*</span> PI <span class="op">*</span> i <span class="op">*</span>denom<span class="op">);</span></span>
+<span id="cb6-159"><a href="#cb6-159" aria-hidden="true" tabindex="-1"></a>        imag        <span class="op">=</span>   sin<span class="op">(-</span><span class="dv">2</span> <span class="op">*</span> PI <span class="op">*</span> i <span class="op">*</span>denom<span class="op">);</span></span>
+<span id="cb6-160"><a href="#cb6-160" aria-hidden="true" tabindex="-1"></a>        handle<span class="op">-&gt;</span>wnFine<span class="op">[</span><span class="dv">2</span><span class="op">*</span>i<span class="op">]</span>     <span class="op">=</span>   imag<span class="op">;</span></span>
+<span id="cb6-161"><a href="#cb6-161" aria-hidden="true" tabindex="-1"></a>        handle<span class="op">-&gt;</span>wnFine<span class="op">[</span><span class="dv">2</span><span class="op">*</span>i<span class="op">+</span> <span class="dv">1</span> <span class="op">]</span> <span class="op">=</span>   real<span class="op">;</span></span>
+<span id="cb6-162"><a href="#cb6-162" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-163"><a href="#cb6-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-164"><a href="#cb6-164" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span><span class="op">((</span><span class="dt">void</span> <span class="op">*)</span>handle<span class="op">);</span></span>
+<span id="cb6-165"><a href="#cb6-165" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="释放所创建时申请的内存空间" class="level2">
+<h2 class="anchored" data-anchor-id="释放所创建时申请的内存空间">2.2 释放所创建时申请的内存空间</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* 释放所有申请额空间 */</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span>    RADARDEMO_highAccuRangeProc_delete<span class="op">(</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                            IN  <span class="dt">void</span> <span class="op">*</span> handle<span class="op">)</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    RADARDEMO_highAccuRangeProc_handle <span class="op">*</span>rangeProcInst<span class="op">;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    rangeProcInst   <span class="op">=</span>   <span class="op">(</span>RADARDEMO_highAccuRangeProc_handle <span class="op">*)</span> handle<span class="op">;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    radarOsal_memFree<span class="op">(</span>rangeProcInst<span class="op">-&gt;</span>inputSig<span class="op">,</span> rangeProcInst<span class="op">-&gt;</span>fft1DSize <span class="op">*</span> <span class="dv">2</span> <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span><span class="dt">float</span><span class="op">));</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    radarOsal_memFree<span class="op">(</span>rangeProcInst<span class="op">-&gt;</span>twiddle<span class="op">,</span> rangeProcInst<span class="op">-&gt;</span>fft1DSize <span class="op">*</span> <span class="dv">2</span> <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span><span class="dt">float</span><span class="op">));</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    radarOsal_memFree<span class="op">(</span>rangeProcInst<span class="op">-&gt;</span>wnFine<span class="op">,</span> rangeProcInst<span class="op">-&gt;</span>fft1DSize <span class="op">*</span> <span class="dv">2</span> <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span><span class="dt">float</span><span class="op">));</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    radarOsal_memFree<span class="op">(</span>rangeProcInst<span class="op">-&gt;</span>wnCoarse<span class="op">,</span> rangeProcInst<span class="op">-&gt;</span>fft1DSize <span class="op">*</span> <span class="dv">2</span> <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span><span class="dt">float</span><span class="op">));</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    radarOsal_memFree<span class="op">(</span>rangeProcInst<span class="op">-&gt;</span>win1D<span class="op">,</span> rangeProcInst<span class="op">-&gt;</span>win1DLength <span class="op">*</span> <span class="dv">2</span> <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span><span class="dt">float</span><span class="op">));</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    radarOsal_memFree<span class="op">(</span>rangeProcInst<span class="op">-&gt;</span>demodSig<span class="op">,</span> rangeProcInst<span class="op">-&gt;</span>nSamplesPerChirp <span class="op">*</span> <span class="dv">2</span> <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span><span class="dt">float</span><span class="op">));</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    radarOsal_memFree<span class="op">(</span>handle<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>RADARDEMO_highAccuRangeProc_handle<span class="op">));</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="运行" class="level2">
+<h2 class="anchored" data-anchor-id="运行">2.3 运行</h2>
+<div class="sourceCode" id="cb8"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>RADARDEMO_highAccuRangeProc_errorCode   RADARDEMO_highAccuRangeProc_run<span class="op">(</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                            IN  <span class="dt">void</span> <span class="op">*</span> handle<span class="op">,</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                            IN  RADARDEMO_highAccuRangeProc_input <span class="op">*</span> rangeProcInput<span class="op">,</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                            OUT RADARDEMO_highAccuRangeProc_output <span class="op">*</span> rangeProcOutput<span class="op">)</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int32_t</span>     chirpNum<span class="op">;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    RADARDEMO_highAccuRangeProc_handle <span class="op">*</span>rangeProcInst<span class="op">;</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    cplx16_t    <span class="op">*</span> inputSignal<span class="op">;</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    RADARDEMO_highAccuRangeProc_errorCode errorCode <span class="op">=</span> RADARDEMO_HIGHACCURANGEPROC_NO_ERROR<span class="op">;</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    inputSignal     <span class="op">=</span>   rangeProcInput<span class="op">-&gt;</span>inputSignal<span class="op">;</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    rangeProcInst   <span class="op">=</span>   <span class="op">(</span>RADARDEMO_highAccuRangeProc_handle <span class="op">*)</span> handle<span class="op">;</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>inputSignal <span class="op">==</span> NULL<span class="op">)</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>        errorCode   <span class="op">=</span>   RADARDEMO_HIGHACCURANGEPROC_INOUTPTR_NOTCORRECT<span class="op">;</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>rangeProcInst<span class="op">-&gt;</span>win1D <span class="op">==</span> NULL<span class="op">)</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>        errorCode   <span class="op">=</span>   RADARDEMO_HIGHACCURANGEPROC_INOUTPTR_NOTCORRECT<span class="op">;</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>errorCode <span class="op">&gt;</span> RADARDEMO_HIGHACCURANGEPROC_NO_ERROR<span class="op">)</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span><span class="op">(</span>errorCode<span class="op">);</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    chirpNum        <span class="op">=</span>   <span class="op">(</span><span class="dt">int32_t</span><span class="op">)</span> rangeProcInput<span class="op">-&gt;</span>chirpNumber<span class="op">;</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>chirpNum <span class="op">&gt;=</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span> <span class="co">/*accumulating all the chirps and convert to float*/</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>        RADARDEMO_highAccuRangeProc_accumulateInput<span class="op">(</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>                            rangeProcInst<span class="op">-&gt;</span>nSamplesPerChirp<span class="op">,</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>                            rangeProcInst<span class="op">-&gt;</span>fft1DSize<span class="op">,</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>                            rangeProcInst<span class="op">-&gt;</span>numChirpsPerFrame<span class="op">,</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>                            rangeProcInst<span class="op">-&gt;</span>win1D<span class="op">,</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>                            rangeProcInst<span class="op">-&gt;</span>win1DLength<span class="op">,</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>                            rangeProcInput<span class="op">-&gt;</span>inputSignal<span class="op">,</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>                            chirpNum<span class="op">,</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>                            rangeProcInst<span class="op">-&gt;</span>inputSig<span class="op">);</span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span> </span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* range measurements*/</span></span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>        RADARDEMO_highAccuRangeProc_rangeEst<span class="op">(</span></span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>                            rangeProcInst<span class="op">,</span> </span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>                            <span class="op">&amp;(</span>rangeProcOutput<span class="op">-&gt;</span>rangeEst<span class="op">),</span></span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>                            <span class="op">&amp;(</span>rangeProcOutput<span class="op">-&gt;</span>deltaPhaseEst<span class="op">),</span></span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>                            <span class="op">&amp;(</span>rangeProcOutput<span class="op">-&gt;</span>linearSNREst<span class="op">));</span></span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span><span class="op">(</span>errorCode<span class="op">);</span></span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
