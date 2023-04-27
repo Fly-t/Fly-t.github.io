@@ -14,6 +14,7 @@ TI has developed the IWR1843 mmWave radar sensor for industrial and automotive a
 # Referance
 
 [high_accuracy_user_guide.html](high_accuracy_user_guide.html)
+[resource explorer](https://dev.ti.com/tirex/explore/node?a=VLyFKFf__2.4.0&node=A__AMIRzzFfLQdhCxzdyy.fEg__radar_toolbox__1AslXXD__LATEST)
 
 # 原理
 
@@ -145,6 +146,9 @@ static void MmwDemo_mboxReadTask(UArg arg0, UArg arg1)
 ```
 
 这里就是接收到数据后,将数据赋值给mss的变量然后调整通信格式(按照`TLV`的格式发送). TLV格式ti的文档中有说明.
+[TLV format guide](https://dev.ti.com/tirex/explore/node?a=VLyFKFf__2.4.0&node=A__AJXx96rI7gxMSeZVEpNFrw__radar_toolbox__1AslXXD__LATEST)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-04-27-09-18-39.png)
 
 ``` c
 
@@ -173,25 +177,40 @@ static void MmwDemo_mboxReadTask(UArg arg0, UArg arg1)
 
 void MmwDemo_transmitProcessedOutput()
 {
+    /* 创建header变量存储数据头(FrameHeader) */
     MmwDemo_output_message_header header;
+    /* TLV的索引 */
     uint32_t tlvIdx = 0;
+
     uint32_t numPaddingBytes;
+    /* 数据包的长度信息 */
     uint32_t packetLen;
+    /* 数据对齐填充的padding */
     uint8_t padding[MMWDEMO_OUTPUT_MSG_SEGMENT_LEN];
-	MmwDemo_detOutputHdr           *ptrDetOutputHdr;
-	radarProcessOutput_t * outputData;
+	/* 用来存放从mailBox接收到的数据头得信息 */
+    MmwDemo_detOutputHdr           *ptrDetOutputHdr;
+	/* 用来存放从mailBox接收到的数据值部分 */
+    radarProcessOutput_t * outputData;
+    /* 设置T(ype)L(ength) */
     MmwDemo_output_message_tl   tl[MMWDEMO_OUTPUT_MSG_MAX];
-	uint32_t fft1D_length;
+	/* 用来存放fft数据的长度 */
+    uint32_t fft1D_length;
+    /* 存数据对象从结构体中提取出来 */
 	MmwDemo_MSS_DataPathObj     *obj = &gMmwMssMCB.mssDataPathObj;
-	MmwDemo_GuiMonSel   guiMonSel = gMmwMssMCB.cfg.guiMonSel;
-	UART_Handle uartHandle = gMmwMssMCB.loggingUartHandle;
+	/* 该变量决定什么变量发送给gui */
+    MmwDemo_GuiMonSel   guiMonSel = gMmwMssMCB.cfg.guiMonSel;
+	/* 拿到mss的uart句柄 */
+    UART_Handle uartHandle = gMmwMssMCB.loggingUartHandle;
 
+    /* 将数据放fft处理的header(chirp处理时间, 目标数据, frame处理时间, chirp处理时的负载,frame处理时的负载 ) */
     ptrDetOutputHdr = (MmwDemo_detOutputHdr *)&obj->inputInfo.header;
+    /* 存放处理fft后存储的相位变化量, 最大的range,fft输出等信息 */
     outputData      = (radarProcessOutput_t *)&obj->inputInfo.pointCloudBuf;
-
+    /* 提取出1Dfft的长度信息 */
     fft1D_length	=	outputData->fft1DSize;
 
     /* Clear message header */
+    /* 清空数据头, 重新构造数据头, 每一帧的数据都重新构造, 防止出现脏数据 */
     memset((void *)&header, 0, sizeof(MmwDemo_output_message_header));
     /* Header: */
     header.platform = 0xA1642;
@@ -315,6 +334,11 @@ void MmwDemo_transmitProcessedOutput()
 
 }
 ```
+
+
+
+
+
 
 
 
