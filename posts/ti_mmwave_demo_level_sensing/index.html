@@ -882,7 +882,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>            _amem8_f2<span class="op">(&amp;</span>outputPtr<span class="op">[</span><span class="dv">2</span><span class="op">*(</span>nSamplesPerChirp <span class="op">-</span> <span class="dv">1</span><span class="op">)])</span> <span class="op">=</span>   _ftof2<span class="op">((</span><span class="dt">float</span><span class="op">)</span>_ext<span class="op">(</span>itemp<span class="op">,</span> <span class="dv">16</span><span class="op">,</span> <span class="dv">16</span><span class="op">),</span> <span class="op">(</span><span class="dt">float</span><span class="op">)</span>_ext<span class="op">(</span>itemp<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">16</span><span class="op">));</span></span>
 <span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
 <span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 如果不是第一个chirp的话, (主要目的是为了取出直流分量) */</span></span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 如果不是第一个chirp的话, (主要目的是为了去除直流分量) */</span></span>
 <span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
 <span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
 <span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span><span class="op">(</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="op">((</span><span class="dt">int32_t</span><span class="op">)</span>nSamplesPerChirp<span class="op">&gt;&gt;</span> <span class="dv">1</span><span class="op">);</span> i<span class="op">++)</span></span>
@@ -1129,152 +1129,458 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-203"><a href="#cb10-203" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span><span class="op">;</span></span>
 <span id="cb10-204"><a href="#cb10-204" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
+<section id="demo的datapath配置" class="level1">
+<h1>3. demo的dataPath配置</h1>
+<p>应用层数据解析部分的配置, 包括: 内存分配, 缓冲区分配, 项目配置传递到硬件层.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> <span class="dt">int32_t</span> MmwDemo_dssDataPathConfig<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 接收执行结果 */</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int32_t</span>             retVal<span class="op">;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint8_t</span>             numRxChannels <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">//MMWave_CtrlCfg      *ptrCtrlCfg;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* demo的操作对象(句柄) */</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    MmwDemo_DSS_DataPathObj <span class="op">*</span>dataPathObj<span class="op">;</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">//uint32_t numTxAntAzim = 0;</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Get data path object and control configuration */</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">//ptrCtrlCfg   = &amp;gMmwDssMCB.cfg.ctrlCfg;</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 将dss的对象控制块中的dataPath对象拿到(拿到雷达部分的对象) */</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    dataPathObj  <span class="op">=</span> <span class="op">&amp;</span>gMmwDssMCB<span class="op">.</span>dataPathObj<span class="op">;</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">/*****************************************************************************</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="co">     * Data path :: Algorithm Configuration</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co">     *****************************************************************************/</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 配置缓冲区,其中包括堆内存分配, demo的配置传递到RSS */</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    MmwDemo_dataPathConfigBuffers<span class="op">(</span>SOC_XWR18XX_DSS_ADCBUF_BASE_ADDRESS<span class="op">,</span> <span class="op">&amp;</span>gMmwDssMCB<span class="op">.</span>cfg<span class="op">,</span> dataPathObj<span class="op">);</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    retVal <span class="op">=</span> MmwDemo_dssDataPathConfigAdcBuf<span class="op">(&amp;</span>numRxChannels<span class="op">);</span></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>retVal <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>    MmwDemo_dataPathConfigEdma<span class="op">(</span>dataPathObj<span class="op">);</span></span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="配置datapath和各种缓冲区" class="level1">
+<h1>3.1 配置dataPATH和各种缓冲区</h1>
+<p>代码中首先定义了一个<code>heapconfig</code>数组，这个数组定义了各种堆内存的类型、地址、大小等信息。接着通过调用<code>radarOsal_memInit</code>函数来初始化各种内存堆。之后通过调用<code>MmwDemo_initConfigStruct</code>函数初始化了信号处理链的配置信息。然后调用了<code>RADARDEMO_highAccuRangeProc_create</code>函数创建了高精度测距模块句柄，并检查返回码是否为错误码。接着用<code>radarOsal_memAlloc</code>函数分配了<code>rangeProcInput</code>和<code>rangeProcOutput</code>所需的内存，最后用<code>radarOsal_memAlloc</code>函数分配了一个<code>outputToARM_t</code>类型的结构体。这些内存都是在前面定义的<code>heapconfig</code>数组中的内存堆中分配的。</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> MmwDemo_dataPathConfigBuffers<span class="op">(</span><span class="dt">uint32_t</span> adcBufAddress<span class="op">,</span> MmwDemo_Cfg  <span class="op">*</span>demoCfg<span class="op">,</span> MmwDemo_DSS_DataPathObj <span class="op">*</span>dataPathObj<span class="op">)</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">//MmwDemo_DSS_DataPathObj *dataPathObj;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    radarOsal_heapConfig heapconfig<span class="op">[</span>SOC_XWR16XX_DSS_MAXNUMHEAPS<span class="op">];</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    RADARDEMO_highAccuRangeProc_errorCode rangeProcErrorCode<span class="op">;</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Get data path object and control configuration */</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">//dataPathObj  = &amp;gMmwDssMCB.dataPathObj;</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int32_t</span> tempNumSamples<span class="op">;</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">//设置ADC数据缓冲区的地址为给定的地址</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    dataPathObj<span class="op">-&gt;</span>ADCdataBuf <span class="op">=</span> <span class="op">(</span>cmplx16ImRe_t <span class="op">*)</span>adcBufAddress<span class="op">;</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">//堆初始化 将heapconfig数组的元素初始化为0</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    memset<span class="op">(</span>heapconfig<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>heapconfig<span class="op">));</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">//将heapconfig数组中的第一个元素的heapType成员设置为RADARMEMOSAL_HEAPTYPE_DDR_CACHED</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    heapconfig<span class="op">[</span>RADARMEMOSAL_HEAPTYPE_DDR_CACHED<span class="op">].</span>heapType <span class="op">=</span> RADARMEMOSAL_HEAPTYPE_DDR_CACHED<span class="op">;</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">//将heapconfig数组中的第一个元素的heapAddr成员设置为&amp;gMmwL3[0]</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    heapconfig<span class="op">[</span>RADARMEMOSAL_HEAPTYPE_DDR_CACHED<span class="op">].</span>heapAddr <span class="op">=</span> <span class="op">(</span><span class="dt">int8_t</span> <span class="op">*)&amp;</span>gMmwL3<span class="op">[</span><span class="dv">0</span><span class="op">];</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    <span class="co">//将heapconfig数组中的第一个元素的heapSize成员设置为SOC_XWR16XX_DSS_L3RAM_BUFF_SIZE</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>    heapconfig<span class="op">[</span>RADARMEMOSAL_HEAPTYPE_DDR_CACHED<span class="op">].</span>heapSize <span class="op">=</span> SOC_XWR16XX_DSS_L3RAM_BUFF_SIZE<span class="op">;</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">//将heapconfig数组中的第一个元素的scratchAddr成员设置为NULL</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    heapconfig<span class="op">[</span>RADARMEMOSAL_HEAPTYPE_DDR_CACHED<span class="op">].</span>scratchAddr <span class="op">=</span> NULL<span class="op">;</span> <span class="co">//不是DDR临时存储器，TM演示不使用</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    <span class="co">//将heapconfig数组中的第一个元素的scratchSize成员设置为0</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    heapconfig<span class="op">[</span>RADARMEMOSAL_HEAPTYPE_DDR_CACHED<span class="op">].</span>scratchSize <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="co">//不是DDR临时存储器，TM演示不使用</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>    <span class="co">//将heapconfig数组中的第二个元素的heapType成员设置为RADARMEMOSAL_HEAPTYPE_LL2</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>    heapconfig<span class="op">[</span>RADARMEMOSAL_HEAPTYPE_LL2<span class="op">].</span>heapType <span class="op">=</span> RADARMEMOSAL_HEAPTYPE_LL2<span class="op">;</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>    <span class="co">//将heapconfig数组中的第二个元素的heapAddr成员设置为&amp;gMmwL2[0]</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>    heapconfig<span class="op">[</span>RADARMEMOSAL_HEAPTYPE_LL2<span class="op">].</span>heapAddr <span class="op">=</span> <span class="op">(</span><span class="dt">int8_t</span> <span class="op">*)&amp;</span>gMmwL2<span class="op">[</span><span class="dv">0</span><span class="op">];</span></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">//将heapconfig数组中的第二个元素的heapSize成员设置为SOC_XWR16XX_DSS_L2_BUFF_SIZE</span></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>    heapconfig<span class="op">[</span>RADARMEMOSAL_HEAPTYPE_LL2<span class="op">].</span>heapSize <span class="op">=</span> SOC_XWR16XX_DSS_L2_BUFF_SIZE<span class="op">;</span></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 将L2暂存首地址设置为&amp;gMmwL2Scratch[0]</span></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>    heapconfig<span class="op">[</span>RADARMEMOSAL_HEAPTYPE_LL2<span class="op">].</span>scratchAddr <span class="op">=</span> <span class="op">(</span><span class="dt">int8_t</span> <span class="op">*)&amp;</span>gMmwL2Scratch<span class="op">[</span><span class="dv">0</span><span class="op">];</span></span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 将L2暂存设置为24KB(L2共计:256KB)</span></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>    heapconfig<span class="op">[</span>RADARMEMOSAL_HEAPTYPE_LL2<span class="op">].</span>scratchSize       <span class="op">=</span>   SOC_XWR16XX_DSS_L2_SCRATCH_SIZE<span class="op">;</span></span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 配置L1内存 */</span></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>    heapconfig<span class="op">[</span>RADARMEMOSAL_HEAPTYPE_LL1<span class="op">].</span>heapType          <span class="op">=</span>   RADARMEMOSAL_HEAPTYPE_LL1<span class="op">;</span></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 内存堆地址设置NULL */</span></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>    heapconfig<span class="op">[</span>RADARMEMOSAL_HEAPTYPE_LL1<span class="op">].</span>heapAddr          <span class="op">=</span>   NULL<span class="op">;</span> <span class="co">/* not used as L1 heap in TM demo  */</span></span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 设置大小为 0 */</span></span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>    heapconfig<span class="op">[</span>RADARMEMOSAL_HEAPTYPE_LL1<span class="op">].</span>heapSize          <span class="op">=</span>   <span class="dv">0</span><span class="op">;</span>    <span class="co">/* not used as L1 heap in TM demo  */</span></span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 设置暂存地址为gMmwL1[0] */</span></span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>    heapconfig<span class="op">[</span>RADARMEMOSAL_HEAPTYPE_LL1<span class="op">].</span>scratchAddr       <span class="op">=</span>   <span class="op">(</span><span class="dt">int8_t</span> <span class="op">*)</span> <span class="op">&amp;</span>gMmwL1<span class="op">[</span><span class="dv">0</span><span class="op">];</span></span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* L1暂存大小为 16KB (L1一共32KB(L1Program)+32KB(L1Data)) */</span></span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>    heapconfig<span class="op">[</span>RADARMEMOSAL_HEAPTYPE_LL1<span class="op">].</span>scratchSize       <span class="op">=</span>   MMW_L1_SCRATCH_SIZE<span class="op">;</span></span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 配置 HSRAM 高速RAM, 8KB */</span></span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>    heapconfig<span class="op">[</span>RADARMEMOSAL_HEAPTYPE_HSRAM<span class="op">].</span>heapType        <span class="op">=</span>   RADARMEMOSAL_HEAPTYPE_HSRAM<span class="op">;</span></span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>    heapconfig<span class="op">[</span>RADARMEMOSAL_HEAPTYPE_HSRAM<span class="op">].</span>heapAddr        <span class="op">=</span>   <span class="op">(</span><span class="dt">int8_t</span> <span class="op">*)</span> <span class="op">&amp;</span>gMmwHSRAM<span class="op">[</span><span class="dv">0</span><span class="op">];</span></span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>    heapconfig<span class="op">[</span>RADARMEMOSAL_HEAPTYPE_HSRAM<span class="op">].</span>heapSize        <span class="op">=</span>   SOC_XWR16XX_DSS_HSRAM_BUFF_SIZE<span class="op">;</span></span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>    heapconfig<span class="op">[</span>RADARMEMOSAL_HEAPTYPE_HSRAM<span class="op">].</span>scratchAddr     <span class="op">=</span>   NULL<span class="op">;</span>   <span class="co">/* not HSRAM scratch for TM demo  */</span></span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>    heapconfig<span class="op">[</span>RADARMEMOSAL_HEAPTYPE_HSRAM<span class="op">].</span>scratchSize     <span class="op">=</span>   <span class="dv">0</span><span class="op">;</span>    <span class="co">/* not HSRAM scratch for TM demo  */</span></span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 按照上述配置进行申请堆内存, 如果失败打印信息 */</span></span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>radarOsal_memInit<span class="op">(&amp;</span>heapconfig<span class="op">[</span><span class="dv">0</span><span class="op">],</span> SOC_XWR16XX_DSS_MAXNUMHEAPS<span class="op">)</span> <span class="op">==</span> RADARMEMOSAL_FAIL<span class="op">)</span></span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>        System_printf<span class="op">(</span><span class="st">"Error: radarOsal_memInit fail</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>    <span class="co">/*initializing configuration structure for signal processing chain */</span></span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 这个函数的作用是将demo中的配置传递给雷达(这么做将软件进行解耦, 应用和硬件隔离, 更好的抽象) */</span></span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>    MmwDemo_initConfigStruct<span class="op">(</span>demoCfg<span class="op">,</span> <span class="op">&amp;</span>dataPathObj<span class="op">-&gt;</span>radarProcConfig<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dt">uint32_t</span>            uitemp<span class="op">;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="dt">float</span>               frequencySlopeMHzMicoSec<span class="op">,</span> adcSamplePeriodMicoSec<span class="op">,</span> bandWidth<span class="op">,</span> chirpInterval<span class="op">;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="dt">uint16_t</span>            frameChirpStartIdx<span class="op">;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="dt">uint16_t</span>            frameChirpEndIdx<span class="op">;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int16_t</span>             frameTotalChirps<span class="op">;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int32_t</span>             errCode<span class="op">,</span> itemp<span class="op">;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="dt">uint32_t</span>            profileLoopIdx<span class="op">,</span> chirpLoopIdx<span class="op">;</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span>                foundValidProfile <span class="op">=</span> false<span class="op">;</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">/* 配置传递:传递给RSS(radar sub system) */</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>MMWave_CtrlCfg<span class="op">*</span>     ptrCtrlCfg <span class="op">=</span> <span class="op">&amp;(</span>demoCfg<span class="op">-&gt;</span>ctrlCfg<span class="op">);</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>MMWave_OpenCfg<span class="op">*</span>     ptrOpenCfg <span class="op">=</span> <span class="op">&amp;(</span>demoCfg<span class="op">-&gt;</span>openCfg<span class="op">);</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="dt">uint16_t</span>            channelTxEn <span class="op">=</span> ptrOpenCfg<span class="op">-&gt;</span>chCfg<span class="op">.</span>txChannelEn<span class="op">;</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co">/* 这段代码中，首先读取了变量demoCfg中的openCfg结构体的chCfg成员变量的txChannelEn字段，</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">   该字段表示雷达系统启用的发射通道，是一个4位的二进制数，每一位表示一个发射天线是否启用，</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co">   1表示启用，0表示未启用 */</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>radarProcConfig<span class="op">-&gt;</span>numTxAntenna <span class="op">=</span> <span class="op">(</span><span class="dt">uint16_t</span><span class="op">)</span>_bitc4<span class="op">(</span>demoCfg<span class="op">-&gt;</span>openCfg<span class="op">.</span>chCfg<span class="op">.</span>txChannelEn<span class="op">);</span><span class="co">//3</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>radarProcConfig<span class="op">-&gt;</span>numPhyRxAntenna <span class="op">=</span> <span class="op">(</span><span class="dt">uint16_t</span><span class="op">)</span>_bitc4<span class="op">(</span>demoCfg<span class="op">-&gt;</span>openCfg<span class="op">.</span>chCfg<span class="op">.</span>rxChannelEn<span class="op">);</span><span class="co">//1</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="co">/* 判断天线数量, 物理接收天线只能打开1根, 对于该应用来说(液位测量) */</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span><span class="op">(</span>radarProcConfig<span class="op">-&gt;</span>numPhyRxAntenna <span class="op">&gt;</span> <span class="dv">1</span><span class="op">)</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    System_printf<span class="op">(</span><span class="st">"channelCfg Error: Does not support multiple Rx Antennas !!!"</span><span class="op">);</span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    DebugP_assert<span class="op">(</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="co">/* 获取到雷达配置中的开始chipr索引和结束索引 */</span></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>frameChirpStartIdx <span class="op">=</span> ptrCtrlCfg<span class="op">-&gt;</span>u<span class="op">.</span>frameCfg<span class="op">.</span>frameCfg<span class="op">.</span>chirpStartIdx<span class="op">;</span><span class="co">//0</span></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>frameChirpEndIdx <span class="op">=</span> ptrCtrlCfg<span class="op">-&gt;</span>u<span class="op">.</span>frameCfg<span class="op">.</span>frameCfg<span class="op">.</span>chirpEndIdx<span class="op">;</span><span class="co">//0</span></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="co">/* 计算一帧中chirp数 (结束-开始+1)*/</span></span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>frameTotalChirps <span class="op">=</span> frameChirpEndIdx <span class="op">-</span> frameChirpStartIdx <span class="op">+</span> <span class="dv">1</span><span class="op">;</span><span class="co">//1</span></span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a><span class="co">/* since validChirpTxEnBits is static array of 32 */</span></span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a><span class="co">/* 若果一帧内的chirp数大于32则会触发断言, 程序终止 */</span></span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>DebugP_assert<span class="op">(</span>frameTotalChirps<span class="op">&lt;=</span><span class="dv">32</span><span class="op">);</span></span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a><span class="co">/*  foundValidProfile 是一个布尔类型的变量，用于指示在 for 循环中是否找到了有效的配置文件。</span></span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a><span class="co">    在循环中，如果找到了有效的配置文件，则会将 foundValidProfile 设置为 true，从而退出循环 */</span></span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span>   </span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>        profileLoopIdx<span class="op">=</span><span class="dv">0</span><span class="op">;</span></span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* 最大支持4中配置, 如果找到有效配置就停止, 提升效率 */</span></span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a>        <span class="op">((</span>profileLoopIdx<span class="op">&lt;</span>MMWAVE_MAX_PROFILE<span class="op">)&amp;&amp;(</span>foundValidProfile<span class="op">==</span>false<span class="op">));</span></span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a>        profileLoopIdx<span class="op">++</span></span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>    <span class="op">)</span></span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>        <span class="dt">uint32_t</span>    mmWaveNumChirps <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a>        <span class="dt">uint16_t</span>    validChirpTxEnBits<span class="op">[</span><span class="dv">32</span><span class="op">]={</span><span class="dv">0</span><span class="op">};</span></span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a>        MMWave_ProfileHandle profileHandle<span class="op">;</span></span>
+<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* 获取给定索引（profileLoopIdx）的配置文件（profile）的句柄（handle），并将其保存在`profileHandle`指针所指向的变量中。</span></span>
+<span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a><span class="co">        同时，该函数还返回错误码`errCode`,如果执行异常就中断程序 */</span></span>
+<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>MMWave_getProfileHandle<span class="op">(</span>gMmwDssMCB<span class="op">.</span>ctrlHandle<span class="op">,</span> profileLoopIdx<span class="op">,</span> <span class="op">&amp;</span>profileHandle<span class="op">,</span> <span class="op">&amp;</span>errCode<span class="op">)</span> <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb13-56"><a href="#cb13-56" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb13-57"><a href="#cb13-57" aria-hidden="true" tabindex="-1"></a>            <span class="co">/* Error: Unable to get the profile handle; this should never fail */</span></span>
+<span id="cb13-58"><a href="#cb13-58" aria-hidden="true" tabindex="-1"></a>            DebugP_assert <span class="op">(</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb13-59"><a href="#cb13-59" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb13-60"><a href="#cb13-60" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* 如果获取到的句柄为空就重新进入下一次`profiIdx`进行获取句柄 */</span></span>
+<span id="cb13-61"><a href="#cb13-61" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>profileHandle <span class="op">==</span> NULL<span class="op">)</span></span>
+<span id="cb13-62"><a href="#cb13-62" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span><span class="op">;</span> <span class="co">/* skip this profile */</span></span>
+<span id="cb13-63"><a href="#cb13-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-64"><a href="#cb13-64" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* get numChirps for this profile; skip error checking */</span></span>
+<span id="cb13-65"><a href="#cb13-65" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* 通过当前有效句柄获取chirp数 */</span></span>
+<span id="cb13-66"><a href="#cb13-66" aria-hidden="true" tabindex="-1"></a>        MMWave_getNumChirps<span class="op">(</span>profileHandle<span class="op">,&amp;</span>mmWaveNumChirps<span class="op">,&amp;</span>errCode<span class="op">);</span></span>
+<span id="cb13-67"><a href="#cb13-67" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* loop for chirps and find if it has valid chirps for the frame</span></span>
+<span id="cb13-68"><a href="#cb13-68" aria-hidden="true" tabindex="-1"></a><span class="co">           looping around for all chirps in a profile, in case</span></span>
+<span id="cb13-69"><a href="#cb13-69" aria-hidden="true" tabindex="-1"></a><span class="co">           there are duplicate chirps</span></span>
+<span id="cb13-70"><a href="#cb13-70" aria-hidden="true" tabindex="-1"></a><span class="co">        */</span></span>
+<span id="cb13-71"><a href="#cb13-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-72"><a href="#cb13-72" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* 拿到所有的获取到chirp数之后, 按照chirp数进行遍历获取所有chirp的句柄和chirp配置 */</span></span>
+<span id="cb13-73"><a href="#cb13-73" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span>chirpLoopIdx<span class="op">=</span><span class="dv">1</span><span class="op">;</span>chirpLoopIdx<span class="op">&lt;=</span>mmWaveNumChirps<span class="op">;</span>chirpLoopIdx<span class="op">++)</span></span>
+<span id="cb13-74"><a href="#cb13-74" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb13-75"><a href="#cb13-75" aria-hidden="true" tabindex="-1"></a>            MMWave_ChirpHandle chirpHandle<span class="op">;</span></span>
+<span id="cb13-76"><a href="#cb13-76" aria-hidden="true" tabindex="-1"></a>            <span class="co">/* get handle and read ChirpCfg */</span></span>
+<span id="cb13-77"><a href="#cb13-77" aria-hidden="true" tabindex="-1"></a>            <span class="co">/* 通过 `MMWave_getChirpHandle` 获取到chirp的句柄 */</span></span>
+<span id="cb13-78"><a href="#cb13-78" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>MMWave_getChirpHandle<span class="op">(</span>profileHandle<span class="op">,</span>chirpLoopIdx<span class="op">,&amp;</span>chirpHandle<span class="op">,&amp;</span>errCode<span class="op">)==</span><span class="dv">0</span><span class="op">)</span></span>
+<span id="cb13-79"><a href="#cb13-79" aria-hidden="true" tabindex="-1"></a>            <span class="op">{</span></span>
+<span id="cb13-80"><a href="#cb13-80" aria-hidden="true" tabindex="-1"></a>                rlChirpCfg_t chirpCfg<span class="op">;</span></span>
+<span id="cb13-81"><a href="#cb13-81" aria-hidden="true" tabindex="-1"></a>                <span class="co">/* 通过chirp句柄后获取`chirp`的配置 */</span></span>
+<span id="cb13-82"><a href="#cb13-82" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="op">(</span>MMWave_getChirpCfg<span class="op">(</span>chirpHandle<span class="op">,&amp;</span>chirpCfg<span class="op">,&amp;</span>errCode<span class="op">)==</span><span class="dv">0</span><span class="op">)</span></span>
+<span id="cb13-83"><a href="#cb13-83" aria-hidden="true" tabindex="-1"></a>                <span class="op">{</span></span>
+<span id="cb13-84"><a href="#cb13-84" aria-hidden="true" tabindex="-1"></a>                    <span class="co">/* txEnable是一个二进制值，用于指示哪些天线在当前chirp的时间内应该被使用, 最多可以同时开启2根发射天线 */</span></span>
+<span id="cb13-85"><a href="#cb13-85" aria-hidden="true" tabindex="-1"></a>                    <span class="co">/*</span></span>
+<span id="cb13-86"><a href="#cb13-86" aria-hidden="true" tabindex="-1"></a><span class="co">                        b0: 是否启用 TX0 发射天线，0 表示禁用，1 表示启用。</span></span>
+<span id="cb13-87"><a href="#cb13-87" aria-hidden="true" tabindex="-1"></a><span class="co">                        b1: 是否启用 TX1 发射天线，0 表示禁用，1 表示启用。</span></span>
+<span id="cb13-88"><a href="#cb13-88" aria-hidden="true" tabindex="-1"></a><span class="co">                        b2: 是否启用 TX2 发射天线，0 表示禁用，1 表示启用。</span></span>
+<span id="cb13-89"><a href="#cb13-89" aria-hidden="true" tabindex="-1"></a><span class="co">                    */</span></span>
+<span id="cb13-90"><a href="#cb13-90" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">uint16_t</span> chirpTxEn <span class="op">=</span> chirpCfg<span class="op">.</span>txEnable<span class="op">;</span></span>
+<span id="cb13-91"><a href="#cb13-91" aria-hidden="true" tabindex="-1"></a>                    <span class="co">/* do chirps fall in range and has valid antenna enabled */</span></span>
+<span id="cb13-92"><a href="#cb13-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-93"><a href="#cb13-93" aria-hidden="true" tabindex="-1"></a>                    <span class="co">/*  这段代码是在循环遍历一个profile中的所有chirps，判断是否有valid的chirp能够覆盖到frame中的chirp范围，</span></span>
+<span id="cb13-94"><a href="#cb13-94" aria-hidden="true" tabindex="-1"></a><span class="co">                        并且判断这个chirp对应的天线是否是valid的。如果找到了这样的valid chirp，</span></span>
+<span id="cb13-95"><a href="#cb13-95" aria-hidden="true" tabindex="-1"></a><span class="co">                        就将对应的bit位设置到validChirpTxEnBits数组中，表示这个chirp对应的TX是valid的 */</span></span>
+<span id="cb13-96"><a href="#cb13-96" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> <span class="op">((</span>chirpCfg<span class="op">.</span>chirpStartIdx <span class="op">&gt;=</span> frameChirpStartIdx<span class="op">)</span> <span class="op">&amp;&amp;</span></span>
+<span id="cb13-97"><a href="#cb13-97" aria-hidden="true" tabindex="-1"></a>                        <span class="op">(</span>chirpCfg<span class="op">.</span>chirpEndIdx <span class="op">&lt;=</span> frameChirpEndIdx<span class="op">)</span> <span class="op">&amp;&amp;</span></span>
+<span id="cb13-98"><a href="#cb13-98" aria-hidden="true" tabindex="-1"></a>                        <span class="op">((</span>chirpTxEn <span class="op">&amp;</span> channelTxEn<span class="op">)</span> <span class="op">&gt;</span> <span class="dv">0</span><span class="op">))</span></span>
+<span id="cb13-99"><a href="#cb13-99" aria-hidden="true" tabindex="-1"></a>                    <span class="op">{</span></span>
+<span id="cb13-100"><a href="#cb13-100" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">uint16_t</span> idx <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb13-101"><a href="#cb13-101" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">for</span> <span class="op">(</span>idx<span class="op">=(</span>chirpCfg<span class="op">.</span>chirpStartIdx<span class="op">-</span>frameChirpStartIdx<span class="op">);</span>idx<span class="op">&lt;=(</span>chirpCfg<span class="op">.</span>chirpEndIdx<span class="op">-</span>frameChirpStartIdx<span class="op">);</span>idx<span class="op">++)</span></span>
+<span id="cb13-102"><a href="#cb13-102" aria-hidden="true" tabindex="-1"></a>                        <span class="op">{</span></span>
+<span id="cb13-103"><a href="#cb13-103" aria-hidden="true" tabindex="-1"></a>                            validChirpTxEnBits<span class="op">[</span>idx<span class="op">]</span> <span class="op">=</span> chirpTxEn<span class="op">;</span></span>
+<span id="cb13-104"><a href="#cb13-104" aria-hidden="true" tabindex="-1"></a>                            foundValidProfile <span class="op">=</span> true<span class="op">;</span></span>
+<span id="cb13-105"><a href="#cb13-105" aria-hidden="true" tabindex="-1"></a>                        <span class="op">}</span></span>
+<span id="cb13-106"><a href="#cb13-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-107"><a href="#cb13-107" aria-hidden="true" tabindex="-1"></a>                    <span class="op">}</span></span>
+<span id="cb13-108"><a href="#cb13-108" aria-hidden="true" tabindex="-1"></a>                <span class="op">}</span></span>
+<span id="cb13-109"><a href="#cb13-109" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb13-110"><a href="#cb13-110" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb13-111"><a href="#cb13-111" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* now loop through unique chirps and check if we found all of the ones</span></span>
+<span id="cb13-112"><a href="#cb13-112" aria-hidden="true" tabindex="-1"></a><span class="co">           needed for the frame and then determine the azimuth antenna</span></span>
+<span id="cb13-113"><a href="#cb13-113" aria-hidden="true" tabindex="-1"></a><span class="co">           configuration</span></span>
+<span id="cb13-114"><a href="#cb13-114" aria-hidden="true" tabindex="-1"></a><span class="co">         */</span></span>
+<span id="cb13-115"><a href="#cb13-115" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>foundValidProfile<span class="op">)</span></span>
+<span id="cb13-116"><a href="#cb13-116" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb13-117"><a href="#cb13-117" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> <span class="op">(</span>chirpLoopIdx<span class="op">=</span><span class="dv">0</span><span class="op">;</span>chirpLoopIdx<span class="op">&lt;</span>frameTotalChirps<span class="op">;</span>chirpLoopIdx<span class="op">++)</span></span>
+<span id="cb13-118"><a href="#cb13-118" aria-hidden="true" tabindex="-1"></a>            <span class="op">{</span></span>
+<span id="cb13-119"><a href="#cb13-119" aria-hidden="true" tabindex="-1"></a>                <span class="dt">uint16_t</span> chirpTxEn <span class="op">=</span> validChirpTxEnBits<span class="op">[</span>chirpLoopIdx<span class="op">];</span></span>
+<span id="cb13-120"><a href="#cb13-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-121"><a href="#cb13-121" aria-hidden="true" tabindex="-1"></a>                uitemp  <span class="op">=</span>   <span class="op">(</span><span class="dt">uint32_t</span><span class="op">)</span>_bitc4<span class="op">(</span>chirpTxEn<span class="op">);</span></span>
+<span id="cb13-122"><a href="#cb13-122" aria-hidden="true" tabindex="-1"></a><span class="co">//              if (uitemp &gt; 1)</span></span>
+<span id="cb13-123"><a href="#cb13-123" aria-hidden="true" tabindex="-1"></a><span class="co">//              {</span></span>
+<span id="cb13-124"><a href="#cb13-124" aria-hidden="true" tabindex="-1"></a><span class="co">//                  System_printf("channelCfg Error: Current code only support SIMO and TDM MIMO !!!");</span></span>
+<span id="cb13-125"><a href="#cb13-125" aria-hidden="true" tabindex="-1"></a><span class="co">//                  DebugP_assert(0);</span></span>
+<span id="cb13-126"><a href="#cb13-126" aria-hidden="true" tabindex="-1"></a><span class="co">//              }</span></span>
+<span id="cb13-127"><a href="#cb13-127" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb13-128"><a href="#cb13-128" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb13-129"><a href="#cb13-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-130"><a href="#cb13-130" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* found valid chirps for the frame; mark this profile valid */</span></span>
+<span id="cb13-131"><a href="#cb13-131" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>foundValidProfile<span class="op">==</span>true<span class="op">)</span></span>
+<span id="cb13-132"><a href="#cb13-132" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb13-133"><a href="#cb13-133" aria-hidden="true" tabindex="-1"></a>            rlProfileCfg_t  profileCfg<span class="op">;</span></span>
+<span id="cb13-134"><a href="#cb13-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-135"><a href="#cb13-135" aria-hidden="true" tabindex="-1"></a>            <span class="co">//dataPathObj-&gt;validProfileIdx = profileLoopIdx;</span></span>
+<span id="cb13-136"><a href="#cb13-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-137"><a href="#cb13-137" aria-hidden="true" tabindex="-1"></a>            <span class="co">/* Get the profile configuration: */</span></span>
+<span id="cb13-138"><a href="#cb13-138" aria-hidden="true" tabindex="-1"></a>            <span class="co">/* 获取扫描模式配置句柄, 如果没有获取到就进行断言, 程序终止 */</span></span>
+<span id="cb13-139"><a href="#cb13-139" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>MMWave_getProfileCfg <span class="op">(</span>profileHandle<span class="op">,&amp;</span>profileCfg<span class="op">,</span> <span class="op">&amp;</span>errCode<span class="op">)</span> <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb13-140"><a href="#cb13-140" aria-hidden="true" tabindex="-1"></a>            <span class="op">{</span></span>
+<span id="cb13-141"><a href="#cb13-141" aria-hidden="true" tabindex="-1"></a>                System_printf <span class="op">(</span><span class="st">"Error: Unable to get the profile configuration [Error code </span><span class="sc">%d</span><span class="st">]</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> errCode<span class="op">);</span></span>
+<span id="cb13-142"><a href="#cb13-142" aria-hidden="true" tabindex="-1"></a>                DebugP_assert <span class="op">(</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb13-143"><a href="#cb13-143" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb13-144"><a href="#cb13-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-145"><a href="#cb13-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-146"><a href="#cb13-146" aria-hidden="true" tabindex="-1"></a>            <span class="co">/* 如果配置有效, 将参数进行传递, 从demo的配置传递给雷达部分. */</span></span>
+<span id="cb13-147"><a href="#cb13-147" aria-hidden="true" tabindex="-1"></a>            radarProcConfig<span class="op">-&gt;</span>numAdcSamplePerChirp   <span class="op">=</span>   profileCfg<span class="op">.</span>numAdcSamples<span class="op">;</span></span>
+<span id="cb13-148"><a href="#cb13-148" aria-hidden="true" tabindex="-1"></a>            radarProcConfig<span class="op">-&gt;</span>highAccuConfig<span class="op">.</span>nSamplesPerChirp    <span class="op">=</span>   profileCfg<span class="op">.</span>numAdcSamples<span class="op">;</span></span>
+<span id="cb13-149"><a href="#cb13-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-150"><a href="#cb13-150" aria-hidden="true" tabindex="-1"></a>            frequencySlopeMHzMicoSec        <span class="op">=</span>   <span class="op">(</span><span class="dt">float</span><span class="op">)</span>profileCfg<span class="op">.</span>freqSlopeConst <span class="op">*</span> <span class="fl">3600.</span><span class="bu">f</span><span class="op">*</span> <span class="fl">900.</span><span class="bu">f</span><span class="op">/((</span><span class="dt">float</span><span class="op">)(</span><span class="dv">1</span><span class="op">&lt;&lt;</span><span class="dv">26</span><span class="op">));</span></span>
+<span id="cb13-151"><a href="#cb13-151" aria-hidden="true" tabindex="-1"></a>            radarProcConfig<span class="op">-&gt;</span>highAccuConfig<span class="op">.</span>chirpSlope      <span class="op">=</span>   frequencySlopeMHzMicoSec <span class="op">*</span> <span class="fl">1e12</span><span class="op">;</span></span>
+<span id="cb13-152"><a href="#cb13-152" aria-hidden="true" tabindex="-1"></a>            adcSamplePeriodMicoSec          <span class="op">=</span>   <span class="fl">1000.0</span><span class="bu">f</span> <span class="op">/</span> <span class="op">(</span><span class="dt">float</span><span class="op">)</span> profileCfg<span class="op">.</span>digOutSampleRate<span class="op">;</span></span>
+<span id="cb13-153"><a href="#cb13-153" aria-hidden="true" tabindex="-1"></a>            adcSamplePeriodMicoSec          <span class="op">*=</span>  <span class="op">(</span><span class="dt">float</span><span class="op">)</span>radarProcConfig<span class="op">-&gt;</span>numAdcSamplePerChirp<span class="op">;</span></span>
+<span id="cb13-154"><a href="#cb13-154" aria-hidden="true" tabindex="-1"></a>            radarProcConfig<span class="op">-&gt;</span>highAccuConfig<span class="op">.</span>chirpRampTime   <span class="op">=</span>   adcSamplePeriodMicoSec <span class="op">*</span> <span class="fl">1e-6</span><span class="op">;</span></span>
+<span id="cb13-155"><a href="#cb13-155" aria-hidden="true" tabindex="-1"></a>            bandWidth                       <span class="op">=</span>   frequencySlopeMHzMicoSec <span class="op">*</span> adcSamplePeriodMicoSec <span class="op">*</span> <span class="fl">1.0e6</span><span class="op">;</span></span>
+<span id="cb13-156"><a href="#cb13-156" aria-hidden="true" tabindex="-1"></a>            radarProcConfig<span class="op">-&gt;</span>highAccuConfig<span class="op">.</span>chirpBandwidth  <span class="op">=</span>   bandWidth<span class="op">;</span></span>
+<span id="cb13-157"><a href="#cb13-157" aria-hidden="true" tabindex="-1"></a>            radarProcConfig<span class="op">-&gt;</span>highAccuConfig<span class="op">.</span>adcSampleRate   <span class="op">=</span>   <span class="fl">1000.0</span><span class="bu">f</span> <span class="op">*</span> profileCfg<span class="op">.</span>digOutSampleRate<span class="op">;</span></span>
+<span id="cb13-158"><a href="#cb13-158" aria-hidden="true" tabindex="-1"></a>            radarProcConfig<span class="op">-&gt;</span>highAccuConfig<span class="op">.</span>maxBeatFreq <span class="op">=</span>   <span class="fl">1000.0</span><span class="bu">f</span> <span class="op">*</span> profileCfg<span class="op">.</span>digOutSampleRate<span class="op">;</span></span>
+<span id="cb13-159"><a href="#cb13-159" aria-hidden="true" tabindex="-1"></a>            radarProcConfig<span class="op">-&gt;</span>highAccuConfig<span class="op">.</span>fc  <span class="op">=</span>   <span class="op">((</span><span class="dt">float</span><span class="op">)</span>profileCfg<span class="op">.</span>startFreqConst <span class="op">*</span> <span class="fl">3.6</span><span class="bu">f</span><span class="op">/((</span><span class="dt">float</span><span class="op">)(</span><span class="dv">1</span><span class="op">&lt;&lt;</span><span class="dv">26</span><span class="op">)))</span> <span class="op">*</span> <span class="fl">1.0e9</span> <span class="op">+</span></span>
+<span id="cb13-160"><a href="#cb13-160" aria-hidden="true" tabindex="-1"></a>                    radarProcConfig<span class="op">-&gt;</span>highAccuConfig<span class="op">.</span>chirpSlope <span class="op">*</span> <span class="op">(</span><span class="dt">float</span><span class="op">)</span>profileCfg<span class="op">.</span>adcStartTimeConst <span class="op">*</span> <span class="fl">1.0e-8</span><span class="op">;</span></span>
+<span id="cb13-161"><a href="#cb13-161" aria-hidden="true" tabindex="-1"></a>            itemp                               <span class="op">=</span>   profileCfg<span class="op">.</span>numAdcSamples<span class="op">;</span></span>
+<span id="cb13-162"><a href="#cb13-162" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">((</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> <span class="op">(</span><span class="dv">30</span> <span class="op">-</span> _norm<span class="op">(</span>itemp<span class="op">)))</span> <span class="op">==</span> itemp<span class="op">)</span></span>
+<span id="cb13-163"><a href="#cb13-163" aria-hidden="true" tabindex="-1"></a>                radarProcConfig<span class="op">-&gt;</span>highAccuConfig<span class="op">.</span>fft1DSize       <span class="op">=</span>   itemp<span class="op">;</span></span>
+<span id="cb13-164"><a href="#cb13-164" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span></span>
+<span id="cb13-165"><a href="#cb13-165" aria-hidden="true" tabindex="-1"></a>                radarProcConfig<span class="op">-&gt;</span>highAccuConfig<span class="op">.</span>fft1DSize       <span class="op">=</span>   <span class="dv">1</span> <span class="op">&lt;&lt;</span> <span class="op">(</span><span class="dv">31</span> <span class="op">-</span> _norm<span class="op">(</span>itemp<span class="op">));</span></span>
+<span id="cb13-166"><a href="#cb13-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-167"><a href="#cb13-167" aria-hidden="true" tabindex="-1"></a>            <span class="co">//centerFrequency                   =   ((float)profileCfg.startFreqConst * 3.6f/((float)(1&lt;&lt;26))) * 1.0e9 + bandWidth * 0.5;</span></span>
+<span id="cb13-168"><a href="#cb13-168" aria-hidden="true" tabindex="-1"></a>            chirpInterval                   <span class="op">=</span>   <span class="op">(</span><span class="dt">float</span><span class="op">)((</span>profileCfg<span class="op">.</span>rampEndTime<span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="dt">float</span><span class="op">)(</span>profileCfg<span class="op">.</span>idleTimeConst<span class="op">))</span> <span class="op">*</span><span class="fl">1.0e-8</span><span class="op">;</span></span>
+<span id="cb13-169"><a href="#cb13-169" aria-hidden="true" tabindex="-1"></a>            radarProcConfig<span class="op">-&gt;</span>chirpInterval  <span class="op">=</span>   chirpInterval<span class="op">;</span></span>
+<span id="cb13-170"><a href="#cb13-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-171"><a href="#cb13-171" aria-hidden="true" tabindex="-1"></a>            radarProcConfig<span class="op">-&gt;</span>numChirpPerFrame   <span class="op">=</span>   demoCfg<span class="op">-&gt;</span>ctrlCfg<span class="op">.</span>u<span class="op">.</span>frameCfg<span class="op">.</span>frameCfg<span class="op">.</span>numLoops<span class="op">;</span></span>
+<span id="cb13-172"><a href="#cb13-172" aria-hidden="true" tabindex="-1"></a>            radarProcConfig<span class="op">-&gt;</span>highAccuConfig<span class="op">.</span>numChirpsPerFrame   <span class="op">=</span>   radarProcConfig<span class="op">-&gt;</span>numChirpPerFrame<span class="op">;</span></span>
+<span id="cb13-173"><a href="#cb13-173" aria-hidden="true" tabindex="-1"></a>            radarProcConfig<span class="op">-&gt;</span>framePeriod        <span class="op">=</span>   <span class="op">(</span>demoCfg<span class="op">-&gt;</span>ctrlCfg<span class="op">.</span>u<span class="op">.</span>frameCfg<span class="op">.</span>frameCfg<span class="op">.</span>framePeriodicity<span class="op">)</span> <span class="op">*</span> <span class="fl">5e-6</span><span class="op">;</span></span>
+<span id="cb13-174"><a href="#cb13-174" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb13-175"><a href="#cb13-175" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span><span class="co">//fist for</span></span>
+<span id="cb13-176"><a href="#cb13-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-177"><a href="#cb13-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-178"><a href="#cb13-178" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Range window parameters. */</span></span>
+<span id="cb13-179"><a href="#cb13-179" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 距离窗配置 */</span></span>
+<span id="cb13-180"><a href="#cb13-180" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>highAccuConfig<span class="op">.</span>win1DLength     <span class="op">=</span> <span class="dv">16</span><span class="op">;</span></span>
+<span id="cb13-181"><a href="#cb13-181" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">0</span><span class="op">]</span>  <span class="op">=</span> <span class="dv">0</span><span class="er">.0800f</span><span class="op">;</span></span>
+<span id="cb13-182"><a href="#cb13-182" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">1</span><span class="op">]</span>  <span class="op">=</span> <span class="dv">0</span><span class="er">.0894f</span><span class="op">;</span></span>
+<span id="cb13-183"><a href="#cb13-183" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">2</span><span class="op">]</span>  <span class="op">=</span> <span class="dv">0</span><span class="er">.1173f</span><span class="op">;</span></span>
+<span id="cb13-184"><a href="#cb13-184" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">3</span><span class="op">]</span>  <span class="op">=</span> <span class="dv">0</span><span class="er">.1624f</span><span class="op">;</span></span>
+<span id="cb13-185"><a href="#cb13-185" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">4</span><span class="op">]</span>  <span class="op">=</span> <span class="dv">0</span><span class="er">.2231f</span><span class="op">;</span></span>
+<span id="cb13-186"><a href="#cb13-186" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">5</span><span class="op">]</span>  <span class="op">=</span> <span class="dv">0</span><span class="er">.2967f</span><span class="op">;</span></span>
+<span id="cb13-187"><a href="#cb13-187" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">6</span><span class="op">]</span>  <span class="op">=</span> <span class="dv">0</span><span class="er">.3802f</span><span class="op">;</span></span>
+<span id="cb13-188"><a href="#cb13-188" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">7</span><span class="op">]</span>  <span class="op">=</span> <span class="dv">0</span><span class="er">.4703f</span><span class="op">;</span></span>
+<span id="cb13-189"><a href="#cb13-189" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">8</span><span class="op">]</span>  <span class="op">=</span> <span class="dv">0</span><span class="er">.5633f</span><span class="op">;</span></span>
+<span id="cb13-190"><a href="#cb13-190" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">9</span><span class="op">]</span>  <span class="op">=</span> <span class="dv">0</span><span class="er">.6553f</span><span class="op">;</span></span>
+<span id="cb13-191"><a href="#cb13-191" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">10</span><span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="er">.7426f</span><span class="op">;</span></span>
+<span id="cb13-192"><a href="#cb13-192" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">11</span><span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="er">.8216f</span><span class="op">;</span></span>
+<span id="cb13-193"><a href="#cb13-193" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">12</span><span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="er">.8890f</span><span class="op">;</span></span>
+<span id="cb13-194"><a href="#cb13-194" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">13</span><span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="er">.9422f</span><span class="op">;</span></span>
+<span id="cb13-195"><a href="#cb13-195" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">14</span><span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="er">.9789f</span><span class="op">;</span></span>
+<span id="cb13-196"><a href="#cb13-196" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">15</span><span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="er">.9976f</span><span class="op">;</span></span>
+<span id="cb13-197"><a href="#cb13-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-198"><a href="#cb13-198" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 将项目的窗也设置为相同的窗 */</span></span>
+<span id="cb13-199"><a href="#cb13-199" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>highAccuConfig<span class="op">.</span>win1D     <span class="op">=</span> radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
 <section id="附录" class="level1">
 <h1>附录</h1>
 <section id="配置文件解析" class="level2">
 <h2 class="anchored" data-anchor-id="配置文件解析">1. 配置文件解析</h2>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>                                <span class="ex">IWR6843vitalsign配置解析</span>                                                            </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                                                                <span class="ex">-2022-11-15</span> dd21</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ex">sensorStop</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> 传感器停止</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="ex">flushCfg</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> 刷新配置</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="ex">dfeDataOutputMode</span> 1</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>     <span class="ex">-</span> 数据输出模式</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-1</span> 基于帧的chirp模式</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-2</span> 连续chirp模式</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-3</span> 高级帧模式       </span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="ex">channelCfg</span> 15 3 0</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> 通道设置</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-15</span> =<span class="op">&gt;</span> <span class="er">(</span><span class="ex">0x1111</span><span class="kw">)</span><span class="ex">b</span> 接收天线掩码, 表示打开 4个接收天线  </span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-3</span>  =<span class="op">&gt;</span> <span class="er">(</span><span class="ex">0x11</span><span class="kw">)</span><span class="ex">b</span>   发射天线掩码, 表示打开 2个发射天线</span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span> soc级联<span class="er">(</span><span class="ex">目前不可用[V3.5.4]</span><span class="kw">)</span><span class="ex">,</span> 设置为0</span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="ex">adcCfg</span> 2 1</span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> ADC配置</span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span><span class="op">&lt;</span>具体信息查看mmwaveLink 文档<span class="op">&gt;</span></span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-2</span> adc采样位数<span class="er">(</span><span class="ex">只支持16bits</span><span class="kw">)</span></span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-0</span> 12bits</span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-1</span> 14bits</span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-2</span> 16bits</span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-1</span> adc输出格式</span>
-<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-0</span> real<span class="er">(</span><span class="ex">实数</span><span class="kw">)</span></span>
-<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-1</span> complex 1x <span class="er">(</span><span class="ex">image</span> band filtered output<span class="kw">)</span></span>
-<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-2</span> complex 2x <span class="er">(</span><span class="ex">image</span> band visible<span class="kw">)</span></span>
-<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a><span class="ex">adcbufCfg</span> <span class="at">-1</span> 0 0 1 0</span>
-<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> Adc_buffer配置</span>
-<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">--1子帧索引</span></span>
-<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-传统模式</span> 设置为-1</span>
-<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-高级帧模式</span> 根据需求配置, 若依旧设置为-1, 则表示子帧采取相同的配置</span>
-<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 ADCBUF adcBuffer输出模式</span>
-<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-0</span> 复数模式</span>
-<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-1</span> 实数模式</span>
-<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 1 采样交换选择<span class="er">(</span><span class="ex">只支持1</span><span class="kw">)</span></span>
-<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-0-I</span> in LSB, Q in MSB</span>
-<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-1-Q</span> in LSB, I in MSB</span>
-<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 1 ADCbuffer通道交错<span class="er">(</span><span class="ex">只支持1</span><span class="kw">)</span></span>
-<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-0</span> 交错</span>
-<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-1</span> 不交错</span>
-<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 1 chrip 阈值, 用于 ADCBUF 缓冲区触发 ping /pong 缓冲区开关的 Chirp 阈值配置</span>
-<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-[0-8]</span> 16xx, 将dsp用于1D-fft处理,如果使用lvds使用的话, 1也是可以的</span>
-<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-[1]</span> 68xx,64xx,18xx, 有HWA<span class="er">(</span><span class="ex">fft硬件加速</span><span class="kw">)</span> </span>
-<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a><span class="ex">profileCfg</span> 0 60 7 6 60 0 0 65 1 100 2000 0 0 40</span>
-<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> 雷达前段和数据处理配置</span>
-<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>    标识符, 区别第几个配置</span>
-<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-60</span>   起始频率<span class="er">(</span><span class="ex">GHz,允许浮点数</span><span class="kw">)</span></span>
-<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-7</span>    idle time  空闲时间<span class="er">(</span><span class="ex">us</span><span class="kw">)</span></span>
-<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-6</span>    adc有效起始时间<span class="er">(</span><span class="ex">us</span><span class="kw">)</span></span>
-<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-60</span>   斜坡结束时间<span class="er">(</span><span class="ex">us</span><span class="kw">)</span></span>
-<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>    发射天线功率返回码<span class="er">(</span><span class="ex">只有0测试过</span><span class="kw">)</span></span>
-<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>    发射天线移相器<span class="er">(</span><span class="ex">只有0测试过</span><span class="kw">)</span></span>
-<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-65</span>   每个chirp的变化率,MHz/us</span>
-<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-1</span>    发射天线开始时间<span class="er">(</span><span class="ex">us</span><span class="kw">)</span></span>
-<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-100</span>  adc采样数</span>
-<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-2000</span> adc采样率</span>
-<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>    高通滤波器1</span>
-<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-0:</span> 175 KHz</span>
-<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-1:</span> 235 KHz</span>
-<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-2:</span> 350 KHz</span>
-<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-3:</span> 700 KHz</span>
-<span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>    高通滤波器2</span>
-<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-0:</span> 350 KHz</span>
-<span id="cb11-79"><a href="#cb11-79" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-1:</span> 700 KHz</span>
-<span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-2:</span> 1.4 MHz</span>
-<span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-3:</span> 2.8 MHz</span>
-<span id="cb11-82"><a href="#cb11-82" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-40</span>  接收增益 以 dB 为单位的 RX 增益和 RF 增益目标的或值</span>
-<span id="cb11-83"><a href="#cb11-83" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb11-84"><a href="#cb11-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-85"><a href="#cb11-85" aria-hidden="true" tabindex="-1"></a><span class="ex">chirpCfg</span> 0 0 0 0 0 0 0 1</span>
-<span id="cb11-86"><a href="#cb11-86" aria-hidden="true" tabindex="-1"></a><span class="ex">chirpCfg</span> 1 1 0 0 0 0 0 2</span>
-<span id="cb11-87"><a href="#cb11-87" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> 对雷达前段和数据处理的chirp配置</span>
-<span id="cb11-88"><a href="#cb11-88" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 chirp开始索引</span>
-<span id="cb11-89"><a href="#cb11-89" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 chirp结束索引</span>
-<span id="cb11-90"><a href="#cb11-90" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 配置文件标识符</span>
-<span id="cb11-91"><a href="#cb11-91" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 起始频率变化<span class="er">(</span><span class="ex">Hz</span><span class="kw">)</span>     <span class="ex">[只支持0]</span></span>
-<span id="cb11-92"><a href="#cb11-92" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 频率斜率变化<span class="er">(</span><span class="ex">kHz/us</span><span class="kw">)</span> <span class="ex">[只支持0]</span></span>
-<span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 空闲时间<span class="er">(</span><span class="ex">us</span><span class="kw">)</span>           <span class="ex">[只支持0]</span></span>
-<span id="cb11-94"><a href="#cb11-94" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 ADC 启动时间变化<span class="er">(</span><span class="ex">us</span><span class="kw">)</span> <span class="ex">[只支持0]</span></span>
-<span id="cb11-95"><a href="#cb11-95" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 1 <span class="er">(</span><span class="ex">0x01</span><span class="kw">)</span><span class="ex">b</span> =<span class="op">&gt;</span> tx 天线掩码, 打开天线1</span>
-<span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb11-97"><a href="#cb11-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-98"><a href="#cb11-98" aria-hidden="true" tabindex="-1"></a><span class="ex">frameCfg</span> 0 1 1 0 50 1 0</span>
-<span id="cb11-99"><a href="#cb11-99" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> fram配置</span>
-<span id="cb11-100"><a href="#cb11-100" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>  chrip 开始索引<span class="er">(</span><span class="ex">0-511</span><span class="kw">)</span></span>
-<span id="cb11-101"><a href="#cb11-101" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-1</span>  chrip 结束索引<span class="er">(</span><span class="ex">开始索引-511</span><span class="kw">)</span></span>
-<span id="cb11-102"><a href="#cb11-102" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-1</span>  循环次数<span class="er">(</span><span class="ex">1-255</span><span class="kw">)</span><span class="ex">,</span> 如果用dsp进行计算多普勒chirp, 循环次数必须是4的倍数, 否则需要调整窗的大小</span>
-<span id="cb11-103"><a href="#cb11-103" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>  frame的数量<span class="er">(</span><span class="ex">0-65535</span><span class="kw">)</span><span class="ex">,0表示无穷</span></span>
-<span id="cb11-104"><a href="#cb11-104" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-50</span> frame的周期50ms</span>
-<span id="cb11-105"><a href="#cb11-105" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-1</span>  触发选择</span>
-<span id="cb11-106"><a href="#cb11-106" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-1:软件触发</span><span class="er">(</span><span class="ex">只支持软件触发</span><span class="kw">)</span> </span>
-<span id="cb11-107"><a href="#cb11-107" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-2:硬件触发</span></span>
-<span id="cb11-108"><a href="#cb11-108" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>  frame触发延时<span class="er">(</span><span class="ex">ms</span><span class="kw">)</span></span>
-<span id="cb11-109"><a href="#cb11-109" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb11-110"><a href="#cb11-110" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb11-111"><a href="#cb11-111" aria-hidden="true" tabindex="-1"></a><span class="ex">lowPower</span> 0 0</span>
-<span id="cb11-112"><a href="#cb11-112" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> 低功耗模式</span>
-<span id="cb11-113"><a href="#cb11-113" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 don’t_care</span>
-<span id="cb11-114"><a href="#cb11-114" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-ADC</span> Mode</span>
-<span id="cb11-115"><a href="#cb11-115" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-0</span> : 常规模式</span>
-<span id="cb11-116"><a href="#cb11-116" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-1</span> : 低功耗adc模式 <span class="er">(</span><span class="ex">不支持</span> xwr6xxx<span class="kw">)</span></span>
-<span id="cb11-117"><a href="#cb11-117" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb11-118"><a href="#cb11-118" aria-hidden="true" tabindex="-1"></a><span class="ex">guiMonitor</span> <span class="at">-1</span> 0 0 0 0 0 1</span>
-<span id="cb11-119"><a href="#cb11-119" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> 图形界面监视器<span class="er">(</span><span class="ex">所有配置0表示关闭,</span> 1表示开启<span class="kw">)</span></span>
-<span id="cb11-120"><a href="#cb11-120" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> <span class="at">-1</span>  所有frame配置相同<span class="er">(</span><span class="ex">-1</span><span class="kw">)</span></span>
-<span id="cb11-121"><a href="#cb11-121" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0   检测到的物体</span>
-<span id="cb11-122"><a href="#cb11-122" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0   log magnitude range</span>
-<span id="cb11-123"><a href="#cb11-123" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0   noise profile</span>
-<span id="cb11-124"><a href="#cb11-124" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0   各种热图</span>
-<span id="cb11-125"><a href="#cb11-125" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0   距离多普勒热图</span>
-<span id="cb11-126"><a href="#cb11-126" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 1   CPU 负载、余量、设备温度读数等</span>
-<span id="cb11-127"><a href="#cb11-127" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb11-128"><a href="#cb11-128" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb11-129"><a href="#cb11-129" aria-hidden="true" tabindex="-1"></a><span class="ex">calibDcRangeSig</span> <span class="at">-1</span> 0 0 0 0</span>
-<span id="cb11-130"><a href="#cb11-130" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> 补偿参数</span>
-<span id="cb11-131"><a href="#cb11-131" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> <span class="at">-1</span>  所有frame配置相同<span class="er">(</span><span class="ex">-1</span><span class="kw">)</span></span>
-<span id="cb11-132"><a href="#cb11-132" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> Enable DC removal using first few chirps</span>
-<span id="cb11-133"><a href="#cb11-133" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span></span>
-<span id="cb11-134"><a href="#cb11-134" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span></span>
-<span id="cb11-135"><a href="#cb11-135" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span></span>
-<span id="cb11-136"><a href="#cb11-136" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span></span>
-<span id="cb11-137"><a href="#cb11-137" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb11-138"><a href="#cb11-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-139"><a href="#cb11-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-140"><a href="#cb11-140" aria-hidden="true" tabindex="-1"></a><span class="ex">vitalSignsCfg</span> 0.3 0.9 256 512 4 0.1 0.05 100000 300000</span>
-<span id="cb11-141"><a href="#cb11-141" aria-hidden="true" tabindex="-1"></a><span class="ex">motionDetection</span> 1 20 2.0 0</span>
-<span id="cb11-142"><a href="#cb11-142" aria-hidden="true" tabindex="-1"></a><span class="ex">sensorStart</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>                                <span class="ex">IWR6843vitalsign配置解析</span>                                                            </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                                                                <span class="ex">-2022-11-15</span> dd21</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="ex">sensorStop</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> 传感器停止</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="ex">flushCfg</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> 刷新配置</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="ex">dfeDataOutputMode</span> 1</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>     <span class="ex">-</span> 数据输出模式</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-1</span> 基于帧的chirp模式</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-2</span> 连续chirp模式</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-3</span> 高级帧模式       </span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="ex">channelCfg</span> 15 3 0</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> 通道设置</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-15</span> =<span class="op">&gt;</span> <span class="er">(</span><span class="ex">0x1111</span><span class="kw">)</span><span class="ex">b</span> 接收天线掩码, 表示打开 4个接收天线  </span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-3</span>  =<span class="op">&gt;</span> <span class="er">(</span><span class="ex">0x11</span><span class="kw">)</span><span class="ex">b</span>   发射天线掩码, 表示打开 2个发射天线</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span> soc级联<span class="er">(</span><span class="ex">目前不可用[V3.5.4]</span><span class="kw">)</span><span class="ex">,</span> 设置为0</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="ex">adcCfg</span> 2 1</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> ADC配置</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span><span class="op">&lt;</span>具体信息查看mmwaveLink 文档<span class="op">&gt;</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-2</span> adc采样位数<span class="er">(</span><span class="ex">只支持16bits</span><span class="kw">)</span></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-0</span> 12bits</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-1</span> 14bits</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-2</span> 16bits</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-1</span> adc输出格式</span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-0</span> real<span class="er">(</span><span class="ex">实数</span><span class="kw">)</span></span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-1</span> complex 1x <span class="er">(</span><span class="ex">image</span> band filtered output<span class="kw">)</span></span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-2</span> complex 2x <span class="er">(</span><span class="ex">image</span> band visible<span class="kw">)</span></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a><span class="ex">adcbufCfg</span> <span class="at">-1</span> 0 0 1 0</span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> Adc_buffer配置</span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">--1子帧索引</span></span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-传统模式</span> 设置为-1</span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-高级帧模式</span> 根据需求配置, 若依旧设置为-1, 则表示子帧采取相同的配置</span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 ADCBUF adcBuffer输出模式</span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-0</span> 复数模式</span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-1</span> 实数模式</span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 1 采样交换选择<span class="er">(</span><span class="ex">只支持1</span><span class="kw">)</span></span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-0-I</span> in LSB, Q in MSB</span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-1-Q</span> in LSB, I in MSB</span>
+<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 1 ADCbuffer通道交错<span class="er">(</span><span class="ex">只支持1</span><span class="kw">)</span></span>
+<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-0</span> 交错</span>
+<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-1</span> 不交错</span>
+<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 1 chrip 阈值, 用于 ADCBUF 缓冲区触发 ping /pong 缓冲区开关的 Chirp 阈值配置</span>
+<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-[0-8]</span> 16xx, 将dsp用于1D-fft处理,如果使用lvds使用的话, 1也是可以的</span>
+<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-[1]</span> 68xx,64xx,18xx, 有HWA<span class="er">(</span><span class="ex">fft硬件加速</span><span class="kw">)</span> </span>
+<span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb14-59"><a href="#cb14-59" aria-hidden="true" tabindex="-1"></a><span class="ex">profileCfg</span> 0 60 7 6 60 0 0 65 1 100 2000 0 0 40</span>
+<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> 雷达前段和数据处理配置</span>
+<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>    标识符, 区别第几个配置</span>
+<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-60</span>   起始频率<span class="er">(</span><span class="ex">GHz,允许浮点数</span><span class="kw">)</span></span>
+<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-7</span>    idle time  空闲时间<span class="er">(</span><span class="ex">us</span><span class="kw">)</span></span>
+<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-6</span>    adc有效起始时间<span class="er">(</span><span class="ex">us</span><span class="kw">)</span></span>
+<span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-60</span>   斜坡结束时间<span class="er">(</span><span class="ex">us</span><span class="kw">)</span></span>
+<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>    发射天线功率返回码<span class="er">(</span><span class="ex">只有0测试过</span><span class="kw">)</span></span>
+<span id="cb14-67"><a href="#cb14-67" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>    发射天线移相器<span class="er">(</span><span class="ex">只有0测试过</span><span class="kw">)</span></span>
+<span id="cb14-68"><a href="#cb14-68" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-65</span>   每个chirp的变化率,MHz/us</span>
+<span id="cb14-69"><a href="#cb14-69" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-1</span>    发射天线开始时间<span class="er">(</span><span class="ex">us</span><span class="kw">)</span></span>
+<span id="cb14-70"><a href="#cb14-70" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-100</span>  adc采样数</span>
+<span id="cb14-71"><a href="#cb14-71" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-2000</span> adc采样率</span>
+<span id="cb14-72"><a href="#cb14-72" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>    高通滤波器1</span>
+<span id="cb14-73"><a href="#cb14-73" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-0:</span> 175 KHz</span>
+<span id="cb14-74"><a href="#cb14-74" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-1:</span> 235 KHz</span>
+<span id="cb14-75"><a href="#cb14-75" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-2:</span> 350 KHz</span>
+<span id="cb14-76"><a href="#cb14-76" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-3:</span> 700 KHz</span>
+<span id="cb14-77"><a href="#cb14-77" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>    高通滤波器2</span>
+<span id="cb14-78"><a href="#cb14-78" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-0:</span> 350 KHz</span>
+<span id="cb14-79"><a href="#cb14-79" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-1:</span> 700 KHz</span>
+<span id="cb14-80"><a href="#cb14-80" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-2:</span> 1.4 MHz</span>
+<span id="cb14-81"><a href="#cb14-81" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-3:</span> 2.8 MHz</span>
+<span id="cb14-82"><a href="#cb14-82" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-40</span>  接收增益 以 dB 为单位的 RX 增益和 RF 增益目标的或值</span>
+<span id="cb14-83"><a href="#cb14-83" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-84"><a href="#cb14-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-85"><a href="#cb14-85" aria-hidden="true" tabindex="-1"></a><span class="ex">chirpCfg</span> 0 0 0 0 0 0 0 1</span>
+<span id="cb14-86"><a href="#cb14-86" aria-hidden="true" tabindex="-1"></a><span class="ex">chirpCfg</span> 1 1 0 0 0 0 0 2</span>
+<span id="cb14-87"><a href="#cb14-87" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> 对雷达前段和数据处理的chirp配置</span>
+<span id="cb14-88"><a href="#cb14-88" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 chirp开始索引</span>
+<span id="cb14-89"><a href="#cb14-89" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 chirp结束索引</span>
+<span id="cb14-90"><a href="#cb14-90" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 配置文件标识符</span>
+<span id="cb14-91"><a href="#cb14-91" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 起始频率变化<span class="er">(</span><span class="ex">Hz</span><span class="kw">)</span>     <span class="ex">[只支持0]</span></span>
+<span id="cb14-92"><a href="#cb14-92" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 频率斜率变化<span class="er">(</span><span class="ex">kHz/us</span><span class="kw">)</span> <span class="ex">[只支持0]</span></span>
+<span id="cb14-93"><a href="#cb14-93" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 空闲时间<span class="er">(</span><span class="ex">us</span><span class="kw">)</span>           <span class="ex">[只支持0]</span></span>
+<span id="cb14-94"><a href="#cb14-94" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 ADC 启动时间变化<span class="er">(</span><span class="ex">us</span><span class="kw">)</span> <span class="ex">[只支持0]</span></span>
+<span id="cb14-95"><a href="#cb14-95" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 1 <span class="er">(</span><span class="ex">0x01</span><span class="kw">)</span><span class="ex">b</span> =<span class="op">&gt;</span> tx 天线掩码, 打开天线1</span>
+<span id="cb14-96"><a href="#cb14-96" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-97"><a href="#cb14-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-98"><a href="#cb14-98" aria-hidden="true" tabindex="-1"></a><span class="ex">frameCfg</span> 0 1 1 0 50 1 0</span>
+<span id="cb14-99"><a href="#cb14-99" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> fram配置</span>
+<span id="cb14-100"><a href="#cb14-100" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>  chrip 开始索引<span class="er">(</span><span class="ex">0-511</span><span class="kw">)</span></span>
+<span id="cb14-101"><a href="#cb14-101" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-1</span>  chrip 结束索引<span class="er">(</span><span class="ex">开始索引-511</span><span class="kw">)</span></span>
+<span id="cb14-102"><a href="#cb14-102" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-1</span>  循环次数<span class="er">(</span><span class="ex">1-255</span><span class="kw">)</span><span class="ex">,</span> 如果用dsp进行计算多普勒chirp, 循环次数必须是4的倍数, 否则需要调整窗的大小</span>
+<span id="cb14-103"><a href="#cb14-103" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>  frame的数量<span class="er">(</span><span class="ex">0-65535</span><span class="kw">)</span><span class="ex">,0表示无穷</span></span>
+<span id="cb14-104"><a href="#cb14-104" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-50</span> frame的周期50ms</span>
+<span id="cb14-105"><a href="#cb14-105" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-1</span>  触发选择</span>
+<span id="cb14-106"><a href="#cb14-106" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-1:软件触发</span><span class="er">(</span><span class="ex">只支持软件触发</span><span class="kw">)</span> </span>
+<span id="cb14-107"><a href="#cb14-107" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-2:硬件触发</span></span>
+<span id="cb14-108"><a href="#cb14-108" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>  frame触发延时<span class="er">(</span><span class="ex">ms</span><span class="kw">)</span></span>
+<span id="cb14-109"><a href="#cb14-109" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-110"><a href="#cb14-110" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-111"><a href="#cb14-111" aria-hidden="true" tabindex="-1"></a><span class="ex">lowPower</span> 0 0</span>
+<span id="cb14-112"><a href="#cb14-112" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> 低功耗模式</span>
+<span id="cb14-113"><a href="#cb14-113" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 don’t_care</span>
+<span id="cb14-114"><a href="#cb14-114" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-ADC</span> Mode</span>
+<span id="cb14-115"><a href="#cb14-115" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-0</span> : 常规模式</span>
+<span id="cb14-116"><a href="#cb14-116" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-1</span> : 低功耗adc模式 <span class="er">(</span><span class="ex">不支持</span> xwr6xxx<span class="kw">)</span></span>
+<span id="cb14-117"><a href="#cb14-117" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb14-118"><a href="#cb14-118" aria-hidden="true" tabindex="-1"></a><span class="ex">guiMonitor</span> <span class="at">-1</span> 0 0 0 0 0 1</span>
+<span id="cb14-119"><a href="#cb14-119" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> 图形界面监视器<span class="er">(</span><span class="ex">所有配置0表示关闭,</span> 1表示开启<span class="kw">)</span></span>
+<span id="cb14-120"><a href="#cb14-120" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> <span class="at">-1</span>  所有frame配置相同<span class="er">(</span><span class="ex">-1</span><span class="kw">)</span></span>
+<span id="cb14-121"><a href="#cb14-121" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0   检测到的物体</span>
+<span id="cb14-122"><a href="#cb14-122" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0   log magnitude range</span>
+<span id="cb14-123"><a href="#cb14-123" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0   noise profile</span>
+<span id="cb14-124"><a href="#cb14-124" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0   各种热图</span>
+<span id="cb14-125"><a href="#cb14-125" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0   距离多普勒热图</span>
+<span id="cb14-126"><a href="#cb14-126" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 1   CPU 负载、余量、设备温度读数等</span>
+<span id="cb14-127"><a href="#cb14-127" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-128"><a href="#cb14-128" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-129"><a href="#cb14-129" aria-hidden="true" tabindex="-1"></a><span class="ex">calibDcRangeSig</span> <span class="at">-1</span> 0 0 0 0</span>
+<span id="cb14-130"><a href="#cb14-130" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> 补偿参数</span>
+<span id="cb14-131"><a href="#cb14-131" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> <span class="at">-1</span>  所有frame配置相同<span class="er">(</span><span class="ex">-1</span><span class="kw">)</span></span>
+<span id="cb14-132"><a href="#cb14-132" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> Enable DC removal using first few chirps</span>
+<span id="cb14-133"><a href="#cb14-133" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span></span>
+<span id="cb14-134"><a href="#cb14-134" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span></span>
+<span id="cb14-135"><a href="#cb14-135" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span></span>
+<span id="cb14-136"><a href="#cb14-136" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span></span>
+<span id="cb14-137"><a href="#cb14-137" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-138"><a href="#cb14-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-139"><a href="#cb14-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-140"><a href="#cb14-140" aria-hidden="true" tabindex="-1"></a><span class="ex">vitalSignsCfg</span> 0.3 0.9 256 512 4 0.1 0.05 100000 300000</span>
+<span id="cb14-141"><a href="#cb14-141" aria-hidden="true" tabindex="-1"></a><span class="ex">motionDetection</span> 1 20 2.0 0</span>
+<span id="cb14-142"><a href="#cb14-142" aria-hidden="true" tabindex="-1"></a><span class="ex">sensorStart</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="多普勒累积" class="level2">
 <h2 class="anchored" data-anchor-id="多普勒累积">1. 多普勒累积</h2>
