@@ -752,7 +752,7 @@ void	RADARDEMO_highAccuRangeProc_accumulateInput(
 			_amem8_f2(&outputPtr[2*(nSamplesPerChirp - 1)])	=	_ftof2((float)_ext(itemp, 16, 16), (float)_ext(itemp, 0, 16));
 		}
 	}
-    /* 如果不是第一个chirp的话, (主要目的是为了取出直流分量) */
+    /* 如果不是第一个chirp的话, (主要目的是为了去除直流分量) */
 	else
 	{
 		for( i = 0; i < ((int32_t)nSamplesPerChirp>> 1); i++)
@@ -999,6 +999,348 @@ void	RADARDEMO_highAccuRangeProc_rangeEst(
 	return;
 }
 ```
+
+# 3. demo的dataPath配置
+应用层数据解析部分的配置, 包括: 内存分配, 缓冲区分配, 项目配置传递到硬件层.
+``` c
+static int32_t MmwDemo_dssDataPathConfig(void)
+{
+    /* 接收执行结果 */
+    int32_t             retVal;
+    uint8_t             numRxChannels = 0;
+    //MMWave_CtrlCfg      *ptrCtrlCfg;
+    /* demo的操作对象(句柄) */
+    MmwDemo_DSS_DataPathObj *dataPathObj;
+    //uint32_t numTxAntAzim = 0;
+
+    /* Get data path object and control configuration */
+    //ptrCtrlCfg   = &gMmwDssMCB.cfg.ctrlCfg;
+    /* 将dss的对象控制块中的dataPath对象拿到(拿到雷达部分的对象) */
+    dataPathObj  = &gMmwDssMCB.dataPathObj;
+
+
+    /*****************************************************************************
+     * Data path :: Algorithm Configuration
+     *****************************************************************************/
+    /* 配置缓冲区,其中包括堆内存分配, demo的配置传递到RSS */
+    MmwDemo_dataPathConfigBuffers(SOC_XWR18XX_DSS_ADCBUF_BASE_ADDRESS, &gMmwDssMCB.cfg, dataPathObj);
+
+
+    retVal = MmwDemo_dssDataPathConfigAdcBuf(&numRxChannels);
+    if (retVal < 0)
+    {
+        return -1;
+    }
+
+
+    MmwDemo_dataPathConfigEdma(dataPathObj);
+
+    return 0;
+}
+```
+
+
+
+
+
+
+# 3.1 配置dataPATH和各种缓冲区
+
+代码中首先定义了一个`heapconfig`数组，这个数组定义了各种堆内存的类型、地址、大小等信息。接着通过调用`radarOsal_memInit`函数来初始化各种内存堆。之后通过调用`MmwDemo_initConfigStruct`函数初始化了信号处理链的配置信息。然后调用了`RADARDEMO_highAccuRangeProc_create`函数创建了高精度测距模块句柄，并检查返回码是否为错误码。接着用`radarOsal_memAlloc`函数分配了`rangeProcInput`和`rangeProcOutput`所需的内存，最后用`radarOsal_memAlloc`函数分配了一个`outputToARM_t`类型的结构体。这些内存都是在前面定义的`heapconfig`数组中的内存堆中分配的。
+
+``` c
+void MmwDemo_dataPathConfigBuffers(uint32_t adcBufAddress, MmwDemo_Cfg  *demoCfg, MmwDemo_DSS_DataPathObj *dataPathObj)
+{
+    //MmwDemo_DSS_DataPathObj *dataPathObj;
+    radarOsal_heapConfig heapconfig[SOC_XWR16XX_DSS_MAXNUMHEAPS];
+    RADARDEMO_highAccuRangeProc_errorCode rangeProcErrorCode;
+
+    /* Get data path object and control configuration */
+    //dataPathObj  = &gMmwDssMCB.dataPathObj;
+    int32_t tempNumSamples;
+
+    //设置ADC数据缓冲区的地址为给定的地址
+    dataPathObj->ADCdataBuf = (cmplx16ImRe_t *)adcBufAddress;
+
+    //堆初始化 将heapconfig数组的元素初始化为0
+    memset(heapconfig, 0, sizeof(heapconfig));
+    
+    //将heapconfig数组中的第一个元素的heapType成员设置为RADARMEMOSAL_HEAPTYPE_DDR_CACHED
+    heapconfig[RADARMEMOSAL_HEAPTYPE_DDR_CACHED].heapType = RADARMEMOSAL_HEAPTYPE_DDR_CACHED;
+    //将heapconfig数组中的第一个元素的heapAddr成员设置为&gMmwL3[0]
+    heapconfig[RADARMEMOSAL_HEAPTYPE_DDR_CACHED].heapAddr = (int8_t *)&gMmwL3[0];
+    //将heapconfig数组中的第一个元素的heapSize成员设置为SOC_XWR16XX_DSS_L3RAM_BUFF_SIZE
+    heapconfig[RADARMEMOSAL_HEAPTYPE_DDR_CACHED].heapSize = SOC_XWR16XX_DSS_L3RAM_BUFF_SIZE;
+    //将heapconfig数组中的第一个元素的scratchAddr成员设置为NULL
+    heapconfig[RADARMEMOSAL_HEAPTYPE_DDR_CACHED].scratchAddr = NULL; //不是DDR临时存储器，TM演示不使用
+    //将heapconfig数组中的第一个元素的scratchSize成员设置为0
+    heapconfig[RADARMEMOSAL_HEAPTYPE_DDR_CACHED].scratchSize = 0; //不是DDR临时存储器，TM演示不使用
+
+    //将heapconfig数组中的第二个元素的heapType成员设置为RADARMEMOSAL_HEAPTYPE_LL2
+    heapconfig[RADARMEMOSAL_HEAPTYPE_LL2].heapType = RADARMEMOSAL_HEAPTYPE_LL2;
+    //将heapconfig数组中的第二个元素的heapAddr成员设置为&gMmwL2[0]
+    heapconfig[RADARMEMOSAL_HEAPTYPE_LL2].heapAddr = (int8_t *)&gMmwL2[0];
+    //将heapconfig数组中的第二个元素的heapSize成员设置为SOC_XWR16XX_DSS_L2_BUFF_SIZE
+    heapconfig[RADARMEMOSAL_HEAPTYPE_LL2].heapSize = SOC_XWR16XX_DSS_L2_BUFF_SIZE;
+    // 将L2暂存首地址设置为&gMmwL2Scratch[0]
+    heapconfig[RADARMEMOSAL_HEAPTYPE_LL2].scratchAddr = (int8_t *)&gMmwL2Scratch[0];
+    // 将L2暂存设置为24KB(L2共计:256KB)
+    heapconfig[RADARMEMOSAL_HEAPTYPE_LL2].scratchSize   	= 	SOC_XWR16XX_DSS_L2_SCRATCH_SIZE;
+
+    /* 配置L1内存 */
+    heapconfig[RADARMEMOSAL_HEAPTYPE_LL1].heapType 			= 	RADARMEMOSAL_HEAPTYPE_LL1;
+	/* 内存堆地址设置NULL */
+    heapconfig[RADARMEMOSAL_HEAPTYPE_LL1].heapAddr   		= 	NULL; /* not used as L1 heap in TM demo  */
+	/* 设置大小为 0 */
+    heapconfig[RADARMEMOSAL_HEAPTYPE_LL1].heapSize   		= 	0;    /* not used as L1 heap in TM demo  */
+ 	/* 设置暂存地址为gMmwL1[0] */
+    heapconfig[RADARMEMOSAL_HEAPTYPE_LL1].scratchAddr   	= 	(int8_t *) &gMmwL1[0];
+	/* L1暂存大小为 16KB (L1一共32KB(L1Program)+32KB(L1Data)) */
+    heapconfig[RADARMEMOSAL_HEAPTYPE_LL1].scratchSize   	= 	MMW_L1_SCRATCH_SIZE;
+
+    /* 配置 HSRAM 高速RAM, 8KB */
+    heapconfig[RADARMEMOSAL_HEAPTYPE_HSRAM].heapType 		= 	RADARMEMOSAL_HEAPTYPE_HSRAM;
+	heapconfig[RADARMEMOSAL_HEAPTYPE_HSRAM].heapAddr   		= 	(int8_t *) &gMmwHSRAM[0];
+	heapconfig[RADARMEMOSAL_HEAPTYPE_HSRAM].heapSize   		= 	SOC_XWR16XX_DSS_HSRAM_BUFF_SIZE;
+ 	heapconfig[RADARMEMOSAL_HEAPTYPE_HSRAM].scratchAddr   	= 	NULL; 	/* not HSRAM scratch for TM demo  */
+	heapconfig[RADARMEMOSAL_HEAPTYPE_HSRAM].scratchSize   	= 	0;    /* not HSRAM scratch for TM demo  */
+
+    /* 按照上述配置进行申请堆内存, 如果失败打印信息 */
+    if(radarOsal_memInit(&heapconfig[0], SOC_XWR16XX_DSS_MAXNUMHEAPS) == RADARMEMOSAL_FAIL)
+	{
+		System_printf("Error: radarOsal_memInit fail\n");
+	}
+
+    /*initializing configuration structure for signal processing chain */
+    /* 这个函数的作用是将demo中的配置传递给雷达(这么做将软件进行解耦, 应用和硬件隔离, 更好的抽象) */
+	MmwDemo_initConfigStruct(demoCfg, &dataPathObj->radarProcConfig);
+```
+
+
+
+``` c
+uint32_t 	        uitemp;
+float               frequencySlopeMHzMicoSec, adcSamplePeriodMicoSec, bandWidth, chirpInterval;
+uint16_t            frameChirpStartIdx;
+uint16_t            frameChirpEndIdx;
+int16_t             frameTotalChirps;
+int32_t             errCode, itemp;
+uint32_t            profileLoopIdx, chirpLoopIdx;
+bool                foundValidProfile = false;
+
+/* 配置传递:传递给RSS(radar sub system) */
+MMWave_CtrlCfg*     ptrCtrlCfg = &(demoCfg->ctrlCfg);
+MMWave_OpenCfg*     ptrOpenCfg = &(demoCfg->openCfg);
+
+uint16_t            channelTxEn = ptrOpenCfg->chCfg.txChannelEn;
+
+/* 这段代码中，首先读取了变量demoCfg中的openCfg结构体的chCfg成员变量的txChannelEn字段，
+   该字段表示雷达系统启用的发射通道，是一个4位的二进制数，每一位表示一个发射天线是否启用，
+   1表示启用，0表示未启用 */
+radarProcConfig->numTxAntenna = (uint16_t)_bitc4(demoCfg->openCfg.chCfg.txChannelEn);//3
+radarProcConfig->numPhyRxAntenna = (uint16_t)_bitc4(demoCfg->openCfg.chCfg.rxChannelEn);//1
+
+/* 判断天线数量, 物理接收天线只能打开1根, 对于该应用来说(液位测量) */
+if(radarProcConfig->numPhyRxAntenna > 1)
+{
+    System_printf("channelCfg Error: Does not support multiple Rx Antennas !!!");
+    DebugP_assert(0);
+}
+
+/* 获取到雷达配置中的开始chipr索引和结束索引 */
+frameChirpStartIdx = ptrCtrlCfg->u.frameCfg.frameCfg.chirpStartIdx;//0
+frameChirpEndIdx = ptrCtrlCfg->u.frameCfg.frameCfg.chirpEndIdx;//0
+
+/* 计算一帧中chirp数 (结束-开始+1)*/
+frameTotalChirps = frameChirpEndIdx - frameChirpStartIdx + 1;//1
+
+/* since validChirpTxEnBits is static array of 32 */
+/* 若果一帧内的chirp数大于32则会触发断言, 程序终止 */
+DebugP_assert(frameTotalChirps<=32);
+
+/*  foundValidProfile 是一个布尔类型的变量，用于指示在 for 循环中是否找到了有效的配置文件。
+    在循环中，如果找到了有效的配置文件，则会将 foundValidProfile 设置为 true，从而退出循环 */
+for (   
+        profileLoopIdx=0;
+        /* 最大支持4中配置, 如果找到有效配置就停止, 提升效率 */
+        ((profileLoopIdx<MMWAVE_MAX_PROFILE)&&(foundValidProfile==false));
+        profileLoopIdx++
+    )
+    {
+        uint32_t    mmWaveNumChirps = 0;
+        uint16_t    validChirpTxEnBits[32]={0};
+        MMWave_ProfileHandle profileHandle;
+
+        /* 获取给定索引（profileLoopIdx）的配置文件（profile）的句柄（handle），并将其保存在`profileHandle`指针所指向的变量中。
+        同时，该函数还返回错误码`errCode`,如果执行异常就中断程序 */
+        if (MMWave_getProfileHandle(gMmwDssMCB.ctrlHandle, profileLoopIdx, &profileHandle, &errCode) < 0)
+        {
+            /* Error: Unable to get the profile handle; this should never fail */
+            DebugP_assert (0);
+        }
+        /* 如果获取到的句柄为空就重新进入下一次`profiIdx`进行获取句柄 */
+        if (profileHandle == NULL)
+            continue; /* skip this profile */
+
+        /* get numChirps for this profile; skip error checking */
+        /* 通过当前有效句柄获取chirp数 */
+        MMWave_getNumChirps(profileHandle,&mmWaveNumChirps,&errCode);
+        /* loop for chirps and find if it has valid chirps for the frame
+           looping around for all chirps in a profile, in case
+           there are duplicate chirps
+        */
+
+        /* 拿到所有的获取到chirp数之后, 按照chirp数进行遍历获取所有chirp的句柄和chirp配置 */
+        for (chirpLoopIdx=1;chirpLoopIdx<=mmWaveNumChirps;chirpLoopIdx++)
+        {
+            MMWave_ChirpHandle chirpHandle;
+            /* get handle and read ChirpCfg */
+            /* 通过 `MMWave_getChirpHandle` 获取到chirp的句柄 */
+            if (MMWave_getChirpHandle(profileHandle,chirpLoopIdx,&chirpHandle,&errCode)==0)
+            {
+                rlChirpCfg_t chirpCfg;
+                /* 通过chirp句柄后获取`chirp`的配置 */
+                if (MMWave_getChirpCfg(chirpHandle,&chirpCfg,&errCode)==0)
+                {
+                    /* txEnable是一个二进制值，用于指示哪些天线在当前chirp的时间内应该被使用, 最多可以同时开启2根发射天线 */
+                    /*
+                        b0: 是否启用 TX0 发射天线，0 表示禁用，1 表示启用。
+                        b1: 是否启用 TX1 发射天线，0 表示禁用，1 表示启用。
+                        b2: 是否启用 TX2 发射天线，0 表示禁用，1 表示启用。
+                    */
+                    uint16_t chirpTxEn = chirpCfg.txEnable;
+                    /* do chirps fall in range and has valid antenna enabled */
+
+                    /*  这段代码是在循环遍历一个profile中的所有chirps，判断是否有valid的chirp能够覆盖到frame中的chirp范围，
+                        并且判断这个chirp对应的天线是否是valid的。如果找到了这样的valid chirp，
+                        就将对应的bit位设置到validChirpTxEnBits数组中，表示这个chirp对应的TX是valid的 */
+                    if ((chirpCfg.chirpStartIdx >= frameChirpStartIdx) &&
+                        (chirpCfg.chirpEndIdx <= frameChirpEndIdx) &&
+                        ((chirpTxEn & channelTxEn) > 0))
+                    {
+                        uint16_t idx = 0;
+                        for (idx=(chirpCfg.chirpStartIdx-frameChirpStartIdx);idx<=(chirpCfg.chirpEndIdx-frameChirpStartIdx);idx++)
+                        {
+                            validChirpTxEnBits[idx] = chirpTxEn;
+                            foundValidProfile = true;
+                        }
+
+                    }
+                }
+            }
+        }
+        /* now loop through unique chirps and check if we found all of the ones
+           needed for the frame and then determine the azimuth antenna
+           configuration
+         */
+        if (foundValidProfile)
+        {
+            for (chirpLoopIdx=0;chirpLoopIdx<frameTotalChirps;chirpLoopIdx++)
+            {
+                uint16_t chirpTxEn = validChirpTxEnBits[chirpLoopIdx];
+
+            	uitemp	=	(uint32_t)_bitc4(chirpTxEn);
+//            	if (uitemp > 1)
+//            	{
+//            		System_printf("channelCfg Error: Current code only support SIMO and TDM MIMO !!!");
+//            		DebugP_assert(0);
+//            	}
+            }
+        }
+
+        /* found valid chirps for the frame; mark this profile valid */
+        if (foundValidProfile==true)
+        {
+            rlProfileCfg_t  profileCfg;
+
+            //dataPathObj->validProfileIdx = profileLoopIdx;
+
+            /* Get the profile configuration: */
+            /* 获取扫描模式配置句柄, 如果没有获取到就进行断言, 程序终止 */
+            if (MMWave_getProfileCfg (profileHandle,&profileCfg, &errCode) < 0)
+            {
+                System_printf ("Error: Unable to get the profile configuration [Error code %d]\n", errCode);
+                DebugP_assert (0);
+            }
+
+
+            /* 如果配置有效, 将参数进行传递, 从demo的配置传递给雷达部分. */
+        	radarProcConfig->numAdcSamplePerChirp	=	profileCfg.numAdcSamples;
+        	radarProcConfig->highAccuConfig.nSamplesPerChirp	=	profileCfg.numAdcSamples;
+
+        	frequencySlopeMHzMicoSec		=	(float)profileCfg.freqSlopeConst * 3600.f* 900.f/((float)(1<<26));
+        	radarProcConfig->highAccuConfig.chirpSlope		=	frequencySlopeMHzMicoSec * 1e12;
+        	adcSamplePeriodMicoSec			=	1000.0f / (float) profileCfg.digOutSampleRate;
+        	adcSamplePeriodMicoSec			*=	(float)radarProcConfig->numAdcSamplePerChirp;
+        	radarProcConfig->highAccuConfig.chirpRampTime	=	adcSamplePeriodMicoSec * 1e-6;
+        	bandWidth						=	frequencySlopeMHzMicoSec * adcSamplePeriodMicoSec * 1.0e6;
+        	radarProcConfig->highAccuConfig.chirpBandwidth	=	bandWidth;
+        	radarProcConfig->highAccuConfig.adcSampleRate	=	1000.0f * profileCfg.digOutSampleRate;
+        	radarProcConfig->highAccuConfig.maxBeatFreq	=	1000.0f * profileCfg.digOutSampleRate;
+        	radarProcConfig->highAccuConfig.fc	=	((float)profileCfg.startFreqConst * 3.6f/((float)(1<<26))) * 1.0e9 +
+					radarProcConfig->highAccuConfig.chirpSlope * (float)profileCfg.adcStartTimeConst * 1.0e-8;
+			itemp								=	profileCfg.numAdcSamples;
+			if ((1 << (30 - _norm(itemp))) == itemp)
+				radarProcConfig->highAccuConfig.fft1DSize		=	itemp;
+			else
+				radarProcConfig->highAccuConfig.fft1DSize		=	1 << (31 - _norm(itemp));
+
+        	//centerFrequency					=	((float)profileCfg.startFreqConst * 3.6f/((float)(1<<26))) * 1.0e9 + bandWidth * 0.5;
+        	chirpInterval					=	(float)((profileCfg.rampEndTime) + (float)(profileCfg.idleTimeConst)) *1.0e-8;
+        	radarProcConfig->chirpInterval  =   chirpInterval;
+
+        	radarProcConfig->numChirpPerFrame	=	demoCfg->ctrlCfg.u.frameCfg.frameCfg.numLoops;
+        	radarProcConfig->highAccuConfig.numChirpsPerFrame	=	radarProcConfig->numChirpPerFrame;
+        	radarProcConfig->framePeriod		=	(demoCfg->ctrlCfg.u.frameCfg.frameCfg.framePeriodicity) * 5e-6;
+        }
+    }//fist for
+
+
+    /* Range window parameters. */
+    /* 距离窗配置 */
+	radarProcConfig->highAccuConfig.win1DLength     = 16;
+	radarProcConfig->win1D[0]  = 0.0800f;
+	radarProcConfig->win1D[1]  = 0.0894f;
+	radarProcConfig->win1D[2]  = 0.1173f;
+	radarProcConfig->win1D[3]  = 0.1624f;
+    radarProcConfig->win1D[4]  = 0.2231f;
+    radarProcConfig->win1D[5]  = 0.2967f;
+    radarProcConfig->win1D[6]  = 0.3802f;
+    radarProcConfig->win1D[7]  = 0.4703f;
+    radarProcConfig->win1D[8]  = 0.5633f;
+    radarProcConfig->win1D[9]  = 0.6553f;
+    radarProcConfig->win1D[10] = 0.7426f;
+    radarProcConfig->win1D[11] = 0.8216f;
+    radarProcConfig->win1D[12] = 0.8890f;
+    radarProcConfig->win1D[13] = 0.9422f;
+    radarProcConfig->win1D[14] = 0.9789f;
+    radarProcConfig->win1D[15] = 0.9976f;
+
+    /* 将项目的窗也设置为相同的窗 */
+    radarProcConfig->highAccuConfig.win1D     = radarProcConfig->win1D;
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
