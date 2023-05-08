@@ -851,7 +851,7 @@ void	RADARDEMO_highAccuRangeProc_rangeEst(
 	inputPtr1	=	(__float2_t *) &highAccuRangeHandle->scratchPad[2 * highAccuRangeHandle->fft1DSize];
 	/* 第一次 fft 运算, 
       函数 DSPF_sp_fftSPxSP() 将 inputPtr1 指针指向的一维数组进行FFT变换，
-      并将结果存储在 highAccuRangeHandle->fft1DOutSig 指针指向的一维数组中。
+      并将结果存储在 `highAccuRangeHandle->fft1DOutSig` 指针指向的一维数组中。
     */
     DSPF_sp_fftSPxSP (
 			highAccuRangeHandle->fft1DSize,
@@ -872,12 +872,19 @@ void	RADARDEMO_highAccuRangeProc_rangeEst(
 	{
 		_amem8_f2(&highAccuRangeHandle->fft1DOutSig[2*i]) = _ftof2(0.f, 0.f);
 	}
+
+    /* 存储最大距离和能量和 */
 	max			=	0.f;
 	totalPower	=	0.f;
 	coarseRangeInd	=	0;
 	inputPtr	=	(__float2_t *)highAccuRangeHandle->fft1DOutSig;
 	powerPtr	=	(float *)highAccuRangeHandle->scratchPad;
-    // 在1Dfft中找到最大功率的位置
+    /* 对FFT输出进行 功率计算 和 峰值检测 
+        - 循环遍历FFT输出，对每个复数幅度计算其平方得到该频率点的功率。
+        - 将每个频率点的功率累加到totalPower变量中。
+        - 判断当前频率点的功率是否为历史最大值，如果是，则更新max和coarseRangeInd变量，
+            其中coarseRangeInd表示粗估的目标距离在FFT输出中的索引。
+    */
 	for( i = 0; i < (int32_t)highAccuRangeHandle->fft1DSize; i++ )
 	{
 		f2input		=	_amem8_f2(inputPtr++);
