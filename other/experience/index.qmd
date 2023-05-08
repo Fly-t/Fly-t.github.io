@@ -1,0 +1,21 @@
+---
+title: "Miscellaneous talk" 
+author: "dd21"
+date: "2023-05-08" 
+categories: [experience]
+image: ./homepage.jpg
+---
+
+
+# Abstract
+
+随笔, 杂谈.
+
+# Referance
+
+
+说话不能很随意, 不能说随便弄弄就行了, `避免泛泛而谈的感觉, 要有具体的执行方案`, 让听者觉得可行, 可信.
+
+说话时`底气得足`, 不能让人从气场上觉得不可行.
+
+

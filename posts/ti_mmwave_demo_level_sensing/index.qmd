@@ -703,7 +703,10 @@ RADARDEMO_highAccuRangeProc_errorCode	RADARDEMO_highAccuRangeProc_run(
 
 ```
 
-## 2.3.1 累加一帧内所有chirp的信号并加窗, 外加去除直流分量
+## 2.3.1 累加一帧内所有chirp的信号并加窗
+
+`if`是格式转换, `else`是chirp累加和加窗. 通过加窗和累加输入数据，实现了去除直流分量的效果。
+
 ``` c
 
 void	RADARDEMO_highAccuRangeProc_accumulateInput(
@@ -723,11 +726,13 @@ void	RADARDEMO_highAccuRangeProc_accumulateInput(
     int32_t i, itemp;
 	int64_t input;
 
-    /* 判断所有的chirp是不是结束, 如果是新 */
+    /* 判断所有的chirp索引是不是0, 如果是0 */
 	if (chirpInd == 0)
 	{
-        // nSamplesPerchir是配置文件中的 `numAdcSamples` 这个值是采样的点数(假设这个值是256: 因为一个采样点包含实部虚部, 所以要除以二, 右移1位就是除以2,那就每个点进行递增 )
-		for( i = 0; i < ((int32_t)nSamplesPerChirp>> 1); i++)
+        // nSamplesPerchir是配置文件中的 `numAdcSamples` 这个值是采样的点数(假设这个值是256: 因为一个复数采样点包含两个实数采样点, 所以要除以二, 右移1位就是除以2,那就每个点进行递增 )
+        /* 右移一位相当于将其除以2，这是因为每个复数采样点包含两个实数采样点，而这段代码的目的是将复数形式的采样点转换为实数形式的采样点，所以需要将采样点数除以2 ,因此循环条件中使用了右移运算符 >>，这也是一种常见的快速除以2的方法*/
+		/* 将输入数据从Q15格式转换为IEEE-754格式的浮点数，并按照一定的规则存储到输出数组中 */
+        for( i = 0; i < ((int32_t)nSamplesPerChirp>> 1); i++)
 		{
             /* 拿到inputPtr中的数据地址, 然后将该地址存储在input中, input的大小为64bit,一个复数结构(float(32)+float(32)) */
 			input							=	_amem8(&inputPtr[2 * i]);
@@ -738,13 +743,17 @@ void	RADARDEMO_highAccuRangeProc_accumulateInput(
             (float)_ext(_loll(input), 0, 16)提取了input的低32位中的低16位，并将结果强制转换成32位浮点数
             
             --------------------------------------------------------------------------------
-            将16是因为adc采样的数据是16位采样, 所以这里的操作是将adc的采样数据转换为32位float类型,然后按照采样点进行拼凑, 一个采样点由连个数组成(实部虚部,各占一个flot, 所以是连个float)
-            这里是连2个采样点
+            将16是因为adc采样的数据是16位采样, 所以这里的操作是将adc的采样数据转换为32位float类型,然后按照采样点进行拼凑, 一个采样点由2个数组成(实部虚部,各占一个flot, 所以是2个float, 这里实际上就是将ADC采样的Q格式数据转换为complex格式(real+image))
             */
-			_amem8_f2(&outputPtr[4*i])		=	_ftof2((float)_ext(_loll(input), 16, 16), (float)_ext(_loll(input), 0, 16)); // 采样点1
-			_amem8_f2(&outputPtr[4*i + 2])	=	_ftof2((float)_ext(_hill(input), 16, 16), (float)_ext(_hill(input), 0, 16)); // 采样点2
+            /* 这里实际上就是一个complex格式的采样点 */
+            /* _loll: 用于提取一个64位整数中低32位  */
+            /* _ext(x,  0, 16)表示提取x中的 高 16位作为输出 */
+            /* _ext(x, 16, 16)表示提取x中的 低 16位作为输出 */
+            /* _ext(x, msb, lsb)表示将32位整数x中的第msb到第lsb位（包括msb和lsb）提取出来组成一个新的32位整数. */
+			_amem8_f2(&outputPtr[4*i])		=	_ftof2((float)_ext(_loll(input), 16, 16), (float)_ext(_loll(input), 0, 16)); // 实部 将复数的实部转换为浮点数的高16位，将虚部转换为浮点数的低16位，然后存储在outputPtr数组中，
+			_amem8_f2(&outputPtr[4*i + 2])	=	_ftof2((float)_ext(_hill(input), 16, 16), (float)_ext(_hill(input), 0, 16)); // 虚部
 		}
-        /* 如果采样点是奇数 */
+        /* 如果采样点是奇数, 那么Q格式中只有 */
 		if((int32_t)nSamplesPerChirp & 1)
 		{
             /* 在这种情况下，最后一个采样点只有一个float存储，而不是两个 */
@@ -755,6 +764,7 @@ void	RADARDEMO_highAccuRangeProc_accumulateInput(
     /* 如果不是第一个chirp的话, (主要目的是为了去除直流分量) */
 	else
 	{
+        /* 将每个输入数据的实部和虚部累加到输出数组的对应位置上 */
 		for( i = 0; i < ((int32_t)nSamplesPerChirp>> 1); i++)
 		{
 			input							=	_amem8(&inputPtr[2 * i]);
@@ -772,13 +782,14 @@ void	RADARDEMO_highAccuRangeProc_accumulateInput(
 		{
 			__float2_t f2win1D;
             // 如果是每帧的最后一个 chirp，则需要进行窗函数操作
+            /* 将加窗后的数据分别乘以窗函数并存回 outputPtr 数组中 */
 			for( i = 0; i < fftWin1DSize; i++)
 			{
 				f2win1D						=	_ftof2(fftWin1D[i], fftWin1D[i]);
 				_amem8_f2(&outputPtr[2*i])	=	_dmpysp(_amem8_f2(&outputPtr[2*i]), f2win1D);
 				_amem8_f2(&outputPtr[2*(nSamplesPerChirp - i - 1)])	=	_dmpysp(_amem8_f2(&outputPtr[2*(nSamplesPerChirp - i - 1)]), f2win1D);
 			}
-            // 如果 FFT 长度大于样本数，则对多余部分进行填零操作
+            // 如果一个 chirp 中的样本点数 nSamplesPerChirp 小于 FFT 点数 fftSize1D，则将 outputPtr 数组中多余的部分填充为 0 
 			if (((int32_t)fftSize1D - (int32_t)nSamplesPerChirp) > 0)
 			{
                 // 对多余部分进行填零操作
@@ -819,6 +830,7 @@ void	RADARDEMO_highAccuRangeProc_rangeEst(
 		rad1D = 2;
 
 	/* copy to scratch is needed because FFT function will corrupt the input. We need to preserve if for zoom-in FFT */
+    /* 这段注释的意思是，将输入的数据先复制到缓冲区（scratch）中，因为进行 FFT 运算时会破坏原始输入数据。此处需要保留原始输入数据以便进行后续的 "zoom-in FFT" 运算 */
 	inputPtr	=	(__float2_t *) highAccuRangeHandle->inputSig;
 	inputPtr1	=	(__float2_t *) &highAccuRangeHandle->scratchPad[2 * highAccuRangeHandle->fft1DSize];
 	for (i = 0; i < (int32_t)highAccuRangeHandle->fft1DSize; i++ )
