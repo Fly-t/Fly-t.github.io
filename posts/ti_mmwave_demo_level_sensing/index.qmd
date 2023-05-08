@@ -831,6 +831,12 @@ void	RADARDEMO_highAccuRangeProc_rangeEst(
 
 	/* copy to scratch is needed because FFT function will corrupt the input. We need to preserve if for zoom-in FFT */
     /* 这段注释的意思是，将输入的数据先复制到缓冲区（scratch）中，因为进行 FFT 运算时会破坏原始输入数据。此处需要保留原始输入数据以便进行后续的 "zoom-in FFT" 运算 */
+
+    /* inputPtr指向高精度测距模块的输入数据，而inputPtr1指向临时缓冲区的起始位置，每次循环将inputPtr指向的输入数据复制到inputPtr1所指向的位置，
+       同时重新排列为实部和虚部交替存储的形式。最终，输入数据的实部和虚部交替存储的形式将存储在高精度测距模块的输入数据中。
+       这个过程的原因是因为FFT算法对于实数输入和复数输入的计算方式不同，需要将实数输入转化为复数输入进行计算。 
+
+       ==> (将高精度测距模块的输入数据复制到一个临时的缓冲区，并将输入数据重新排列为实部和虚部交替存储的形式，以便后续进行一维FFT操作)*/
 	inputPtr	=	(__float2_t *) highAccuRangeHandle->inputSig;
 	inputPtr1	=	(__float2_t *) &highAccuRangeHandle->scratchPad[2 * highAccuRangeHandle->fft1DSize];
 	for (i = 0; i < (int32_t)highAccuRangeHandle->fft1DSize; i++ )
@@ -841,8 +847,13 @@ void	RADARDEMO_highAccuRangeProc_rangeEst(
 		inputPtr++;
 	}
 
+    /* 重新 `inputPtr1` 指向首地址 */
 	inputPtr1	=	(__float2_t *) &highAccuRangeHandle->scratchPad[2 * highAccuRangeHandle->fft1DSize];
-	DSPF_sp_fftSPxSP (
+	/* 第一次 fft 运算, 
+      函数 DSPF_sp_fftSPxSP() 将 inputPtr1 指针指向的一维数组进行FFT变换，
+      并将结果存储在 highAccuRangeHandle->fft1DOutSig 指针指向的一维数组中。
+    */
+    DSPF_sp_fftSPxSP (
 			highAccuRangeHandle->fft1DSize,
 			(float*) inputPtr1,
 			(float *)highAccuRangeHandle->twiddle, 
