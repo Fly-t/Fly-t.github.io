@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="dd21">
-<meta name="dcterms.date" content="2022-12-05">
+<meta name="dcterms.date" content="2023-06-12">
 
-<title>TengFei’s Blog - 清除html和css标签自带的默认样式</title>
+<title>TengFei’s Blog - nb-iot advantages and disadvantages between B5 and B8</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -145,9 +111,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">清除html和css标签自带的默认样式</h1>
+      <h1 class="title">nb-iot advantages and disadvantages between B5 and B8</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">clutter</div>
+                <div class="quarto-category">nb-iot</div>
               </div>
                   </div>
   </div>
@@ -165,7 +131,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">December 5, 2022</p>
+        <p class="date">June 12, 2023</p>
       </div>
     </div>
     
@@ -183,42 +149,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="清除的目的" class="level2">
-<h2 class="anchored" data-anchor-id="清除的目的">清除的目的：</h2>
-<p>在我们编写前端页面的时候，html和css标签有时候会自带一些格式，我们一般习惯性把自带格式全部清除，在需要的时候再自己写上，这样代码的可读性更加的高，也不会把自己搞混淆。</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>html{<span class="kw">color</span>:<span class="cn">#000</span><span class="op">;</span><span class="kw">background</span>:<span class="cn">#FFF</span><span class="op">;</span>} </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>body<span class="op">,</span>div<span class="op">,</span>dl<span class="op">,</span>dt<span class="op">,</span>dd<span class="op">,</span>ul<span class="op">,</span>ol<span class="op">,</span>li<span class="op">,</span>h1<span class="op">,</span>h2<span class="op">,</span>h3<span class="op">,</span>h4<span class="op">,</span>h5<span class="op">,</span>h6<span class="op">,</span>pre<span class="op">,</span>form<span class="op">,</span>fieldset<span class="op">,</span>input<span class="op">,</span>textarea<span class="op">,</span>p<span class="op">,</span>blockquote<span class="op">,</span>th<span class="op">,</span>td { </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">margin</span>:<span class="dv">0</span><span class="op">;</span> </span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">padding</span>:<span class="dv">0</span><span class="op">;</span> </span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>} </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>table { </span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">border-collapse</span>:<span class="dv">collapse</span><span class="op">;</span> </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">border-spacing</span>:<span class="dv">0</span><span class="op">;</span> </span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>} </span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>fieldset<span class="op">,</span>img { </span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">border</span>:<span class="dv">0</span><span class="op">;</span> </span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>} </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>address<span class="op">,</span>caption<span class="op">,</span>cite<span class="op">,</span>code<span class="op">,</span>dfn<span class="op">,</span>em<span class="op">,</span>strong<span class="op">,</span>th<span class="op">,</span>var { </span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="kw">font-style</span>:<span class="dv">normal</span><span class="op">;</span> </span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">font-weight</span>:<span class="dv">normal</span><span class="op">;</span> </span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>} </span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>ol<span class="op">,</span>ul { </span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="kw">list-style</span>:<span class="dv">none</span><span class="op">;</span> </span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>} </span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>caption<span class="op">,</span>th { </span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="kw">text-align</span>:<span class="dv">left</span><span class="op">;</span> </span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>} </span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>h1<span class="op">,</span>h2<span class="op">,</span>h3<span class="op">,</span>h4<span class="op">,</span>h5<span class="op">,</span>h6 { </span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="kw">font-size</span>:<span class="dv">100</span><span class="dt">%</span><span class="op">;</span> </span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="kw">font-weight</span>:<span class="dv">normal</span><span class="op">;</span> </span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>} </span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>q<span class="in">:before</span><span class="op">,</span>q<span class="in">:after</span> { </span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="kw">content</span>:<span class="st">''</span><span class="op">;</span> </span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>} </span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>abbr<span class="op">,</span>acronym { <span class="kw">border</span>:<span class="dv">0</span><span class="op">;</span> </span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="abstract" class="level1">
+<h1>Abstract</h1>
+<p>This study compares the selection of B5 (850 MHz) and B8 (900 MHz) frequency bands for Narrowband Internet of Things (NB-IoT) deployment. Factors such as coverage range, signal quality, spectrum availability, and interference considerations are evaluated to determine the advantages and drawbacks of using B5 and B8 bands. The findings assist in informed decision-making for NB-IoT implementation.</p>
+</section>
+<section id="referance" class="level1">
+<h1>Referance</h1>
+<p><code>BC26_AT命令手册.pdf</code> https://blog.csdn.net/zoomdy/article/details/72764847</p>
+</section>
+<section id="三大运营商区别" class="level1">
+<h1>三大运营商区别</h1>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-12-14-50-20.png" class="img-fluid"></p>
+<section id="优缺点" class="level2">
+<h2 class="anchored" data-anchor-id="优缺点">优缺点</h2>
+<p>B5（850 MHz）的优点：</p>
+<blockquote class="blockquote">
+<ol type="1">
+<li>传输范围：由于较低的频率，B5信号具有较好的穿透能力，可以在相对较长的距离内传输，并具有较强的建筑物穿透能力。</li>
+<li>信号质量：B5信号相对较低的频率可以减少多径干扰，因此在某些环境下，可能会具有更好的信号质量和连接可靠性。</li>
+<li>覆盖范围：相对于高频段，B5信号的覆盖范围较广，适合用于广阔的地理区域和较少基站的部署情况。</li>
+</ol>
+</blockquote>
+<p>B5（850 MHz）的缺点：</p>
+<blockquote class="blockquote">
+<ol type="1">
+<li>频谱限制：由于B5频段在一些地区可能有限制或已经被分配给其他用途，因此在某些地区可能没有足够的可用频谱资源。</li>
+<li>带宽限制：相对于较高的频段，B5频段的可用带宽可能较窄，限制了数据传输速率的潜力。</li>
+</ol>
+</blockquote>
+<p>B8（900 MHz）的优点： &gt; 1. 频谱可用性：B8频段在许多地区可用且有较好的频谱资源分配，因此在大多数情况下可以获得较好的频谱支持。 &gt; 2. 信号传输：B8频段在传输质量方面通常表现良好，并且具有较好的覆盖范围和传输能力。</p>
+<p>B8（900 MHz）的缺点：</p>
+<blockquote class="blockquote">
+<ol type="1">
+<li>覆盖距离：相对于B5频段，B8频段在传输距离方面可能稍短一些，穿透能力稍弱。</li>
+<li>干扰情况：由于B8频段的广泛使用，可能会面临更多的干扰源，如其他设备或邻近基站的干扰。</li>
+</ol>
+</blockquote>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
