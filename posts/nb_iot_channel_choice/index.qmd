@@ -1,0 +1,46 @@
+---
+title: "nb-iot advantages and disadvantages between B5 and B8" 
+author: "dd21"
+date: "2023-06-12" 
+categories: [nb-iot]
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-12-14-46-46.png
+---
+
+
+# Abstract
+
+This study compares the selection of B5 (850 MHz) and B8 (900 MHz) frequency bands for Narrowband Internet of Things (NB-IoT) deployment. Factors such as coverage range, signal quality, spectrum availability, and interference considerations are evaluated to determine the advantages and drawbacks of using B5 and B8 bands. The findings assist in informed decision-making for NB-IoT implementation.
+
+# Referance
+
+`BC26_AT命令手册.pdf`
+https://blog.csdn.net/zoomdy/article/details/72764847
+
+
+# 三大运营商区别
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-12-14-50-20.png)
+
+## 优缺点
+
+B5（850 MHz）的优点：
+
+> 1. 传输范围：由于较低的频率，B5信号具有较好的穿透能力，可以在相对较长的距离内传输，并具有较强的建筑物穿透能力。
+> 2. 信号质量：B5信号相对较低的频率可以减少多径干扰，因此在某些环境下，可能会具有更好的信号质量和连接可靠性。
+> 3. 覆盖范围：相对于高频段，B5信号的覆盖范围较广，适合用于广阔的地理区域和较少基站的部署情况。
+
+B5（850 MHz）的缺点：
+
+> 1. 频谱限制：由于B5频段在一些地区可能有限制或已经被分配给其他用途，因此在某些地区可能没有足够的可用频谱资源。
+> 2. 带宽限制：相对于较高的频段，B5频段的可用带宽可能较窄，限制了数据传输速率的潜力。
+
+
+
+B8（900 MHz）的优点：
+> 1. 频谱可用性：B8频段在许多地区可用且有较好的频谱资源分配，因此在大多数情况下可以获得较好的频谱支持。
+> 2. 信号传输：B8频段在传输质量方面通常表现良好，并且具有较好的覆盖范围和传输能力。
+
+B8（900 MHz）的缺点：
+
+> 1. 覆盖距离：相对于B5频段，B8频段在传输距离方面可能稍短一些，穿透能力稍弱。
+> 2. 干扰情况：由于B8频段的广泛使用，可能会面临更多的干扰源，如其他设备或邻近基站的干扰。
