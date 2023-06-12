@@ -1,0 +1,66 @@
+---
+title: "nb-iot eDRX(Extended Discontinuous Reception)" 
+author: "dd21"
+date: "2023-06-12" 
+categories: [nb-iot]
+image:  https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-12-14-46-46.png
+---
+
+
+# Abstract
+
+This paper discusses the application of eDRX (Extended Discontinuous Reception) and PSM (Power Saving Mode) in the context of the BC26 module, which is designed for NB-IoT applications. These power-saving techniques aim to reduce energy consumption and improve efficiency. The BC26 module supports eDRX and PSM, allowing IoT devices to achieve longer battery life and reduced energy consumption.
+
+Keywords: eDRX, PSM, BC26
+
+# Referance
+
+`BC26_AT命令手册.pdf`
+
+https://zhuanlan.zhihu.com/p/260330842
+
+# 关键词解释
+
+DRX( Discontinuous Reception )
+> DRX 是一种节省终端功耗的工作模式，其基本原理是让模块周期性地进入休眠模式；休眠期间，模块将不监听 PDCCH、关闭收发单元，以降低其功耗。
+<font color='red'> DRX 参数由网络决定，模块无法修改也无法建议网络修改 </font>
+
+
+PTW( Paging Time Window 请求的寻呼时间窗,  )
+> PTW (请求的寻呼时间窗)设置为10秒, 可以理解为设备每隔10秒查看下是否有网络寻呼
+
+eDRX(Extended Discontinuous Reception)
+>  eDRX目的与 DRX 相同，均是通过让模块周期性进入休眠状态以达到降低功耗的目的
+
+上行（Uplink）
+> 指的是数据从设备（如传感器、终端设备）传输到网络基础设施（如基站、服务器）。这包括设备向网络发送命令、传感器数据、请求或其他类型的数据。
+
+下行（Downlink）
+> 指的是数据从网络基础设施传输到设备。这包括网络向设备发送命令、控制指令、配置信息、更新、广播消息以及其他类型的数据。
+
+
+
+# eDRX 模式
+
+eDRX 模式下，模块只在 PTW 内按 DRX 周期监听下行寻呼、接收下行业务（打开接收机）；如果在休眠期有数据发给模块，模块并不能及时接收，只能等到当前 eDRX 周期完毕后再次进入 PTW 监听寻呼。因此，eDRX 模式下，模块功耗的降低以实时性为“代价”，实际应用时需要根据业务模型，确定合适的 eDRX周期和 PTW 值，以达到功耗与实时性的平衡。
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-12-16-40-48.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-12-16-41-03.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-12-16-20-47.png)
+
+
+# AT命令
+- eDRX 和 PTW 设置
+
+``` bash
+# 查询命令
+AT+QEDRXCFG?
+
+# 设置命令
+
+#AT+QEDRXCFG = <mode>, <AcT-type>, <Requested_eDRX_value>,  <Requested_Paging_time_window_value>
+ AT+QEDRXCFG  =    1,        5,            "0010",                         "1111"
+ AT+QEDRXCFG=1,5,"0010","1111"
+```
