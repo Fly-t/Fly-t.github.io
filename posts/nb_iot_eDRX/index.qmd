@@ -64,3 +64,61 @@ AT+QEDRXCFG?
  AT+QEDRXCFG  =    1,        5,            "0010",                         "1111"
  AT+QEDRXCFG=1,5,"0010","1111"
 ```
+
+
+# 修改功耗几个参数
+
+1. DRX
+2. eDRX
+3. PTW
+4. TAU
+5. PSM
+
+## TAU(T3412) 和 PSM(T3324)配置
+
+AT指令
+
+AT+CPSMS
+
+格式: 
+``` bash
+# 查询语法
+AT+CPSMS=?
+# 查询目前设置的值
+AT+CPSMS?
+# 设置
+AT+CPSMS=<mode>[,,,<requested_periodic_TAU>[,<requested_active_time>]]
+
+# 打开psm,配置 TAU定时器值 和 PSM定时器值
+AT+CPSMS=1,,,TAU_VALUE,PSM_VALUE
+
+# 关闭PSM
+AT+CPSMS=0
+```
+
+> 在PSM模式下, 且eDRX没有开启, 云端只能等待设备发送数据, 的`requested_active_time`时间内将下行数据传递到设备, 否则无法将数据发送到设备, 这种模式存在弊端,就是发送周期很长适用于三表类型的应用场景, 但是功耗也是很低uA级别.
+
+`requested_active_time`: 在该段时间内可以发送数据也可以接收数据, 当`requested_active_time`结束后, 终端模块会进入到`PSM`(省电模式), 在该模式中就不可以接收数据了, 但是可以随时发送数据.
+
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-14-14-52-07.png)
+
+## eDRX配置
+
+AT+QEDRXCFG
+
+``` bash
+# 查询语法
+AT+QEDRXCFG=?
+# 查询目前设置的值
+AT+QEDRXCFG?
+# 设置
+AT+QEDRXCFG=<mode>[,<AcT_type>[,<requested_eDRX_value>[,<requested_paging_time_window_value>]]]
+
+# 打开psm,配置 TAU定时器值 和 PSM定时器值
+AT+QEDRXCFG=1,5,"1101","0011"
+# mode: -0 OFF  AcT_type        requested_eDRX_value        requested_paging_time_window_value
+#       -1 ON   接入技术类型            eDRX 周期                   
+```
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-14-15-17-48.png)

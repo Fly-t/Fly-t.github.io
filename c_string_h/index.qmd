@@ -1,0 +1,90 @@
+---
+title: "opcrating string of c with <string.h>" 
+author: "dd21"
+date: "2023-05-30" 
+categories: [c]
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-05-31-10-05-39.png
+---
+
+
+# Abstract
+C language string operations of segmentation, extraction, and concatenation 
+
+# Referance
+[https://www.runoob.com/cprogramming/c-function-sprintf.html](https://www.runoob.com/cprogramming/c-function-sprintf.html)
+
+
+# strtok()
+
+将字符串分割成若干个子串, 类似`split`的操作. 但是这里分割是将分割符的地方替换为`\0`,从而实现字符串的分割.
+
+> #include <string.h>
+> char *strtok(char *str, const char *delim)
+> - str: 要被分割的字符串
+> - delim: 分割符
+
+第一次传递数据的时候将即将被分割的原始数据通过`str`传递, 分割符用`delim`传递.
+
+第一次分割返回第一个分隔符之前的数据.
+``` c
+// raw: [ 2023/05/30,05:17:32+32 ]
+char *first = strtok((char*)receive_buff,"/");  /* first is: 2023 */
+// second is transmit NULL, means split the same data.
+char *second = strtok(NULL,"/");                /* second: 05 */
+
+char *thrid = strtok(NULL,"/");                 /* second: 30 */
+```
+
+分割完所有数据
+
+``` c
+/* 获取第一个子字符串 */
+   token = strtok(str, s);
+   
+   /* 继续获取其他的子字符串 */
+   while( token != NULL ) {
+      printf( "%s\n", token );
+    
+      token = strtok(NULL, s);
+   }
+```
+
+
+# sscanf()
+
+按照对应格式, 从字符串中提取出所需数据, 有点类似正则表达式的提取.
+
+> #include <stdio.h>
+>  int sscanf(const char *str, const char *format, ...) 
+> - str:    原始字符串，是函数检索数据
+> - format: 提取的格式
+> - ...:    被提取到的位置
+
+
+将字符串日期数据, 按照`int`类型提取并存储.
+
+``` c
+int year, moth, day, hour, minute, second;
+char time_c[20] = "2023/05/30,05:17:32"
+
+sscanf(time_c, "%d/%d/%d,%d:%d:%d",&year,&moth,&day,&hour,&minute,&second);
+```
+
+# sprintf()
+数据的拼接, 拼接完存储到字符串变量中.
+
+> #include <stdio.h>
+> int sprintf(char *str, const char *format, ...)
+> - str: 用来存放拼接完的数据
+> - format: 存储的格式
+> - ...: 需要拼接的数据
+
+``` c
+char str[20];
+
+sprintf(str, "Pi 的值 = %f", 3.1415926);
+printf("%s",str);  /* Pi 的值 = 3.1415926 */
+```
+
+
+
