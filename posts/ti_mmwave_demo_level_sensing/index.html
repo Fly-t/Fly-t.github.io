@@ -1527,89 +1527,90 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-[1]</span> 68xx,64xx,18xx, 有HWA<span class="er">(</span><span class="ex">fft硬件加速</span><span class="kw">)</span> </span>
 <span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb14-59"><a href="#cb14-59" aria-hidden="true" tabindex="-1"></a><span class="ex">profileCfg</span> 0 60 7 6 60 0 0 65 1 100 2000 0 0 40</span>
-<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> 雷达前段和数据处理配置</span>
-<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>    标识符, 区别第几个配置</span>
-<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-60</span>   起始频率<span class="er">(</span><span class="ex">GHz,允许浮点数</span><span class="kw">)</span></span>
-<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-7</span>    idle time  空闲时间<span class="er">(</span><span class="ex">us</span><span class="kw">)</span></span>
-<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-6</span>    adc有效起始时间<span class="er">(</span><span class="ex">us</span><span class="kw">)</span></span>
-<span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-60</span>   斜坡结束时间<span class="er">(</span><span class="ex">us</span><span class="kw">)</span></span>
-<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>    发射天线功率返回码<span class="er">(</span><span class="ex">只有0测试过</span><span class="kw">)</span></span>
-<span id="cb14-67"><a href="#cb14-67" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>    发射天线移相器<span class="er">(</span><span class="ex">只有0测试过</span><span class="kw">)</span></span>
-<span id="cb14-68"><a href="#cb14-68" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-65</span>   每个chirp的变化率,MHz/us</span>
-<span id="cb14-69"><a href="#cb14-69" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-1</span>    发射天线开始时间<span class="er">(</span><span class="ex">us</span><span class="kw">)</span></span>
-<span id="cb14-70"><a href="#cb14-70" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-100</span>  adc采样数</span>
-<span id="cb14-71"><a href="#cb14-71" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-2000</span> adc采样率</span>
-<span id="cb14-72"><a href="#cb14-72" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>    高通滤波器1</span>
-<span id="cb14-73"><a href="#cb14-73" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-0:</span> 175 KHz</span>
-<span id="cb14-74"><a href="#cb14-74" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-1:</span> 235 KHz</span>
-<span id="cb14-75"><a href="#cb14-75" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-2:</span> 350 KHz</span>
-<span id="cb14-76"><a href="#cb14-76" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-3:</span> 700 KHz</span>
-<span id="cb14-77"><a href="#cb14-77" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>    高通滤波器2</span>
-<span id="cb14-78"><a href="#cb14-78" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-0:</span> 350 KHz</span>
-<span id="cb14-79"><a href="#cb14-79" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-1:</span> 700 KHz</span>
-<span id="cb14-80"><a href="#cb14-80" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-2:</span> 1.4 MHz</span>
-<span id="cb14-81"><a href="#cb14-81" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-3:</span> 2.8 MHz</span>
-<span id="cb14-82"><a href="#cb14-82" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-40</span>  接收增益 以 dB 为单位的 RX 增益和 RF 增益目标的或值</span>
-<span id="cb14-83"><a href="#cb14-83" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb14-84"><a href="#cb14-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-85"><a href="#cb14-85" aria-hidden="true" tabindex="-1"></a><span class="ex">chirpCfg</span> 0 0 0 0 0 0 0 1</span>
-<span id="cb14-86"><a href="#cb14-86" aria-hidden="true" tabindex="-1"></a><span class="ex">chirpCfg</span> 1 1 0 0 0 0 0 2</span>
-<span id="cb14-87"><a href="#cb14-87" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> 对雷达前段和数据处理的chirp配置</span>
-<span id="cb14-88"><a href="#cb14-88" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 chirp开始索引</span>
-<span id="cb14-89"><a href="#cb14-89" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 chirp结束索引</span>
-<span id="cb14-90"><a href="#cb14-90" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 配置文件标识符</span>
-<span id="cb14-91"><a href="#cb14-91" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 起始频率变化<span class="er">(</span><span class="ex">Hz</span><span class="kw">)</span>     <span class="ex">[只支持0]</span></span>
-<span id="cb14-92"><a href="#cb14-92" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 频率斜率变化<span class="er">(</span><span class="ex">kHz/us</span><span class="kw">)</span> <span class="ex">[只支持0]</span></span>
-<span id="cb14-93"><a href="#cb14-93" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 空闲时间<span class="er">(</span><span class="ex">us</span><span class="kw">)</span>           <span class="ex">[只支持0]</span></span>
-<span id="cb14-94"><a href="#cb14-94" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 ADC 启动时间变化<span class="er">(</span><span class="ex">us</span><span class="kw">)</span> <span class="ex">[只支持0]</span></span>
-<span id="cb14-95"><a href="#cb14-95" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 1 <span class="er">(</span><span class="ex">0x01</span><span class="kw">)</span><span class="ex">b</span> =<span class="op">&gt;</span> tx 天线掩码, 打开天线1</span>
-<span id="cb14-96"><a href="#cb14-96" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb14-97"><a href="#cb14-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-98"><a href="#cb14-98" aria-hidden="true" tabindex="-1"></a><span class="ex">frameCfg</span> 0 1 1 0 50 1 0</span>
-<span id="cb14-99"><a href="#cb14-99" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> fram配置</span>
-<span id="cb14-100"><a href="#cb14-100" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>  chrip 开始索引<span class="er">(</span><span class="ex">0-511</span><span class="kw">)</span></span>
-<span id="cb14-101"><a href="#cb14-101" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-1</span>  chrip 结束索引<span class="er">(</span><span class="ex">开始索引-511</span><span class="kw">)</span></span>
-<span id="cb14-102"><a href="#cb14-102" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-1</span>  循环次数<span class="er">(</span><span class="ex">1-255</span><span class="kw">)</span><span class="ex">,</span> 如果用dsp进行计算多普勒chirp, 循环次数必须是4的倍数, 否则需要调整窗的大小</span>
-<span id="cb14-103"><a href="#cb14-103" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>  frame的数量<span class="er">(</span><span class="ex">0-65535</span><span class="kw">)</span><span class="ex">,0表示无穷</span></span>
-<span id="cb14-104"><a href="#cb14-104" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-50</span> frame的周期50ms</span>
-<span id="cb14-105"><a href="#cb14-105" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-1</span>  触发选择</span>
-<span id="cb14-106"><a href="#cb14-106" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-1:软件触发</span><span class="er">(</span><span class="ex">只支持软件触发</span><span class="kw">)</span> </span>
-<span id="cb14-107"><a href="#cb14-107" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-2:硬件触发</span></span>
-<span id="cb14-108"><a href="#cb14-108" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>  frame触发延时<span class="er">(</span><span class="ex">ms</span><span class="kw">)</span></span>
-<span id="cb14-109"><a href="#cb14-109" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a><span class="ex">profileCfg</span> 0 77 7 7 114.4 0 0  33.71 1 256 2500 0 0 48</span>
+<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> 雷达前段和数据处理配置</span>
+<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>    标识符, 区别第几个配置</span>
+<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-60</span>   起始频率<span class="er">(</span><span class="ex">GHz,允许浮点数</span><span class="kw">)</span></span>
+<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-7</span>    idle time  空闲时间<span class="er">(</span><span class="ex">us</span><span class="kw">)</span></span>
+<span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-6</span>    adc有效起始时间<span class="er">(</span><span class="ex">us</span><span class="kw">)</span></span>
+<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-60</span>   斜坡结束时间<span class="er">(</span><span class="ex">us</span><span class="kw">)</span></span>
+<span id="cb14-67"><a href="#cb14-67" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>    发射天线功率返回码<span class="er">(</span><span class="ex">只有0测试过</span><span class="kw">)</span></span>
+<span id="cb14-68"><a href="#cb14-68" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>    发射天线移相器<span class="er">(</span><span class="ex">只有0测试过</span><span class="kw">)</span></span>
+<span id="cb14-69"><a href="#cb14-69" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-65</span>   每个chirp的变化率,MHz/us</span>
+<span id="cb14-70"><a href="#cb14-70" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-1</span>    发射天线开始时间<span class="er">(</span><span class="ex">us</span><span class="kw">)</span></span>
+<span id="cb14-71"><a href="#cb14-71" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-100</span>  adc采样数</span>
+<span id="cb14-72"><a href="#cb14-72" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-2000</span> adc采样率</span>
+<span id="cb14-73"><a href="#cb14-73" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>    高通滤波器1</span>
+<span id="cb14-74"><a href="#cb14-74" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-0:</span> 175 KHz</span>
+<span id="cb14-75"><a href="#cb14-75" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-1:</span> 235 KHz</span>
+<span id="cb14-76"><a href="#cb14-76" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-2:</span> 350 KHz</span>
+<span id="cb14-77"><a href="#cb14-77" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-3:</span> 700 KHz</span>
+<span id="cb14-78"><a href="#cb14-78" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>    高通滤波器2</span>
+<span id="cb14-79"><a href="#cb14-79" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-0:</span> 350 KHz</span>
+<span id="cb14-80"><a href="#cb14-80" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-1:</span> 700 KHz</span>
+<span id="cb14-81"><a href="#cb14-81" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-2:</span> 1.4 MHz</span>
+<span id="cb14-82"><a href="#cb14-82" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-3:</span> 2.8 MHz</span>
+<span id="cb14-83"><a href="#cb14-83" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-40</span>  接收增益 以 dB 为单位的 RX 增益和 RF 增益目标的或值</span>
+<span id="cb14-84"><a href="#cb14-84" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-85"><a href="#cb14-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-86"><a href="#cb14-86" aria-hidden="true" tabindex="-1"></a><span class="ex">chirpCfg</span> 0 0 0 0 0 0 0 1</span>
+<span id="cb14-87"><a href="#cb14-87" aria-hidden="true" tabindex="-1"></a><span class="ex">chirpCfg</span> 1 1 0 0 0 0 0 2</span>
+<span id="cb14-88"><a href="#cb14-88" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> 对雷达前段和数据处理的chirp配置</span>
+<span id="cb14-89"><a href="#cb14-89" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 chirp开始索引</span>
+<span id="cb14-90"><a href="#cb14-90" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 chirp结束索引</span>
+<span id="cb14-91"><a href="#cb14-91" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 配置文件标识符</span>
+<span id="cb14-92"><a href="#cb14-92" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 起始频率变化<span class="er">(</span><span class="ex">Hz</span><span class="kw">)</span>     <span class="ex">[只支持0]</span></span>
+<span id="cb14-93"><a href="#cb14-93" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 频率斜率变化<span class="er">(</span><span class="ex">kHz/us</span><span class="kw">)</span> <span class="ex">[只支持0]</span></span>
+<span id="cb14-94"><a href="#cb14-94" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 空闲时间<span class="er">(</span><span class="ex">us</span><span class="kw">)</span>           <span class="ex">[只支持0]</span></span>
+<span id="cb14-95"><a href="#cb14-95" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 ADC 启动时间变化<span class="er">(</span><span class="ex">us</span><span class="kw">)</span> <span class="ex">[只支持0]</span></span>
+<span id="cb14-96"><a href="#cb14-96" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 1 <span class="er">(</span><span class="ex">0x01</span><span class="kw">)</span><span class="ex">b</span> =<span class="op">&gt;</span> tx 天线掩码, 打开天线1</span>
+<span id="cb14-97"><a href="#cb14-97" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-98"><a href="#cb14-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-99"><a href="#cb14-99" aria-hidden="true" tabindex="-1"></a><span class="ex">frameCfg</span> 0 1 1 0 50 1 0</span>
+<span id="cb14-100"><a href="#cb14-100" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> fram配置</span>
+<span id="cb14-101"><a href="#cb14-101" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>  chrip 开始索引<span class="er">(</span><span class="ex">0-511</span><span class="kw">)</span></span>
+<span id="cb14-102"><a href="#cb14-102" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-1</span>  chrip 结束索引<span class="er">(</span><span class="ex">开始索引-511</span><span class="kw">)</span></span>
+<span id="cb14-103"><a href="#cb14-103" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-1</span>  循环次数<span class="er">(</span><span class="ex">1-255</span><span class="kw">)</span><span class="ex">,</span> 如果用dsp进行计算多普勒chirp, 循环次数必须是4的倍数, 否则需要调整窗的大小</span>
+<span id="cb14-104"><a href="#cb14-104" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>  frame的数量<span class="er">(</span><span class="ex">0-65535</span><span class="kw">)</span><span class="ex">,0表示无穷</span></span>
+<span id="cb14-105"><a href="#cb14-105" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-50</span> frame的周期50ms</span>
+<span id="cb14-106"><a href="#cb14-106" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-1</span>  触发选择</span>
+<span id="cb14-107"><a href="#cb14-107" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-1:软件触发</span><span class="er">(</span><span class="ex">只支持软件触发</span><span class="kw">)</span> </span>
+<span id="cb14-108"><a href="#cb14-108" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-2:硬件触发</span></span>
+<span id="cb14-109"><a href="#cb14-109" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-0</span>  frame触发延时<span class="er">(</span><span class="ex">ms</span><span class="kw">)</span></span>
 <span id="cb14-110"><a href="#cb14-110" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb14-111"><a href="#cb14-111" aria-hidden="true" tabindex="-1"></a><span class="ex">lowPower</span> 0 0</span>
-<span id="cb14-112"><a href="#cb14-112" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> 低功耗模式</span>
-<span id="cb14-113"><a href="#cb14-113" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 don’t_care</span>
-<span id="cb14-114"><a href="#cb14-114" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-ADC</span> Mode</span>
-<span id="cb14-115"><a href="#cb14-115" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-0</span> : 常规模式</span>
-<span id="cb14-116"><a href="#cb14-116" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-1</span> : 低功耗adc模式 <span class="er">(</span><span class="ex">不支持</span> xwr6xxx<span class="kw">)</span></span>
-<span id="cb14-117"><a href="#cb14-117" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb14-118"><a href="#cb14-118" aria-hidden="true" tabindex="-1"></a><span class="ex">guiMonitor</span> <span class="at">-1</span> 0 0 0 0 0 1</span>
-<span id="cb14-119"><a href="#cb14-119" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> 图形界面监视器<span class="er">(</span><span class="ex">所有配置0表示关闭,</span> 1表示开启<span class="kw">)</span></span>
-<span id="cb14-120"><a href="#cb14-120" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> <span class="at">-1</span>  所有frame配置相同<span class="er">(</span><span class="ex">-1</span><span class="kw">)</span></span>
-<span id="cb14-121"><a href="#cb14-121" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0   检测到的物体</span>
-<span id="cb14-122"><a href="#cb14-122" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0   log magnitude range</span>
-<span id="cb14-123"><a href="#cb14-123" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0   noise profile</span>
-<span id="cb14-124"><a href="#cb14-124" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0   各种热图</span>
-<span id="cb14-125"><a href="#cb14-125" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0   距离多普勒热图</span>
-<span id="cb14-126"><a href="#cb14-126" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 1   CPU 负载、余量、设备温度读数等</span>
-<span id="cb14-127"><a href="#cb14-127" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-111"><a href="#cb14-111" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-112"><a href="#cb14-112" aria-hidden="true" tabindex="-1"></a><span class="ex">lowPower</span> 0 0</span>
+<span id="cb14-113"><a href="#cb14-113" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> 低功耗模式</span>
+<span id="cb14-114"><a href="#cb14-114" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0 don’t_care</span>
+<span id="cb14-115"><a href="#cb14-115" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-ADC</span> Mode</span>
+<span id="cb14-116"><a href="#cb14-116" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-0</span> : 常规模式</span>
+<span id="cb14-117"><a href="#cb14-117" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">-1</span> : 低功耗adc模式 <span class="er">(</span><span class="ex">不支持</span> xwr6xxx<span class="kw">)</span></span>
+<span id="cb14-118"><a href="#cb14-118" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb14-119"><a href="#cb14-119" aria-hidden="true" tabindex="-1"></a><span class="ex">guiMonitor</span> <span class="at">-1</span> 0 0 0 0 0 1</span>
+<span id="cb14-120"><a href="#cb14-120" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> 图形界面监视器<span class="er">(</span><span class="ex">所有配置0表示关闭,</span> 1表示开启<span class="kw">)</span></span>
+<span id="cb14-121"><a href="#cb14-121" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> <span class="at">-1</span>  所有frame配置相同<span class="er">(</span><span class="ex">-1</span><span class="kw">)</span></span>
+<span id="cb14-122"><a href="#cb14-122" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0   检测到的物体</span>
+<span id="cb14-123"><a href="#cb14-123" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0   log magnitude range</span>
+<span id="cb14-124"><a href="#cb14-124" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0   noise profile</span>
+<span id="cb14-125"><a href="#cb14-125" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0   各种热图</span>
+<span id="cb14-126"><a href="#cb14-126" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 0   距离多普勒热图</span>
+<span id="cb14-127"><a href="#cb14-127" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> 1   CPU 负载、余量、设备温度读数等</span>
 <span id="cb14-128"><a href="#cb14-128" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb14-129"><a href="#cb14-129" aria-hidden="true" tabindex="-1"></a><span class="ex">calibDcRangeSig</span> <span class="at">-1</span> 0 0 0 0</span>
-<span id="cb14-130"><a href="#cb14-130" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> 补偿参数</span>
-<span id="cb14-131"><a href="#cb14-131" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> <span class="at">-1</span>  所有frame配置相同<span class="er">(</span><span class="ex">-1</span><span class="kw">)</span></span>
-<span id="cb14-132"><a href="#cb14-132" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> Enable DC removal using first few chirps</span>
-<span id="cb14-133"><a href="#cb14-133" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span></span>
+<span id="cb14-129"><a href="#cb14-129" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-130"><a href="#cb14-130" aria-hidden="true" tabindex="-1"></a><span class="ex">calibDcRangeSig</span> <span class="at">-1</span> 0 0 0 0</span>
+<span id="cb14-131"><a href="#cb14-131" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> 补偿参数</span>
+<span id="cb14-132"><a href="#cb14-132" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> <span class="at">-1</span>  所有frame配置相同<span class="er">(</span><span class="ex">-1</span><span class="kw">)</span></span>
+<span id="cb14-133"><a href="#cb14-133" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span> Enable DC removal using first few chirps</span>
 <span id="cb14-134"><a href="#cb14-134" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span></span>
 <span id="cb14-135"><a href="#cb14-135" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span></span>
 <span id="cb14-136"><a href="#cb14-136" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span></span>
-<span id="cb14-137"><a href="#cb14-137" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb14-138"><a href="#cb14-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-137"><a href="#cb14-137" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">-</span></span>
+<span id="cb14-138"><a href="#cb14-138" aria-hidden="true" tabindex="-1"></a>        </span>
 <span id="cb14-139"><a href="#cb14-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-140"><a href="#cb14-140" aria-hidden="true" tabindex="-1"></a><span class="ex">vitalSignsCfg</span> 0.3 0.9 256 512 4 0.1 0.05 100000 300000</span>
-<span id="cb14-141"><a href="#cb14-141" aria-hidden="true" tabindex="-1"></a><span class="ex">motionDetection</span> 1 20 2.0 0</span>
-<span id="cb14-142"><a href="#cb14-142" aria-hidden="true" tabindex="-1"></a><span class="ex">sensorStart</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-140"><a href="#cb14-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-141"><a href="#cb14-141" aria-hidden="true" tabindex="-1"></a><span class="ex">vitalSignsCfg</span> 0.3 0.9 256 512 4 0.1 0.05 100000 300000</span>
+<span id="cb14-142"><a href="#cb14-142" aria-hidden="true" tabindex="-1"></a><span class="ex">motionDetection</span> 1 20 2.0 0</span>
+<span id="cb14-143"><a href="#cb14-143" aria-hidden="true" tabindex="-1"></a><span class="ex">sensorStart</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="多普勒累积" class="level2">
 <h2 class="anchored" data-anchor-id="多普勒累积">1. 多普勒累积</h2>

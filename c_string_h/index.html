@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="dd21">
-<meta name="dcterms.date" content="2023-06-12">
+<meta name="dcterms.date" content="2023-05-30">
 
-<title>TengFei’s Blog - nb-iot eDRX(Extended Discontinuous Reception)</title>
+<title>TengFei’s Blog - opcrating string of c with <string.h></string.h></title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -59,24 +59,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../">
-<script src="../../site_libs/quarto-html/quarto.js"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -99,7 +99,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-fixed fullcontent">
@@ -109,7 +109,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="../../index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">TengFei’s Blog</span>
     </a>
   </div>
@@ -120,7 +120,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../article.html" rel="" target="">
+    <a class="nav-link" href="../article.html" rel="" target="">
  <span class="menu-text">Article</span></a>
   </li>  
   <li class="nav-item compact">
@@ -142,136 +142,102 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">nb-iot eDRX(Extended Discontinuous Reception)</h1>
-                                <div class="quarto-categories">
-                <div class="quarto-category">nb-iot</div>
-              </div>
-                  </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>dd21 </p>
-            </div>
-    </div>
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">June 12, 2023</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">opcrating string of c with &lt;string.h&gt;</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">c</div>
+  </div>
+  </div>
 
 
 
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>dd21 </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">May 30, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
 
 <section id="abstract" class="level1">
 <h1>Abstract</h1>
-<p>This paper discusses the application of eDRX (Extended Discontinuous Reception) and PSM (Power Saving Mode) in the context of the BC26 module, which is designed for NB-IoT applications. These power-saving techniques aim to reduce energy consumption and improve efficiency. The BC26 module supports eDRX and PSM, allowing IoT devices to achieve longer battery life and reduced energy consumption.</p>
-<p>Keywords: eDRX, PSM, BC26</p>
+<p>C language string operations of segmentation, extraction, and concatenation</p>
 </section>
 <section id="referance" class="level1">
 <h1>Referance</h1>
-<p><code>BC26_AT命令手册.pdf</code></p>
-<p>https://zhuanlan.zhihu.com/p/260330842</p>
+<p><a href="https://www.runoob.com/cprogramming/c-function-sprintf.html">https://www.runoob.com/cprogramming/c-function-sprintf.html</a></p>
 </section>
-<section id="关键词解释" class="level1">
-<h1>关键词解释</h1>
-<p>DRX( Discontinuous Reception ) &gt; DRX 是一种节省终端功耗的工作模式，其基本原理是让模块周期性地进入休眠模式；休眠期间，模块将不监听 PDCCH、关闭收发单元，以降低其功耗。 <font color="red"> DRX 参数由网络决定，模块无法修改也无法建议网络修改 </font></p>
-<p>PTW( Paging Time Window 请求的寻呼时间窗, ) &gt; PTW (请求的寻呼时间窗)设置为10秒, 可以理解为设备每隔10秒查看下是否有网络寻呼</p>
-<p>eDRX(Extended Discontinuous Reception) &gt; eDRX目的与 DRX 相同，均是通过让模块周期性进入休眠状态以达到降低功耗的目的</p>
-<p>上行（Uplink） &gt; 指的是数据从设备（如传感器、终端设备）传输到网络基础设施（如基站、服务器）。这包括设备向网络发送命令、传感器数据、请求或其他类型的数据。</p>
-<p>下行（Downlink） &gt; 指的是数据从网络基础设施传输到设备。这包括网络向设备发送命令、控制指令、配置信息、更新、广播消息以及其他类型的数据。</p>
-</section>
-<section id="edrx-模式" class="level1">
-<h1>eDRX 模式</h1>
-<p>eDRX 模式下，模块只在 PTW 内按 DRX 周期监听下行寻呼、接收下行业务（打开接收机）；如果在休眠期有数据发给模块，模块并不能及时接收，只能等到当前 eDRX 周期完毕后再次进入 PTW 监听寻呼。因此，eDRX 模式下，模块功耗的降低以实时性为“代价”，实际应用时需要根据业务模型，确定合适的 eDRX周期和 PTW 值，以达到功耗与实时性的平衡。</p>
-<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-12-16-40-48.png" class="img-fluid"></p>
-<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-12-16-41-03.png" class="img-fluid"></p>
-<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-12-16-20-47.png" class="img-fluid"></p>
-</section>
-<section id="at命令" class="level1">
-<h1>AT命令</h1>
-<ul>
-<li>eDRX 和 PTW 设置</li>
-</ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 查询命令</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">AT+QEDRXCFG?</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 设置命令</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#AT+QEDRXCFG = &lt;mode&gt;, &lt;AcT-type&gt;, &lt;Requested_eDRX_value&gt;,  &lt;Requested_Paging_time_window_value&gt;</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a> <span class="ex">AT+QEDRXCFG</span>  =    1,        5,            <span class="st">"0010"</span>,                         <span class="st">"1111"</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a> <span class="ex">AT+QEDRXCFG=1,5,</span><span class="st">"0010"</span><span class="ex">,</span><span class="st">"1111"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="修改功耗几个参数" class="level1">
-<h1>修改功耗几个参数</h1>
-<ol type="1">
-<li>DRX</li>
-<li>eDRX</li>
-<li>PTW</li>
-<li>TAU</li>
-<li>PSM</li>
-</ol>
-<section id="taut3412-和-psmt3324配置" class="level2">
-<h2 class="anchored" data-anchor-id="taut3412-和-psmt3324配置">TAU(T3412) 和 PSM(T3324)配置</h2>
-<p>AT指令</p>
-<p>AT+CPSMS</p>
-<p>格式:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 查询语法</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">AT+CPSMS=?</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 查询目前设置的值</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">AT+CPSMS?</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 设置</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ex">AT+CPSMS=</span><span class="op">&lt;</span>mode<span class="op">&gt;</span>[,,,<span class="op">&lt;</span>requested_periodic_TAU<span class="op">&gt;</span>[,<span class="op">&lt;</span>requested_active_time<span class="op">&gt;</span>]]</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 打开psm,配置 TAU定时器值 和 PSM定时器值</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="ex">AT+CPSMS=1,,,TAU_VALUE,PSM_VALUE</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 关闭PSM</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="ex">AT+CPSMS=0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="strtok" class="level1">
+<h1>strtok()</h1>
+<p>将字符串分割成若干个子串, 类似<code>split</code>的操作. 但是这里分割是将分割符的地方替换为<code>\0</code>,从而实现字符串的分割.</p>
 <blockquote class="blockquote">
-<p>在PSM模式下, 且eDRX没有开启, 云端只能等待设备发送数据, 的<code>requested_active_time</code>时间内将下行数据传递到设备, 否则无法将数据发送到设备, 这种模式存在弊端,就是发送周期很长适用于三表类型的应用场景, 但是功耗也是很低uA级别.</p>
+<p>#include &lt;string.h&gt; char <em>strtok(char </em>str, const char *delim) - str: 要被分割的字符串 - delim: 分割符</p>
 </blockquote>
-<p><code>requested_active_time</code>: 在该段时间内可以发送数据也可以接收数据, 当<code>requested_active_time</code>结束后, 终端模块会进入到<code>PSM</code>(省电模式), 在该模式中就不可以接收数据了, 但是可以随时发送数据.</p>
-<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-14-14-52-07.png" class="img-fluid"></p>
+<p>第一次传递数据的时候将即将被分割的原始数据通过<code>str</code>传递, 分割符用<code>delim</code>传递.</p>
+<p>第一次分割返回第一个分隔符之前的数据.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// raw: [ 2023/05/30,05:17:32+32 ]</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> <span class="op">*</span>first <span class="op">=</span> strtok<span class="op">((</span><span class="dt">char</span><span class="op">*)</span>receive_buff<span class="op">,</span><span class="st">"/"</span><span class="op">);</span>  <span class="co">/* first is: 2023 */</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">// second is transmit NULL, means split the same data.</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> <span class="op">*</span>second <span class="op">=</span> strtok<span class="op">(</span>NULL<span class="op">,</span><span class="st">"/"</span><span class="op">);</span>                <span class="co">/* second: 05 */</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> <span class="op">*</span>thrid <span class="op">=</span> strtok<span class="op">(</span>NULL<span class="op">,</span><span class="st">"/"</span><span class="op">);</span>                 <span class="co">/* second: 30 */</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>分割完所有数据</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* 获取第一个子字符串 */</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>   token <span class="op">=</span> strtok<span class="op">(</span>str<span class="op">,</span> s<span class="op">);</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>   <span class="co">/* 继续获取其他的子字符串 */</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">while</span><span class="op">(</span> token <span class="op">!=</span> NULL <span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>      printf<span class="op">(</span> <span class="st">"</span><span class="sc">%s\n</span><span class="st">"</span><span class="op">,</span> token <span class="op">);</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>      token <span class="op">=</span> strtok<span class="op">(</span>NULL<span class="op">,</span> s<span class="op">);</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="edrx配置" class="level2">
-<h2 class="anchored" data-anchor-id="edrx配置">eDRX配置</h2>
-<p>AT+QEDRXCFG</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 查询语法</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">AT+QEDRXCFG=?</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 查询目前设置的值</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">AT+QEDRXCFG?</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 设置</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="ex">AT+QEDRXCFG=</span><span class="op">&lt;</span>mode<span class="op">&gt;</span>[,<span class="op">&lt;</span>AcT_type<span class="op">&gt;</span>[,<span class="op">&lt;</span>requested_eDRX_value<span class="op">&gt;</span>[,<span class="op">&lt;</span>requested_paging_time_window_value<span class="op">&gt;</span>]]]</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 打开psm,配置 TAU定时器值 和 PSM定时器值</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="ex">AT+QEDRXCFG=1,5,</span><span class="st">"1101"</span><span class="ex">,</span><span class="st">"0011"</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># mode: -0 OFF  AcT_type        requested_eDRX_value        requested_paging_time_window_value</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#       -1 ON   接入技术类型            eDRX 周期                   </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-14-15-17-48.png" class="img-fluid"></p>
+<section id="sscanf" class="level1">
+<h1>sscanf()</h1>
+<p>按照对应格式, 从字符串中提取出所需数据, 有点类似正则表达式的提取.</p>
+<blockquote class="blockquote">
+<p>#include &lt;stdio.h&gt; int sscanf(const char <em>str, const char </em>format, …) - str: 原始字符串，是函数检索数据 - format: 提取的格式 - …: 被提取到的位置</p>
+</blockquote>
+<p>将字符串日期数据, 按照<code>int</code>类型提取并存储.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> year<span class="op">,</span> moth<span class="op">,</span> day<span class="op">,</span> hour<span class="op">,</span> minute<span class="op">,</span> second<span class="op">;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> time_c<span class="op">[</span><span class="dv">20</span><span class="op">]</span> <span class="op">=</span> <span class="st">"2023/05/30,05:17:32"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>sscanf<span class="op">(</span>time_c<span class="op">,</span> <span class="st">"</span><span class="sc">%d</span><span class="st">/</span><span class="sc">%d</span><span class="st">/</span><span class="sc">%d</span><span class="st">,</span><span class="sc">%d</span><span class="st">:</span><span class="sc">%d</span><span class="st">:</span><span class="sc">%d</span><span class="st">"</span><span class="op">,&amp;</span>year<span class="op">,&amp;</span>moth<span class="op">,&amp;</span>day<span class="op">,&amp;</span>hour<span class="op">,&amp;</span>minute<span class="op">,&amp;</span>second<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="sprintf" class="level1">
+<h1>sprintf()</h1>
+<p>数据的拼接, 拼接完存储到字符串变量中.</p>
+<blockquote class="blockquote">
+<p>#include &lt;stdio.h&gt; int sprintf(char <em>str, const char </em>format, …) - str: 用来存放拼接完的数据 - format: 存储的格式 - …: 需要拼接的数据</p>
+</blockquote>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> str<span class="op">[</span><span class="dv">20</span><span class="op">];</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>sprintf<span class="op">(</span>str<span class="op">,</span> <span class="st">"Pi 的值 = </span><span class="sc">%f</span><span class="st">"</span><span class="op">,</span> <span class="fl">3.1415926</span><span class="op">);</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>printf<span class="op">(</span><span class="st">"</span><span class="sc">%s</span><span class="st">"</span><span class="op">,</span>str<span class="op">);</span>  <span class="co">/* Pi 的值 = 3.1415926 */</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
