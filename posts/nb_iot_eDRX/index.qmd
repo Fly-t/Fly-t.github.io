@@ -14,10 +14,20 @@ This paper discusses the application of eDRX (Extended Discontinuous Reception) 
 Keywords: eDRX, PSM, BC26
 
 # Referance
-
-`BC26_AT命令手册.pdf`
-
+[bc260y 硬件设计手册](https://www.quectel.com/wp-content/uploads/2021/06/Quectel_BC260Y-CN_%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%89%8B%E5%86%8C_V1.2.pdf)
+[BC26&BC20 AT 命令手册](https://www.quectel.com/wp-content/uploads/2021/06/Quectel_BC260Y-CN_AT%E5%91%BD%E4%BB%A4%E6%89%8B%E5%86%8C_V1.0.pdf)
+[BC35-G&BC28&BC95 R2.0 eDRX 应用指导.pdf](https://www.quectel.com/wp-content/uploads/2021/03/Quectel_BC26BC20_eDRX_%E5%BA%94%E7%94%A8%E6%8C%87%E5%AF%BC_V1.0.pdf)
 https://zhuanlan.zhihu.com/p/260330842
+[eDRX社区](https://forumschinese.quectel.com/t/topic/468/3)
+
+
+# <font color='red'> 配置前需要进行查看购买的NB卡是否支持, 淘宝上卖的基本上是cmnbiot2的卡 </font>
+
+该类型卡是不支持eDRX的
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-15-10-42-12.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-15-10-43-40.png)
 
 # 关键词解释
 
