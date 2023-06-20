@@ -1,0 +1,55 @@
+---
+title: "xiaomi 3s flash openwrt" 
+author: "dd21"
+date: "2023-06-05" 
+categories: [openwrt]
+image: image
+---
+
+
+# Abstract
+
+use xiaomi box flash to an openwrt device   
+
+# Referance
+
+openwrt install openclash
+
+安装`openclash`依赖库会出现以下报错
+
+>  * pkg_hash_check_unresolved: cannot find dependency kernel (= 6.1.31-1-ea9c0bad270bcff7df7febc55ee0cc63) for kmod-ipt-core
+
+解决方法：
+将kennel版本修改为报错信息中的版本即可解决问题
+``` bash
+vim /usr/lib/opkg/status
+
+# 全局替换，将123替换为456
+# 语法 ：%s#123#456#g  
+：%s#5.15.110-1-5c2e6274bba101fd7a88dbfd8c0f25d8#6.1.31-1-ea9c0bad270bcff7df7febc55ee0cc63#g
+```
+# 安装clash内核
+
+cortex A53是armV8
+下载链接： [clash 内核下载](https://github.com/vernesong/OpenClash/releases/download/Clash/clash-linux-armv8.tar.gz)
+
+解压命令：
+``` bash
+# 压缩
+tar -zcvf 压缩文件名 .tar.gz 被压缩文件名
+# 解压
+tar -zxvf 压缩文件名.tar.gz
+
+tar -zxvf clash-linux-armv8.tar.gz
+```
+安装clash内核位置
+``` bash
+mkdir /etc/openclash/core/
+mv clash /etc/openclash/core/
+```
+
+# openclash 安装
+
+安装完依赖，安装openclash
+
+
