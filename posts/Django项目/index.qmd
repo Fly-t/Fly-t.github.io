@@ -968,7 +968,11 @@ TEMPLATES = [
 
 ```html
 <!--base.html文件-->
+{%- raw -%}
 {% load static %}
+{%- endraw -%}
+
+
 <!DOCTYPE html>
 <html>
 <head>
