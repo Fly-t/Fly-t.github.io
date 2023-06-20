@@ -979,17 +979,17 @@ TEMPLATES = [
     <meta charset="utf-8">
 
 
-    <title>{% block title %}{% endblock title %}</title>
+    <title>{{% block title %}}{{% endblock title %}}</title>
 
 
-    <link rel="stylesheet" href={% static "css/base/reset.css" %}>
-    <link rel="stylesheet" href={% static "css/base/common.css" %}>
+    <link rel="stylesheet" href={{% static "css/base/reset.css" %}}>
+    <link rel="stylesheet" href={{% static "css/base/common.css" %}}>
 
-    <link rel="stylesheet" href={% static "css/base/side.css" %}>
+    <link rel="stylesheet" href={{% static "css/base/side.css" %}}>
     <link rel="stylesheet" href="http://at.alicdn.com/t/font_684044_un7umbuwwfp.css">
     <!--特殊的css-->
-    {% block css %}
-    {% endblock css %}
+    {{% block css %}}
+    {{% endblock css %}}
 </head>
 <body>
 <!-- header start -->
@@ -1003,9 +1003,9 @@ TEMPLATES = [
         <!-- nav start -->
         <nav class="nav">
             <ul class="menu">
-                <li><a href="{% url 'news:index' %}">首页</a></li>
-                <li><a href="{% url 'course:index' %}">在线课堂</a></li>
-                <li><a href="{% url 'doc:index' %}">下载文档</a></li>
+                <li><a href="{{% url 'news:index' %}}">首页</a></li>
+                <li><a href="{{% url 'course:index' %}}">在线课堂</a></li>
+                <li><a href="{{% url 'doc:index' %}}">下载文档</a></li>
                 <li><a href="search.html">搜索</a></li>
             </ul>
         </nav>
@@ -1015,7 +1015,7 @@ TEMPLATES = [
             <div>
                 <i class="PyWhich py-user"></i>
                 <span>
-                  <a href="{% url 'user:login' %}" class="login">登录</a> / <a href="{% url 'user:register' %}"
+                  <a href="{{% url 'user:login' %}}" class="login">登录</a> / <a href="{{% url 'user:register' %}}"
                                                                          class="reg">注册</a>
               </span>
             </div>
@@ -1035,26 +1035,26 @@ TEMPLATES = [
 
 <!-- main start -->
 <!-- 除去页眉页脚的内容 -->
-{% block main %}
+{{% block main %}}
     <main id="main">
         <div class="w1200 clearfix">
             <!-- main-contain start  -->
             <!-- 主体内容 start  -->
-            {% block main_contain %}
+            {{% block main_contain %}}
 
-            {% endblock main_contain %}
+            {{% endblock main_contain %}}
             <!-- 主体内容  end -->
             <!-- main-contain  end -->
 
             <!-- side start -->
             <!-- 边上的内容 -->
-            {% block side %}
+            {{% block side %}}
                 <aside class="side">
                     <div class="side-activities">
                         <h3 class="activities-title">在线课堂<a href="javascript:void(0)">更多</a></h3>
                         <div class="activities-img">
                             <a href="javascript:void(0);" target="_blank">
-                                <img src={% static "images/english.jpg" %} alt="title">
+                                <img src={{% static "images/english.jpg" %}} alt="title">
                             </a>
                             <p class="activities-tips">对话国外小姐姐</p>
                         </div>
@@ -1096,30 +1096,30 @@ TEMPLATES = [
                         </div>
                     </div>
                     <!--hot_news模板-->
-                    {% block hotnews %}
-                    {% endblock hotnews %}
+                    {{% block hotnews %}}
+                    {{% endblock hotnews %}}
 
                 </aside>
-            {% endblock side %}
+            {{% endblock side %}}
             <!-- side end -->
         </div>
     </main>
-{% endblock main %}
+{{% endblock main %}}
 <!-- main end -->
 
 <!-- footer start -->
 <!-- 页脚 start -->
-{% block foot %}
+{{% block foot %}}
 
-{% endblock foot %}
+{{% endblock foot %}}
 <!-- footer end -->
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
-{#<script src="{% static 'js/base/common.js' %}"></script>#}
-<script src="{% static 'js/base/message.js' %}"></script>
+{#<script src="{{% static 'js/base/common.js' %}}"></script>#}
+<script src="{{% static 'js/base/message.js' %}}"></script>
 
 <!-- js start -->
-{% block script %}
-{% endblock script %}
+{{% block script %}}
+{{% endblock script %}}
 </body>
 </html>
 
@@ -1128,26 +1128,26 @@ TEMPLATES = [
 #### ②news.html文件
 
 ```html
-{% extends 'base/base.html' %}
-{% load static %}
-{% block title %}
+{{% extends 'base/base.html' %}}
+{{% load static %}}
+{{% block title %}}
     IndexPage
-{% endblock title %}
+{{% endblock title %}}
 
-{% block css %}
-    <link rel="stylesheet" href="{% static 'css/news/index.css' %}">
+{{% block css %}}
+    <link rel="stylesheet" href="{{% static 'css/news/index.css' %}}">
     <script>IMemuIndex=0</script>
-{% endblock css %}
+{{% endblock css %}}
 
 
 
 
 <!-- main start -->
-{% block main %}
+{{% block main %}}
     <main id="main">
         <div class="w1200 clearfix">
             <!-- main-contain start  -->
-            {% block main_contain %}
+            {{% block main_contain %}}
                 <div class="main-contain">
                     <!-- banner start -->
 
@@ -1156,27 +1156,27 @@ TEMPLATES = [
                             <!--淡入淡出banner-->
 
 
-                            <li><a href="javascript:void(0);"><img src={% static "images/linux.jpg" %} alt="test"></a>
+                            <li><a href="javascript:void(0);"><img src={{% static "images/linux.jpg" %}} alt="test"></a>
                             </li>
 
 
-                            <li><a href="javascript:void(0);"><img src={% static "images/python_gui.jpg" %} alt="test"></a>
+                            <li><a href="javascript:void(0);"><img src={{% static "images/python_gui.jpg" %}} alt="test"></a>
                             </li>
 
 
                             <li><a href="javascript:void(0);"><img
-                                    src={% static "images/python_function.jpg" %} alt="test"></a></li>
+                                    src={{% static "images/python_function.jpg" %}} alt="test"></a></li>
 
 
                             <li><a href="javascript:void(0);"><img
-                                    src={% static "images/python_advanced.jpg" %} alt="test"></a></li>
+                                    src={{% static "images/python_advanced.jpg" %}} alt="test"></a></li>
 
 
                             <li><a href="javascript:void(0);"><img
-                                    src={% static "images/jichujiaochen.jpeg" %} alt="test"></a></li>
+                                    src={{% static "images/jichujiaochen.jpeg" %}} alt="test"></a></li>
 
 
-                            <li><a href="javascript:void(0);"><img src={% static "images/python_web.jpg" %} alt="test"></a>
+                            <li><a href="javascript:void(0);"><img src={{% static "images/python_web.jpg" %}} alt="test"></a>
                             </li>
 
 
@@ -1219,7 +1219,7 @@ TEMPLATES = [
                             <li>
                                 <a href="https://www.shiguangkey.com/course/2432" target="_blank">
                                     <div class="recommend-thumbnail">
-                                        <img src={% static "images/python_gui.jpg" %} alt="title">
+                                        <img src={{% static "images/python_gui.jpg" %}} alt="title">
                                     </div>
                                     <p class="info">Python GUI 教程 25行代码写一个小闹钟</p>
                                 </a>
@@ -1228,7 +1228,7 @@ TEMPLATES = [
                             <li>
                                 <a href="https://www.shiguangkey.com/course/2432" target="_blank">
                                     <div class="recommend-thumbnail">
-                                        <img src={% static "images/python_advanced.jpg" %} alt="title">
+                                        <img src={{% static "images/python_advanced.jpg" %}} alt="title">
                                     </div>
                                     <p class="info">python高性能编程方法一</p>
                                 </a>
@@ -1237,7 +1237,7 @@ TEMPLATES = [
                             <li>
                                 <a href="https://www.shiguangkey.com/course/2432" target="_blank">
                                     <div class="recommend-thumbnail">
-                                        <img src={% static "images/jichujiaochen.jpeg" %} alt="title">
+                                        <img src={{% static "images/jichujiaochen.jpeg" %}} alt="title">
                                     </div>
                                     <p class="info">python基础 split 和 join函数比较</p>
                                 </a>
@@ -1279,7 +1279,7 @@ TEMPLATES = [
                                 <li class="news-item">
                                     <a href="https://www.shiguangkey.com/course/2432" class="news-thumbnail"
                                        target="_blank">
-                                        <img src={% static "images/linux.jpg" %} alt="linux查找文件或目录命令"
+                                        <img src={{% static "images/linux.jpg" %}} alt="linux查找文件或目录命令"
                                              title="linux查找文件或目录命令">
                                     </a>
                                     <div class="news-content">
@@ -1300,7 +1300,7 @@ TEMPLATES = [
                                 <li class="news-item">
                                     <a href="https://www.shiguangkey.com/course/2432" class="news-thumbnail"
                                        target="_blank">
-                                        <img src={% static "images/linux.jpg" %} alt="linux下svn命令的使用"
+                                        <img src={{% static "images/linux.jpg" %}} alt="linux下svn命令的使用"
                                              title="linux下svn命令的使用">
                                     </a>
                                     <div class="news-content">
@@ -1322,7 +1322,7 @@ TEMPLATES = [
                                 <li class="news-item">
                                     <a href="https://www.shiguangkey.com/course/2432" class="news-thumbnail"
                                        target="_blank">
-                                        <img src={% static "images/linux.jpg" %} alt="实现linux和windows文件传输"
+                                        <img src={{% static "images/linux.jpg" %}} alt="实现linux和windows文件传输"
                                              title="实现linux和windows文件传输">
                                     </a>
                                     <div class="news-content">
@@ -1342,7 +1342,7 @@ TEMPLATES = [
                                 <li class="news-item">
                                     <a href="https://www.shiguangkey.com/course/2432" class="news-thumbnail"
                                        target="_blank">
-                                        <img src={% static "images/linux.jpg" %} alt=".htaccess配置详解"
+                                        <img src={{% static "images/linux.jpg" %}} alt=".htaccess配置详解"
                                              title=".htaccess配置详解">
                                     </a>
                                     <div class="news-content">
@@ -1363,7 +1363,7 @@ TEMPLATES = [
                                 <li class="news-item">
                                     <a href="https://www.shiguangkey.com/course/2432" class="news-thumbnail"
                                        target="_blank">
-                                        <img src={% static "images/linux.jpg" %} alt="使用nohup命令让linux程序后台运行"
+                                        <img src={{% static "images/linux.jpg" %}} alt="使用nohup命令让linux程序后台运行"
                                              title="使用nohup命令让linux程序后台运行">
                                     </a>
                                     <div class="news-content">
@@ -1391,17 +1391,17 @@ TEMPLATES = [
                     </div>
                     <!-- content end -->
                 </div>
-            {% endblock main_contain %}
+            {{% endblock main_contain %}}
             <!-- main-contain  end -->
 
             <!-- side start -->
-            {% block side %}
+            {{% block side %}}
                 <aside class="side">
                     <div class="side-activities">
                         <h3 class="activities-title">在线课堂<a href="javascript:void(0)">更多</a></h3>
                         <div class="activities-img">
                             <a href="javascript:void(0);" target="_blank">
-                                <img src={% static "images/english.jpg" %} alt="title">
+                                <img src={{% static "images/english.jpg" %}} alt="title">
                             </a>
                             <p class="activities-tips">对话国外小姐姐</p>
                         </div>
@@ -1450,7 +1450,7 @@ TEMPLATES = [
                             <li>
                                 <a href="javascript:void(0)" class="hot-news-contain clearfix">
                                     <div class="hot-news-thumbnail">
-                                        <img src={% static "images/python_web.jpg" %}
+                                        <img src={{% static "images/python_web.jpg" %}}
                                                      alt="">
                                     </div>
                                     <div class="hot-news-content">
@@ -1470,15 +1470,15 @@ TEMPLATES = [
 
 
                 </aside>
-            {% endblock side %}
+            {{% endblock side %}}
             <!-- side end -->
         </div>
     </main>
-{% endblock main %}
+{{% endblock main %}}
 <!-- main end -->
 
 <!-- footer start -->
-{% block foot %}
+{{% block foot %}}
     <footer id="footer">
         <div class="footer-box">
             <div class="footer-content">
@@ -1501,13 +1501,13 @@ TEMPLATES = [
             </p>
         </div>
     </footer>
-{% endblock foot %}
+{{% endblock foot %}}
 <!-- footer end -->
 
-{% block script %}
-    <script src="{% static 'js/news/index.js' %}"></script>
-    <script src="{% static 'js/base/common.js' %}"></script>
-{% endblock script %}
+{{% block script %}}
+    <script src="{{% static 'js/news/index.js' %}}"></script>
+    <script src="{{% static 'js/base/common.js' %}}"></script>
+{{% endblock script %}}
 
 
 ```
@@ -1515,27 +1515,27 @@ TEMPLATES = [
 ③doc.html文件
 
 ```html
-{% extends 'base/base.html' %}
-{% load static %}
+{{% extends 'base/base.html' %}}
+{{% load static %}}
 
 
-{% block title %}
+{{% block title %}}
     payInfo
-{% endblock title %}
+{{% endblock title %}}
 
-{% block css %}
-    <link rel="stylesheet" href="{% static 'css/doc/docDownload.css' %}">
+{{% block css %}}
+    <link rel="stylesheet" href="{{% static 'css/doc/docDownload.css' %}}">
     <script>IMemuIndex = 2</script>
-{% endblock css %}
+{{% endblock css %}}
 <body>
 
 
 <!-- main start -->
-{% block main %}
+{{% block main %}}
     <main id="main">
         <div class="w1200 clearfix">
             <!-- main-contain start  -->
-            {% block main_contain %}
+            {{% block main_contain %}}
                 <div class="main-contain ">
                     <div class="banner">
                         <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1802845035,3786939119&fm=26&gp=0.jpg"
@@ -1584,11 +1584,11 @@ TEMPLATES = [
                         </ul>
                     </div>
                 </div>
-            {% endblock main_contain %}
+            {{% endblock main_contain %}}
             <!-- main-contain  end -->
 
             <!-- side start -->
-            {% block side %}
+            {{% block side %}}
                 <aside class="side">
                     <div class="side-activities">
                         <h3 class="activities-title">在线课堂<a href="javascript:void(0)">更多</a></h3>
@@ -1637,18 +1637,18 @@ TEMPLATES = [
 
 
                 </aside>
-            {% endblock side %}
+            {{% endblock side %}}
             <!-- side end -->
 
 
         </div>
     </main>
-{% endblock main %}
+{{% endblock main %}}
 
 <!-- main end -->
 
 <!-- footer start -->
-{% block foot %}
+{{% block foot %}}
     <footer id="footer">
         <div class="footer-box">
             <div class="footer-content">
@@ -1671,36 +1671,36 @@ TEMPLATES = [
             </p>
         </div>
     </footer>
-{% endblock foot %}
+{{% endblock foot %}}
 <!-- footer end -->
-{% block script %}
-    <script src="{% static 'js/base/common.js' %}"></script>
-{% endblock script %}
+{{% block script %}}
+    <script src="{{% static 'js/base/common.js' %}}"></script>
+{{% endblock script %}}
 
 ```
 
 #### ④user/login.html文件
 
 ```html
-{% extends 'base/base.html' %}
-{% load static %}
+{{% extends 'base/base.html' %}}
+{{% load static %}}
 
-{% block css %}
-    <link rel="stylesheet" href="{% static 'css/user/auth.css' %}">
-{% endblock css %}
+{{% block css %}}
+    <link rel="stylesheet" href="{{% static 'css/user/auth.css' %}}">
+{{% endblock css %}}
 
-{% block title %}
+{{% block title %}}
     login
-{% endblock %}
+{{% endblock %}}
 
 <!-- container start -->
-{% block main %}
+{{% block main %}}
     <main id="container">
         <div class="login-contain">
             <div class="top-contain">
                 <h4 class="please-login">请登录</h4>
 {#                <a href="javascript:void(0);" class="register">立即注册 &gt;</a>#}
-                <a href="{% url 'user:register' %}" class="register">立即注册 &gt;</a>
+                <a href="{{% url 'user:register' %}}" class="register">立即注册 &gt;</a>
             </div>
             <form action="" method="post" class="form-contain">
                 <div class="form-item">
@@ -1722,11 +1722,11 @@ TEMPLATES = [
             </form>
         </div>
     </main>
-{% endblock main %}
+{{% endblock main %}}
 <!-- container end -->
 
 <!-- footer start -->
-{% block foot %}
+{{% block foot %}}
     <footer id="footer">
         <div class="footer-box">
             <div class="footer-content">
@@ -1749,41 +1749,41 @@ TEMPLATES = [
             </p>
         </div>
     </footer>
-{% endblock %}
+{{% endblock %}}
 
 <!-- footer end -->
-{% block script %}
-{#<script src="{% static 'js/user/register.js' %}"></script>#}
-<script src="{% static 'js/user/login.js' %}"></script>
-{% endblock script %}
+{{% block script %}}
+{#<script src="{{% static 'js/user/register.js' %}}"></script>#}
+<script src="{{% static 'js/user/login.js' %}}"></script>
+{{% endblock script %}}
 ```
 
 #### ⑤register.html文件
 
 ```html
-{% extends 'base/base.html' %}
-{% load static %}
+{{% extends 'base/base.html' %}}
+{{% load static %}}
 
-{% block title %}
+{{% block title %}}
     Register
-{% endblock title %}
-{% block css %}
-  <link rel="stylesheet" href="{% static 'css/user/auth.css' %}">
+{{% endblock title %}}
+{{% block css %}}
+  <link rel="stylesheet" href="{{% static 'css/user/auth.css' %}}">
     <script>IMemuIndex=false</script>
-{% endblock css %}
+{{% endblock css %}}
 
 
 <!-- container start -->
-{% block main %}
+{{% block main %}}
 <main id="container">
   <div class="register-contain">
     <div class="top-contain">
       <h4 class="please-register">请注册</h4>
 {#      <a href="javascript:void(0);" class="login">立即登录 &gt;</a>#}
-      <a href="{% url 'user:login' %}" class="login">立即登录 &gt;</a>
+      <a href="{{% url 'user:login' %}}" class="login">立即登录 &gt;</a>
     </div>
     <form action="" method="post" class="form-contain">
-        {% csrf_token %}
+        {{% csrf_token %}}
 
       <div class="form-item">
         <input type="text" placeholder="请输入用户名" name="username" class="form-control" id="username" autocomplete="off">
@@ -1800,7 +1800,7 @@ TEMPLATES = [
       <div class="form-item">
         <input type="text" placeholder="请输入图形验证码" name="captcha_graph" class="form-captcha">
         <a href="javascript:void(0);" class="captcha-graph-img">
-          <img src="{% url 'image_code:image_code' %}" alt="验证码" title="点击刷新">
+          <img src="{{% url 'image_code:image_code' %}}" alt="验证码" title="点击刷新">
         </a>
       </div>
       <div class="form-item">
@@ -1813,11 +1813,11 @@ TEMPLATES = [
     </form>
   </div>
 </main>
-{% endblock main %}
+{{% endblock main %}}
 <!-- container end -->
 
 <!-- footer start -->
-{% block foot %}
+{{% block foot %}}
 <footer id="footer">
   <div class="footer-box">
     <div class="footer-content">
@@ -1840,42 +1840,42 @@ TEMPLATES = [
     </p>
   </div>
 </footer>
-{% endblock foot %}
+{{% endblock foot %}}
 <!-- footer end -->
-{% block script %}
-{#    <script src="{% static 'js/base/message.js' %}"></script>#}
-    <script src="{% static 'js/user/register.js' %}"></script>
-    <script src="{% static 'js/base/common.js' %}"></script>
-{% endblock script %}
+{{% block script %}}
+{#    <script src="{{% static 'js/base/message.js' %}}"></script>#}
+    <script src="{{% static 'js/user/register.js' %}}"></script>
+    <script src="{{% static 'js/base/common.js' %}}"></script>
+{{% endblock script %}}
 
 ```
 
 #### ⑥course.html文件
 
 ```html
-{% extends 'base/base.html' %}
-{% load static %}
+{{% extends 'base/base.html' %}}
+{{% load static %}}
 
 
 
-{% block title %}
+{{% block title %}}
     coursePage
-{% endblock title %}
-{% block css %}
-    <link rel="stylesheet" href="{% static 'css/course/course.css' %}">
+{{% endblock title %}}
+{{% block css %}}
+    <link rel="stylesheet" href="{{% static 'css/course/course.css' %}}">
     <script>IMemuIndex = 1</script>
-{% endblock css %}
+{{% endblock css %}}
 
 
 
-{% block main %}
+{{% block main %}}
     <main id="course-container">
         <div class="w1200">
             <ul class="course-list">
 
                 <li class="course-item">
                     <a href="https://www.shiguangkey.com/course/2432">
-                        <img class="course-img" src={% static "images/python_advanced.jpg" %}
+                        <img class="course-img" src={{% static "images/python_advanced.jpg" %}}
                                 alt="潭州英语">
                         <div class="course-content">
                             <p class="course-info">python 全栈开发</p>
@@ -1887,7 +1887,7 @@ TEMPLATES = [
 
                 <li class="course-item">
                     <a href="https://www.shiguangkey.com/course/2432">
-                        <img class="course-img" src={% static "images/python_web.jpg" %}
+                        <img class="course-img" src={{% static "images/python_web.jpg" %}}
                                 alt="潭州英语">
                         <div class="course-content">
                             <p class="course-info">django 项目</p>
@@ -1900,10 +1900,10 @@ TEMPLATES = [
             </ul>
         </div>
     </main>
-{% endblock main %}
+{{% endblock main %}}
 
 <!-- footer start -->
-{% block foot %}
+{{% block foot %}}
     <footer id="footer">
         <div class="footer-box">
             <div class="footer-content">
@@ -1926,12 +1926,12 @@ TEMPLATES = [
             </p>
         </div>
     </footer>
-{% endblock foot %}
+{{% endblock foot %}}
 <!-- footer end -->
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
-{% block script %}
-    <script src="{% static 'js/base/common.js' %}"></script>
-{% endblock script %}
+{{% block script %}}
+    <script src="{{% static 'js/base/common.js' %}}"></script>
+{{% endblock script %}}
 
 
 ```
