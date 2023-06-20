@@ -850,17 +850,17 @@ STATICFILES_DIRS = [
 <span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;meta</span> <span class="er">charset</span><span class="ot">=</span><span class="st">"utf-8"</span><span class="kw">&gt;</span></span>
 <span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;title&gt;</span>{% block title %}{% endblock title %}<span class="kw">&lt;/title&gt;</span></span>
+<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;title&gt;</span>{{% block title %}}{{% endblock title %}}<span class="kw">&lt;/title&gt;</span></span>
 <span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb57-15"><a href="#cb57-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-16"><a href="#cb57-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;link</span> <span class="er">rel</span><span class="ot">=</span><span class="st">"stylesheet"</span> <span class="er">href</span><span class="ot">=</span><span class="st">{%</span> <span class="er">static</span> <span class="er">"css/base/reset.css"</span> <span class="er">%}</span><span class="kw">&gt;</span></span>
-<span id="cb57-17"><a href="#cb57-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;link</span> <span class="er">rel</span><span class="ot">=</span><span class="st">"stylesheet"</span> <span class="er">href</span><span class="ot">=</span><span class="st">{%</span> <span class="er">static</span> <span class="er">"css/base/common.css"</span> <span class="er">%}</span><span class="kw">&gt;</span></span>
+<span id="cb57-16"><a href="#cb57-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;link</span> <span class="er">rel</span><span class="ot">=</span><span class="st">"stylesheet"</span> <span class="er">href</span><span class="ot">=</span><span class="st">{{%</span> <span class="er">static</span> <span class="er">"css/base/reset.css"</span> <span class="er">%}}</span><span class="kw">&gt;</span></span>
+<span id="cb57-17"><a href="#cb57-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;link</span> <span class="er">rel</span><span class="ot">=</span><span class="st">"stylesheet"</span> <span class="er">href</span><span class="ot">=</span><span class="st">{{%</span> <span class="er">static</span> <span class="er">"css/base/common.css"</span> <span class="er">%}}</span><span class="kw">&gt;</span></span>
 <span id="cb57-18"><a href="#cb57-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-19"><a href="#cb57-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;link</span> <span class="er">rel</span><span class="ot">=</span><span class="st">"stylesheet"</span> <span class="er">href</span><span class="ot">=</span><span class="st">{%</span> <span class="er">static</span> <span class="er">"css/base/side.css"</span> <span class="er">%}</span><span class="kw">&gt;</span></span>
+<span id="cb57-19"><a href="#cb57-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;link</span> <span class="er">rel</span><span class="ot">=</span><span class="st">"stylesheet"</span> <span class="er">href</span><span class="ot">=</span><span class="st">{{%</span> <span class="er">static</span> <span class="er">"css/base/side.css"</span> <span class="er">%}}</span><span class="kw">&gt;</span></span>
 <span id="cb57-20"><a href="#cb57-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;link</span> <span class="er">rel</span><span class="ot">=</span><span class="st">"stylesheet"</span> <span class="er">href</span><span class="ot">=</span><span class="st">"http://at.alicdn.com/t/font_684044_un7umbuwwfp.css"</span><span class="kw">&gt;</span></span>
 <span id="cb57-21"><a href="#cb57-21" aria-hidden="true" tabindex="-1"></a>    <span class="co">&lt;!--特殊的css--&gt;</span></span>
-<span id="cb57-22"><a href="#cb57-22" aria-hidden="true" tabindex="-1"></a>    {% block css %}</span>
-<span id="cb57-23"><a href="#cb57-23" aria-hidden="true" tabindex="-1"></a>    {% endblock css %}</span>
+<span id="cb57-22"><a href="#cb57-22" aria-hidden="true" tabindex="-1"></a>    {{% block css %}}</span>
+<span id="cb57-23"><a href="#cb57-23" aria-hidden="true" tabindex="-1"></a>    {{% endblock css %}}</span>
 <span id="cb57-24"><a href="#cb57-24" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/head&gt;</span></span>
 <span id="cb57-25"><a href="#cb57-25" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;body&gt;</span></span>
 <span id="cb57-26"><a href="#cb57-26" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- header start --&gt;</span></span>
@@ -874,9 +874,9 @@ STATICFILES_DIRS = [
 <span id="cb57-34"><a href="#cb57-34" aria-hidden="true" tabindex="-1"></a>        <span class="co">&lt;!-- nav start --&gt;</span></span>
 <span id="cb57-35"><a href="#cb57-35" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;nav</span> <span class="er">class</span><span class="ot">=</span><span class="st">"nav"</span><span class="kw">&gt;</span></span>
 <span id="cb57-36"><a href="#cb57-36" aria-hidden="true" tabindex="-1"></a>            <span class="kw">&lt;ul</span> <span class="er">class</span><span class="ot">=</span><span class="st">"menu"</span><span class="kw">&gt;</span></span>
-<span id="cb57-37"><a href="#cb57-37" aria-hidden="true" tabindex="-1"></a>                <span class="kw">&lt;li&gt;&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"{% url 'news:index' %}"</span><span class="kw">&gt;</span>首页<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></span>
-<span id="cb57-38"><a href="#cb57-38" aria-hidden="true" tabindex="-1"></a>                <span class="kw">&lt;li&gt;&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"{% url 'course:index' %}"</span><span class="kw">&gt;</span>在线课堂<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></span>
-<span id="cb57-39"><a href="#cb57-39" aria-hidden="true" tabindex="-1"></a>                <span class="kw">&lt;li&gt;&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"{% url 'doc:index' %}"</span><span class="kw">&gt;</span>下载文档<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></span>
+<span id="cb57-37"><a href="#cb57-37" aria-hidden="true" tabindex="-1"></a>                <span class="kw">&lt;li&gt;&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"{{% url 'news:index' %}}"</span><span class="kw">&gt;</span>首页<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></span>
+<span id="cb57-38"><a href="#cb57-38" aria-hidden="true" tabindex="-1"></a>                <span class="kw">&lt;li&gt;&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"{{% url 'course:index' %}}"</span><span class="kw">&gt;</span>在线课堂<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></span>
+<span id="cb57-39"><a href="#cb57-39" aria-hidden="true" tabindex="-1"></a>                <span class="kw">&lt;li&gt;&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"{{% url 'doc:index' %}}"</span><span class="kw">&gt;</span>下载文档<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></span>
 <span id="cb57-40"><a href="#cb57-40" aria-hidden="true" tabindex="-1"></a>                <span class="kw">&lt;li&gt;&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"search.html"</span><span class="kw">&gt;</span>搜索<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></span>
 <span id="cb57-41"><a href="#cb57-41" aria-hidden="true" tabindex="-1"></a>            <span class="kw">&lt;/ul&gt;</span></span>
 <span id="cb57-42"><a href="#cb57-42" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;/nav&gt;</span></span>
@@ -886,7 +886,7 @@ STATICFILES_DIRS = [
 <span id="cb57-46"><a href="#cb57-46" aria-hidden="true" tabindex="-1"></a>            <span class="kw">&lt;div&gt;</span></span>
 <span id="cb57-47"><a href="#cb57-47" aria-hidden="true" tabindex="-1"></a>                <span class="kw">&lt;i</span> <span class="er">class</span><span class="ot">=</span><span class="st">"PyWhich py-user"</span><span class="kw">&gt;&lt;/i&gt;</span></span>
 <span id="cb57-48"><a href="#cb57-48" aria-hidden="true" tabindex="-1"></a>                <span class="kw">&lt;span&gt;</span></span>
-<span id="cb57-49"><a href="#cb57-49" aria-hidden="true" tabindex="-1"></a>                  <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"{% url 'user:login' %}"</span> <span class="er">class</span><span class="ot">=</span><span class="st">"login"</span><span class="kw">&gt;</span>登录<span class="kw">&lt;/a&gt;</span> / <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"{% url 'user:register' %}"</span></span>
+<span id="cb57-49"><a href="#cb57-49" aria-hidden="true" tabindex="-1"></a>                  <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"{{% url 'user:login' %}}"</span> <span class="er">class</span><span class="ot">=</span><span class="st">"login"</span><span class="kw">&gt;</span>登录<span class="kw">&lt;/a&gt;</span> / <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"{{% url 'user:register' %}}"</span></span>
 <span id="cb57-50"><a href="#cb57-50" aria-hidden="true" tabindex="-1"></a><span class="ot">                                                                         class=</span><span class="st">"reg"</span><span class="kw">&gt;</span>注册<span class="kw">&lt;/a&gt;</span></span>
 <span id="cb57-51"><a href="#cb57-51" aria-hidden="true" tabindex="-1"></a>              <span class="kw">&lt;/span&gt;</span></span>
 <span id="cb57-52"><a href="#cb57-52" aria-hidden="true" tabindex="-1"></a>            <span class="kw">&lt;/div&gt;</span></span>
@@ -906,26 +906,26 @@ STATICFILES_DIRS = [
 <span id="cb57-66"><a href="#cb57-66" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb57-67"><a href="#cb57-67" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- main start --&gt;</span></span>
 <span id="cb57-68"><a href="#cb57-68" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- 除去页眉页脚的内容 --&gt;</span></span>
-<span id="cb57-69"><a href="#cb57-69" aria-hidden="true" tabindex="-1"></a>{% block main %}</span>
+<span id="cb57-69"><a href="#cb57-69" aria-hidden="true" tabindex="-1"></a>{{% block main %}}</span>
 <span id="cb57-70"><a href="#cb57-70" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;main</span> <span class="er">id</span><span class="ot">=</span><span class="st">"main"</span><span class="kw">&gt;</span></span>
 <span id="cb57-71"><a href="#cb57-71" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"w1200 clearfix"</span><span class="kw">&gt;</span></span>
 <span id="cb57-72"><a href="#cb57-72" aria-hidden="true" tabindex="-1"></a>            <span class="co">&lt;!-- main-contain start  --&gt;</span></span>
 <span id="cb57-73"><a href="#cb57-73" aria-hidden="true" tabindex="-1"></a>            <span class="co">&lt;!-- 主体内容 start  --&gt;</span></span>
-<span id="cb57-74"><a href="#cb57-74" aria-hidden="true" tabindex="-1"></a>            {% block main_contain %}</span>
+<span id="cb57-74"><a href="#cb57-74" aria-hidden="true" tabindex="-1"></a>            {{% block main_contain %}}</span>
 <span id="cb57-75"><a href="#cb57-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-76"><a href="#cb57-76" aria-hidden="true" tabindex="-1"></a>            {% endblock main_contain %}</span>
+<span id="cb57-76"><a href="#cb57-76" aria-hidden="true" tabindex="-1"></a>            {{% endblock main_contain %}}</span>
 <span id="cb57-77"><a href="#cb57-77" aria-hidden="true" tabindex="-1"></a>            <span class="co">&lt;!-- 主体内容  end --&gt;</span></span>
 <span id="cb57-78"><a href="#cb57-78" aria-hidden="true" tabindex="-1"></a>            <span class="co">&lt;!-- main-contain  end --&gt;</span></span>
 <span id="cb57-79"><a href="#cb57-79" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb57-80"><a href="#cb57-80" aria-hidden="true" tabindex="-1"></a>            <span class="co">&lt;!-- side start --&gt;</span></span>
 <span id="cb57-81"><a href="#cb57-81" aria-hidden="true" tabindex="-1"></a>            <span class="co">&lt;!-- 边上的内容 --&gt;</span></span>
-<span id="cb57-82"><a href="#cb57-82" aria-hidden="true" tabindex="-1"></a>            {% block side %}</span>
+<span id="cb57-82"><a href="#cb57-82" aria-hidden="true" tabindex="-1"></a>            {{% block side %}}</span>
 <span id="cb57-83"><a href="#cb57-83" aria-hidden="true" tabindex="-1"></a>                <span class="kw">&lt;aside</span> <span class="er">class</span><span class="ot">=</span><span class="st">"side"</span><span class="kw">&gt;</span></span>
 <span id="cb57-84"><a href="#cb57-84" aria-hidden="true" tabindex="-1"></a>                    <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"side-activities"</span><span class="kw">&gt;</span></span>
 <span id="cb57-85"><a href="#cb57-85" aria-hidden="true" tabindex="-1"></a>                        <span class="kw">&lt;h3</span> <span class="er">class</span><span class="ot">=</span><span class="st">"activities-title"</span><span class="kw">&gt;</span>在线课堂<span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"javascript:void(0)"</span><span class="kw">&gt;</span>更多<span class="kw">&lt;/a&gt;&lt;/h3&gt;</span></span>
 <span id="cb57-86"><a href="#cb57-86" aria-hidden="true" tabindex="-1"></a>                        <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"activities-img"</span><span class="kw">&gt;</span></span>
 <span id="cb57-87"><a href="#cb57-87" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"javascript:void(0);"</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span><span class="kw">&gt;</span></span>
-<span id="cb57-88"><a href="#cb57-88" aria-hidden="true" tabindex="-1"></a>                                <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{%</span> <span class="er">static</span> <span class="er">"images/english.jpg"</span> <span class="er">%}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"title"</span><span class="kw">&gt;</span></span>
+<span id="cb57-88"><a href="#cb57-88" aria-hidden="true" tabindex="-1"></a>                                <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{{%</span> <span class="er">static</span> <span class="er">"images/english.jpg"</span> <span class="er">%}}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"title"</span><span class="kw">&gt;</span></span>
 <span id="cb57-89"><a href="#cb57-89" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">&lt;/a&gt;</span></span>
 <span id="cb57-90"><a href="#cb57-90" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">&lt;p</span> <span class="er">class</span><span class="ot">=</span><span class="st">"activities-tips"</span><span class="kw">&gt;</span>对话国外小姐姐<span class="kw">&lt;/p&gt;</span></span>
 <span id="cb57-91"><a href="#cb57-91" aria-hidden="true" tabindex="-1"></a>                        <span class="kw">&lt;/div&gt;</span></span>
@@ -967,55 +967,55 @@ STATICFILES_DIRS = [
 <span id="cb57-127"><a href="#cb57-127" aria-hidden="true" tabindex="-1"></a>                        <span class="kw">&lt;/div&gt;</span></span>
 <span id="cb57-128"><a href="#cb57-128" aria-hidden="true" tabindex="-1"></a>                    <span class="kw">&lt;/div&gt;</span></span>
 <span id="cb57-129"><a href="#cb57-129" aria-hidden="true" tabindex="-1"></a>                    <span class="co">&lt;!--hot_news模板--&gt;</span></span>
-<span id="cb57-130"><a href="#cb57-130" aria-hidden="true" tabindex="-1"></a>                    {% block hotnews %}</span>
-<span id="cb57-131"><a href="#cb57-131" aria-hidden="true" tabindex="-1"></a>                    {% endblock hotnews %}</span>
+<span id="cb57-130"><a href="#cb57-130" aria-hidden="true" tabindex="-1"></a>                    {{% block hotnews %}}</span>
+<span id="cb57-131"><a href="#cb57-131" aria-hidden="true" tabindex="-1"></a>                    {{% endblock hotnews %}}</span>
 <span id="cb57-132"><a href="#cb57-132" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb57-133"><a href="#cb57-133" aria-hidden="true" tabindex="-1"></a>                <span class="kw">&lt;/aside&gt;</span></span>
-<span id="cb57-134"><a href="#cb57-134" aria-hidden="true" tabindex="-1"></a>            {% endblock side %}</span>
+<span id="cb57-134"><a href="#cb57-134" aria-hidden="true" tabindex="-1"></a>            {{% endblock side %}}</span>
 <span id="cb57-135"><a href="#cb57-135" aria-hidden="true" tabindex="-1"></a>            <span class="co">&lt;!-- side end --&gt;</span></span>
 <span id="cb57-136"><a href="#cb57-136" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;/div&gt;</span></span>
 <span id="cb57-137"><a href="#cb57-137" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;/main&gt;</span></span>
-<span id="cb57-138"><a href="#cb57-138" aria-hidden="true" tabindex="-1"></a>{% endblock main %}</span>
+<span id="cb57-138"><a href="#cb57-138" aria-hidden="true" tabindex="-1"></a>{{% endblock main %}}</span>
 <span id="cb57-139"><a href="#cb57-139" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- main end --&gt;</span></span>
 <span id="cb57-140"><a href="#cb57-140" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb57-141"><a href="#cb57-141" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- footer start --&gt;</span></span>
 <span id="cb57-142"><a href="#cb57-142" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- 页脚 start --&gt;</span></span>
-<span id="cb57-143"><a href="#cb57-143" aria-hidden="true" tabindex="-1"></a>{% block foot %}</span>
+<span id="cb57-143"><a href="#cb57-143" aria-hidden="true" tabindex="-1"></a>{{% block foot %}}</span>
 <span id="cb57-144"><a href="#cb57-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-145"><a href="#cb57-145" aria-hidden="true" tabindex="-1"></a>{% endblock foot %}</span>
+<span id="cb57-145"><a href="#cb57-145" aria-hidden="true" tabindex="-1"></a>{{% endblock foot %}}</span>
 <span id="cb57-146"><a href="#cb57-146" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- footer end --&gt;</span></span>
 <span id="cb57-147"><a href="#cb57-147" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;script</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://cdn.bootcss.com/jquery/3.3.1/jquery.js"</span><span class="kw">&gt;&lt;/script&gt;</span></span>
-<span id="cb57-148"><a href="#cb57-148" aria-hidden="true" tabindex="-1"></a>{#<span class="kw">&lt;script</span> <span class="er">src</span><span class="ot">=</span><span class="st">"{% static 'js/base/common.js' %}"</span><span class="kw">&gt;&lt;/script&gt;</span>#}</span>
-<span id="cb57-149"><a href="#cb57-149" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;script</span> <span class="er">src</span><span class="ot">=</span><span class="st">"{% static 'js/base/message.js' %}"</span><span class="kw">&gt;&lt;/script&gt;</span></span>
+<span id="cb57-148"><a href="#cb57-148" aria-hidden="true" tabindex="-1"></a>{#<span class="kw">&lt;script</span> <span class="er">src</span><span class="ot">=</span><span class="st">"{{% static 'js/base/common.js' %}}"</span><span class="kw">&gt;&lt;/script&gt;</span>#}</span>
+<span id="cb57-149"><a href="#cb57-149" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;script</span> <span class="er">src</span><span class="ot">=</span><span class="st">"{{% static 'js/base/message.js' %}}"</span><span class="kw">&gt;&lt;/script&gt;</span></span>
 <span id="cb57-150"><a href="#cb57-150" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb57-151"><a href="#cb57-151" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- js start --&gt;</span></span>
-<span id="cb57-152"><a href="#cb57-152" aria-hidden="true" tabindex="-1"></a>{% block script %}</span>
-<span id="cb57-153"><a href="#cb57-153" aria-hidden="true" tabindex="-1"></a>{% endblock script %}</span>
+<span id="cb57-152"><a href="#cb57-152" aria-hidden="true" tabindex="-1"></a>{{% block script %}}</span>
+<span id="cb57-153"><a href="#cb57-153" aria-hidden="true" tabindex="-1"></a>{{% endblock script %}}</span>
 <span id="cb57-154"><a href="#cb57-154" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/body&gt;</span></span>
 <span id="cb57-155"><a href="#cb57-155" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/html&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="news.html文件" class="level4">
 <h4 class="anchored" data-anchor-id="news.html文件">②news.html文件</h4>
-<div class="sourceCode" id="cb58"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>{% extends 'base/base.html' %}</span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>{% load static %}</span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>{% block title %}</span>
+<div class="sourceCode" id="cb58"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>{{% extends 'base/base.html' %}}</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>{{% load static %}}</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>{{% block title %}}</span>
 <span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>    IndexPage</span>
-<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>{% endblock title %}</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>{{% endblock title %}}</span>
 <span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>{% block css %}</span>
-<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;link</span> <span class="er">rel</span><span class="ot">=</span><span class="st">"stylesheet"</span> <span class="er">href</span><span class="ot">=</span><span class="st">"{% static 'css/news/index.css' %}"</span><span class="kw">&gt;</span></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>{{% block css %}}</span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;link</span> <span class="er">rel</span><span class="ot">=</span><span class="st">"stylesheet"</span> <span class="er">href</span><span class="ot">=</span><span class="st">"{{% static 'css/news/index.css' %}}"</span><span class="kw">&gt;</span></span>
 <span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;script&gt;</span>IMemuIndex<span class="op">=</span><span class="dv">0</span><span class="kw">&lt;/script&gt;</span></span>
-<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>{% endblock css %}</span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>{{% endblock css %}}</span>
 <span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb58-13"><a href="#cb58-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb58-14"><a href="#cb58-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb58-15"><a href="#cb58-15" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- main start --&gt;</span></span>
-<span id="cb58-16"><a href="#cb58-16" aria-hidden="true" tabindex="-1"></a>{% block main %}</span>
+<span id="cb58-16"><a href="#cb58-16" aria-hidden="true" tabindex="-1"></a>{{% block main %}}</span>
 <span id="cb58-17"><a href="#cb58-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;main</span> <span class="er">id</span><span class="ot">=</span><span class="st">"main"</span><span class="kw">&gt;</span></span>
 <span id="cb58-18"><a href="#cb58-18" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"w1200 clearfix"</span><span class="kw">&gt;</span></span>
 <span id="cb58-19"><a href="#cb58-19" aria-hidden="true" tabindex="-1"></a>            <span class="co">&lt;!-- main-contain start  --&gt;</span></span>
-<span id="cb58-20"><a href="#cb58-20" aria-hidden="true" tabindex="-1"></a>            {% block main_contain %}</span>
+<span id="cb58-20"><a href="#cb58-20" aria-hidden="true" tabindex="-1"></a>            {{% block main_contain %}}</span>
 <span id="cb58-21"><a href="#cb58-21" aria-hidden="true" tabindex="-1"></a>                <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"main-contain"</span><span class="kw">&gt;</span></span>
 <span id="cb58-22"><a href="#cb58-22" aria-hidden="true" tabindex="-1"></a>                    <span class="co">&lt;!-- banner start --&gt;</span></span>
 <span id="cb58-23"><a href="#cb58-23" aria-hidden="true" tabindex="-1"></a></span>
@@ -1024,27 +1024,27 @@ STATICFILES_DIRS = [
 <span id="cb58-26"><a href="#cb58-26" aria-hidden="true" tabindex="-1"></a>                            <span class="co">&lt;!--淡入淡出banner--&gt;</span></span>
 <span id="cb58-27"><a href="#cb58-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb58-28"><a href="#cb58-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-29"><a href="#cb58-29" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">&lt;li&gt;&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"javascript:void(0);"</span><span class="kw">&gt;&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{%</span> <span class="er">static</span> <span class="er">"images/linux.jpg"</span> <span class="er">%}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"test"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
+<span id="cb58-29"><a href="#cb58-29" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">&lt;li&gt;&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"javascript:void(0);"</span><span class="kw">&gt;&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{{%</span> <span class="er">static</span> <span class="er">"images/linux.jpg"</span> <span class="er">%}}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"test"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
 <span id="cb58-30"><a href="#cb58-30" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">&lt;/li&gt;</span></span>
 <span id="cb58-31"><a href="#cb58-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb58-32"><a href="#cb58-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-33"><a href="#cb58-33" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">&lt;li&gt;&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"javascript:void(0);"</span><span class="kw">&gt;&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{%</span> <span class="er">static</span> <span class="er">"images/python_gui.jpg"</span> <span class="er">%}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"test"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
+<span id="cb58-33"><a href="#cb58-33" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">&lt;li&gt;&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"javascript:void(0);"</span><span class="kw">&gt;&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{{%</span> <span class="er">static</span> <span class="er">"images/python_gui.jpg"</span> <span class="er">%}}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"test"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
 <span id="cb58-34"><a href="#cb58-34" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">&lt;/li&gt;</span></span>
 <span id="cb58-35"><a href="#cb58-35" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb58-36"><a href="#cb58-36" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb58-37"><a href="#cb58-37" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">&lt;li&gt;&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"javascript:void(0);"</span><span class="kw">&gt;&lt;img</span></span>
-<span id="cb58-38"><a href="#cb58-38" aria-hidden="true" tabindex="-1"></a><span class="ot">                                    src=</span><span class="st">{%</span> <span class="er">static</span> <span class="er">"images/python_function.jpg"</span> <span class="er">%}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"test"</span><span class="kw">&gt;&lt;/a&gt;&lt;/li&gt;</span></span>
+<span id="cb58-38"><a href="#cb58-38" aria-hidden="true" tabindex="-1"></a><span class="ot">                                    src=</span><span class="st">{{%</span> <span class="er">static</span> <span class="er">"images/python_function.jpg"</span> <span class="er">%}}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"test"</span><span class="kw">&gt;&lt;/a&gt;&lt;/li&gt;</span></span>
 <span id="cb58-39"><a href="#cb58-39" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb58-40"><a href="#cb58-40" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb58-41"><a href="#cb58-41" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">&lt;li&gt;&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"javascript:void(0);"</span><span class="kw">&gt;&lt;img</span></span>
-<span id="cb58-42"><a href="#cb58-42" aria-hidden="true" tabindex="-1"></a><span class="ot">                                    src=</span><span class="st">{%</span> <span class="er">static</span> <span class="er">"images/python_advanced.jpg"</span> <span class="er">%}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"test"</span><span class="kw">&gt;&lt;/a&gt;&lt;/li&gt;</span></span>
+<span id="cb58-42"><a href="#cb58-42" aria-hidden="true" tabindex="-1"></a><span class="ot">                                    src=</span><span class="st">{{%</span> <span class="er">static</span> <span class="er">"images/python_advanced.jpg"</span> <span class="er">%}}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"test"</span><span class="kw">&gt;&lt;/a&gt;&lt;/li&gt;</span></span>
 <span id="cb58-43"><a href="#cb58-43" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb58-44"><a href="#cb58-44" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb58-45"><a href="#cb58-45" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">&lt;li&gt;&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"javascript:void(0);"</span><span class="kw">&gt;&lt;img</span></span>
-<span id="cb58-46"><a href="#cb58-46" aria-hidden="true" tabindex="-1"></a><span class="ot">                                    src=</span><span class="st">{%</span> <span class="er">static</span> <span class="er">"images/jichujiaochen.jpeg"</span> <span class="er">%}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"test"</span><span class="kw">&gt;&lt;/a&gt;&lt;/li&gt;</span></span>
+<span id="cb58-46"><a href="#cb58-46" aria-hidden="true" tabindex="-1"></a><span class="ot">                                    src=</span><span class="st">{{%</span> <span class="er">static</span> <span class="er">"images/jichujiaochen.jpeg"</span> <span class="er">%}}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"test"</span><span class="kw">&gt;&lt;/a&gt;&lt;/li&gt;</span></span>
 <span id="cb58-47"><a href="#cb58-47" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb58-48"><a href="#cb58-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-49"><a href="#cb58-49" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">&lt;li&gt;&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"javascript:void(0);"</span><span class="kw">&gt;&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{%</span> <span class="er">static</span> <span class="er">"images/python_web.jpg"</span> <span class="er">%}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"test"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
+<span id="cb58-49"><a href="#cb58-49" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">&lt;li&gt;&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"javascript:void(0);"</span><span class="kw">&gt;&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{{%</span> <span class="er">static</span> <span class="er">"images/python_web.jpg"</span> <span class="er">%}}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"test"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
 <span id="cb58-50"><a href="#cb58-50" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">&lt;/li&gt;</span></span>
 <span id="cb58-51"><a href="#cb58-51" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb58-52"><a href="#cb58-52" aria-hidden="true" tabindex="-1"></a></span>
@@ -1087,7 +1087,7 @@ STATICFILES_DIRS = [
 <span id="cb58-89"><a href="#cb58-89" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">&lt;li&gt;</span></span>
 <span id="cb58-90"><a href="#cb58-90" aria-hidden="true" tabindex="-1"></a>                                <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://www.shiguangkey.com/course/2432"</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span><span class="kw">&gt;</span></span>
 <span id="cb58-91"><a href="#cb58-91" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"recommend-thumbnail"</span><span class="kw">&gt;</span></span>
-<span id="cb58-92"><a href="#cb58-92" aria-hidden="true" tabindex="-1"></a>                                        <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{%</span> <span class="er">static</span> <span class="er">"images/python_gui.jpg"</span> <span class="er">%}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"title"</span><span class="kw">&gt;</span></span>
+<span id="cb58-92"><a href="#cb58-92" aria-hidden="true" tabindex="-1"></a>                                        <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{{%</span> <span class="er">static</span> <span class="er">"images/python_gui.jpg"</span> <span class="er">%}}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"title"</span><span class="kw">&gt;</span></span>
 <span id="cb58-93"><a href="#cb58-93" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;/div&gt;</span></span>
 <span id="cb58-94"><a href="#cb58-94" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;p</span> <span class="er">class</span><span class="ot">=</span><span class="st">"info"</span><span class="kw">&gt;</span>Python GUI 教程 25行代码写一个小闹钟<span class="kw">&lt;/p&gt;</span></span>
 <span id="cb58-95"><a href="#cb58-95" aria-hidden="true" tabindex="-1"></a>                                <span class="kw">&lt;/a&gt;</span></span>
@@ -1096,7 +1096,7 @@ STATICFILES_DIRS = [
 <span id="cb58-98"><a href="#cb58-98" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">&lt;li&gt;</span></span>
 <span id="cb58-99"><a href="#cb58-99" aria-hidden="true" tabindex="-1"></a>                                <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://www.shiguangkey.com/course/2432"</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span><span class="kw">&gt;</span></span>
 <span id="cb58-100"><a href="#cb58-100" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"recommend-thumbnail"</span><span class="kw">&gt;</span></span>
-<span id="cb58-101"><a href="#cb58-101" aria-hidden="true" tabindex="-1"></a>                                        <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{%</span> <span class="er">static</span> <span class="er">"images/python_advanced.jpg"</span> <span class="er">%}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"title"</span><span class="kw">&gt;</span></span>
+<span id="cb58-101"><a href="#cb58-101" aria-hidden="true" tabindex="-1"></a>                                        <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{{%</span> <span class="er">static</span> <span class="er">"images/python_advanced.jpg"</span> <span class="er">%}}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"title"</span><span class="kw">&gt;</span></span>
 <span id="cb58-102"><a href="#cb58-102" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;/div&gt;</span></span>
 <span id="cb58-103"><a href="#cb58-103" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;p</span> <span class="er">class</span><span class="ot">=</span><span class="st">"info"</span><span class="kw">&gt;</span>python高性能编程方法一<span class="kw">&lt;/p&gt;</span></span>
 <span id="cb58-104"><a href="#cb58-104" aria-hidden="true" tabindex="-1"></a>                                <span class="kw">&lt;/a&gt;</span></span>
@@ -1105,7 +1105,7 @@ STATICFILES_DIRS = [
 <span id="cb58-107"><a href="#cb58-107" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">&lt;li&gt;</span></span>
 <span id="cb58-108"><a href="#cb58-108" aria-hidden="true" tabindex="-1"></a>                                <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://www.shiguangkey.com/course/2432"</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span><span class="kw">&gt;</span></span>
 <span id="cb58-109"><a href="#cb58-109" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"recommend-thumbnail"</span><span class="kw">&gt;</span></span>
-<span id="cb58-110"><a href="#cb58-110" aria-hidden="true" tabindex="-1"></a>                                        <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{%</span> <span class="er">static</span> <span class="er">"images/jichujiaochen.jpeg"</span> <span class="er">%}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"title"</span><span class="kw">&gt;</span></span>
+<span id="cb58-110"><a href="#cb58-110" aria-hidden="true" tabindex="-1"></a>                                        <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{{%</span> <span class="er">static</span> <span class="er">"images/jichujiaochen.jpeg"</span> <span class="er">%}}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"title"</span><span class="kw">&gt;</span></span>
 <span id="cb58-111"><a href="#cb58-111" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;/div&gt;</span></span>
 <span id="cb58-112"><a href="#cb58-112" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;p</span> <span class="er">class</span><span class="ot">=</span><span class="st">"info"</span><span class="kw">&gt;</span>python基础 split 和 join函数比较<span class="kw">&lt;/p&gt;</span></span>
 <span id="cb58-113"><a href="#cb58-113" aria-hidden="true" tabindex="-1"></a>                                <span class="kw">&lt;/a&gt;</span></span>
@@ -1147,7 +1147,7 @@ STATICFILES_DIRS = [
 <span id="cb58-149"><a href="#cb58-149" aria-hidden="true" tabindex="-1"></a>                                <span class="kw">&lt;li</span> <span class="er">class</span><span class="ot">=</span><span class="st">"news-item"</span><span class="kw">&gt;</span></span>
 <span id="cb58-150"><a href="#cb58-150" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://www.shiguangkey.com/course/2432"</span> <span class="er">class</span><span class="ot">=</span><span class="st">"news-thumbnail"</span></span>
 <span id="cb58-151"><a href="#cb58-151" aria-hidden="true" tabindex="-1"></a><span class="ot">                                       target=</span><span class="st">"_blank"</span><span class="kw">&gt;</span></span>
-<span id="cb58-152"><a href="#cb58-152" aria-hidden="true" tabindex="-1"></a>                                        <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{%</span> <span class="er">static</span> <span class="er">"images/linux.jpg"</span> <span class="er">%}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"linux查找文件或目录命令"</span></span>
+<span id="cb58-152"><a href="#cb58-152" aria-hidden="true" tabindex="-1"></a>                                        <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{{%</span> <span class="er">static</span> <span class="er">"images/linux.jpg"</span> <span class="er">%}}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"linux查找文件或目录命令"</span></span>
 <span id="cb58-153"><a href="#cb58-153" aria-hidden="true" tabindex="-1"></a><span class="ot">                                             title=</span><span class="st">"linux查找文件或目录命令"</span><span class="kw">&gt;</span></span>
 <span id="cb58-154"><a href="#cb58-154" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;/a&gt;</span></span>
 <span id="cb58-155"><a href="#cb58-155" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"news-content"</span><span class="kw">&gt;</span></span>
@@ -1168,7 +1168,7 @@ STATICFILES_DIRS = [
 <span id="cb58-170"><a href="#cb58-170" aria-hidden="true" tabindex="-1"></a>                                <span class="kw">&lt;li</span> <span class="er">class</span><span class="ot">=</span><span class="st">"news-item"</span><span class="kw">&gt;</span></span>
 <span id="cb58-171"><a href="#cb58-171" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://www.shiguangkey.com/course/2432"</span> <span class="er">class</span><span class="ot">=</span><span class="st">"news-thumbnail"</span></span>
 <span id="cb58-172"><a href="#cb58-172" aria-hidden="true" tabindex="-1"></a><span class="ot">                                       target=</span><span class="st">"_blank"</span><span class="kw">&gt;</span></span>
-<span id="cb58-173"><a href="#cb58-173" aria-hidden="true" tabindex="-1"></a>                                        <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{%</span> <span class="er">static</span> <span class="er">"images/linux.jpg"</span> <span class="er">%}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"linux下svn命令的使用"</span></span>
+<span id="cb58-173"><a href="#cb58-173" aria-hidden="true" tabindex="-1"></a>                                        <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{{%</span> <span class="er">static</span> <span class="er">"images/linux.jpg"</span> <span class="er">%}}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"linux下svn命令的使用"</span></span>
 <span id="cb58-174"><a href="#cb58-174" aria-hidden="true" tabindex="-1"></a><span class="ot">                                             title=</span><span class="st">"linux下svn命令的使用"</span><span class="kw">&gt;</span></span>
 <span id="cb58-175"><a href="#cb58-175" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;/a&gt;</span></span>
 <span id="cb58-176"><a href="#cb58-176" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"news-content"</span><span class="kw">&gt;</span></span>
@@ -1190,7 +1190,7 @@ STATICFILES_DIRS = [
 <span id="cb58-192"><a href="#cb58-192" aria-hidden="true" tabindex="-1"></a>                                <span class="kw">&lt;li</span> <span class="er">class</span><span class="ot">=</span><span class="st">"news-item"</span><span class="kw">&gt;</span></span>
 <span id="cb58-193"><a href="#cb58-193" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://www.shiguangkey.com/course/2432"</span> <span class="er">class</span><span class="ot">=</span><span class="st">"news-thumbnail"</span></span>
 <span id="cb58-194"><a href="#cb58-194" aria-hidden="true" tabindex="-1"></a><span class="ot">                                       target=</span><span class="st">"_blank"</span><span class="kw">&gt;</span></span>
-<span id="cb58-195"><a href="#cb58-195" aria-hidden="true" tabindex="-1"></a>                                        <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{%</span> <span class="er">static</span> <span class="er">"images/linux.jpg"</span> <span class="er">%}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"实现linux和windows文件传输"</span></span>
+<span id="cb58-195"><a href="#cb58-195" aria-hidden="true" tabindex="-1"></a>                                        <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{{%</span> <span class="er">static</span> <span class="er">"images/linux.jpg"</span> <span class="er">%}}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"实现linux和windows文件传输"</span></span>
 <span id="cb58-196"><a href="#cb58-196" aria-hidden="true" tabindex="-1"></a><span class="ot">                                             title=</span><span class="st">"实现linux和windows文件传输"</span><span class="kw">&gt;</span></span>
 <span id="cb58-197"><a href="#cb58-197" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;/a&gt;</span></span>
 <span id="cb58-198"><a href="#cb58-198" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"news-content"</span><span class="kw">&gt;</span></span>
@@ -1210,7 +1210,7 @@ STATICFILES_DIRS = [
 <span id="cb58-212"><a href="#cb58-212" aria-hidden="true" tabindex="-1"></a>                                <span class="kw">&lt;li</span> <span class="er">class</span><span class="ot">=</span><span class="st">"news-item"</span><span class="kw">&gt;</span></span>
 <span id="cb58-213"><a href="#cb58-213" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://www.shiguangkey.com/course/2432"</span> <span class="er">class</span><span class="ot">=</span><span class="st">"news-thumbnail"</span></span>
 <span id="cb58-214"><a href="#cb58-214" aria-hidden="true" tabindex="-1"></a><span class="ot">                                       target=</span><span class="st">"_blank"</span><span class="kw">&gt;</span></span>
-<span id="cb58-215"><a href="#cb58-215" aria-hidden="true" tabindex="-1"></a>                                        <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{%</span> <span class="er">static</span> <span class="er">"images/linux.jpg"</span> <span class="er">%}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">".htaccess配置详解"</span></span>
+<span id="cb58-215"><a href="#cb58-215" aria-hidden="true" tabindex="-1"></a>                                        <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{{%</span> <span class="er">static</span> <span class="er">"images/linux.jpg"</span> <span class="er">%}}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">".htaccess配置详解"</span></span>
 <span id="cb58-216"><a href="#cb58-216" aria-hidden="true" tabindex="-1"></a><span class="ot">                                             title=</span><span class="st">".htaccess配置详解"</span><span class="kw">&gt;</span></span>
 <span id="cb58-217"><a href="#cb58-217" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;/a&gt;</span></span>
 <span id="cb58-218"><a href="#cb58-218" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"news-content"</span><span class="kw">&gt;</span></span>
@@ -1231,7 +1231,7 @@ STATICFILES_DIRS = [
 <span id="cb58-233"><a href="#cb58-233" aria-hidden="true" tabindex="-1"></a>                                <span class="kw">&lt;li</span> <span class="er">class</span><span class="ot">=</span><span class="st">"news-item"</span><span class="kw">&gt;</span></span>
 <span id="cb58-234"><a href="#cb58-234" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://www.shiguangkey.com/course/2432"</span> <span class="er">class</span><span class="ot">=</span><span class="st">"news-thumbnail"</span></span>
 <span id="cb58-235"><a href="#cb58-235" aria-hidden="true" tabindex="-1"></a><span class="ot">                                       target=</span><span class="st">"_blank"</span><span class="kw">&gt;</span></span>
-<span id="cb58-236"><a href="#cb58-236" aria-hidden="true" tabindex="-1"></a>                                        <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{%</span> <span class="er">static</span> <span class="er">"images/linux.jpg"</span> <span class="er">%}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"使用nohup命令让linux程序后台运行"</span></span>
+<span id="cb58-236"><a href="#cb58-236" aria-hidden="true" tabindex="-1"></a>                                        <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{{%</span> <span class="er">static</span> <span class="er">"images/linux.jpg"</span> <span class="er">%}}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"使用nohup命令让linux程序后台运行"</span></span>
 <span id="cb58-237"><a href="#cb58-237" aria-hidden="true" tabindex="-1"></a><span class="ot">                                             title=</span><span class="st">"使用nohup命令让linux程序后台运行"</span><span class="kw">&gt;</span></span>
 <span id="cb58-238"><a href="#cb58-238" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;/a&gt;</span></span>
 <span id="cb58-239"><a href="#cb58-239" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"news-content"</span><span class="kw">&gt;</span></span>
@@ -1259,17 +1259,17 @@ STATICFILES_DIRS = [
 <span id="cb58-261"><a href="#cb58-261" aria-hidden="true" tabindex="-1"></a>                    <span class="kw">&lt;/div&gt;</span></span>
 <span id="cb58-262"><a href="#cb58-262" aria-hidden="true" tabindex="-1"></a>                    <span class="co">&lt;!-- content end --&gt;</span></span>
 <span id="cb58-263"><a href="#cb58-263" aria-hidden="true" tabindex="-1"></a>                <span class="kw">&lt;/div&gt;</span></span>
-<span id="cb58-264"><a href="#cb58-264" aria-hidden="true" tabindex="-1"></a>            {% endblock main_contain %}</span>
+<span id="cb58-264"><a href="#cb58-264" aria-hidden="true" tabindex="-1"></a>            {{% endblock main_contain %}}</span>
 <span id="cb58-265"><a href="#cb58-265" aria-hidden="true" tabindex="-1"></a>            <span class="co">&lt;!-- main-contain  end --&gt;</span></span>
 <span id="cb58-266"><a href="#cb58-266" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb58-267"><a href="#cb58-267" aria-hidden="true" tabindex="-1"></a>            <span class="co">&lt;!-- side start --&gt;</span></span>
-<span id="cb58-268"><a href="#cb58-268" aria-hidden="true" tabindex="-1"></a>            {% block side %}</span>
+<span id="cb58-268"><a href="#cb58-268" aria-hidden="true" tabindex="-1"></a>            {{% block side %}}</span>
 <span id="cb58-269"><a href="#cb58-269" aria-hidden="true" tabindex="-1"></a>                <span class="kw">&lt;aside</span> <span class="er">class</span><span class="ot">=</span><span class="st">"side"</span><span class="kw">&gt;</span></span>
 <span id="cb58-270"><a href="#cb58-270" aria-hidden="true" tabindex="-1"></a>                    <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"side-activities"</span><span class="kw">&gt;</span></span>
 <span id="cb58-271"><a href="#cb58-271" aria-hidden="true" tabindex="-1"></a>                        <span class="kw">&lt;h3</span> <span class="er">class</span><span class="ot">=</span><span class="st">"activities-title"</span><span class="kw">&gt;</span>在线课堂<span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"javascript:void(0)"</span><span class="kw">&gt;</span>更多<span class="kw">&lt;/a&gt;&lt;/h3&gt;</span></span>
 <span id="cb58-272"><a href="#cb58-272" aria-hidden="true" tabindex="-1"></a>                        <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"activities-img"</span><span class="kw">&gt;</span></span>
 <span id="cb58-273"><a href="#cb58-273" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"javascript:void(0);"</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span><span class="kw">&gt;</span></span>
-<span id="cb58-274"><a href="#cb58-274" aria-hidden="true" tabindex="-1"></a>                                <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{%</span> <span class="er">static</span> <span class="er">"images/english.jpg"</span> <span class="er">%}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"title"</span><span class="kw">&gt;</span></span>
+<span id="cb58-274"><a href="#cb58-274" aria-hidden="true" tabindex="-1"></a>                                <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{{%</span> <span class="er">static</span> <span class="er">"images/english.jpg"</span> <span class="er">%}}</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"title"</span><span class="kw">&gt;</span></span>
 <span id="cb58-275"><a href="#cb58-275" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">&lt;/a&gt;</span></span>
 <span id="cb58-276"><a href="#cb58-276" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">&lt;p</span> <span class="er">class</span><span class="ot">=</span><span class="st">"activities-tips"</span><span class="kw">&gt;</span>对话国外小姐姐<span class="kw">&lt;/p&gt;</span></span>
 <span id="cb58-277"><a href="#cb58-277" aria-hidden="true" tabindex="-1"></a>                        <span class="kw">&lt;/div&gt;</span></span>
@@ -1318,7 +1318,7 @@ STATICFILES_DIRS = [
 <span id="cb58-320"><a href="#cb58-320" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">&lt;li&gt;</span></span>
 <span id="cb58-321"><a href="#cb58-321" aria-hidden="true" tabindex="-1"></a>                                <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"javascript:void(0)"</span> <span class="er">class</span><span class="ot">=</span><span class="st">"hot-news-contain clearfix"</span><span class="kw">&gt;</span></span>
 <span id="cb58-322"><a href="#cb58-322" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"hot-news-thumbnail"</span><span class="kw">&gt;</span></span>
-<span id="cb58-323"><a href="#cb58-323" aria-hidden="true" tabindex="-1"></a>                                        <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{%</span> <span class="er">static</span> <span class="er">"images/python_web.jpg"</span> <span class="er">%}</span></span>
+<span id="cb58-323"><a href="#cb58-323" aria-hidden="true" tabindex="-1"></a>                                        <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">{{%</span> <span class="er">static</span> <span class="er">"images/python_web.jpg"</span> <span class="er">%}}</span></span>
 <span id="cb58-324"><a href="#cb58-324" aria-hidden="true" tabindex="-1"></a><span class="ot">                                                     alt=</span><span class="st">""</span><span class="kw">&gt;</span></span>
 <span id="cb58-325"><a href="#cb58-325" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;/div&gt;</span></span>
 <span id="cb58-326"><a href="#cb58-326" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"hot-news-content"</span><span class="kw">&gt;</span></span>
@@ -1338,15 +1338,15 @@ STATICFILES_DIRS = [
 <span id="cb58-340"><a href="#cb58-340" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb58-341"><a href="#cb58-341" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb58-342"><a href="#cb58-342" aria-hidden="true" tabindex="-1"></a>                <span class="kw">&lt;/aside&gt;</span></span>
-<span id="cb58-343"><a href="#cb58-343" aria-hidden="true" tabindex="-1"></a>            {% endblock side %}</span>
+<span id="cb58-343"><a href="#cb58-343" aria-hidden="true" tabindex="-1"></a>            {{% endblock side %}}</span>
 <span id="cb58-344"><a href="#cb58-344" aria-hidden="true" tabindex="-1"></a>            <span class="co">&lt;!-- side end --&gt;</span></span>
 <span id="cb58-345"><a href="#cb58-345" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;/div&gt;</span></span>
 <span id="cb58-346"><a href="#cb58-346" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;/main&gt;</span></span>
-<span id="cb58-347"><a href="#cb58-347" aria-hidden="true" tabindex="-1"></a>{% endblock main %}</span>
+<span id="cb58-347"><a href="#cb58-347" aria-hidden="true" tabindex="-1"></a>{{% endblock main %}}</span>
 <span id="cb58-348"><a href="#cb58-348" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- main end --&gt;</span></span>
 <span id="cb58-349"><a href="#cb58-349" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb58-350"><a href="#cb58-350" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- footer start --&gt;</span></span>
-<span id="cb58-351"><a href="#cb58-351" aria-hidden="true" tabindex="-1"></a>{% block foot %}</span>
+<span id="cb58-351"><a href="#cb58-351" aria-hidden="true" tabindex="-1"></a>{{% block foot %}}</span>
 <span id="cb58-352"><a href="#cb58-352" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;footer</span> <span class="er">id</span><span class="ot">=</span><span class="st">"footer"</span><span class="kw">&gt;</span></span>
 <span id="cb58-353"><a href="#cb58-353" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"footer-box"</span><span class="kw">&gt;</span></span>
 <span id="cb58-354"><a href="#cb58-354" aria-hidden="true" tabindex="-1"></a>            <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"footer-content"</span><span class="kw">&gt;</span></span>
@@ -1369,36 +1369,36 @@ STATICFILES_DIRS = [
 <span id="cb58-371"><a href="#cb58-371" aria-hidden="true" tabindex="-1"></a>            <span class="kw">&lt;/p&gt;</span></span>
 <span id="cb58-372"><a href="#cb58-372" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;/div&gt;</span></span>
 <span id="cb58-373"><a href="#cb58-373" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;/footer&gt;</span></span>
-<span id="cb58-374"><a href="#cb58-374" aria-hidden="true" tabindex="-1"></a>{% endblock foot %}</span>
+<span id="cb58-374"><a href="#cb58-374" aria-hidden="true" tabindex="-1"></a>{{% endblock foot %}}</span>
 <span id="cb58-375"><a href="#cb58-375" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- footer end --&gt;</span></span>
 <span id="cb58-376"><a href="#cb58-376" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-377"><a href="#cb58-377" aria-hidden="true" tabindex="-1"></a>{% block script %}</span>
-<span id="cb58-378"><a href="#cb58-378" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;script</span> <span class="er">src</span><span class="ot">=</span><span class="st">"{% static 'js/news/index.js' %}"</span><span class="kw">&gt;&lt;/script&gt;</span></span>
-<span id="cb58-379"><a href="#cb58-379" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;script</span> <span class="er">src</span><span class="ot">=</span><span class="st">"{% static 'js/base/common.js' %}"</span><span class="kw">&gt;&lt;/script&gt;</span></span>
-<span id="cb58-380"><a href="#cb58-380" aria-hidden="true" tabindex="-1"></a>{% endblock script %}</span>
+<span id="cb58-377"><a href="#cb58-377" aria-hidden="true" tabindex="-1"></a>{{% block script %}}</span>
+<span id="cb58-378"><a href="#cb58-378" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;script</span> <span class="er">src</span><span class="ot">=</span><span class="st">"{{% static 'js/news/index.js' %}}"</span><span class="kw">&gt;&lt;/script&gt;</span></span>
+<span id="cb58-379"><a href="#cb58-379" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;script</span> <span class="er">src</span><span class="ot">=</span><span class="st">"{{% static 'js/base/common.js' %}}"</span><span class="kw">&gt;&lt;/script&gt;</span></span>
+<span id="cb58-380"><a href="#cb58-380" aria-hidden="true" tabindex="-1"></a>{{% endblock script %}}</span>
 <span id="cb58-381"><a href="#cb58-381" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>③doc.html文件</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>{% extends 'base/base.html' %}</span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>{% load static %}</span>
+<div class="sourceCode" id="cb59"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>{{% extends 'base/base.html' %}}</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>{{% load static %}}</span>
 <span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>{% block title %}</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>{{% block title %}}</span>
 <span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>    payInfo</span>
-<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>{% endblock title %}</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>{{% endblock title %}}</span>
 <span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>{% block css %}</span>
-<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;link</span> <span class="er">rel</span><span class="ot">=</span><span class="st">"stylesheet"</span> <span class="er">href</span><span class="ot">=</span><span class="st">"{% static 'css/doc/docDownload.css' %}"</span><span class="kw">&gt;</span></span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>{{% block css %}}</span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;link</span> <span class="er">rel</span><span class="ot">=</span><span class="st">"stylesheet"</span> <span class="er">href</span><span class="ot">=</span><span class="st">"{{% static 'css/doc/docDownload.css' %}}"</span><span class="kw">&gt;</span></span>
 <span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;script&gt;</span>IMemuIndex <span class="op">=</span> <span class="dv">2</span><span class="kw">&lt;/script&gt;</span></span>
-<span id="cb59-12"><a href="#cb59-12" aria-hidden="true" tabindex="-1"></a>{% endblock css %}</span>
+<span id="cb59-12"><a href="#cb59-12" aria-hidden="true" tabindex="-1"></a>{{% endblock css %}}</span>
 <span id="cb59-13"><a href="#cb59-13" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;body&gt;</span></span>
 <span id="cb59-14"><a href="#cb59-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb59-15"><a href="#cb59-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb59-16"><a href="#cb59-16" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- main start --&gt;</span></span>
-<span id="cb59-17"><a href="#cb59-17" aria-hidden="true" tabindex="-1"></a>{% block main %}</span>
+<span id="cb59-17"><a href="#cb59-17" aria-hidden="true" tabindex="-1"></a>{{% block main %}}</span>
 <span id="cb59-18"><a href="#cb59-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;main</span> <span class="er">id</span><span class="ot">=</span><span class="st">"main"</span><span class="kw">&gt;</span></span>
 <span id="cb59-19"><a href="#cb59-19" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"w1200 clearfix"</span><span class="kw">&gt;</span></span>
 <span id="cb59-20"><a href="#cb59-20" aria-hidden="true" tabindex="-1"></a>            <span class="co">&lt;!-- main-contain start  --&gt;</span></span>
-<span id="cb59-21"><a href="#cb59-21" aria-hidden="true" tabindex="-1"></a>            {% block main_contain %}</span>
+<span id="cb59-21"><a href="#cb59-21" aria-hidden="true" tabindex="-1"></a>            {{% block main_contain %}}</span>
 <span id="cb59-22"><a href="#cb59-22" aria-hidden="true" tabindex="-1"></a>                <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"main-contain "</span><span class="kw">&gt;</span></span>
 <span id="cb59-23"><a href="#cb59-23" aria-hidden="true" tabindex="-1"></a>                    <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"banner"</span><span class="kw">&gt;</span></span>
 <span id="cb59-24"><a href="#cb59-24" aria-hidden="true" tabindex="-1"></a>                        <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1802845035,3786939119</span><span class="er">&amp;</span><span class="st">fm=26</span><span class="er">&amp;</span><span class="st">gp=0.jpg"</span></span>
@@ -1447,11 +1447,11 @@ STATICFILES_DIRS = [
 <span id="cb59-67"><a href="#cb59-67" aria-hidden="true" tabindex="-1"></a>                        <span class="kw">&lt;/ul&gt;</span></span>
 <span id="cb59-68"><a href="#cb59-68" aria-hidden="true" tabindex="-1"></a>                    <span class="kw">&lt;/div&gt;</span></span>
 <span id="cb59-69"><a href="#cb59-69" aria-hidden="true" tabindex="-1"></a>                <span class="kw">&lt;/div&gt;</span></span>
-<span id="cb59-70"><a href="#cb59-70" aria-hidden="true" tabindex="-1"></a>            {% endblock main_contain %}</span>
+<span id="cb59-70"><a href="#cb59-70" aria-hidden="true" tabindex="-1"></a>            {{% endblock main_contain %}}</span>
 <span id="cb59-71"><a href="#cb59-71" aria-hidden="true" tabindex="-1"></a>            <span class="co">&lt;!-- main-contain  end --&gt;</span></span>
 <span id="cb59-72"><a href="#cb59-72" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb59-73"><a href="#cb59-73" aria-hidden="true" tabindex="-1"></a>            <span class="co">&lt;!-- side start --&gt;</span></span>
-<span id="cb59-74"><a href="#cb59-74" aria-hidden="true" tabindex="-1"></a>            {% block side %}</span>
+<span id="cb59-74"><a href="#cb59-74" aria-hidden="true" tabindex="-1"></a>            {{% block side %}}</span>
 <span id="cb59-75"><a href="#cb59-75" aria-hidden="true" tabindex="-1"></a>                <span class="kw">&lt;aside</span> <span class="er">class</span><span class="ot">=</span><span class="st">"side"</span><span class="kw">&gt;</span></span>
 <span id="cb59-76"><a href="#cb59-76" aria-hidden="true" tabindex="-1"></a>                    <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"side-activities"</span><span class="kw">&gt;</span></span>
 <span id="cb59-77"><a href="#cb59-77" aria-hidden="true" tabindex="-1"></a>                        <span class="kw">&lt;h3</span> <span class="er">class</span><span class="ot">=</span><span class="st">"activities-title"</span><span class="kw">&gt;</span>在线课堂<span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"javascript:void(0)"</span><span class="kw">&gt;</span>更多<span class="kw">&lt;/a&gt;&lt;/h3&gt;</span></span>
@@ -1500,18 +1500,18 @@ STATICFILES_DIRS = [
 <span id="cb59-120"><a href="#cb59-120" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb59-121"><a href="#cb59-121" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb59-122"><a href="#cb59-122" aria-hidden="true" tabindex="-1"></a>                <span class="kw">&lt;/aside&gt;</span></span>
-<span id="cb59-123"><a href="#cb59-123" aria-hidden="true" tabindex="-1"></a>            {% endblock side %}</span>
+<span id="cb59-123"><a href="#cb59-123" aria-hidden="true" tabindex="-1"></a>            {{% endblock side %}}</span>
 <span id="cb59-124"><a href="#cb59-124" aria-hidden="true" tabindex="-1"></a>            <span class="co">&lt;!-- side end --&gt;</span></span>
 <span id="cb59-125"><a href="#cb59-125" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb59-126"><a href="#cb59-126" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb59-127"><a href="#cb59-127" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;/div&gt;</span></span>
 <span id="cb59-128"><a href="#cb59-128" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;/main&gt;</span></span>
-<span id="cb59-129"><a href="#cb59-129" aria-hidden="true" tabindex="-1"></a>{% endblock main %}</span>
+<span id="cb59-129"><a href="#cb59-129" aria-hidden="true" tabindex="-1"></a>{{% endblock main %}}</span>
 <span id="cb59-130"><a href="#cb59-130" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb59-131"><a href="#cb59-131" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- main end --&gt;</span></span>
 <span id="cb59-132"><a href="#cb59-132" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb59-133"><a href="#cb59-133" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- footer start --&gt;</span></span>
-<span id="cb59-134"><a href="#cb59-134" aria-hidden="true" tabindex="-1"></a>{% block foot %}</span>
+<span id="cb59-134"><a href="#cb59-134" aria-hidden="true" tabindex="-1"></a>{{% block foot %}}</span>
 <span id="cb59-135"><a href="#cb59-135" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;footer</span> <span class="er">id</span><span class="ot">=</span><span class="st">"footer"</span><span class="kw">&gt;</span></span>
 <span id="cb59-136"><a href="#cb59-136" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"footer-box"</span><span class="kw">&gt;</span></span>
 <span id="cb59-137"><a href="#cb59-137" aria-hidden="true" tabindex="-1"></a>            <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"footer-content"</span><span class="kw">&gt;</span></span>
@@ -1534,33 +1534,33 @@ STATICFILES_DIRS = [
 <span id="cb59-154"><a href="#cb59-154" aria-hidden="true" tabindex="-1"></a>            <span class="kw">&lt;/p&gt;</span></span>
 <span id="cb59-155"><a href="#cb59-155" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;/div&gt;</span></span>
 <span id="cb59-156"><a href="#cb59-156" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;/footer&gt;</span></span>
-<span id="cb59-157"><a href="#cb59-157" aria-hidden="true" tabindex="-1"></a>{% endblock foot %}</span>
+<span id="cb59-157"><a href="#cb59-157" aria-hidden="true" tabindex="-1"></a>{{% endblock foot %}}</span>
 <span id="cb59-158"><a href="#cb59-158" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- footer end --&gt;</span></span>
-<span id="cb59-159"><a href="#cb59-159" aria-hidden="true" tabindex="-1"></a>{% block script %}</span>
-<span id="cb59-160"><a href="#cb59-160" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;script</span> <span class="er">src</span><span class="ot">=</span><span class="st">"{% static 'js/base/common.js' %}"</span><span class="kw">&gt;&lt;/script&gt;</span></span>
-<span id="cb59-161"><a href="#cb59-161" aria-hidden="true" tabindex="-1"></a>{% endblock script %}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb59-159"><a href="#cb59-159" aria-hidden="true" tabindex="-1"></a>{{% block script %}}</span>
+<span id="cb59-160"><a href="#cb59-160" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;script</span> <span class="er">src</span><span class="ot">=</span><span class="st">"{{% static 'js/base/common.js' %}}"</span><span class="kw">&gt;&lt;/script&gt;</span></span>
+<span id="cb59-161"><a href="#cb59-161" aria-hidden="true" tabindex="-1"></a>{{% endblock script %}}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="userlogin.html文件" class="level4">
 <h4 class="anchored" data-anchor-id="userlogin.html文件">④user/login.html文件</h4>
-<div class="sourceCode" id="cb60"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>{% extends 'base/base.html' %}</span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>{% load static %}</span>
+<div class="sourceCode" id="cb60"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>{{% extends 'base/base.html' %}}</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>{{% load static %}}</span>
 <span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>{% block css %}</span>
-<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;link</span> <span class="er">rel</span><span class="ot">=</span><span class="st">"stylesheet"</span> <span class="er">href</span><span class="ot">=</span><span class="st">"{% static 'css/user/auth.css' %}"</span><span class="kw">&gt;</span></span>
-<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>{% endblock css %}</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>{{% block css %}}</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;link</span> <span class="er">rel</span><span class="ot">=</span><span class="st">"stylesheet"</span> <span class="er">href</span><span class="ot">=</span><span class="st">"{{% static 'css/user/auth.css' %}}"</span><span class="kw">&gt;</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>{{% endblock css %}}</span>
 <span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>{% block title %}</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>{{% block title %}}</span>
 <span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>    login</span>
-<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>{% endblock %}</span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>{{% endblock %}}</span>
 <span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- container start --&gt;</span></span>
-<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a>{% block main %}</span>
+<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a>{{% block main %}}</span>
 <span id="cb60-14"><a href="#cb60-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;main</span> <span class="er">id</span><span class="ot">=</span><span class="st">"container"</span><span class="kw">&gt;</span></span>
 <span id="cb60-15"><a href="#cb60-15" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"login-contain"</span><span class="kw">&gt;</span></span>
 <span id="cb60-16"><a href="#cb60-16" aria-hidden="true" tabindex="-1"></a>            <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"top-contain"</span><span class="kw">&gt;</span></span>
 <span id="cb60-17"><a href="#cb60-17" aria-hidden="true" tabindex="-1"></a>                <span class="kw">&lt;h4</span> <span class="er">class</span><span class="ot">=</span><span class="st">"please-login"</span><span class="kw">&gt;</span>请登录<span class="kw">&lt;/h4&gt;</span></span>
 <span id="cb60-18"><a href="#cb60-18" aria-hidden="true" tabindex="-1"></a>{#                <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"javascript:void(0);"</span> <span class="er">class</span><span class="ot">=</span><span class="st">"register"</span><span class="kw">&gt;</span>立即注册 <span class="dv">&amp;gt;</span><span class="kw">&lt;/a&gt;</span>#}</span>
-<span id="cb60-19"><a href="#cb60-19" aria-hidden="true" tabindex="-1"></a>                <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"{% url 'user:register' %}"</span> <span class="er">class</span><span class="ot">=</span><span class="st">"register"</span><span class="kw">&gt;</span>立即注册 <span class="dv">&amp;gt;</span><span class="kw">&lt;/a&gt;</span></span>
+<span id="cb60-19"><a href="#cb60-19" aria-hidden="true" tabindex="-1"></a>                <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"{{% url 'user:register' %}}"</span> <span class="er">class</span><span class="ot">=</span><span class="st">"register"</span><span class="kw">&gt;</span>立即注册 <span class="dv">&amp;gt;</span><span class="kw">&lt;/a&gt;</span></span>
 <span id="cb60-20"><a href="#cb60-20" aria-hidden="true" tabindex="-1"></a>            <span class="kw">&lt;/div&gt;</span></span>
 <span id="cb60-21"><a href="#cb60-21" aria-hidden="true" tabindex="-1"></a>            <span class="kw">&lt;form</span> <span class="er">action</span><span class="ot">=</span><span class="st">""</span> <span class="er">method</span><span class="ot">=</span><span class="st">"post"</span> <span class="er">class</span><span class="ot">=</span><span class="st">"form-contain"</span><span class="kw">&gt;</span></span>
 <span id="cb60-22"><a href="#cb60-22" aria-hidden="true" tabindex="-1"></a>                <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"form-item"</span><span class="kw">&gt;</span></span>
@@ -1582,11 +1582,11 @@ STATICFILES_DIRS = [
 <span id="cb60-38"><a href="#cb60-38" aria-hidden="true" tabindex="-1"></a>            <span class="kw">&lt;/form&gt;</span></span>
 <span id="cb60-39"><a href="#cb60-39" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;/div&gt;</span></span>
 <span id="cb60-40"><a href="#cb60-40" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;/main&gt;</span></span>
-<span id="cb60-41"><a href="#cb60-41" aria-hidden="true" tabindex="-1"></a>{% endblock main %}</span>
+<span id="cb60-41"><a href="#cb60-41" aria-hidden="true" tabindex="-1"></a>{{% endblock main %}}</span>
 <span id="cb60-42"><a href="#cb60-42" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- container end --&gt;</span></span>
 <span id="cb60-43"><a href="#cb60-43" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb60-44"><a href="#cb60-44" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- footer start --&gt;</span></span>
-<span id="cb60-45"><a href="#cb60-45" aria-hidden="true" tabindex="-1"></a>{% block foot %}</span>
+<span id="cb60-45"><a href="#cb60-45" aria-hidden="true" tabindex="-1"></a>{{% block foot %}}</span>
 <span id="cb60-46"><a href="#cb60-46" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;footer</span> <span class="er">id</span><span class="ot">=</span><span class="st">"footer"</span><span class="kw">&gt;</span></span>
 <span id="cb60-47"><a href="#cb60-47" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"footer-box"</span><span class="kw">&gt;</span></span>
 <span id="cb60-48"><a href="#cb60-48" aria-hidden="true" tabindex="-1"></a>            <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"footer-content"</span><span class="kw">&gt;</span></span>
@@ -1609,39 +1609,39 @@ STATICFILES_DIRS = [
 <span id="cb60-65"><a href="#cb60-65" aria-hidden="true" tabindex="-1"></a>            <span class="kw">&lt;/p&gt;</span></span>
 <span id="cb60-66"><a href="#cb60-66" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;/div&gt;</span></span>
 <span id="cb60-67"><a href="#cb60-67" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;/footer&gt;</span></span>
-<span id="cb60-68"><a href="#cb60-68" aria-hidden="true" tabindex="-1"></a>{% endblock %}</span>
+<span id="cb60-68"><a href="#cb60-68" aria-hidden="true" tabindex="-1"></a>{{% endblock %}}</span>
 <span id="cb60-69"><a href="#cb60-69" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb60-70"><a href="#cb60-70" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- footer end --&gt;</span></span>
-<span id="cb60-71"><a href="#cb60-71" aria-hidden="true" tabindex="-1"></a>{% block script %}</span>
-<span id="cb60-72"><a href="#cb60-72" aria-hidden="true" tabindex="-1"></a>{#<span class="kw">&lt;script</span> <span class="er">src</span><span class="ot">=</span><span class="st">"{% static 'js/user/register.js' %}"</span><span class="kw">&gt;&lt;/script&gt;</span>#}</span>
-<span id="cb60-73"><a href="#cb60-73" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;script</span> <span class="er">src</span><span class="ot">=</span><span class="st">"{% static 'js/user/login.js' %}"</span><span class="kw">&gt;&lt;/script&gt;</span></span>
-<span id="cb60-74"><a href="#cb60-74" aria-hidden="true" tabindex="-1"></a>{% endblock script %}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb60-71"><a href="#cb60-71" aria-hidden="true" tabindex="-1"></a>{{% block script %}}</span>
+<span id="cb60-72"><a href="#cb60-72" aria-hidden="true" tabindex="-1"></a>{#<span class="kw">&lt;script</span> <span class="er">src</span><span class="ot">=</span><span class="st">"{{% static 'js/user/register.js' %}}"</span><span class="kw">&gt;&lt;/script&gt;</span>#}</span>
+<span id="cb60-73"><a href="#cb60-73" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;script</span> <span class="er">src</span><span class="ot">=</span><span class="st">"{{% static 'js/user/login.js' %}}"</span><span class="kw">&gt;&lt;/script&gt;</span></span>
+<span id="cb60-74"><a href="#cb60-74" aria-hidden="true" tabindex="-1"></a>{{% endblock script %}}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="register.html文件" class="level4">
 <h4 class="anchored" data-anchor-id="register.html文件">⑤register.html文件</h4>
-<div class="sourceCode" id="cb61"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>{% extends 'base/base.html' %}</span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>{% load static %}</span>
+<div class="sourceCode" id="cb61"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>{{% extends 'base/base.html' %}}</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>{{% load static %}}</span>
 <span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>{% block title %}</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>{{% block title %}}</span>
 <span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>    Register</span>
-<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>{% endblock title %}</span>
-<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>{% block css %}</span>
-<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;link</span> <span class="er">rel</span><span class="ot">=</span><span class="st">"stylesheet"</span> <span class="er">href</span><span class="ot">=</span><span class="st">"{% static 'css/user/auth.css' %}"</span><span class="kw">&gt;</span></span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>{{% endblock title %}}</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>{{% block css %}}</span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;link</span> <span class="er">rel</span><span class="ot">=</span><span class="st">"stylesheet"</span> <span class="er">href</span><span class="ot">=</span><span class="st">"{{% static 'css/user/auth.css' %}}"</span><span class="kw">&gt;</span></span>
 <span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;script&gt;</span>IMemuIndex<span class="op">=</span><span class="kw">false&lt;/script&gt;</span></span>
-<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>{% endblock css %}</span>
+<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>{{% endblock css %}}</span>
 <span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb61-12"><a href="#cb61-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb61-13"><a href="#cb61-13" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- container start --&gt;</span></span>
-<span id="cb61-14"><a href="#cb61-14" aria-hidden="true" tabindex="-1"></a>{% block main %}</span>
+<span id="cb61-14"><a href="#cb61-14" aria-hidden="true" tabindex="-1"></a>{{% block main %}}</span>
 <span id="cb61-15"><a href="#cb61-15" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;main</span> <span class="er">id</span><span class="ot">=</span><span class="st">"container"</span><span class="kw">&gt;</span></span>
 <span id="cb61-16"><a href="#cb61-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"register-contain"</span><span class="kw">&gt;</span></span>
 <span id="cb61-17"><a href="#cb61-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"top-contain"</span><span class="kw">&gt;</span></span>
 <span id="cb61-18"><a href="#cb61-18" aria-hidden="true" tabindex="-1"></a>      <span class="kw">&lt;h4</span> <span class="er">class</span><span class="ot">=</span><span class="st">"please-register"</span><span class="kw">&gt;</span>请注册<span class="kw">&lt;/h4&gt;</span></span>
 <span id="cb61-19"><a href="#cb61-19" aria-hidden="true" tabindex="-1"></a>{#      <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"javascript:void(0);"</span> <span class="er">class</span><span class="ot">=</span><span class="st">"login"</span><span class="kw">&gt;</span>立即登录 <span class="dv">&amp;gt;</span><span class="kw">&lt;/a&gt;</span>#}</span>
-<span id="cb61-20"><a href="#cb61-20" aria-hidden="true" tabindex="-1"></a>      <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"{% url 'user:login' %}"</span> <span class="er">class</span><span class="ot">=</span><span class="st">"login"</span><span class="kw">&gt;</span>立即登录 <span class="dv">&amp;gt;</span><span class="kw">&lt;/a&gt;</span></span>
+<span id="cb61-20"><a href="#cb61-20" aria-hidden="true" tabindex="-1"></a>      <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"{{% url 'user:login' %}}"</span> <span class="er">class</span><span class="ot">=</span><span class="st">"login"</span><span class="kw">&gt;</span>立即登录 <span class="dv">&amp;gt;</span><span class="kw">&lt;/a&gt;</span></span>
 <span id="cb61-21"><a href="#cb61-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;/div&gt;</span></span>
 <span id="cb61-22"><a href="#cb61-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;form</span> <span class="er">action</span><span class="ot">=</span><span class="st">""</span> <span class="er">method</span><span class="ot">=</span><span class="st">"post"</span> <span class="er">class</span><span class="ot">=</span><span class="st">"form-contain"</span><span class="kw">&gt;</span></span>
-<span id="cb61-23"><a href="#cb61-23" aria-hidden="true" tabindex="-1"></a>        {% csrf_token %}</span>
+<span id="cb61-23"><a href="#cb61-23" aria-hidden="true" tabindex="-1"></a>        {{% csrf_token %}}</span>
 <span id="cb61-24"><a href="#cb61-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb61-25"><a href="#cb61-25" aria-hidden="true" tabindex="-1"></a>      <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"form-item"</span><span class="kw">&gt;</span></span>
 <span id="cb61-26"><a href="#cb61-26" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;input</span> <span class="er">type</span><span class="ot">=</span><span class="st">"text"</span> <span class="er">placeholder</span><span class="ot">=</span><span class="st">"请输入用户名"</span> <span class="er">name</span><span class="ot">=</span><span class="st">"username"</span> <span class="er">class</span><span class="ot">=</span><span class="st">"form-control"</span> <span class="er">id</span><span class="ot">=</span><span class="st">"username"</span> <span class="er">autocomplete</span><span class="ot">=</span><span class="st">"off"</span><span class="kw">&gt;</span></span>
@@ -1658,7 +1658,7 @@ STATICFILES_DIRS = [
 <span id="cb61-37"><a href="#cb61-37" aria-hidden="true" tabindex="-1"></a>      <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"form-item"</span><span class="kw">&gt;</span></span>
 <span id="cb61-38"><a href="#cb61-38" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;input</span> <span class="er">type</span><span class="ot">=</span><span class="st">"text"</span> <span class="er">placeholder</span><span class="ot">=</span><span class="st">"请输入图形验证码"</span> <span class="er">name</span><span class="ot">=</span><span class="st">"captcha_graph"</span> <span class="er">class</span><span class="ot">=</span><span class="st">"form-captcha"</span><span class="kw">&gt;</span></span>
 <span id="cb61-39"><a href="#cb61-39" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"javascript:void(0);"</span> <span class="er">class</span><span class="ot">=</span><span class="st">"captcha-graph-img"</span><span class="kw">&gt;</span></span>
-<span id="cb61-40"><a href="#cb61-40" aria-hidden="true" tabindex="-1"></a>          <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"{% url 'image_code:image_code' %}"</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"验证码"</span> <span class="er">title</span><span class="ot">=</span><span class="st">"点击刷新"</span><span class="kw">&gt;</span></span>
+<span id="cb61-40"><a href="#cb61-40" aria-hidden="true" tabindex="-1"></a>          <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"{{% url 'image_code:image_code' %}}"</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"验证码"</span> <span class="er">title</span><span class="ot">=</span><span class="st">"点击刷新"</span><span class="kw">&gt;</span></span>
 <span id="cb61-41"><a href="#cb61-41" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;/a&gt;</span></span>
 <span id="cb61-42"><a href="#cb61-42" aria-hidden="true" tabindex="-1"></a>      <span class="kw">&lt;/div&gt;</span></span>
 <span id="cb61-43"><a href="#cb61-43" aria-hidden="true" tabindex="-1"></a>      <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"form-item"</span><span class="kw">&gt;</span></span>
@@ -1671,11 +1671,11 @@ STATICFILES_DIRS = [
 <span id="cb61-50"><a href="#cb61-50" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;/form&gt;</span></span>
 <span id="cb61-51"><a href="#cb61-51" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;/div&gt;</span></span>
 <span id="cb61-52"><a href="#cb61-52" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/main&gt;</span></span>
-<span id="cb61-53"><a href="#cb61-53" aria-hidden="true" tabindex="-1"></a>{% endblock main %}</span>
+<span id="cb61-53"><a href="#cb61-53" aria-hidden="true" tabindex="-1"></a>{{% endblock main %}}</span>
 <span id="cb61-54"><a href="#cb61-54" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- container end --&gt;</span></span>
 <span id="cb61-55"><a href="#cb61-55" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb61-56"><a href="#cb61-56" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- footer start --&gt;</span></span>
-<span id="cb61-57"><a href="#cb61-57" aria-hidden="true" tabindex="-1"></a>{% block foot %}</span>
+<span id="cb61-57"><a href="#cb61-57" aria-hidden="true" tabindex="-1"></a>{{% block foot %}}</span>
 <span id="cb61-58"><a href="#cb61-58" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;footer</span> <span class="er">id</span><span class="ot">=</span><span class="st">"footer"</span><span class="kw">&gt;</span></span>
 <span id="cb61-59"><a href="#cb61-59" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"footer-box"</span><span class="kw">&gt;</span></span>
 <span id="cb61-60"><a href="#cb61-60" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"footer-content"</span><span class="kw">&gt;</span></span>
@@ -1698,39 +1698,39 @@ STATICFILES_DIRS = [
 <span id="cb61-77"><a href="#cb61-77" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;/p&gt;</span></span>
 <span id="cb61-78"><a href="#cb61-78" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;/div&gt;</span></span>
 <span id="cb61-79"><a href="#cb61-79" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/footer&gt;</span></span>
-<span id="cb61-80"><a href="#cb61-80" aria-hidden="true" tabindex="-1"></a>{% endblock foot %}</span>
+<span id="cb61-80"><a href="#cb61-80" aria-hidden="true" tabindex="-1"></a>{{% endblock foot %}}</span>
 <span id="cb61-81"><a href="#cb61-81" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- footer end --&gt;</span></span>
-<span id="cb61-82"><a href="#cb61-82" aria-hidden="true" tabindex="-1"></a>{% block script %}</span>
-<span id="cb61-83"><a href="#cb61-83" aria-hidden="true" tabindex="-1"></a>{#    <span class="kw">&lt;script</span> <span class="er">src</span><span class="ot">=</span><span class="st">"{% static 'js/base/message.js' %}"</span><span class="kw">&gt;&lt;/script&gt;</span>#}</span>
-<span id="cb61-84"><a href="#cb61-84" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;script</span> <span class="er">src</span><span class="ot">=</span><span class="st">"{% static 'js/user/register.js' %}"</span><span class="kw">&gt;&lt;/script&gt;</span></span>
-<span id="cb61-85"><a href="#cb61-85" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;script</span> <span class="er">src</span><span class="ot">=</span><span class="st">"{% static 'js/base/common.js' %}"</span><span class="kw">&gt;&lt;/script&gt;</span></span>
-<span id="cb61-86"><a href="#cb61-86" aria-hidden="true" tabindex="-1"></a>{% endblock script %}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb61-82"><a href="#cb61-82" aria-hidden="true" tabindex="-1"></a>{{% block script %}}</span>
+<span id="cb61-83"><a href="#cb61-83" aria-hidden="true" tabindex="-1"></a>{#    <span class="kw">&lt;script</span> <span class="er">src</span><span class="ot">=</span><span class="st">"{{% static 'js/base/message.js' %}}"</span><span class="kw">&gt;&lt;/script&gt;</span>#}</span>
+<span id="cb61-84"><a href="#cb61-84" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;script</span> <span class="er">src</span><span class="ot">=</span><span class="st">"{{% static 'js/user/register.js' %}}"</span><span class="kw">&gt;&lt;/script&gt;</span></span>
+<span id="cb61-85"><a href="#cb61-85" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;script</span> <span class="er">src</span><span class="ot">=</span><span class="st">"{{% static 'js/base/common.js' %}}"</span><span class="kw">&gt;&lt;/script&gt;</span></span>
+<span id="cb61-86"><a href="#cb61-86" aria-hidden="true" tabindex="-1"></a>{{% endblock script %}}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="course.html文件" class="level4">
 <h4 class="anchored" data-anchor-id="course.html文件">⑥course.html文件</h4>
-<div class="sourceCode" id="cb62"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>{% extends 'base/base.html' %}</span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>{% load static %}</span>
+<div class="sourceCode" id="cb62"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>{{% extends 'base/base.html' %}}</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>{{% load static %}}</span>
 <span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>{% block title %}</span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>{{% block title %}}</span>
 <span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>    coursePage</span>
-<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>{% endblock title %}</span>
-<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a>{% block css %}</span>
-<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;link</span> <span class="er">rel</span><span class="ot">=</span><span class="st">"stylesheet"</span> <span class="er">href</span><span class="ot">=</span><span class="st">"{% static 'css/course/course.css' %}"</span><span class="kw">&gt;</span></span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>{{% endblock title %}}</span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a>{{% block css %}}</span>
+<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;link</span> <span class="er">rel</span><span class="ot">=</span><span class="st">"stylesheet"</span> <span class="er">href</span><span class="ot">=</span><span class="st">"{{% static 'css/course/course.css' %}}"</span><span class="kw">&gt;</span></span>
 <span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;script&gt;</span>IMemuIndex <span class="op">=</span> <span class="dv">1</span><span class="kw">&lt;/script&gt;</span></span>
-<span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a>{% endblock css %}</span>
+<span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a>{{% endblock css %}}</span>
 <span id="cb62-13"><a href="#cb62-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb62-14"><a href="#cb62-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb62-15"><a href="#cb62-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-16"><a href="#cb62-16" aria-hidden="true" tabindex="-1"></a>{% block main %}</span>
+<span id="cb62-16"><a href="#cb62-16" aria-hidden="true" tabindex="-1"></a>{{% block main %}}</span>
 <span id="cb62-17"><a href="#cb62-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;main</span> <span class="er">id</span><span class="ot">=</span><span class="st">"course-container"</span><span class="kw">&gt;</span></span>
 <span id="cb62-18"><a href="#cb62-18" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"w1200"</span><span class="kw">&gt;</span></span>
 <span id="cb62-19"><a href="#cb62-19" aria-hidden="true" tabindex="-1"></a>            <span class="kw">&lt;ul</span> <span class="er">class</span><span class="ot">=</span><span class="st">"course-list"</span><span class="kw">&gt;</span></span>
 <span id="cb62-20"><a href="#cb62-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb62-21"><a href="#cb62-21" aria-hidden="true" tabindex="-1"></a>                <span class="kw">&lt;li</span> <span class="er">class</span><span class="ot">=</span><span class="st">"course-item"</span><span class="kw">&gt;</span></span>
 <span id="cb62-22"><a href="#cb62-22" aria-hidden="true" tabindex="-1"></a>                    <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://www.shiguangkey.com/course/2432"</span><span class="kw">&gt;</span></span>
-<span id="cb62-23"><a href="#cb62-23" aria-hidden="true" tabindex="-1"></a>                        <span class="kw">&lt;img</span> <span class="er">class</span><span class="ot">=</span><span class="st">"course-img"</span> <span class="er">src</span><span class="ot">=</span><span class="st">{%</span> <span class="er">static</span> <span class="er">"images/python_advanced.jpg"</span> <span class="er">%}</span></span>
+<span id="cb62-23"><a href="#cb62-23" aria-hidden="true" tabindex="-1"></a>                        <span class="kw">&lt;img</span> <span class="er">class</span><span class="ot">=</span><span class="st">"course-img"</span> <span class="er">src</span><span class="ot">=</span><span class="st">{{%</span> <span class="er">static</span> <span class="er">"images/python_advanced.jpg"</span> <span class="er">%}}</span></span>
 <span id="cb62-24"><a href="#cb62-24" aria-hidden="true" tabindex="-1"></a><span class="ot">                                alt=</span><span class="st">"潭州英语"</span><span class="kw">&gt;</span></span>
 <span id="cb62-25"><a href="#cb62-25" aria-hidden="true" tabindex="-1"></a>                        <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"course-content"</span><span class="kw">&gt;</span></span>
 <span id="cb62-26"><a href="#cb62-26" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">&lt;p</span> <span class="er">class</span><span class="ot">=</span><span class="st">"course-info"</span><span class="kw">&gt;</span>python 全栈开发<span class="kw">&lt;/p&gt;</span></span>
@@ -1742,7 +1742,7 @@ STATICFILES_DIRS = [
 <span id="cb62-32"><a href="#cb62-32" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb62-33"><a href="#cb62-33" aria-hidden="true" tabindex="-1"></a>                <span class="kw">&lt;li</span> <span class="er">class</span><span class="ot">=</span><span class="st">"course-item"</span><span class="kw">&gt;</span></span>
 <span id="cb62-34"><a href="#cb62-34" aria-hidden="true" tabindex="-1"></a>                    <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://www.shiguangkey.com/course/2432"</span><span class="kw">&gt;</span></span>
-<span id="cb62-35"><a href="#cb62-35" aria-hidden="true" tabindex="-1"></a>                        <span class="kw">&lt;img</span> <span class="er">class</span><span class="ot">=</span><span class="st">"course-img"</span> <span class="er">src</span><span class="ot">=</span><span class="st">{%</span> <span class="er">static</span> <span class="er">"images/python_web.jpg"</span> <span class="er">%}</span></span>
+<span id="cb62-35"><a href="#cb62-35" aria-hidden="true" tabindex="-1"></a>                        <span class="kw">&lt;img</span> <span class="er">class</span><span class="ot">=</span><span class="st">"course-img"</span> <span class="er">src</span><span class="ot">=</span><span class="st">{{%</span> <span class="er">static</span> <span class="er">"images/python_web.jpg"</span> <span class="er">%}}</span></span>
 <span id="cb62-36"><a href="#cb62-36" aria-hidden="true" tabindex="-1"></a><span class="ot">                                alt=</span><span class="st">"潭州英语"</span><span class="kw">&gt;</span></span>
 <span id="cb62-37"><a href="#cb62-37" aria-hidden="true" tabindex="-1"></a>                        <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"course-content"</span><span class="kw">&gt;</span></span>
 <span id="cb62-38"><a href="#cb62-38" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">&lt;p</span> <span class="er">class</span><span class="ot">=</span><span class="st">"course-info"</span><span class="kw">&gt;</span>django 项目<span class="kw">&lt;/p&gt;</span></span>
@@ -1755,10 +1755,10 @@ STATICFILES_DIRS = [
 <span id="cb62-45"><a href="#cb62-45" aria-hidden="true" tabindex="-1"></a>            <span class="kw">&lt;/ul&gt;</span></span>
 <span id="cb62-46"><a href="#cb62-46" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;/div&gt;</span></span>
 <span id="cb62-47"><a href="#cb62-47" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;/main&gt;</span></span>
-<span id="cb62-48"><a href="#cb62-48" aria-hidden="true" tabindex="-1"></a>{% endblock main %}</span>
+<span id="cb62-48"><a href="#cb62-48" aria-hidden="true" tabindex="-1"></a>{{% endblock main %}}</span>
 <span id="cb62-49"><a href="#cb62-49" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb62-50"><a href="#cb62-50" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- footer start --&gt;</span></span>
-<span id="cb62-51"><a href="#cb62-51" aria-hidden="true" tabindex="-1"></a>{% block foot %}</span>
+<span id="cb62-51"><a href="#cb62-51" aria-hidden="true" tabindex="-1"></a>{{% block foot %}}</span>
 <span id="cb62-52"><a href="#cb62-52" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;footer</span> <span class="er">id</span><span class="ot">=</span><span class="st">"footer"</span><span class="kw">&gt;</span></span>
 <span id="cb62-53"><a href="#cb62-53" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"footer-box"</span><span class="kw">&gt;</span></span>
 <span id="cb62-54"><a href="#cb62-54" aria-hidden="true" tabindex="-1"></a>            <span class="kw">&lt;div</span> <span class="er">class</span><span class="ot">=</span><span class="st">"footer-content"</span><span class="kw">&gt;</span></span>
@@ -1781,12 +1781,12 @@ STATICFILES_DIRS = [
 <span id="cb62-71"><a href="#cb62-71" aria-hidden="true" tabindex="-1"></a>            <span class="kw">&lt;/p&gt;</span></span>
 <span id="cb62-72"><a href="#cb62-72" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;/div&gt;</span></span>
 <span id="cb62-73"><a href="#cb62-73" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;/footer&gt;</span></span>
-<span id="cb62-74"><a href="#cb62-74" aria-hidden="true" tabindex="-1"></a>{% endblock foot %}</span>
+<span id="cb62-74"><a href="#cb62-74" aria-hidden="true" tabindex="-1"></a>{{% endblock foot %}}</span>
 <span id="cb62-75"><a href="#cb62-75" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- footer end --&gt;</span></span>
 <span id="cb62-76"><a href="#cb62-76" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;script</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://cdn.bootcss.com/jquery/3.3.1/jquery.js"</span><span class="kw">&gt;&lt;/script&gt;</span></span>
-<span id="cb62-77"><a href="#cb62-77" aria-hidden="true" tabindex="-1"></a>{% block script %}</span>
-<span id="cb62-78"><a href="#cb62-78" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;script</span> <span class="er">src</span><span class="ot">=</span><span class="st">"{% static 'js/base/common.js' %}"</span><span class="kw">&gt;&lt;/script&gt;</span></span>
-<span id="cb62-79"><a href="#cb62-79" aria-hidden="true" tabindex="-1"></a>{% endblock script %}</span>
+<span id="cb62-77"><a href="#cb62-77" aria-hidden="true" tabindex="-1"></a>{{% block script %}}</span>
+<span id="cb62-78"><a href="#cb62-78" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;script</span> <span class="er">src</span><span class="ot">=</span><span class="st">"{{% static 'js/base/common.js' %}}"</span><span class="kw">&gt;&lt;/script&gt;</span></span>
+<span id="cb62-79"><a href="#cb62-79" aria-hidden="true" tabindex="-1"></a>{{% endblock script %}}</span>
 <span id="cb62-80"><a href="#cb62-80" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
