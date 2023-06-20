@@ -297,7 +297,7 @@ Updated 1 path from the index
 
 1. 对比本地仓库与工作区
 
-   ```Python
+   ```python
    # 注意！！！ 创建文件时不要用文档打开，打开后再用notepad编辑会出现乱码，直接用notepad打开不会出现中文乱码
    
    git diff HEAD -- 文件名     # 没有产生修改不会显示
@@ -312,7 +312,7 @@ Updated 1 path from the index
 
    进入cd到文件所在的夹才可以进行对比
 
-   ```Python
+   ```python
    git diff HEAD HEAD^ -- 文件名
    ```
 
@@ -322,7 +322,7 @@ Updated 1 path from the index
 
 ①没有添加到库中的文件
 
-```Python
+```python
 # 直接删除即可
 ```
 
@@ -330,7 +330,7 @@ Updated 1 path from the index
 
 ②添加到暂存区但是没有提交的文件
 
-```Python
+```python
 # 先撤回到工作区
 git reset HEAD 文件名
 # 直接执行删除
@@ -339,7 +339,7 @@ git reset HEAD 文件名
 
 ③已经提交到版本库
 
-```Python
+```python
 # 删除文件
 ①的操作
 # 运行git add .
@@ -585,7 +585,7 @@ $ git branch
 
 在Ubuntu上创建项目，实际部署大多是linux系统
 
-```Python
+```python
 # 复制本机的Python环境 -p后面是 Python所在的路径   后面试复制后的环境名
 mkvirtualenv -p /usr/bin/python3.6 tzproject
 ```
@@ -594,14 +594,14 @@ mkvirtualenv -p /usr/bin/python3.6 tzproject
 
 选择Django2.1.x最新版本，我们用的是2.1.10
 
-```Python
+```python
 # 安装
 pip install django==2.1.10
 ```
 
 #### 2.1.2 创建Django项目
 
-```Python
+```python
 # 进入到存放Django项目的文件夹
 cd ~/dj_project/
 # 创建Django项目
@@ -730,7 +730,7 @@ DATABASES = {
 
 [外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传(img-ye6aG9rg-1588223223853)(/1565084327733.png)]
 
-```Python
+```python
 # 方法二db.cnf文件
 [client]
 database = tzproject
@@ -754,7 +754,7 @@ pymysql的使用
 pip install django-redis	
 ```
 
-```Python
+```python
 # settings.py文件中指定redis配置
 
 CACHES = {
@@ -793,7 +793,7 @@ django文档：https://docs.djangoproject.com/en/2.2/topics/http/sessions/#using
 
 在项目根目录中创建一个logs文件夹，用于存放日志文件
 
-```Python
+```python
 # 日志
 LOGGING = {
     # 版本
@@ -844,7 +844,7 @@ LOGGING = {
 }
 ```
 
-```Python
+```python
 # 使用方法
 # import the logging library
 import logging
@@ -864,7 +864,7 @@ def my_view(request, arg1, arg):
 
 ### 2.1.7 时区配置
 
-```Python
+```python
 # 修改语言
 LANGUAGE_CODE = 'zh-hans'
 # 修改时区
@@ -887,7 +887,7 @@ STATICFILES_DIRS = [
 
 接着分别在apps文件夹和项目根目录文件夹上右键，加入到Source Root中，优化导入路径(pycharm提示)。
 
-```Python
+```python
 import os
 import sys
 
@@ -906,7 +906,7 @@ sys.path.insert(1, os.path.join(BASE_DIR, 'apps'))
 
 将创建的app放到apps中
 
-```Python
+```python
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -932,7 +932,7 @@ INSTALLED_APPS = [
 
 记得配置templates在settings文件中的路径
 
-```Python
+```python
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -1981,7 +1981,7 @@ def index(request):
 
 [外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传(img-GndDBNH0-1588223223866)(/1565758901074.png)]
 
-```Python
+```python
 # 主路由
 
 from django.contrib import admin
@@ -2005,7 +2005,7 @@ urlpatterns = [
 
 ```
 
-```Python
+```python
 # news的路由
 from django.urls import path
 
@@ -2048,7 +2048,7 @@ django的强大之处在于开发效率高，内置了权限模块之类的很�
 1. 如果你不需要改变数据库存储内容，只是改变行为，那么可以建立有一个基于User模型的代理模型。
 2. 如果想存储与User模型关联的信息，可以使用OneToOneField到包含其他信息字段的模型。这种one-to-one模型经常被称作Profile模型，因为它可能存储站点用户的非身份验证的相关信息。例如：
 
-```Python
+```python
 from django.contrib.auth.models import User
 
 class Employee(models.Model):
@@ -2083,14 +2083,14 @@ class User(AbstractUser):
 
 #### ②settings.py
 
-```Python
+```python
 # 自定义用户模型
 AUTH_USER_MODEL = 'user.User'
 ```
 
 #### ①models.py
 
-```Python
+```python
 from django.db import models
 # 导入Django的内置User模型类 取个别名因为下面会用到相同的名冲突
 from django.contrib.auth.models import AbstractUser, UserManager as _UserManager
@@ -2134,12 +2134,12 @@ class User(AbstractUser):
 
 #### ③迁移
 
-```Python
+```python
 # 数据库迁移	
 python manage.py makemigrations
 ```
 
-```Python
+```python
 # 迁移生效
 python manage.py migrate
 ```
@@ -2235,7 +2235,7 @@ python ../manage.py startapp verification
 
 #### ③verification/views.py代码如下：
 
-```Python
+```python
 import logging
 
 from django.http import HttpResponse
@@ -2268,7 +2268,7 @@ def image_code_view(request):
 
 #### ④verification/urls.py代码如下：
 
-```Python
+```python
 from django.urls import path
 from . import views
 # url的命名空间
@@ -2281,7 +2281,7 @@ urlpatterns = [
 
 #### ⑤主urls文件
 
-```Python
+```python
 from django.contrib import admin
 from django.urls import path, include
 from . import views
@@ -2512,7 +2512,7 @@ python ../manage.py startapp verification
 
 #### ② verification/views.py代码
 
-```Python
+```python
 from user.models import User
 from utils.json_res import json_response
 
@@ -2532,7 +2532,7 @@ def check_username(request, username):
 
 #### ③verification/urls.py代码
 
-```Python
+```python
 from django.urls import path, re_path
 
 from . import views
@@ -2622,7 +2622,7 @@ $(()=>{
 
 返回结果：
 
-```Python
+```python
 json_dict = {
         'errno': errno,
         'errmsg': errmsg,
@@ -2637,7 +2637,7 @@ json_dict = {
 
 #### ①verification/views.py代码 
 
-```Python
+```python
 import logging
 import random
 
@@ -2674,7 +2674,7 @@ def check_mobile(request, mobile):
 
 #### ② verification/urls.py 
 
-```Python
+```python
 from django.urls import path, re_path
 
 from . import views
@@ -2818,7 +2818,7 @@ urlpatterns = [
 
 #### ①verification/views.py代码如下： 
 
-```Python
+```python
 import logging
 import random
 
@@ -2900,7 +2900,7 @@ class SmsCodeView(View):
 
 #### ② verification/forms.py文件代码如下： 
 
-```Python
+```python
 from django import forms
 from django.core.validators import RegexValidator
 from django_redis import get_redis_connection
@@ -2960,7 +2960,7 @@ class CheckImageForm(forms.Form):
 
 4.8.verification/constants.py代码如下： 
 
-```Python
+```python
 from django import forms
 from django.core.validators import RegexValidator
 from django_redis import get_redis_connection
@@ -3046,7 +3046,7 @@ class CheckImageForm(forms.Form):
 
 4.8.verification/constants.py代码如下： 
 
-```Python
+```python
 from django import forms
 from django.core.validators import RegexValidator
 from django_redis import get_redis_connection
