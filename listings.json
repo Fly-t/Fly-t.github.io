@@ -2,6 +2,7 @@
   {
     "listing": "/article.html",
     "items": [
+      "/posts/nb_iot_shadow_device/index.html",
       "/posts/mmwave_getting_started/index.html",
       "/posts/nb_iot_eDRX/index.html",
       "/posts/nb_iot_channel_choice/index.html",

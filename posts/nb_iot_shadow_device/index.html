@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="dd21">
-<meta name="dcterms.date" content="2022-12-05">
+<meta name="dcterms.date" content="2023-06-16">
 
-<title>TengFei’s Blog - 毫米波雷达</title>
+<title>TengFei’s Blog - nb-iot of shadow device</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -64,8 +98,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -113,9 +145,9 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">毫米波雷达</h1>
+      <h1 class="title">nb-iot of shadow device</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">mmwave</div>
+                <div class="quarto-category">nb-iot</div>
               </div>
                   </div>
   </div>
@@ -133,7 +165,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">December 5, 2022</p>
+        <p class="date">June 16, 2023</p>
       </div>
     </div>
     
@@ -151,57 +183,44 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<blockquote class="blockquote">
-<h1 id="参考">参考</h1>
-<p>知乎: <a href="https://zhuanlan.zhihu.com/p/416269210">https://zhuanlan.zhihu.com/p/416269210</a> TI官方:<a href="https://training.ti.com/intro-mmwave-sensing-fmcw-radars-module-1-range-estimation?context=1128486-1139153-1128542">https://training.ti.com/intro-mmwave-sensing-fmcw-radars-module-1-range-estimation?context=1128486-1139153-1128542</a></p>
-</blockquote>
-<p><a href="https://www.ti.com/video/series/mmwave-training-series.html?_ticdt=MTY4NjgwMjE1M3wwMTg4NDc4YTIzN2MwMDljNDI3ODc2Y2I5OWYwMDUwODEwMDIwMDc5MDBiZDB8W29iamVjdCBPYmplY3Rd#transcript-tab">TI教程</a></p>
-<blockquote class="blockquote">
-<h2 id="单目标测距原理" class="anchored">单目标测距原理</h2>
-<ul>
-<li><code>中频信号 = 斜率 x 时延</code>.</li>
-<li>IF = S*τ</li>
-<li>IF = S*(2d/c) <code>d:传播距离</code> <code>c:光速</code></li>
-<li>d = IF*c/2S</li>
-</ul>
-</blockquote>
-<blockquote class="blockquote">
-<h1 id="距离分辨率-区分多目标">距离分辨率, 区分多目标</h1>
-<ul>
-<li>通过FFT将时域信号转换为频域信号, 所表现出来的是多个目标的频域信号会出现多个峰, <code>两个脉冲相差小于一个周期则无法很明显观察到峰, 观测时间越长, 峰越清晰</code></li>
-<li>观察时长为T的一个观察窗可以分离相隔超过1/T Hz的频率分量(个人理解应该是带宽B/T的频率分量)<code>????</code></li>
-<li>观察窗口长度为 的 IF 信号能将间距为 的谱峰分开。故通过增加 IF 信号的长度（观察期）来可以改善距离分辨率。而信号长度的增加会使信号带宽 随之变宽，因此，也可以说增加 IF 信号的带宽可以改善距离分辨率。</li>
-</ul>
-</blockquote>
-<p><img src="https://img-blog.csdnimg.cn/2a04a3d6814c496b9e65396981333f61.png" class="img-fluid" alt="在这里插入图片描述"> &gt; ## 相关应用的个人推测 &gt; - 因为观察窗时间加长, 所以带宽B也线性增加. &gt; - 所以斜率对于应用的影响非常关键 &gt; - 如果是<code>短距离</code>的目标距离分辨, 那合理推测斜率应该是比较<code>大</code>, 这样可以区分出近距离的不同目标, 且可以使得观察窗T的周期尽可能缩短. &gt; - 如果是<code>远距离</code>的物体, 那斜率应该尽可能的<code>小</code>,这样可以检测到远处目标的反射信号, &gt; - 那这样的话, ti的<code>vitalSign</code>的项目就是<code>斜率比较高</code>的配置</p>
-<blockquote class="blockquote">
-<h2 id="区分多个目标总结" class="anchored">区分多个目标–总结</h2>
-<ul>
-<li>区分多个目标的原理,就是将<code>两个相距为△d的目标映射到频率差为△f的两个峰</code></li>
-<li>最小分辨率: <code>c/2B</code></li>
-</ul>
-</blockquote>
-<p>推导:</p>
-<p><span class="math display">\[
-{△f&gt;}{1\over T }
-\]</span></p>
-<p><span class="math display">\[
-{2△dS\over c}&gt;{1\over T }
-\]</span> <span class="math display">\[
-{△d}&gt;{c\over 2ST }
-\]</span> 又因为: <code>B=ST</code> <span class="math display">\[
-{△d}&gt;{c\over 2B }
-\]</span></p>
-<section id="距离分辨率计算" class="level2">
-<h2 class="anchored" data-anchor-id="距离分辨率计算">距离分辨率计算:</h2>
-<p>扫频带宽 B = 4G 距离分辨率 $ {△d} = {3*10<sup>8<em>4</em>10</sup>9}$ = 0.0375m</p>
+<section id="abstract" class="level1">
+<h1>Abstract</h1>
+<p>This article explores the application of NB-IoT technology in the Internet of Things and highlights the Shadow device and data synchronization features provided by the Aliyun platform. NB-IoT is a low-power, wide-coverage communication technology for large-scale IoT devices. The Shadow device facilitates real-time synchronization and remote control of device status, while data synchronization enables efficient monitoring and management of IoT devices. These technologies offer an effective solution for IoT applications.</p>
 </section>
-<section id="问题-同样的扫频带宽-但是斜率不一样-哪一个的距离分辨率好" class="level2">
-<h2 class="anchored" data-anchor-id="问题-同样的扫频带宽-但是斜率不一样-哪一个的距离分辨率好">问题: 同样的扫频带宽, 但是斜率不一样, 哪一个的距离分辨率好</h2>
-<p>chirpA好于chirpB, 为什么因为前面推理过, 观测时间窗越长分辨效果越好, A的持续时间更长, 所以A具有更好的距离分辨率.</p>
-<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-15-16-48-29.png" class="img-fluid"></p>
-<p>对于上面的问题, 如果我们必须使用较短的持续时间, 且需要较好的距离分辨率, 那该如何解决.</p>
-<p>雷达倾向于使用大距离小小斜率.</p>
+<section id="referance" class="level1">
+<h1>Referance</h1>
+<p><a href="https://help.aliyun.com/document_detail/53964.html?spm=a2c4g.69952.4.5.53a13340aMrSEv&amp;scm=20140722.H_53964._.ID_53964-OR_rec-V_1#section-fkh-3dd-xdb">aliyun 帮助手册</a></p>
+</section>
+<section id="准备" class="level1">
+<h1>准备</h1>
+<p>已在阿里云新建设备</p>
+</section>
+<section id="属性上报数据格式" class="level1">
+<h1>属性上报数据格式</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"method"</span><span class="fu">:</span> <span class="st">"update"</span><span class="fu">,</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"state"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"reported"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"z"</span><span class="fu">:</span> <span class="dv">-1</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">}</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">},</span> </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"version"</span><span class="fu">:</span> <span class="dv">1</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="设备主动获取" class="level1">
+<h1>设备主动获取</h1>
+<p>先订阅 /shadow/get/<code>ProductKey</code>/<code>DeviceName</code></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">AT+QMTSUB=0,1,</span><span class="st">"/shadow/get/ProductKey/DeviceName"</span><span class="ex">,1\r\n</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>在发布 /shadow/update/<code>ProductKey</code>/<code>DeviceName</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">AT+QMTPUB=0,1,1,0,</span><span class="st">"/shadow/update/ProductKey/DeviceName"</span><span class="ex">\r\n</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 发布内容</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"method"</span><span class="ex">:</span> <span class="st">"get"</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 按照16进制发送</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="ex">\x1a</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
