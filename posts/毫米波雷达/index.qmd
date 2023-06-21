@@ -11,6 +11,8 @@ image: ../csdn.png
 >知乎: [https://zhuanlan.zhihu.com/p/416269210](https://zhuanlan.zhihu.com/p/416269210)
 >TI官方:[https://training.ti.com/intro-mmwave-sensing-fmcw-radars-module-1-range-estimation?context=1128486-1139153-1128542](https://training.ti.com/intro-mmwave-sensing-fmcw-radars-module-1-range-estimation?context=1128486-1139153-1128542)
 
+[TI教程](https://www.ti.com/video/series/mmwave-training-series.html?_ticdt=MTY4NjgwMjE1M3wwMTg4NDc4YTIzN2MwMDljNDI3ODc2Y2I5OWYwMDUwODEwMDIwMDc5MDBiZDB8W29iamVjdCBPYmplY3Rd#transcript-tab)
+
 
 > ## 单目标测距原理
 > - `中频信号 = 斜率 x 时延`. 
@@ -52,3 +54,19 @@ $$
 $$
 {△d}>{c\over 2B }
 $$
+
+## 距离分辨率计算:
+
+扫频带宽 B = 4G
+距离分辨率 $ {△d} = {3*10^8\over 2*4*10^9}$ = 0.0375m
+
+## 问题: 同样的扫频带宽, 但是斜率不一样, 哪一个的距离分辨率好
+
+chirpA好于chirpB, 为什么因为前面推理过, 观测时间窗越长分辨效果越好, A的持续时间更长, 所以A具有更好的距离分辨率. 
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-15-16-48-29.png)
+
+
+对于上面的问题, 如果我们必须使用较短的持续时间, 且需要较好的距离分辨率, 那该如何解决.
+
+雷达倾向于使用大距离小小斜率.       

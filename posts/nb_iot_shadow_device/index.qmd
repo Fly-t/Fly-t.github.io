@@ -1,0 +1,57 @@
+---
+title: "nb-iot of shadow device" 
+author: "dd21"
+date: "2023-06-16" 
+categories: [nb-iot]
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-16-13-56-26.png
+---
+
+
+# Abstract
+
+This article explores the application of NB-IoT technology in the Internet of Things and highlights the Shadow device and data synchronization features provided by the Aliyun platform. NB-IoT is a low-power, wide-coverage communication technology for large-scale IoT devices. The Shadow device facilitates real-time synchronization and remote control of device status, while data synchronization enables efficient monitoring and management of IoT devices. These technologies offer an effective solution for IoT applications.
+
+# Referance
+
+[aliyun 帮助手册](https://help.aliyun.com/document_detail/53964.html?spm=a2c4g.69952.4.5.53a13340aMrSEv&scm=20140722.H_53964._.ID_53964-OR_rec-V_1#section-fkh-3dd-xdb)
+
+# 准备
+
+已在阿里云新建设备
+
+# 属性上报数据格式
+
+
+``` json
+{
+    "method": "update", 
+    "state": {
+        "reported": {
+            "z": -1
+        }
+    }, 
+    "version": 1
+}
+```
+
+
+
+# 设备主动获取
+
+先订阅 /shadow/get/`ProductKey`/`DeviceName`
+``` bash
+AT+QMTSUB=0,1,"/shadow/get/ProductKey/DeviceName",1\r\n
+```
+在发布 /shadow/update/`ProductKey`/`DeviceName`
+``` bash
+AT+QMTPUB=0,1,1,0,"/shadow/update/ProductKey/DeviceName"\r\n
+
+# 发布内容
+{
+    "method": "get"
+}
+
+# 按照16进制发送
+\x1a
+```
+
