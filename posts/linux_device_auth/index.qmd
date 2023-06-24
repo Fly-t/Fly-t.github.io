@@ -97,3 +97,11 @@ sudo udevadm control --reload-rules && sudo udevadm trigger
 > chmod 755 dir：将 dir 目录的权限设置为所有者可读、写、执行，其他用户可读、执行。
 > chmod u+x script.sh：将 script.sh 脚本文件的权限添加给文件所有者，即添加执行权限。
 > 除了上述的基本权限之外，还有一些特殊权限，如 SUID、SGID、SBIT 等，可以用于特殊的权限管理需求
+
+# 有时候会因为切换到sudo之后找不到xxx文件
+是因为sudo使用的环境和普通用户的环境变量是隔离的，普通用户的环境变量在root权限下没有该环境变量， 所以我们需要将环境变量进行传递
+
+``` bash
+# -E 即可将当前的环境变量传递到root环境变量中， 可以解决没有文件的问题。
+sudo -E make flash
+```
