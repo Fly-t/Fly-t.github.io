@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.427">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -162,26 +196,81 @@ ul.task-list li input[type="checkbox"] {
 <p><a href="https://dl.espressif.com/dl/schematics/SCH_ESP32-S3-DevKitC-1_V1.1_20221130.pdf">ESP32-S3-DevKitC-1 原理图 (PDF)</a></p>
 <p><a href="https://www.bilibili.com/read/cv4647226/#:~:text=%E5%9C%A83.3V%E4%BE%9B%E7%94%B5%E6%97%B6%EF%BC%8CV3%E8%84%9A%E5%92%8CVCC%E8%84%9A%E7%9B%B4%E6%8E%A5%E7%9B%B8%E8%BF%9E%EF%BC%8C%E5%90%8C%E6%97%B6%E7%BB%993.3V%E7%94%B5%E5%8E%8B%E5%8D%B3%E5%8F%AF%EF%BC%8C%E5%89%A9%E4%B8%8B%E7%9A%84%E5%92%8C5V%E7%94%B5%E8%B7%AF%E5%9F%BA%E6%9C%AC%E4%B8%80%E8%87%B4,CH340%E5%BC%95%E8%84%9A%E5%8A%9F%E8%83%BD%E8%A7%A3%E9%87%8A">CH340 设计要点</a></p>
 <p><a href="https://blog.csdn.net/qq_33177268/article/details/108340215">usb pins definenation</a></p>
+<section id="设计完成" class="level2">
+<h2 class="anchored" data-anchor-id="设计完成">设计完成</h2>
+<p><img src="./top.jpg" height="75%" width="40%"></p>
+<p><img src="./bottom.jpg" height="75%" width="40%"></p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-28-20-51-39.png" class="img-fluid"></p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-28-20-52-02.png" class="img-fluid"></p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-28-20-53-23.png" class="img-fluid"></p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-28-20-52-52.png" class="img-fluid"></p>
+</section>
 </section>
 <section id="设计要点some-considerrations" class="level1">
 <h1>设计要点(some considerrations)</h1>
 <ul>
-<li>电源</li>
-<li>上电时序与复位</li>
+<li>电源(模组)</li>
+<li>上电时序与复位(模组)</li>
 <li>Flash 及 SRAM</li>
 <li>晶振</li>
 <li>射频</li>
 <li>UART</li>
 <li>ADC</li>
-<li>USB</li>
+<li>USB(模组)</li>
 <li>触摸传感器</li>
-<li>Strapping 管脚</li>
+<li>Strapping 管脚(模组)</li>
 </ul>
+<section id="eda" class="level2">
+<h2 class="anchored" data-anchor-id="eda">0.EDA</h2>
+<blockquote class="blockquote">
+<p>立创EDA</p>
+</blockquote>
+<p>不得不说立创EDA对我这个第一次画pcb的人来说真好用，总结以下要点。</p>
+<ul>
+<li><font color="red"> 先设置规则，</font> 设置规则避免不了线宽，过孔设置，但是芯片datasheet中的参数好像都比较严苛，但是我想要白嫖嘉立创的免费打样，就得 <font color="red"> 根据厂商的工艺参数来 </font>.</li>
+<li>GND和电源网络先隐藏最后布</li>
+<li>GND最好走线连接，我想当然，最后铺铜就可以了，结果有很多游离铜块。</li>
+<li>信号线尽量避开电源线</li>
+<li>个人理解双层板顶层根据芯片走线方向控制一致， 我的板子应该是顶层水平和芯片那里的走线保持一致。<font color="red"> 两层之间的走线最好垂直，最好不要有平行线尤其是电源线。 </font></li>
+<li>放置缝合孔，尽量连接尽可能多的GND， 保证信号的完整性。</li>
+<li>推荐在信号两侧布置过孔提高抗干扰能力。</li>
+<li>使用禁用区域，禁用铺铜，避免游离铜块</li>
+<li>丝印层字体最小线宽5mil，高度40mil，在小就看不清楚了。</li>
+</ul>
+</section>
 <section id="电源power" class="level2">
 <h2 class="anchored" data-anchor-id="电源power">1.电源（power）</h2>
+<p>参考立创开源项目上的电源方案， 使用ASM的3.3VLDO（0.23RMB），该方案根据手册推荐， 使用了两颗钽电容。（0.5+0.4RMB）， 焊接的时候上电冒烟了我才想起来查一下，钽电容的方向，想当然了，以为电容都没方向。</p>
 </section>
-<section id="section" class="level2">
-<h2 class="anchored" data-anchor-id="section"></h2>
+<section id="usb使用type-c" class="level2">
+<h2 class="anchored" data-anchor-id="usb使用type-c">2. USB使用type-c</h2>
+<p>看了别人推荐的micro-usb，还是上了type-c，烙铁焊接的时候还是有点难度，引脚容易粘连，不过我用吸锡带拖了一遍粘连，效果非常不错。图便宜买的便宜的母座，发现很涩。</p>
+</section>
+<section id="复位按钮" class="level2">
+<h2 class="anchored" data-anchor-id="复位按钮">复位按钮</h2>
+<p>白按钮，淘宝有货，但是运费太贵了，2毛一个按钮，快递费8块，没办法还是多买点吧，买了60个，下次画板子一定先去看元器件。</p>
+</section>
+<section id="串口芯片" class="level2">
+<h2 class="anchored" data-anchor-id="串口芯片">串口芯片</h2>
+<p>CH340K（2.2RMB），电烙铁焊接的时候有点难度，因为芯片底面有个GND，烙铁放不下去，不过办法总比困难多， 先给焊盘上锡，然后焊锡融化快速将芯片推到位，一定要快，要不然芯片会歪在pcb上，其他引脚无法对齐。</p>
+</section>
+<section id="led" class="level2">
+<h2 class="anchored" data-anchor-id="led">LED</h2>
+<p>和esp s3的开发板一致，都是WS2812，该芯片的优点是只占用了一个gpio，可以实现RGB的控制，但是成本也比较贵。参考了别人的设计对比芯片手册给出的设计，参考开源设计上用的是3.3 v供电，可是手册上的是5v，于是我选用了5v，上电测试后发现太亮了，爆闪，大意了。看看后续用pwm调一下。引脚还设计错了设置成IO38了，开发板是IO48。</p>
+</section>
+<section id="注入灵魂烧录程序" class="level2">
+<h2 class="anchored" data-anchor-id="注入灵魂烧录程序">注入灵魂（烧录程序）</h2>
+<p>第一次上电发现板子一直重启，不知道怎么回事，以为电源芯片不行，供电不足，后更换可调电源输出3.3v还是一样，于是排查复位电路，全部拆除依旧重启，后连接串口助手波特率9600强行连接（OTG的串口，自带的那个不是走ch340的那个），发现一些报错， 后去搜索，发现bilibili的一个帖子，说到Strapping引脚，将IO0，和IO46进行拉低，即可解决问题，当时我才反应过来，会不会是因为flash里面没有内容，程序错误，所以导致的这个报错，IO0拉低不就是板子上的boot按钮嘛，于是恍然明白，进boot然后烧录程序即可。</p>
+<p>进到example</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>idf<span class="op">.</span>py settarge esp32s3</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>idf<span class="op">.</span>py build</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>idf<span class="op">.</span>py <span class="op">-</span>p COMx</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="元器件购买" class="level2">
+<h2 class="anchored" data-anchor-id="元器件购买">元器件购买</h2>
+<p><img src="./boom.jpg"></p>
 
 
 </section>
