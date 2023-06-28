@@ -1,0 +1,17 @@
+---
+title: "create env of esp32 s3 with IDF" 
+author: "dd21"
+date: "2023-06-28" 
+categories: [esp]
+image: ![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-28-21-20-20.png)
+---
+
+
+# Abstract
+
+his article provides a brief overview of setting up the development environment for the ESP32-S3 chip using the ESP-IDF framework. The ESP32-S3 is a powerful Wi-Fi and Bluetooth Low Energy SoC. The setup involves installing the ESP-IDF toolchain, configuring variables, selecting a development board, and establishing a serial port connection. With this environment, developers can leverage the ESP-IDF's API and components for application development in IoT and embedded systems.
+
+# Referance
+
+[开发板设计](../esp32_dev_1/index.qmd)
+
