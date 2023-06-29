@@ -3,7 +3,7 @@ title: "create env of esp32 s3 with IDF"
 author: "dd21"
 date: "2023-06-28" 
 categories: [esp]
-image: ![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-28-21-20-20.png)
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-28-21-20-20.png
 ---
 
 
