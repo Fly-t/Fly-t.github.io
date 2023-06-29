@@ -1,11 +1,14 @@
 ---
-title: "linux入门基操作"
+title: "linux入门操作"
 author: "dd21"
 date: "2022-12-05" 
 categories: [linux]
 image: ../csdn.png
 ---
 
+# Referance
+
+[zsh，zshrc，zprofile，zshenv区别](https://juejin.cn/post/7128574050406367269)
 
 
 # 基础操作

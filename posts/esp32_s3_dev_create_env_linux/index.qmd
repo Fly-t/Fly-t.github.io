@@ -18,3 +18,77 @@ his article provides a brief overview of setting up the development environment 
 
 
 
+## 1. 安装依赖
+
+**1.1安装环境依赖**
+
+arch LINUX
+``` bash
+sudo pacman -S --needed gcc git make flex bison gperf python cmake ninja ccache dfu-util libusb
+```
+
+**1.2安装Python3**
+
+python2也可以， 还是推荐Python3
+
+查看Python版本
+
+``` bash
+python3 --version
+```
+
+## 2.获取 ESP-IDF
+
+``` bash
+mkdir -p ~/esp
+cd ~/esp
+git clone -b v5.0.2 --recursive https://github.com/espressif/esp-idf.git
+```
+
+## 3.设置工具
+
+除了 ESP-IDF 本身，您还需要为支持 ESP32-S3 的项目安装 ESP-IDF 使用的各种工具，比如编译器、调试器、Python 包等。
+
+> 默认安装位置`$HOME/.espressif
+
+``` bash
+cd ~/esp/esp-idf
+./install.sh esp32s3
+```
+
+## 4.设置环境变量
+
+此时，您刚刚安装的工具尚未添加至 PATH 环境变量，无法通过“命令窗口”使用这些工具。因此，必须设置一些环境变量。这可以通过 ESP-IDF 提供的另一个脚本进行设置。
+
+``` bash
+. $HOME/esp/esp-idf/export.sh
+```
+
+需要经常运行 ESP-IDF，您可以为执行 export.sh 创建一个别名, 这样做可以使得每个terminal环境隔离，不需要idf环境的时候开一个新的terminal即可。
+
+如果需要idf环境直接执行`get_idf`即可。
+
+``` bash
+alias get_idf='. $HOME/esp/esp-idf/export.sh'
+```
+## 5. 使用IDF
+
+复制项目到自定义目录
+
+``` bash
+cd YOUR_PATH
+cp -r $IDF_PATH/examples/get-started/hello_world .
+```
+
+设置目标芯片， 目前支持的芯片`esp32|esp32s2|esp32c3|esp32s3|esp32c2|linux|esp32h2`
+
+``` bash
+cd hello_world
+idf.py set-target esp32s3 
+idf.py menuconfig 
+idf.py build
+idf.py flash
+```
+
+
+
