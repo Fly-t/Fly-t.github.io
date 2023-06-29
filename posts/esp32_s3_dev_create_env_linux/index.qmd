@@ -14,4 +14,7 @@ his article provides a brief overview of setting up the development environment 
 # Referance
 
 [开发板设计](../esp32_dev_1/index.qmd)
+[esp32 s3 官方搭建环境文档](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32s3/get-started/linux-macos-setup.html#get-started-prerequisites)
+
+
 
