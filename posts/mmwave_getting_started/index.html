@@ -268,6 +268,115 @@ f_{IFmax}={2S d_{max}\over c}
 {λ= fc}, \space \space f={c\overλ}\\
 2πf_c Δτ =\space 2π {c\overλ} {{2Δd}\over c} = {4πΔd\overλ}
 \]</span></p>
+<p><strong>举例:</strong></p>
+<p>雷达系统配置:</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-09-38-27.png" class="img-fluid"></p>
+<p>雷达前方的物体移动1mm，相位的变化为, 相位变化很大</p>
+<p><span class="math display">\[
+\Delta \phi= \frac{4\pi \Delta d}{\lambda} = \pi = 180\degree
+\]</span></p>
+<p>频率变化, <span class="math display">\[
+Δf= {S2Δd\over c}=    {{50∗10^{12}∗2∗1∗10^{−3}}\over{3∗10^8}}=333Hz
+\]</span></p>
+<p>333Mhz对于77G来说太小了, 分辨比较困难. <span class="math display">\[
+ΔfT_c=333∗40∗10^{−6}=0.013cycles
+\]</span></p>
+</section>
+<section id="速度测量原理" class="level2">
+<h2 class="anchored" data-anchor-id="速度测量原理">速度测量原理</h2>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-11-13-26.png" class="img-fluid"></p>
+<ul>
+<li>发送两个时间间隔为<code>Tc</code> 的 <code>chirp</code></li>
+<li>对接收回来的信号做<code>range-FFTs</code>会在相位的位置产生峰值，但是有不同的相位</li>
+<li>相位差(<code>ω</code>)对应于物体移动的距离(d=vt)<code>d=v*Tc</code>，<code>v</code>是物体的速度，<code>Tc</code>是时间</li>
+</ul>
+<p><span class="math display">\[
+ω= {4πvTc\overλ}
+​\]</span></p>
+<p>推导</p>
+<p><span class="math display">\[
+v= {ωλ\over4πTc}
+\]</span></p>
+<p>因此两个连续的chirp可以用来估计一个目标的速度</p>
+<p><strong>​物体微小位移和震动检测</strong> 假设运动幅度非常小，因此物体的最大位移 是波长的一小部分（例如，一毫米或更小）。如果我们在这个振荡物体的前面放置一个雷达并发射一串等距的线性调频信号，则这些线性调频信号中的每一个都会产生反射线性调频信号，而处理后的 IF 信号将产生距离 FFT 中的峰值。这些峰值的频率不会发生太大变化，但是峰值的相位将响应物体的振荡运动</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-11-24-30.png" class="img-fluid"></p>
+<p>下图为相位-时间图</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-11-24-21.png" class="img-fluid"></p>
+<p>故相位的时间演化可用于估计振动的幅度和周期性。</p>
+</section>
+<section id="速度估计" class="level2">
+<h2 class="anchored" data-anchor-id="速度估计">速度估计</h2>
+<p>这里章节TI的字幕有误</p>
+<p><a href="https://blog.csdn.net/xiao_jie123/article/details/113028757#:~:text=%E6%9C%80%E5%A4%A7%E7%9A%84%E5%8F%AF%E6%B5%8B%E9%87%8F%E9%80%9F%E5%BA%A6%E4%B8%BA%20vmax,%3D%204T%20c%CE%BB">参考 xiaojie</a></p>
+<p>有一个离散信号(数字采样的信号)，该向量以每个样本<code>ω</code>弧度的恒定速率旋转，如下图：</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-14-29-38.png" class="img-fluid"></p>
+<p>这些采样点在经过FFT后会在<code>ω</code>的位置产生一个峰值</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-14-30-48.png" class="img-fluid"></p>
+<p>假设一个信号是两个相位之和，则经过FFT后会产生两个峰值(每个相位中的每个样本点的旋转角频率分别为<code>ω1</code> 和<code>ω2</code>) &gt; A1: 频率 &gt; ω: 相位</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-14-32-49.png" class="img-fluid"></p>
+<p>当 <font color="red"> ω1 = 0 , ω2 = π/N</font> , 经过N个采样点后，第二个相位比第一个相位<code>多半个周期</code>(π rads)，这个变化在频域上不足以区分这两个物体.</p>
+<blockquote class="blockquote">
+<p>ω1对应下图中的1, ω2 -&gt; 2 …</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-14-34-50.png" class="img-fluid"></p>
+<p>当经过<code>2N</code>个采样点后，第二个相位比第一个相位<code>多一个周期</code>(2π rads)，这个变换在频域上就可以区分这两个物体</p>
+<blockquote class="blockquote">
+<p>该部分的前提条件都是 <font color="red"> 在一个信号周期(2π)内<code>该值固定</code> </font> 当采样点为2N的时候, 离散角频率的分辨率为<code>2 π / N</code> <font color="red"> 因为信号周期为2π固定不变, 所以为了提高分辨率需要提高采样点数, 但是该参数和硬件ADC性能有关</font></p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-14-37-21.png" class="img-fluid"></p>
+<p>序列长度越长，分辨率越高，一般来说，一个长度为N的序列可以分离出超过<code>2 π / N</code>以上的角频率</p>
+<p><strong>比较连续和离散信号在频域分辨率的标准</strong></p>
+<p>连续信号：时间轴上的信号是连续的.</p>
+<p>该种情况下, 只有当频率变化大于1/T(秒s)才可以被捕捉到.</p>
+<p><span class="math display">\[
+Δf= {1\over T} cycles/sec
+\]</span></p>
+<p>离散信号: 在时间轴上的取值是离散的信号</p>
+<p>只要两个离散信号的频率间隔差值<code>ω</code>大于<code>2 π / N</code>,即可区分出两种频率</p>
+<p><span class="math display">\[
+Δω={2 π \over N}radians/sample = {1\over N}cycles/sample \space ( 1cycles= 2π {\space}radians)
+\]</span> 一种情况是分辨率与观测时间T表示的长度成反比，另一种情况是分辨率与观测样本数N表示的长度成反比</p>
+</section>
+<section id="雷达如何估计一个物体的速度" class="level2">
+<h2 class="anchored" data-anchor-id="雷达如何估计一个物体的速度">雷达如何估计一个物体的速度</h2>
+<p>使用两个chirp来进行速度的测量</p>
+<ul>
+<li>发送两个时间间隔为Tc 的chirp</li>
+<li>每个chirp的range-FFT在相同的位置会出现峰值，但是会有不同的起始相位</li>
+<li>测量的相位差对应于物体的移动距离(vTc)</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-15-54-03.png" class="img-fluid"></p>
+<p>相位差：</p>
+<p><span class="math display">\[
+ω =\space 2π {c\overλ} {{2Δd}\over c} = {4πΔd\overλ} = {4πvTc\overλ}
+​\]</span></p>
+<p>推导出</p>
+<p><span class="math display">\[
+v = {ωλ\over4πTc}
+​\]</span></p>
+<p>在两个连续的chirps的相位差可以用来估计物体的速度</p>
+</section>
+<section id="雷达的最大可测量速度" class="level2">
+<h2 class="anchored" data-anchor-id="雷达的最大可测量速度">雷达的最大可测量速度</h2>
+<p>物体远离雷达，此时ω &gt; 0.</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-16-18-40.png" class="img-fluid"></p>
+<p>物体靠近雷达，此时ω &lt; 0</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-16-19-05.png" class="img-fluid"></p>
+<p>如果<code>ω</code>大于<code>180°</code> 那样就不能分清楚是旋转了角度a还是角度b</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-16-20-48.png" class="img-fluid"></p>
+<p>因此，最大的无模糊速度测量是<code>∣ω∣ &lt; π</code></p>
+<p>可推导出</p>
+<p><span class="math display">\[
+{4πvTc\overλ}&lt; π
+\]</span></p>
+<p><span class="math display">\[
+v&lt;{λ\over 4Tc}
+\]</span></p>
+<p>最大的可测量速度为:</p>
+<p><span class="math display">\[
+V_{max} = {λ\over4Tc} = {4*10^{-3}m\over4*40*10^{-6}s} = 25m/s
+\]</span></p>
+<p>更高的速度需要更近的chirp</p>
 
 
 </section>

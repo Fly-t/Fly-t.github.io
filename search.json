@@ -3189,7 +3189,35 @@
     "href": "posts/mmwave_getting_started/index.html#中频信号的相位",
     "title": "getting started with mmwave radar",
     "section": "中频信号的相位",
-    "text": "中频信号的相位\n雷达将Tx信号发出, 经过△t时间后接收到返回信号Rx(B), 接收到的Rx信号为Tx信号的副本信号(B开始的灰色段), 但是物体由于自身的运动, 第二次的回波信号(E)和第一次的回波信号(B)产生了偏移(BE), 该段相位偏移导致了,中频信号(IF)的相位也发生了偏移(混频器), 并且他们的偏移量都是一样的, 所以可以通过相位的变化来反应时间(△τ)的变化, 因为电磁波传播的速度是不变的, 所以通过时间反推出距离的变化(△d=△τ/c).\n由上面的推理可以将CF之间的相位变化转换为BE之间的相位变化, 同理BE之间的相位变化转换为AD之间的相位变化, D处的相位是基于A处的相位变化的,\n\n波长和频率的关系: λ = c/f m λ = c/f =3/77 = 0.003896m\n\n\n\n\\[\nΔΦ=2πf_c Δτ= {4πΔd\\overλ}\n\\]\n推导:\n\\[\nΔτ= {{2Δd}\\over c} \\\\\n{λ= fc}, \\space \\space f={c\\overλ}\\\\\n2πf_c Δτ =\\space 2π {c\\overλ} {{2Δd}\\over c} = {4πΔd\\overλ}\n\\]"
+    "text": "中频信号的相位\n雷达将Tx信号发出, 经过△t时间后接收到返回信号Rx(B), 接收到的Rx信号为Tx信号的副本信号(B开始的灰色段), 但是物体由于自身的运动, 第二次的回波信号(E)和第一次的回波信号(B)产生了偏移(BE), 该段相位偏移导致了,中频信号(IF)的相位也发生了偏移(混频器), 并且他们的偏移量都是一样的, 所以可以通过相位的变化来反应时间(△τ)的变化, 因为电磁波传播的速度是不变的, 所以通过时间反推出距离的变化(△d=△τ/c).\n由上面的推理可以将CF之间的相位变化转换为BE之间的相位变化, 同理BE之间的相位变化转换为AD之间的相位变化, D处的相位是基于A处的相位变化的,\n\n波长和频率的关系: λ = c/f m λ = c/f =3/77 = 0.003896m\n\n\n\n\\[\nΔΦ=2πf_c Δτ= {4πΔd\\overλ}\n\\]\n推导:\n\\[\nΔτ= {{2Δd}\\over c} \\\\\n{λ= fc}, \\space \\space f={c\\overλ}\\\\\n2πf_c Δτ =\\space 2π {c\\overλ} {{2Δd}\\over c} = {4πΔd\\overλ}\n\\]\n举例:\n雷达系统配置:\n\n雷达前方的物体移动1mm，相位的变化为, 相位变化很大\n\\[\n\\Delta \\phi= \\frac{4\\pi \\Delta d}{\\lambda} = \\pi = 180\\degree\n\\]\n频率变化, \\[\nΔf= {S2Δd\\over c}=    {{50∗10^{12}∗2∗1∗10^{−3}}\\over{3∗10^8}}=333Hz\n\\]\n333Mhz对于77G来说太小了, 分辨比较困难. \\[\nΔfT_c=333∗40∗10^{−6}=0.013cycles\n\\]"
+  },
+  {
+    "objectID": "posts/mmwave_getting_started/index.html#速度测量原理",
+    "href": "posts/mmwave_getting_started/index.html#速度测量原理",
+    "title": "getting started with mmwave radar",
+    "section": "速度测量原理",
+    "text": "速度测量原理\n\n\n发送两个时间间隔为Tc 的 chirp\n对接收回来的信号做range-FFTs会在相位的位置产生峰值，但是有不同的相位\n相位差(ω)对应于物体移动的距离(d=vt)d=v*Tc，v是物体的速度，Tc是时间\n\n\\[\nω= {4πvTc\\overλ}\n​\\]\n推导\n\\[\nv= {ωλ\\over4πTc}\n\\]\n因此两个连续的chirp可以用来估计一个目标的速度\n​物体微小位移和震动检测 假设运动幅度非常小，因此物体的最大位移 是波长的一小部分（例如，一毫米或更小）。如果我们在这个振荡物体的前面放置一个雷达并发射一串等距的线性调频信号，则这些线性调频信号中的每一个都会产生反射线性调频信号，而处理后的 IF 信号将产生距离 FFT 中的峰值。这些峰值的频率不会发生太大变化，但是峰值的相位将响应物体的振荡运动\n\n下图为相位-时间图\n\n故相位的时间演化可用于估计振动的幅度和周期性。"
+  },
+  {
+    "objectID": "posts/mmwave_getting_started/index.html#速度估计",
+    "href": "posts/mmwave_getting_started/index.html#速度估计",
+    "title": "getting started with mmwave radar",
+    "section": "速度估计",
+    "text": "速度估计\n这里章节TI的字幕有误\n参考 xiaojie\n有一个离散信号(数字采样的信号)，该向量以每个样本ω弧度的恒定速率旋转，如下图：\n\n这些采样点在经过FFT后会在ω的位置产生一个峰值\n\n假设一个信号是两个相位之和，则经过FFT后会产生两个峰值(每个相位中的每个样本点的旋转角频率分别为ω1 和ω2) &gt; A1: 频率 &gt; ω: 相位\n\n当  ω1 = 0 , ω2 = π/N , 经过N个采样点后，第二个相位比第一个相位多半个周期(π rads)，这个变化在频域上不足以区分这两个物体.\n\nω1对应下图中的1, ω2 -&gt; 2 …\n\n\n当经过2N个采样点后，第二个相位比第一个相位多一个周期(2π rads)，这个变换在频域上就可以区分这两个物体\n\n该部分的前提条件都是  在一个信号周期(2π)内该值固定  当采样点为2N的时候, 离散角频率的分辨率为2 π / N  因为信号周期为2π固定不变, 所以为了提高分辨率需要提高采样点数, 但是该参数和硬件ADC性能有关\n\n\n序列长度越长，分辨率越高，一般来说，一个长度为N的序列可以分离出超过2 π / N以上的角频率\n比较连续和离散信号在频域分辨率的标准\n连续信号：时间轴上的信号是连续的.\n该种情况下, 只有当频率变化大于1/T(秒s)才可以被捕捉到.\n\\[\nΔf= {1\\over T} cycles/sec\n\\]\n离散信号: 在时间轴上的取值是离散的信号\n只要两个离散信号的频率间隔差值ω大于2 π / N,即可区分出两种频率\n\\[\nΔω={2 π \\over N}radians/sample = {1\\over N}cycles/sample \\space ( 1cycles= 2π {\\space}radians)\n\\] 一种情况是分辨率与观测时间T表示的长度成反比，另一种情况是分辨率与观测样本数N表示的长度成反比"
+  },
+  {
+    "objectID": "posts/mmwave_getting_started/index.html#雷达如何估计一个物体的速度",
+    "href": "posts/mmwave_getting_started/index.html#雷达如何估计一个物体的速度",
+    "title": "getting started with mmwave radar",
+    "section": "雷达如何估计一个物体的速度",
+    "text": "雷达如何估计一个物体的速度\n使用两个chirp来进行速度的测量\n\n发送两个时间间隔为Tc 的chirp\n每个chirp的range-FFT在相同的位置会出现峰值，但是会有不同的起始相位\n测量的相位差对应于物体的移动距离(vTc)\n\n\n相位差：\n\\[\nω =\\space 2π {c\\overλ} {{2Δd}\\over c} = {4πΔd\\overλ} = {4πvTc\\overλ}\n​\\]\n推导出\n\\[\nv = {ωλ\\over4πTc}\n​\\]\n在两个连续的chirps的相位差可以用来估计物体的速度"
+  },
+  {
+    "objectID": "posts/mmwave_getting_started/index.html#雷达的最大可测量速度",
+    "href": "posts/mmwave_getting_started/index.html#雷达的最大可测量速度",
+    "title": "getting started with mmwave radar",
+    "section": "雷达的最大可测量速度",
+    "text": "雷达的最大可测量速度\n物体远离雷达，此时ω &gt; 0.\n\n物体靠近雷达，此时ω &lt; 0\n\n如果ω大于180° 那样就不能分清楚是旋转了角度a还是角度b\n\n因此，最大的无模糊速度测量是∣ω∣ &lt; π\n可推导出\n\\[\n{4πvTc\\overλ}&lt; π\n\\]\n\\[\nv&lt;{λ\\over 4Tc}\n\\]\n最大的可测量速度为:\n\\[\nV_{max} = {λ\\over4Tc} = {4*10^{-3}m\\over4*40*10^{-6}s} = 25m/s\n\\]\n更高的速度需要更近的chirp"
   },
   {
     "objectID": "posts/jdbc-- c3p0xml 链接/index.html",
