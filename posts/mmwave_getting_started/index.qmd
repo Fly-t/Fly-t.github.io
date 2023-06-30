@@ -182,3 +182,180 @@ $$
 2πf_c Δτ =\space 2π {c\overλ} {{2Δd}\over c} = {4πΔd\overλ}
 $$
  
+**举例:**
+
+雷达系统配置:
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-09-38-27.png)
+
+雷达前方的物体移动1mm，相位的变化为, 相位变化很大
+
+$$
+\Delta \phi= \frac{4\pi \Delta d}{\lambda} = \pi = 180\degree
+$$
+
+频率变化,
+$$
+Δf= {S2Δd\over c}=    {{50∗10^{12}∗2∗1∗10^{−3}}\over{3∗10^8}}=333Hz
+$$
+
+ 333Mhz对于77G来说太小了, 分辨比较困难.
+$$
+ΔfT_c=333∗40∗10^{−6}=0.013cycles
+$$
+
+## 速度测量原理
+
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-11-13-26.png)
+
+- 发送两个时间间隔为`Tc` 的 `chirp`
+- 对接收回来的信号做`range-FFTs`会在相位的位置产生峰值，但是有不同的相位
+- 相位差(`ω`)对应于物体移动的距离(d=vt)`d=v*Tc`，`v`是物体的速度，`Tc`是时间
+
+$$
+ω= {4πvTc\overλ}
+​$$
+
+推导
+
+$$
+v= {ωλ\over4πTc}
+$$
+
+因此两个连续的chirp可以用来估计一个目标的速度
+
+
+
+**​物体微小位移和震动检测**
+假设运动幅度非常小，因此物体的最大位移 
+ 是波长的一小部分（例如，一毫米或更小）。如果我们在这个振荡物体的前面放置一个雷达并发射一串等距的线性调频信号，则这些线性调频信号中的每一个都会产生反射线性调频信号，而处理后的 IF 信号将产生距离 FFT 中的峰值。这些峰值的频率不会发生太大变化，但是峰值的相位将响应物体的振荡运动
+
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-11-24-30.png)
+
+下图为相位-时间图
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-11-24-21.png)
+
+故相位的时间演化可用于估计振动的幅度和周期性。
+
+## 速度估计
+这里章节TI的字幕有误
+
+[参考 xiaojie](https://blog.csdn.net/xiao_jie123/article/details/113028757#:~:text=%E6%9C%80%E5%A4%A7%E7%9A%84%E5%8F%AF%E6%B5%8B%E9%87%8F%E9%80%9F%E5%BA%A6%E4%B8%BA%20vmax,%3D%204T%20c%CE%BB)
+
+有一个离散信号(数字采样的信号)，该向量以每个样本`ω`弧度的恒定速率旋转，如下图：
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-14-29-38.png)
+
+这些采样点在经过FFT后会在`ω`的位置产生一个峰值
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-14-30-48.png)
+
+假设一个信号是两个相位之和，则经过FFT后会产生两个峰值(每个相位中的每个样本点的旋转角频率分别为`ω1` 和`ω2`)
+> A1: 频率
+> ω: 相位
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-14-32-49.png)
+
+当 <font color='red'> ω1 = 0 , ω2 = π/N</font> , 经过N个采样点后，第二个相位比第一个相位`多半个周期`(π  rads)，这个变化在频域上不足以区分这两个物体.
+
+> ω1对应下图中的1, ω2 -> 2 ...
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-14-34-50.png)
+
+当经过`2N`个采样点后，第二个相位比第一个相位`多一个周期`(2π rads)，这个变换在频域上就可以区分这两个物体
+
+> 该部分的前提条件都是 <font color='red'> 在一个信号周期(2π)内`该值固定` </font> 当采样点为2N的时候, 离散角频率的分辨率为`2 π / N`
+> <font color='red'> 因为信号周期为2π固定不变, 所以为了提高分辨率需要提高采样点数, 但是该参数和硬件ADC性能有关</font>
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-14-37-21.png)
+
+序列长度越长，分辨率越高，一般来说，一个长度为N的序列可以分离出超过`2 π / N `以上的角频率
+
+**比较连续和离散信号在频域分辨率的标准**
+
+连续信号：时间轴上的信号是连续的.
+
+该种情况下, 只有当频率变化大于1/T(秒s)才可以被捕捉到.
+
+$$
+Δf= {1\over T} cycles/sec
+$$
+
+离散信号: 在时间轴上的取值是离散的信号
+
+只要两个离散信号的频率间隔差值`ω`大于`2 π / N`,即可区分出两种频率
+
+$$
+Δω={2 π \over N}radians/sample = {1\over N}cycles/sample \space ( 1cycles= 2π {\space}radians)
+$$
+一种情况是分辨率与观测时间T表示的长度成反比，另一种情况是分辨率与观测样本数N表示的长度成反比
+
+
+
+## 雷达如何估计一个物体的速度
+
+使用两个chirp来进行速度的测量
+
+- 发送两个时间间隔为Tc 的chirp
+- 每个chirp的range-FFT在相同的位置会出现峰值，但是会有不同的起始相位
+- 测量的相位差对应于物体的移动距离(vTc)
+
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-15-54-03.png)
+
+相位差：
+
+
+
+
+$$
+ω =\space 2π {c\overλ} {{2Δd}\over c} = {4πΔd\overλ} = {4πvTc\overλ}
+​$$
+
+推导出
+
+$$
+v = {ωλ\over4πTc}
+​$$
+
+在两个连续的chirps的相位差可以用来估计物体的速度
+
+## 雷达的最大可测量速度
+
+物体远离雷达，此时ω > 0.
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-16-18-40.png)
+
+物体靠近雷达，此时ω < 0 
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-16-19-05.png)
+
+如果`ω`大于`180°` 那样就不能分清楚是旋转了角度a还是角度b
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-16-20-48.png)
+
+因此，最大的无模糊速度测量是`∣ω∣ < π `
+
+可推导出
+
+$$
+{4πvTc\overλ}< π
+$$
+
+$$
+v<{λ\over 4Tc}
+$$
+
+最大的可测量速度为:
+
+$$
+V_{max} = {λ\over4Tc} = {4*10^{-3}m\over4*40*10^{-6}s} = 25m/s
+$$
+
+更高的速度需要更近的chirp
+
+
+
