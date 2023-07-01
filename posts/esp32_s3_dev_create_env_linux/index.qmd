@@ -90,5 +90,44 @@ idf.py build
 idf.py flash
 ```
 
+## vscode env
+
+安装esp插件，然后选第三个选项，配置好之后，点击报错信息fix.., 修改`c_cpp_properties.json` 文件, 解决波浪线。
+
+``` json
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/home/dd21/esp/esp-idf/components/driver/include",
+                "/home/dd21/esp/esp-idf/components/esp_common/include"
+                
+            ],
+            "defines": [],
+            "cStandard": "c17",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "linux-clang-x64",
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "compilerPath": "/usr/bin/arm-none-eabi-gcc"
+        }
+    ],
+    "version": 4
+}
+```
+
+**修改usb权限**
+
+创建文件 `sudo nvim /etc/udev/rules.d/10-usb-serial.rules`
+``` bash
+KERNEL=="ttyUSB[0-9]*", MODE="0666"
+
+```
+重新加载udev规则以使更改生效：
+
+``` bash
+sudo udevadm control --reload-rules && sudo udevadm trigger
+```
 
 
