@@ -4193,6 +4193,13 @@
     "text": "5. 使用IDF\n复制项目到自定义目录\ncd YOUR_PATH\ncp -r $IDF_PATH/examples/get-started/hello_world .\n设置目标芯片， 目前支持的芯片esp32|esp32s2|esp32c3|esp32s3|esp32c2|linux|esp32h2\ncd hello_world\nidf.py set-target esp32s3 \nidf.py menuconfig \nidf.py build\nidf.py flash"
   },
   {
+    "objectID": "posts/esp32_s3_dev_create_env_linux/index.html#vscode-env",
+    "href": "posts/esp32_s3_dev_create_env_linux/index.html#vscode-env",
+    "title": "create env of esp32 s3 with IDF",
+    "section": "vscode env",
+    "text": "vscode env\n安装esp插件，然后选第三个选项，配置好之后，点击报错信息fix.., 修改c_cpp_properties.json 文件, 解决波浪线。\n{\n    \"configurations\": [\n        {\n            \"name\": \"Linux\",\n            \"includePath\": [\n                \"${workspaceFolder}/**\",\n                \"/home/dd21/esp/esp-idf/components/driver/include\",\n                \"/home/dd21/esp/esp-idf/components/esp_common/include\"\n                \n            ],\n            \"defines\": [],\n            \"cStandard\": \"c17\",\n            \"cppStandard\": \"c++14\",\n            \"intelliSenseMode\": \"linux-clang-x64\",\n            \"configurationProvider\": \"ms-vscode.cmake-tools\",\n            \"compilerPath\": \"/usr/bin/arm-none-eabi-gcc\"\n        }\n    ],\n    \"version\": 4\n}\n修改usb权限\n创建文件 sudo nvim /etc/udev/rules.d/10-usb-serial.rules\nKERNEL==\"ttyUSB[0-9]*\", MODE=\"0666\"\n重新加载udev规则以使更改生效：\nsudo udevadm control --reload-rules && sudo udevadm trigger"
+  },
+  {
     "objectID": "posts/javaGUI-- JPanel/index.html",
     "href": "posts/javaGUI-- JPanel/index.html",
     "title": "javaGUI– JPanel",
