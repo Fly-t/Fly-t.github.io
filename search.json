@@ -3189,7 +3189,7 @@
     "href": "posts/mmwave_getting_started/index.html#中频信号的相位",
     "title": "getting started with mmwave radar",
     "section": "中频信号的相位",
-    "text": "中频信号的相位\n雷达将Tx信号发出, 经过△t时间后接收到返回信号Rx(B), 接收到的Rx信号为Tx信号的副本信号(B开始的灰色段), 但是物体由于自身的运动, 第二次的回波信号(E)和第一次的回波信号(B)产生了偏移(BE), 该段相位偏移导致了,中频信号(IF)的相位也发生了偏移(混频器), 并且他们的偏移量都是一样的, 所以可以通过相位的变化来反应时间(△τ)的变化, 因为电磁波传播的速度是不变的, 所以通过时间反推出距离的变化(△d=△τ/c).\n由上面的推理可以将CF之间的相位变化转换为BE之间的相位变化, 同理BE之间的相位变化转换为AD之间的相位变化, D处的相位是基于A处的相位变化的,\n\n波长和频率的关系: λ = c/f m λ = c/f =3/77 = 0.003896m\n\n\n\n\\[\nΔΦ=2πf_c Δτ= {4πΔd\\overλ}\n\\]\n推导:\n\\[\nΔτ= {{2Δd}\\over c} \\\\\n{λ= fc}, \\space \\space f={c\\overλ}\\\\\n2πf_c Δτ =\\space 2π {c\\overλ} {{2Δd}\\over c} = {4πΔd\\overλ}\n\\]\n举例:\n雷达系统配置:\n\n雷达前方的物体移动1mm，相位的变化为, 相位变化很大\n\\[\n\\Delta \\phi= \\frac{4\\pi \\Delta d}{\\lambda} = \\pi = 180\\degree\n\\]\n频率变化, \\[\nΔf= {S2Δd\\over c}=    {{50∗10^{12}∗2∗1∗10^{−3}}\\over{3∗10^8}}=333Hz\n\\]\n333Mhz对于77G来说太小了, 分辨比较困难. \\[\nΔfT_c=333∗40∗10^{−6}=0.013cycles\n\\]"
+    "text": "中频信号的相位\n雷达将Tx信号发出, 经过△t时间后接收到返回信号Rx(B), 接收到的Rx信号为Tx信号的副本信号(B开始的灰色段), 但是物体由于自身的运动, 第二次的回波信号(E)和第一次的回波信号(B)产生了偏移(BE), 该段相位偏移导致了,中频信号(IF)的相位也发生了偏移(混频器), 并且他们的偏移量都是一样的, 所以可以通过相位的变化来反应时间(△τ)的变化, 因为电磁波传播的速度是不变的, 所以通过时间反推出距离的变化(△d=△τ/c).\n由上面的推理可以将CF之间的相位变化转换为BE之间的相位变化, 同理BE之间的相位变化转换为AD之间的相位变化, D处的相位是基于A处的相位变化的,\n\n波长和频率的关系: λ = c/f m λ = c/f =3/77 = 0.003896m\n\n\n\n\\[\nΔΦ=2πf_c Δτ= {4πΔd\\overλ}\n\\]\n推导:\n\\[\nΔτ= {{2Δd}\\over c} \\\\\n{λ= fc}, \\space \\space f={c\\overλ}\\\\\n2πf_c Δτ =\\space 2π {c\\overλ} {{2Δd}\\over c} = {4πΔd\\overλ}\n\\]\n举例:\n雷达系统配置:\n\n雷达前方的物体移动1mm，相位的变化为(1/4)*λ, 相位变化很大\n\\[\n\\Delta \\phi= \\frac{4\\pi \\Delta d}{\\lambda} = \\pi = 180\\degree\n\\]\n频率变化, \\[\nΔf= {S2Δd\\over c}=    {{50∗10^{12}∗2∗1∗10^{−3}}\\over{3∗10^8}}=333Hz\n\\]\n333Mhz对于77G来说太小了, 分辨比较困难. \\[\nΔfT_c=333∗40∗10^{−6}=0.013cycles\n\\]"
   },
   {
     "objectID": "posts/mmwave_getting_started/index.html#速度测量原理",
@@ -3217,7 +3217,21 @@
     "href": "posts/mmwave_getting_started/index.html#雷达的最大可测量速度",
     "title": "getting started with mmwave radar",
     "section": "雷达的最大可测量速度",
-    "text": "雷达的最大可测量速度\n物体远离雷达，此时ω &gt; 0.\n\n物体靠近雷达，此时ω &lt; 0\n\n如果ω大于180° 那样就不能分清楚是旋转了角度a还是角度b\n\n因此，最大的无模糊速度测量是∣ω∣ &lt; π\n可推导出\n\\[\n{4πvTc\\overλ}&lt; π\n\\]\n\\[\nv&lt;{λ\\over 4Tc}\n\\]\n最大的可测量速度为:\n\\[\nV_{max} = {λ\\over4Tc} = {4*10^{-3}m\\over4*40*10^{-6}s} = 25m/s\n\\]\n更高的速度需要更近的chirp"
+    "text": "雷达的最大可测量速度\n物体远离雷达，此时ω &gt; 0.\n\n物体靠近雷达，此时ω &lt; 0\n\n如果ω大于180° 那样就不能分清楚是旋转了角度a还是角度b\n\n因此，最大的无模糊速度测量是∣ω∣ &lt; π\n可推导出\n\\[\n{4πvTc\\overλ}&lt; π\n\\]\n\\[\nv&lt;{λ\\over 4Tc}\n\\]\n最大的可测量速度为:\n\\[\nV_{max} = {λ\\over4Tc} = {4*10^{-3}m\\over4*40*10^{-6}s} = 25m/s\n\\]\n更高的速度需要更近的chirp(Tc尽可能的小)\n这里所描述的都是单个物体的情况."
+  },
+  {
+    "objectID": "posts/mmwave_getting_started/index.html#相同距离不同速度的多个物体怎么测速",
+    "href": "posts/mmwave_getting_started/index.html#相同距离不同速度的多个物体怎么测速",
+    "title": "getting started with mmwave radar",
+    "section": "相同距离不同速度的多个物体怎么测速",
+    "text": "相同距离不同速度的多个物体怎么测速\n两个物体, 距离相同, 速度不同\n\n解决问题的方法是让雷达发射N个等间隔的chirp\n\n先做range-fft, 得到相同位置的峰. \n在range-fft的基础上，再做一次fft，这个fft叫做doppler-fft，这样会得到第一次fft的相位的两个分量(这个分量的数量取决于被测物体的数量)\n\n对应的速度分别为 \\[\nV_{1} = {λω_1\\over4πTc} \\space\nV_{2} = {λω_2\\over4πTc}\n\\] &gt; 他们在做完range-fft之后将会拥有相同的位置, 和相同的峰值.  但是该位置处相对应的离散值(相位值),由两个(取决于物体数量)旋转向量ω1,ω2组成, 他们分别以频率ω1,ω2进行旋转,分别对应两个速度v1 和 v2, 所以测量处ω1,ω2后我们即可计算出v1,v2 这个过程就是多普勒FFT, 那么多普勒FFT的速度分辨率怎么样(换个说法, v1和v2最小间隔多少可以分辨为2个峰)\n多目标速度分辨率(多普勒fft分辨率)推导\n\\[\n△ω = {4π△vTc\\overλ}\n\\] 又因为, 只要两个离散信号的频率间隔差值△ω大于2 π / N,即可区分出两种频率,N为一个frame中chirp的个数\n\\[\n△ω &gt;{2 π \\over N}\n\\]\n\nTc: T_chirp Tf: T_frame\n\n\\[\n{4π△vTc\\overλ} &gt; {2 π \\over N}\\\\\n\\space \\\\\n{△vTc\\overλ} &gt; {2 π \\over N4π} (= {1\\over N})\\\\\n\\space \\\\\nΔv&gt; {λ\\over2NTc}\\\\\n\\] 所以 \\[\nΔv&gt; {λ\\over2Tf}\n\\]\n\n总结 假设雷达前方有两个物体，两个物体离雷达的距离不一样，前面通过两个chirp来测相位差的方法还可以用，但是如果两个物体距的雷达的距离相等，经过range-FFT后，只有一个峰值，因此，峰值处的相位就会有两个分量，这样，通过相位比较的方法就不再适用."
+  },
+  {
+    "objectID": "posts/mmwave_getting_started/index.html#一些系统设计的话题",
+    "href": "posts/mmwave_getting_started/index.html#一些系统设计的话题",
+    "title": "getting started with mmwave radar",
+    "section": "一些系统设计的话题",
+    "text": "一些系统设计的话题\n\nrange-FFT\n雷达处理接收天线接收回来的数据，对每一个接收回来的chirp做range-fft，然后range-fft处理后的数据按行存储到L3或DDR中，由于range-fft对应的频率，距离与中频成正比，因此可以将x轴绘制为距离轴，如下图：\n\n在上面的图中，在距离维度上的range=3和range=8的距离处有物体，但是有几个物体不知道，只是知道雷达前方有物体，\n\n有待考证: 在大多数雷达的实现中，range-fft是在将ADC样本存储到内存之前完成的\n\n\n\ndoppler-FFT\n在执行完range-fft之后，要在chirp index方向上做doppler-fft，做doppler-fft的时候，要将数据从L3或DDR内存中取出，然后再执行doppler-fft，由于dopper-fft对应离散角频率，离散角频率与速度成正比，因此可以将y轴绘制为速度轴。\n\n对做了range-fft的数据做doppler-fft，会发现在距离为range=3处有两个物体，速度分别为1和4，在range=8处有三个物体，速度分别为1、3和5。\n\n注意: 只有一个frame中的全部chirp做了range-fft之后才可以执行doppler-fft，因此系统中必须有足够的存储器来存储执行range-fft之后的数据\n\n\n\n设计chirp的参数要求(雷达系统设计依据)\n最大速度:\n\\[\nV_{max} = {λ\\over4Tc} \\rArr {Tc = {λ\\over 4V_{max}}}\n\\]\n速度分辨率：\n\\[\nVres = {λ\\over2Tf}\\rArr {Tf = {λ\\over 2 Vres}}\n\\]\n距离分辨率： △d =&gt; d_res \\[\n{d_{res}}={c\\over 2B } \\rArr B = {c\\over 2d_{res} }\n\\]"
   },
   {
     "objectID": "posts/jdbc-- c3p0xml 链接/index.html",

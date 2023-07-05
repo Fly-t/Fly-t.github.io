@@ -271,7 +271,7 @@ f_{IFmax}={2S d_{max}\over c}
 <p><strong>举例:</strong></p>
 <p>雷达系统配置:</p>
 <p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-06-30-09-38-27.png" class="img-fluid"></p>
-<p>雷达前方的物体移动1mm，相位的变化为, 相位变化很大</p>
+<p>雷达前方的物体移动1mm，相位的变化为<code>(1/4)*λ</code>, 相位变化很大</p>
 <p><span class="math display">\[
 \Delta \phi= \frac{4\pi \Delta d}{\lambda} = \pi = 180\degree
 \]</span></p>
@@ -376,9 +376,83 @@ v&lt;{λ\over 4Tc}
 <p><span class="math display">\[
 V_{max} = {λ\over4Tc} = {4*10^{-3}m\over4*40*10^{-6}s} = 25m/s
 \]</span></p>
-<p>更高的速度需要更近的chirp</p>
+<p>更高的速度需要更近的chirp(Tc尽可能的小)</p>
+<p><code>这里所描述的都是单个物体的情况.</code></p>
+</section>
+<section id="相同距离不同速度的多个物体怎么测速" class="level2">
+<h2 class="anchored" data-anchor-id="相同距离不同速度的多个物体怎么测速">相同距离不同速度的多个物体怎么测速</h2>
+<p>两个物体, 距离相同, 速度不同</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-05-11-02-16.png" class="img-fluid"></p>
+<p>解决问题的方法是让雷达发射N个等间隔的chirp</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-05-16-49-27.png" class="img-fluid"></p>
+<p>先做<code>range-fft</code>, 得到相同位置的峰. <img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-05-11-04-17.png" class="img-fluid"></p>
+<p>在range-fft的基础上，再做一次fft，这个fft叫做<code>doppler-fft</code>，这样会得到第一次fft的相位的两个分量(这个分量的数量取决于被测物体的数量)</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-05-11-04-29.png" class="img-fluid"></p>
+<p>对应的速度分别为 <span class="math display">\[
+V_{1} = {λω_1\over4πTc} \space
+V_{2} = {λω_2\over4πTc}
+\]</span> &gt; 他们在做完range-fft之后将会拥有相同的位置, 和相同的峰值. <font color="red"> 但是该位置处相对应的离散值(相位值),由两个(取决于物体数量)旋转向量<code>ω1</code>,<code>ω2</code>组成, 他们分别以频率<code>ω1</code>,<code>ω2</code>进行旋转,分别对应两个速度<code>v1</code> 和 <code>v2</code>, 所以测量处<code>ω1</code>,<code>ω2</code>后我们即可计算出<code>v1</code>,<code>v2</code> </font>这个过程就是<code>多普勒FFT</code>, 那么多普勒FFT的速度分辨率怎么样(换个说法, v1和v2最小间隔多少可以分辨为2个峰)</p>
+<p><strong>多目标速度分辨率(多普勒fft分辨率)推导</strong></p>
+<p><span class="math display">\[
+△ω = {4π△vTc\overλ}
+\]</span> 又因为, 只要两个离散信号的频率间隔差值<code>△ω</code>大于<code>2 π / N</code>,即可区分出两种频率,N为一个frame中chirp的个数</p>
+<p><span class="math display">\[
+△ω &gt;{2 π \over N}
+\]</span></p>
+<blockquote class="blockquote">
+<p>Tc: T_chirp Tf: T_frame</p>
+</blockquote>
+<p><span class="math display">\[
+{4π△vTc\overλ} &gt; {2 π \over N}\\
+\space \\
+{△vTc\overλ} &gt; {2 π \over N4π} (= {1\over N})\\
+\space \\
+Δv&gt; {λ\over2NTc}\\
+\]</span> 所以 <span class="math display">\[
+Δv&gt; {λ\over2Tf}
+\]</span></p>
+<blockquote class="blockquote">
+<p>总结 假设雷达前方有两个物体，两个物体离雷达的距离不一样，前面通过两个chirp来测相位差的方法还可以用，但是如果两个物体距的雷达的距离相等，经过range-FFT后，只有一个峰值，因此，峰值处的相位就会有两个分量，这样，通过相位比较的方法就不再适用.</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-05-16-51-28.png" class="img-fluid"></p>
+</section>
+<section id="一些系统设计的话题" class="level2">
+<h2 class="anchored" data-anchor-id="一些系统设计的话题">一些系统设计的话题</h2>
+<section id="range-fft" class="level4">
+<h4 class="anchored" data-anchor-id="range-fft">range-FFT</h4>
+<p>雷达处理接收天线接收回来的数据，对每一个接收回来的chirp做range-fft，然后range-fft处理后的数据按行存储到L3或DDR中，由于range-fft对应的频率，距离与中频成正比，因此可以将x轴绘制为距离轴，如下图：</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-05-16-20-33.png" class="img-fluid"></p>
+<p>在上面的图中，在距离维度上的range=3和range=8的距离处有物体，但是有几个物体不知道，只是知道雷达前方有物体，</p>
+<blockquote class="blockquote">
+<p>有待考证: 在大多数雷达的实现中，range-fft是在将ADC样本存储到内存之前完成的</p>
+</blockquote>
+</section>
+<section id="doppler-fft" class="level4">
+<h4 class="anchored" data-anchor-id="doppler-fft">doppler-FFT</h4>
+<p>在执行完range-fft之后，要在chirp index方向上做doppler-fft，做doppler-fft的时候，要将数据从L3或DDR内存中取出，然后再执行doppler-fft，由于dopper-fft对应离散角频率，离散角频率与速度成正比，因此可以将y轴绘制为速度轴。</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-05-16-25-53.png" class="img-fluid"></p>
+<p>对做了range-fft的数据做doppler-fft，会发现在距离为range=3处有两个物体，速度分别为1和4，在range=8处有三个物体，速度分别为1、3和5。</p>
+<blockquote class="blockquote">
+<p>注意: 只有一个frame中的全部chirp做了range-fft之后才可以执行doppler-fft，因此系统中必须有足够的存储器来存储执行range-fft之后的数据</p>
+</blockquote>
+</section>
+<section id="设计chirp的参数要求雷达系统设计依据" class="level4">
+<h4 class="anchored" data-anchor-id="设计chirp的参数要求雷达系统设计依据">设计chirp的参数要求(雷达系统设计依据)</h4>
+<p>最大速度:</p>
+<p><span class="math display">\[
+V_{max} = {λ\over4Tc} \rArr {Tc = {λ\over 4V_{max}}}
+\]</span></p>
+<p>速度分辨率：</p>
+<p><span class="math display">\[
+Vres = {λ\over2Tf}\rArr {Tf = {λ\over 2 Vres}}
+\]</span></p>
+<p>距离分辨率： △d =&gt; d_res <span class="math display">\[
+{d_{res}}={c\over 2B } \rArr B = {c\over 2d_{res} }
+\]</span></p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-05-17-00-42.png" class="img-fluid"></p>
 
 
+</section>
 </section>
 </section>
 
