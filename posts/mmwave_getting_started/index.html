@@ -450,6 +450,127 @@ Vres = {λ\over2Tf}\rArr {Tf = {λ\over 2 Vres}}
 {d_{res}}={c\over 2B } \rArr B = {c\over 2d_{res} }
 \]</span></p>
 <p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-05-17-00-42.png" class="img-fluid"></p>
+</section>
+<section id="设备的限制" class="level4">
+<h4 class="anchored" data-anchor-id="设备的限制">设备的限制</h4>
+<ol type="1">
+<li>设备的<code>最大中频带宽</code>有限制, 所以<code>F_if_max</code>为固定值, 则需要在<code>S</code>和<code>d_max</code>之间进行取舍, 因为<code>c</code>是常量, <code>S</code>(斜率)大, <code>d_max</code>(最大探测距离)就得小</li>
+<li>设备的<code>频率提升(斜率)</code>性能有限制(最短时间内能变换的频率是有限制的),</li>
+<li>对于<code>相邻chirp之间的空闲时间</code>限制(防止相邻chirp之间的干扰,需要空闲时间进行chirp隔离).</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-07-09-33-49.png" class="img-fluid"></p>
+<ol start="4" type="1">
+<li>设备的<code>存储空间要求</code>, 因为对于数据处理来说, 每个frame的数据量是相当庞大的,将fft数据全部存储后才能做<code>多普勒fft</code>, 设备的存储空间也是有限的.</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-07-09-21-33.png" class="img-fluid"></p>
+</section>
+<section id="速度优先的应用chirp场景配置依据" class="level4">
+<h4 class="anchored" data-anchor-id="速度优先的应用chirp场景配置依据">速度优先的应用(chirp场景配置依据)</h4>
+<p>对于速度优先的场景, <code>Tc</code>越小, 可以测速度范围越大, 所以根据场景我们将<code>Tc固定</code>下来了.</p>
+<p>接下来需要考虑<code>S(斜率)</code>的问题, 因为<code>F_if(中频信号)</code>受限制于设备, 所以有上限(即为确定值), 所以我们需要在<code>S</code>和<code>d_max</code>之间进行取舍, <code>S越大, d_max越小</code>,</p>
+<blockquote class="blockquote">
+<p>S(斜率)越大表示相同时间内跨越的带宽越大, 所以分辨率越高, 但是<code>d_max</code>会变小.反之S越小, 相同时间内跨越的带宽越小, 分辨率越差, 但是<code>d_max(最大探测距离)</code>会增大(这里是理论上最佳最大探测距离, 实际最大探测距离受限制于ADC性能,以及物体的反射功率). 长距离雷达: 斜率较小, 距离较大, 分辨率较差 短距离雷达: 斜率较高, 距离较短, 分辨率较高</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-07-09-52-22.png" class="img-fluid"></p>
+</section>
+<section id="雷达距离公式" class="level4">
+<h4 class="anchored" data-anchor-id="雷达距离公式">雷达距离公式</h4>
+<p>之前了解到雷达最大探测距离受限制于最大ADC采样频率, 其实还有一个决定最大探测距离的重要因素最大距离物体的<code>信号反射强度</code>, 要有足够的反射强度才能被检测到.</p>
+<p><strong>决定物体反射强度的因素</strong></p>
+<p>信号从发出时的功率(<code>pt</code>)随着距离的平方不断衰减, 如下公式,</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-07-10-17-25.png" class="img-fluid"></p>
+<p>调整为具有更佳增益的天线可增加功率密度从而改善衰减.</p>
+<p>通常的做法是: 调整天线的方向性, 从而来提高天线的增益. (在更窄的视野中探测更远,或者在更宽阔的视野中探测较近的距离)</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-07-10-23-00.png" class="img-fluid"></p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-07-10-23-25.png" class="img-fluid"></p>
+<blockquote class="blockquote">
+<p>Pt: 设备输出功率 G_tx/tx: 发送/接收天线增益 σ: 雷达反射截面积(Radar Cross Section of the Target，RCS) A_RX: RX天线的有效孔径面积(Effective aperture area of RX antenna)接收天线尽可能捕获反射回的信号能力的度量</p>
+</blockquote>
+<p><code>设备原始</code>情况下, 辐射<code>功率密度</code> <span class="math display">\[
+Radiated \space Power \space Density = {{P_t}\over 4π{d^2}} W/m^2
+\]</span></p>
+<p><code>天线增益</code>情况下, 辐射<code>功率密度</code> <span class="math display">\[
+Radiated \space Power \space Density = {{P_tG_{TX}}\over 4π{d^2}}W/m^2
+\]</span></p>
+<p>当<code>信号碰到物体</code>，反射的<code>功率</code>为 <span class="math display">\[
+Power\space reflected \space by \space object = {{P_tG_{TX}σ}\over 4π{d^2}}W
+\]</span></p>
+<p>经过反射回到<code>接收天线处</code>(不是接收到的), 辐射<code>功率密度</code></p>
+<p><span class="math display">\[
+Power \space density \space at \space RX \space ant = {{P_tG_{TX}σ}\over {(4π)}^2{(d^2)}^2}W/m^2
+\]</span></p>
+<p>在<code>接收天线捕获</code>的<code>功率</code>为</p>
+<p><span class="math display">\[
+Power \space captured \space at \space RX \space ant = {{P_tG_{TX}σ}A_{RX}\over {(4π)}^2{d^4}}W
+\]</span></p>
+<p>带入上式 &gt; 接收天线尽可能捕获反射回的信号能力的度量 &gt; 根据接收天线的增益<code>G_Rx</code>和工作波长<code>λ</code></p>
+<p><span class="math display">\[
+A_{RX} = {{G_{RX}λ^2}\over 4π}
+\]</span></p>
+<p>根据该公式可以得出 - <code>接收功率</code> - 和<code>发射功率</code>,<code>发射天线增益</code>,<code>接收天线增益</code>成正比. - 和<code>到目标距离的4次方(d^4)</code>成反比</p>
+<p><span class="math display">\[
+Power \space captured \space at \space RX \space ant = {{P_tG_{TX}σ}G_{RX}λ^2 \over {(4π)}^3{d^4}}W
+\]</span></p>
+<p>接收器(雷达)是否可以看到目标<code>不仅取决于接收到的信号的功率</code>还取决于<code>信号能量和噪声能量的比率</code>(信噪比,SNR).</p>
+<p>信噪比计算公式, <a href="https://blog.csdn.net/wzz110011/article/details/123970959">信噪比概念</a></p>
+<blockquote class="blockquote">
+<p><code>k</code> 天线噪声系数, 和天线的物理特性有关. <code>F</code> 接收器噪声系数, 雷达内部引入的额外噪声. <code>T_means</code>总的测量时间(Tc*N)N表示有多少个chirp，T_c是说明每个chirp持续的时间</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-07-11-22-15.png" class="img-fluid"></p>
+<p>在测量中存在检测目标所需的最小信噪比（SNR_min），SNR_min的选择为漏检概率与虚警概率之间的权衡，典型数字在15dB-20dB范围内。若给定一个确定的SNR_min，雷达可探测的距离为：</p>
+<p><span class="math display">\[
+d_{max} = ({σP_tG_{TX}G_{RX}λ^2T_{means}\over (4π)^3SNR_{min}kTF})^{1\over 4}
+\]</span> &gt; 信噪比越大越好 &gt; <code>信噪比会因为T_means的时间(NTc)增加而提高, 这是因为采样越多, 噪声越趋于某个平均值.</code> &gt; - 但是SNR_min 配置的越大, 可能导致可能性较低的目标丢失 &gt; - SNR_min配置较小, 可能会有误报的情况, 所以需要根据应用来调整</p>
+</section>
+</section>
+<section id="角度估计" class="level2">
+<h2 class="anchored" data-anchor-id="角度估计">角度估计</h2>
+<p>单个物体判断角度位置</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-07-14-19-52.png" class="img-fluid"></p>
+<p>两个物体, 距离相同, 速度相同, 怎么区分</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-07-14-21-28.png" class="img-fluid"></p>
+<p>雷达最大可视角度</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-07-14-21-51.png" class="img-fluid"></p>
+<p>角度分辨率</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-07-14-22-43.png" class="img-fluid"></p>
+<section id="角度测量原理" class="level4">
+<h4 class="anchored" data-anchor-id="角度测量原理">角度测量原理</h4>
+<p><a href="https://blog.csdn.net/qq_39764867/article/details/108883896">测角参考csdn</a> <a href="https://zhuanlan.zhihu.com/p/416835851">知乎过路人毫米波雷达基础</a></p>
+<p>目标距离的微小变化会导致range-FFT峰值的相位变化。角度估计至少需要2个RX天线。 从目标到每个天线的差分距离 Δ d 导致FFT峰值发生相位变化，该相位变化用于估计到达角。</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-07-15-05-30.png" class="img-fluid"></p>
+<p>发射天线发送一个chirp，经过物体发射后信号，信号分别被第一根天线和第二根天线接收，第一根天线接收的距离为d dd，第二根天线接收的距离为<code>d + Δd</code>，额外的距离会产生相位差，<code>ω = 2πΔd/λ</code> ​</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-07-15-06-47.png" class="img-fluid"></p>
+<p><font color="red"> 上图中右部分的图中的d和左图中的d不是同一个代指, 二者无关联. </font></p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-07-15-39-37.png" class="img-fluid"></p>
+<p>假设两根天线接收回来的信号是平行的, Rx2接收到的信号,比Rx1接收的信号传播距离多出△d, 反应在相位变化上.</p>
+<blockquote class="blockquote">
+<p>L是在硬件设计的时候就固定好的天线间距. <code>Δd = L*sin(θ)</code></p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-07-15-46-16.png" class="img-fluid"></p>
+<p>由于相位变化与距离间的关系为： <span class="math display">\[
+ω = { 2πΔd\over λ}
+\]</span></p>
+<p>又因为</p>
+<p><span class="math display">\[
+Δd = L*sin(θ)
+\]</span></p>
+<p>所以</p>
+<p><span class="math display">\[
+ω = { 2πLsin(θ)\over λ}
+\]</span></p>
+<p>所以 <span class="math display">\[
+{ωλ\over2πL} = { sin(θ) }
+\space \\
+θ = sin^{-1}({ωλ\over2πL})
+\]</span> #### 角度测量的准确性</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-07-16-09-17.png" class="img-fluid"></p>
+<p><font color="red"> 在ω (sin(θ))和θ 之间的关系不是线性的 </font></p>
+<p>在这个图中，当θ 趋近于0时，sin(θ)对θ 的变化是非常敏感的，θ 的微小变化<code>可能会</code>导致sin(θ)的同等大小的变化，但是sin(θ)的敏感性会随θ的增大的敏感性减小，当θ 接近于90°时，sin(θ)对θ 的变化是变得非常不敏感，因此随着θ角度的增加，角度的估算就会更容易产生误差</p>
+<blockquote class="blockquote">
+<p>的敏感度sin(θ)（变化速率）随着θ 的增大降低,在 θ=0时，ω对θ的变化最为敏感（在 θ=90°时变为0(无法测量)）</p>
+</blockquote>
+<p>因此，角度测量值的准确度取决于到达角<code>AoA</code> (θ)，且在 <code>AoA</code>值越小时越准确。</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-07-16-25-21.png" class="img-fluid"></p>
 
 
 </section>
