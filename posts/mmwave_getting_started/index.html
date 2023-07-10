@@ -535,7 +535,7 @@ d_{max} = ({σP_tG_{TX}G_{RX}λ^2T_{means}\over (4π)^3SNR_{min}kTF})^{1\over 4}
 <p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-07-14-22-43.png" class="img-fluid"></p>
 <section id="角度测量原理" class="level4">
 <h4 class="anchored" data-anchor-id="角度测量原理">角度测量原理</h4>
-<p><a href="https://blog.csdn.net/qq_39764867/article/details/108883896">测角参考csdn</a> <a href="https://zhuanlan.zhihu.com/p/416835851">知乎过路人毫米波雷达基础</a></p>
+<p><a href="https://xxxxiaojie.blog.csdn.net/article/details/113103008">xiaojie</a> <a href="https://blog.csdn.net/qq_39764867/article/details/108883896">csdn开MINI的工科男</a> <a href="https://zhuanlan.zhihu.com/p/416835851">知乎过路人毫米波雷达基础</a></p>
 <p>目标距离的微小变化会导致range-FFT峰值的相位变化。角度估计至少需要2个RX天线。 从目标到每个天线的差分距离 Δ d 导致FFT峰值发生相位变化，该相位变化用于估计到达角。</p>
 <p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-07-15-05-30.png" class="img-fluid"></p>
 <p>发射天线发送一个chirp，经过物体发射后信号，信号分别被第一根天线和第二根天线接收，第一根天线接收的距离为d dd，第二根天线接收的距离为<code>d + Δd</code>，额外的距离会产生相位差，<code>ω = 2πΔd/λ</code> ​</p>
@@ -571,6 +571,71 @@ d_{max} = ({σP_tG_{TX}G_{RX}λ^2T_{means}\over (4π)^3SNR_{min}kTF})^{1\over 4}
 </blockquote>
 <p>因此，角度测量值的准确度取决于到达角<code>AoA</code> (θ)，且在 <code>AoA</code>值越小时越准确。</p>
 <p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-07-16-25-21.png" class="img-fluid"></p>
+</section>
+<section id="雷达的最大角视场" class="level4">
+<h4 class="anchored" data-anchor-id="雷达的最大角视场">雷达的最大角视场</h4>
+<p>物体在雷达的左边，向量逆时针转 <img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-10-09-02-31.png" class="img-fluid"></p>
+<p>物体在雷达的右边，向量顺时针转 <img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-10-09-02-51.png" class="img-fluid"></p>
+<p>当向量转的角度超过180度时，就会产生模糊，不知道物体是在雷达的左侧还是在雷达的右侧, <img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-10-09-08-26.png" class="img-fluid"></p>
+<p>因此，角度的最大无模糊为： <code>∣ω∣&lt;180°</code> &gt; L: 接收天线距离</p>
+<p><span class="math display">\[
+ω = { 2πLsin(θ)\over λ} \rArr {θ = sin^{-1}({λ\over 2L})}
+\]</span></p>
+<p>因此雷达的最大角视场可能为<code>−90° ~ +90°</code></p>
+</section>
+<section id="测量雷达前方多个距离和速度相同的物体" class="level4">
+<h4 class="anchored" data-anchor-id="测量雷达前方多个距离和速度相同的物体">测量雷达前方多个距离和速度相同的物体</h4>
+<p>雷达前方有两个物体，他们的距离和速度相同，这样两个物体将处于2D-FFT中相同位置的距离速度单元，如下图所示.</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-10-09-34-20.png" class="img-fluid"></p>
+<blockquote class="blockquote">
+<p>之前简单的相位比较就不再适用</p>
+</blockquote>
+<p>解决方案是：将RX天线的数量从两个增加到N个</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-10-09-36-30.png" class="img-fluid"></p>
+<p>经过FFT(angle-FFT)后，得到下图</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-10-09-38-51.png" class="img-fluid"></p>
+<p><code>ω1</code>和<code>ω2</code>分别对应于两个物体之间的接收天线的相位差</p>
+<p><span class="math display">\[
+θ1 = sin^{-1}({ω1λ\over2πL})
+\space \\
+\space \\
+θ2 = sin^{-1}({ω2λ\over2πL})
+\]</span></p>
+<p>得到结果是弧度，最后还应该乘以180度，得到角度</p>
+</section>
+<section id="角度分辨率" class="level4">
+<h4 class="anchored" data-anchor-id="角度分辨率">角度分辨率</h4>
+<p>角度分辨率(θ _res)是两个物体在<code>ange-FFT</code>中作为单独峰值出现的最小角度的问题</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-10-09-47-35.png" class="img-fluid"></p>
+<p><span class="math display">\[
+ω1 = { 2πLsin(θ)\over λ}
+\space \\
+ω2 = { 2πLsin(θ)\over λ}
+\space \\
+△ω = ω2-ω1 \rArr { {2πL\over λ}{sin((θ+△θ)-sin(θ))}}
+\]</span></p>
+<p>又因为</p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-10-10-06-42.png" class="img-fluid"></p>
+<p>所以</p>
+<p><span class="math display">\[
+△ω = { {2πL\over λ}{cos(θ)△θ}}
+\]</span></p>
+<p>又因为傅里叶特性, 分辨两个峰值, 需要&gt;2π/N. N为FFT的样本输入数量, 在该例中即是接收天线的数量.</p>
+<p><span class="math display">\[
+△ω = { {2πL\over λ}{cos(θ)△θ}} &gt; {2π \over N}
+\space \\
+\space \\
+\rArr △θ &gt; {λ\over NLcos(θ)}
+\]</span></p>
+<p>所以角度分辨率</p>
+<p><span class="math display">\[
+θ_{res}  = {λ\over NLcos(θ)}
+\]</span></p>
+<p>通常假设<code>L = λ/2</code>,<code>θ = 0</code>,得：</p>
+<p><span class="math display">\[
+θ_{res} = {2\over N}
+\]</span></p>
+<p>所以角度分辨率和天线数量成正比.</p>
 
 
 </section>
