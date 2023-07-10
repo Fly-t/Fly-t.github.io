@@ -64,21 +64,10 @@ https://zhuanlan.zhihu.com/p/416269210
 φ: 相位
 w: 频率
 
-$input_1$ : $ x_1 = sin(w_1𝑡 + φ1) $
-$input_2$ : $ 𝑥2 = sin(w_2𝑡 + φ2) $
+$$input_1:  x_1 = sin(w_1𝑡 + φ1) $$
+$$input_2 :  𝑥2 = sin(w_2𝑡 + φ2) $$
 
-$output$ = $input_1+input_2 $ = $sin((w_2-w_1)𝑡 + (φ2-φ1))$
-
-# 测距
-
-
-# 测速
-
-
-# 测角
-
-
-
+$$output = input_1+input_2  = sin((w_2-w_1)𝑡 + (φ2-φ1))$$
 
 
 > ## 单目标测距原理
@@ -150,6 +139,21 @@ chirpA好于chirpB, 为什么因为前面推理过, 观测时间窗越长分辨�
 
 $$
 f_{IFmax}={2S d_{max}\over c}
+$$
+
+#### 最远探测距离
+
+IF信号通常经过数字化处理（LPF + ADC），才在DSP上进行进一步处理，因此，中频信号的大小取决于ADC采样频率（FS）。
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-10-14-06-59.png)
+
+$$
+Fs>f_{IFmax}=S2d_{max}/c
+$$
+
+因此最大距离为：
+$$
+d_{max} = {F_s{c} \over 2S}
 $$
 
 ## 中频信号的相位
