@@ -4435,7 +4435,7 @@
     "href": "posts/mmwave_getting_started/index.html#雷达的最大可测量速度",
     "title": "getting started with mmwave radar",
     "section": "雷达的最大可测量速度",
-    "text": "雷达的最大可测量速度\n物体远离雷达，此时ω &gt; 0.\n\n物体靠近雷达，此时ω &lt; 0\n\n如果ω大于180° 那样就不能分清楚是旋转了角度a还是角度b\n\n因此，最大的无模糊速度测量是∣ω∣ &lt; π\n可推导出\n\\[\n{4πvTc\\overλ}&lt; π\n\\]\n\\[\nv&lt;{λ\\over 4Tc}\n\\]\n最大的可测量速度为:\n\\[\nV_{max} = {λ\\over4Tc} = {4*10^{-3}m\\over4*40*10^{-6}s} = 25m/s\n\\]\n更高的速度需要更近的chirp(Tc尽可能的小)\n这里所描述的都是单个物体的情况."
+    "text": "雷达的最大可测量速度\n物体远离雷达，此时ω &gt; 0.\n\n物体靠近雷达，此时ω &lt; 0\n\n如果ω大于180° 那样就不能分清楚是旋转了角度a还是角度b\n\n因此，最大的无模糊速度测量是∣ω∣ &lt; π\n可推导出\n\\[\n{4πvTc\\overλ}&lt; π\n\\]\n\\[\nv&lt;{λ\\over 4Tc}\n\\]\n最大的可测量速度举例: Tc = 40us\n\\[\nV_{max} = {λ\\over4Tc} = {4*10^{-3}m\\over4*40*10^{-6}s} = 25m/s\n\\]\n更高的速度需要更近的chirp(Tc尽可能的小)\n这里所描述的都是单个物体的情况."
   },
   {
     "objectID": "posts/mmwave_getting_started/index.html#相同距离不同速度的多个物体怎么测速",
