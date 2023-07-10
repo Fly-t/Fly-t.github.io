@@ -602,8 +602,8 @@ $$
 
 
 #### 角度测量原理
-
-[测角参考csdn](https://blog.csdn.net/qq_39764867/article/details/108883896)
+[xiaojie](https://xxxxiaojie.blog.csdn.net/article/details/113103008)
+[csdn开MINI的工科男](https://blog.csdn.net/qq_39764867/article/details/108883896)
 [知乎过路人毫米波雷达基础](https://zhuanlan.zhihu.com/p/416835851)
 
 目标距离的微小变化会导致range-FFT峰值的相位变化。角度估计至少需要2个RX天线。
