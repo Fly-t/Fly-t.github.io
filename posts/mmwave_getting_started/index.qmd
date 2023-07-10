@@ -663,3 +663,98 @@ $$
 因此，角度测量值的准确度取决于到达角`AoA` (θ)，且在 `AoA`值越小时越准确。
 
 ![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-07-16-25-21.png)
+
+#### 雷达的最大角视场
+
+物体在雷达的左边，向量逆时针转
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-10-09-02-31.png)
+
+物体在雷达的右边，向量顺时针转
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-10-09-02-51.png)
+
+当向量转的角度超过180度时，就会产生模糊，不知道物体是在雷达的左侧还是在雷达的右侧,
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-10-09-08-26.png)
+
+因此，角度的最大无模糊为： `∣ω∣<180°`
+> L: 接收天线距离
+
+$$
+ω = { 2πLsin(θ)\over λ} \rArr {θ = sin^{-1}({λ\over 2L})}
+$$
+
+因此雷达的最大角视场可能为`−90° ~ +90°`
+
+#### 测量雷达前方多个距离和速度相同的物体
+
+雷达前方有两个物体，他们的距离和速度相同，这样两个物体将处于2D-FFT中相同位置的距离速度单元，如下图所示.
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-10-09-34-20.png)
+
+> 之前简单的相位比较就不再适用
+
+解决方案是：将RX天线的数量从两个增加到N个
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-10-09-36-30.png)
+
+经过FFT(angle-FFT)后，得到下图
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-10-09-38-51.png)
+
+`ω1`和`ω2`分别对应于两个物体之间的接收天线的相位差
+
+$$
+θ1 = sin^{-1}({ω1λ\over2πL}) 
+\space \\
+\space \\ 
+θ2 = sin^{-1}({ω2λ\over2πL})
+$$
+
+得到结果是弧度，最后还应该乘以180度，得到角度
+
+#### 角度分辨率
+
+角度分辨率(θ _res)是两个物体在`ange-FFT`中作为单独峰值出现的最小角度的问题
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-10-09-47-35.png)
+
+
+$$
+ω1 = { 2πLsin(θ)\over λ} 
+\space \\
+ω2 = { 2πLsin(θ)\over λ}
+\space \\
+△ω = ω2-ω1 \rArr { {2πL\over λ}{sin((θ+△θ)-sin(θ))}}
+$$
+
+又因为
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-10-10-06-42.png)
+
+所以
+
+$$
+△ω = { {2πL\over λ}{cos(θ)△θ}}
+$$
+
+又因为傅里叶特性, 分辨两个峰值, 需要>2π/N. N为FFT的样本输入数量, 在该例中即是接收天线的数量.
+
+$$
+△ω = { {2πL\over λ}{cos(θ)△θ}} > {2π \over N}
+\space \\
+\space \\
+\rArr △θ > {λ\over NLcos(θ)}
+$$
+
+所以角度分辨率
+
+$$
+θ_{res}  = {λ\over NLcos(θ)}
+$$
+
+通常假设`L = λ/2`,`θ = 0`,得：
+
+$$
+θ_{res} = {2\over N}
+$$
+
+所以角度分辨率和天线数量成正比.
