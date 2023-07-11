@@ -287,8 +287,8 @@ d_{max} = {F_s{c} \over 2S}
 <p>例子:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ADC配置<span class="op">:</span> 默认最大采样率<span class="dv">25</span><span class="er">Mhz</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>profileCfg <span class="dv">0</span> <span class="dv">77</span> <span class="dv">7</span> <span class="dv">7</span> <span class="fl">114.4</span> <span class="dv">0</span> <span class="dv">0</span>  <span class="fl">33.71</span> <span class="dv">1</span> <span class="dv">256</span> <span class="dv">2500</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">48</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>最大距离 <code>ADC有效采样率 = 0.9 * ADC采样率</code> 为什么是<code>33.71*10^12</code> 因为S为<code>33.71Mhz/us</code> =&gt; <code>33.71*10^6Hz/us</code> =&gt; <code>33.71*10^6*10^6Hz/s</code> =&gt; <code>33.71*10^12Hz/s</code> <span class="math display">\[
-Rmax = {0.9*25*10^{6}*3*10^{8}\over 2*33.71*10^{12}} = 100.11865...m
+<p>最大距离 <code>ADC有效采样率 = 0.9 * ADC采样率</code> 2500kps =&gt; 2.5Mhz 为什么是<code>33.71*10^12</code> 因为S为<code>33.71Mhz/us</code> =&gt; <code>33.71*10^6Hz/us</code> =&gt; <code>33.71*10^6*10^6Hz/s</code> =&gt; <code>33.71*10^12Hz/s</code> <span class="math display">\[
+Rmax = {0.9*2.5*10^{6}*3*10^{8}\over 2*33.71*10^{12}} = 10.011865...m
 \]</span></p>
 </section>
 </section>
@@ -434,7 +434,8 @@ V_{max} = {λ\over4Tc} = {4*10^{-3}m\over4*40*10^{-6}s} = 25m/s
 V_{1} = {λω_1\over4πTc} \space
 V_{2} = {λω_2\over4πTc}
 \]</span> &gt; 他们在做完range-fft之后将会拥有相同的位置, 和相同的峰值. <font color="red"> 但是该位置处相对应的离散值(相位值),由两个(取决于物体数量)旋转向量<code>ω1</code>,<code>ω2</code>组成, 他们分别以频率<code>ω1</code>,<code>ω2</code>进行旋转,分别对应两个速度<code>v1</code> 和 <code>v2</code>, 所以测量处<code>ω1</code>,<code>ω2</code>后我们即可计算出<code>v1</code>,<code>v2</code> </font>这个过程就是<code>多普勒FFT</code>, 那么多普勒FFT的速度分辨率怎么样(换个说法, v1和v2最小间隔多少可以分辨为2个峰)</p>
-<p><strong>多目标速度分辨率(多普勒fft分辨率)推导</strong></p>
+<section id="多目标速度分辨率多普勒fft分辨率推导" class="level4">
+<h4 class="anchored" data-anchor-id="多目标速度分辨率多普勒fft分辨率推导">多目标速度分辨率(多普勒fft分辨率)推导</h4>
 <p><span class="math display">\[
 △ω = {4π△vTc\overλ}
 \]</span> 又因为, 只要两个离散信号的频率间隔差值<code>△ω</code>大于<code>2 π / N</code>,即可区分出两种频率,N为一个frame中chirp的个数</p>
@@ -456,7 +457,9 @@ V_{2} = {λω_2\over4πTc}
 <blockquote class="blockquote">
 <p>总结 假设雷达前方有两个物体，两个物体离雷达的距离不一样，前面通过两个chirp来测相位差的方法还可以用，但是如果两个物体距的雷达的距离相等，经过range-FFT后，只有一个峰值，因此，峰值处的相位就会有两个分量，这样，通过相位比较的方法就不再适用.</p>
 </blockquote>
+<p>速度分辨率举例:</p>
 <p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-07-05-16-51-28.png" class="img-fluid"></p>
+</section>
 </section>
 <section id="一些系统设计的话题" class="level2">
 <h2 class="anchored" data-anchor-id="一些系统设计的话题">一些系统设计的话题</h2>
