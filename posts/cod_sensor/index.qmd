@@ -1,0 +1,92 @@
+---
+title: "cod sensor getting started" 
+author: "dd21"
+date: "2023-08-11" 
+categories: [cod]
+image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-14-14-38-09.png
+---
+
+
+# Abstract
+The conductivity sensor is vital for liquid analysis. Understanding its working principle is crucial for efficient measurement tools. It induces current through an electric field in the liquid, reflecting ion concentration and conductivity. This knowledge guides advanced sensor development, enhancing sensitivity and stability. By fusing electronics with physics, these sensors play a key role in environmental monitoring, water analysis, and industrial automation, boosting efficiency and quality.
+
+# Referance
+
+禹山,凯米斯
+[https://zhuanlan.zhihu.com/p/603956776](https://zhuanlan.zhihu.com/p/603956776)
+
+[https://zhuanlan.zhihu.com/p/114602584](https://zhuanlan.zhihu.com/p/114602584)
+
+
+# 电导率传感器
+
+## 标准溶液
+
+氯化钾溶液
+
+[配置方法](https://wenku.baidu.com/view/e80187f5cebff121dd36a32d7375a417876fc128.html?_wkts_=1691989539111)
+
+配好的标准溶液: 
+雷磁: [https://item.jd.com/34306782421.html](https://item.jd.com/34306782421.html)
+梅特勒: [https://i-item.jd.com/100040781043.html](https://i-item.jd.com/100040781043.html)
+## 电导率传感器原理
+
+电导率表示物质导电的性能。电导率越大则导电性能越强，反之越小。
+
+电导的基本单位是西门子（S），原来被称为姆欧，取电阻单位欧姆倒数之意（电阻率的倒数为电导率）。
+
+
+
+
+> `电导率计算`
+> 电导率常数 K= L/A
+> 其中：A-测量电极的有效极板，L-两极板的距离。
+> 这一值则被称为电极常数。在电极间存在均匀电场的情况下,电极常数可以通过几何尺寸算出。
+> 当两个面积为1cm^2的方形极板，之间相隔1cm组成电极时，此电极的常数 K=1cm^-1。如果用此对电极测得电导值 G=1000μS，则被测溶液的电导率 K=1000 μS/cm。
+
+> `标准溶液`
+标准溶液一般都使用KCl（氯化钾）溶液，这是因为KCl的电导率的不同的温度和浓度情况下非常稳定，准确。0.1 mol/l的KCl溶液在25℃时电导率为12.88mS/CM。
+
+> `工作原理`
+>  当液体中存在离子（如溶解的盐、酸、碱等）时，这些离子会在电场的作用下移动。正离子会朝着负极移动，负离子会朝着正极移动。这种离子的移动导致了电流在液体中的流动。电导率仪测量在液体中产生的电流强度。电流的强度与液体中的离子浓度以及电场强度之间存在关系。通常，电导率仪会将测量到的电流转换为数字信号，以便进一步处理和显示。
+> 
+> 电子单元采用适当频率的交流信号的方法，将信号放大处理后换算成电导率。仪器中还配有与传器相匹配的温度测量系统，能补偿到标准温度电导率的温度补偿系统、温度系数调节系统以及电导池常数调节系统，以及自动换档功能等。
+
+> `电导率仪的电导电极的种类`
+> 由二个电极组成的测量电极被称为科尔劳施（Kohlrausch）电极。
+
+
+
+## 竞品对比
+
+**[奇崛电子](https://www.qijuedz.com/productinfo/1967322.html)**
+
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-14-09-13-19.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-14-09-12-03.png)
+
+
+**[蛙视](https://www.bioon.com.cn/product/show_product.asp?id=367414)**
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-14-09-14-50.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-14-09-16-09.png)
+
+
+**[凯米斯](http://www.chemins-tech.com/sz9/222.html)**
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-14-09-19-09.png)
+
+
+**[禹山](https://www.yosemitech.cn/technology/document/221.html)**
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-14-11-20-49.png)
+
+
+# 校准溶液
+
+如何校准
+
+
+
