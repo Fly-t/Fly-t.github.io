@@ -2,6 +2,7 @@
   {
     "listing": "/article.html",
     "items": [
+      "/posts/quickPCB_getting_started/index.html",
       "/posts/cod_sensor/index.html",
       "/posts/esp32_s3_dev_create_env_linux/index.html",
       "/posts/nb_iot_shadow_device/index.html",
