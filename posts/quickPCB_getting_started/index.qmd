@@ -1,0 +1,131 @@
+---
+title: "getting started with QuickPcb" 
+author: "dd21"
+date: "2023-08-16" 
+categories: [tutorial]
+image: image
+---
+
+
+# Abstract
+
+"quickpcb2005" is a software designed for PCB cloning. It offers a swift and comprehensive solution to guide users through the process of replicating printed circuit boards (PCBs), specifically tailored for the 2005 version. The software provides step-by-step instructions and practical examples, facilitating both beginners and experienced users in mastering the core techniques of PCB cloning. Whether seeking a quick introduction or an in-depth understanding, "quickpcb2005" equips users with the tools and guidance needed to make significant strides in the realm of PCBs.
+
+# Referance
+
+B站视频教程: [https://www.bilibili.com/video/BV1KK411s7sj?t=307.8](https://www.bilibili.com/video/BV1KK411s7sj?t=307.8)
+快捷键: [https://blog.csdn.net/lgcpcb/article/details/93139476](https://blog.csdn.net/lgcpcb/article/details/93139476)
+
+> 扫描仪 推荐
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-16-13-17-07.png)
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-16-13-17-26.png)
+
+
+> 软件: 
+> QuickPcb2005
+> PS
+> AD
+
+## 1. 扫描图片
+
+通过扫描仪获取到图片
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-16-13-25-31.png)
+
+
+
+## 2. 修图
+导入图片
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-16-13-31-15.png)
+
+### 2.1 图片修直
+> PS快捷键
+> 放大缩小: alt+滚轮
+> 调整图片大小: ctrl+T
+
+
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-16-13-24-51.png)
+
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-16-13-35-59.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-16-13-29-56.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-16-13-30-27.png)
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-16-13-34-40.png)
+
+### 2.2 裁剪掉多余部分
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-16-13-40-28.png)
+
+### 2.2.1 重复处理另外一面
+
+图片修直-> 裁剪掉多余部分
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-16-13-42-48.png)
+
+### 2.3 新建尺寸图
+
+用卡尺测量出PCB的长宽, 上图中的PCB的长为104mm, 宽为23mm
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-16-13-46-33.png)
+
+将修剪好的两个图片复制到具有大小信息的新建文档中, 拖拉调整对其
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-16-13-50-35.png)
+
+重复操作将两层都都处理好(使得都具有大小信息), 分别对应两个不同的涂层.
+
+### 2.4 图层对齐
+对齐的时候会发现有一面是镜像的, 需要进行翻转.(根据实际情况进行翻转(垂直/水平))
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-16-13-54-49.png)
+
+对齐操作之前, 先进行不透明度调整, 调整为50%左右, 可以看到上下层, 利用过孔或者焊盘进行对齐.
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-16-14-09-27.png)
+
+拖动涂层调整对齐后分别对图层进行保存.
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-16-14-10-11.png)
+
+保存格式为`.bmp`格式, 方便导入到quickPCB中
+
+## 3. 导入QuickPCB
+
+打开底图
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-16-14-14-10.png)
+
+测量尺寸查看是否正确.
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-16-14-15-35.png)
+
+
+根据PCB进行放置相应器件
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-16-14-18-15.png)
+
+## 4. 连线
+放置完元件后, 将元件进行连接. 顶层和底层走线. , 走线完成后画板框.
+
+## 5. 导出PCB
+
+走线完成后将数据导出为pcb文件
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-16-14-45-14.png)
+
+## 6. 导入AD
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-16-14-54-05.png)
+
+配置网络
+
+![](https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-16-14-54-34.png)
+
+保存文件: 另存为-> `.pcbDoc`
+
+
+
