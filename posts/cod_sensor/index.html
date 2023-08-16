@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="dd21">
-<meta name="dcterms.date" content="2022-12-05">
+<meta name="dcterms.date" content="2023-08-11">
 
-<title>TengFei’s Blog - java EE请求转发（转发和重定向）</title>
+<title>TengFei’s Blog - cod sensor getting started</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -145,9 +111,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">java EE请求转发（转发和重定向）</h1>
+      <h1 class="title">cod sensor getting started</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">java</div>
+                <div class="quarto-category">cod</div>
               </div>
                   </div>
   </div>
@@ -165,7 +131,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">December 5, 2022</p>
+        <p class="date">August 11, 2023</p>
       </div>
     </div>
     
@@ -183,37 +149,55 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>请求转发和请求重定向的区别是： <code>请求转发只有一次请求，请求重定向有两次请求。</code> # 1、 请求转发 方法实现 将<code>RequestFrowardServlet</code>里的company的值转发给<code>ResaultServlet</code>展示 <br> 域对象：在一定范围内可以存值和取值 request域对象：在一次请求中可以存值和取值。</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>存值： request<span class="op">.</span><span class="fu">setAttribute</span><span class="op">(</span><span class="bu">String</span> key<span class="op">,</span> <span class="bu">Object</span> obj<span class="op">)</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>取值： <span class="bu">Object</span> obj <span class="op">=</span> request<span class="op">.</span><span class="fu">getAttribute</span><span class="op">(</span><span class="bu">String</span> key<span class="op">,</span> <span class="bu">Object</span> obj<span class="op">)</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>删除值： request<span class="op">.</span><span class="fu">removeAttRibute</span><span class="op">(</span><span class="bu">String</span> key<span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><code>RequestFrowardServlet</code></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 获取转发对象</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>RequestDispatcher  rd <span class="op">=</span> request<span class="op">.</span><span class="fu">getRequestDispatcher</span><span class="op">(</span><span class="st">"/resault"</span><span class="op">);</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">// 调用转发方法，实现转发效果</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>request<span class="op">.</span><span class="fu">setAttribute</span><span class="op">(</span><span class="st">"company"</span><span class="op">,</span><span class="st">"abc公司"</span><span class="op">);</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>rd<span class="op">.</span><span class="fu">forward</span><span class="op">(</span>request<span class="op">,</span> response<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><br><code>ResaultServlet</code></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 处理响应中文乱码</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>response<span class="op">.</span><span class="fu">setContentType</span><span class="op">(</span><span class="st">"text/html;charset=utf-8"</span><span class="op">);</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">// 获取并转换获取的company所对应的的值</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">String</span> name <span class="op">=</span> <span class="op">(</span><span class="bu">String</span><span class="op">)</span> request<span class="op">.</span><span class="fu">getAttribute</span><span class="op">(</span><span class="st">"company"</span><span class="op">);</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">// 输出到页面</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>response<span class="op">.</span><span class="fu">getWriter</span><span class="op">().</span><span class="fu">write</span><span class="op">(</span>name<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="请求重定向-方法实现" class="level1">
-<h1>2、 请求重定向 方法实现</h1>
-<p>将<code>RequestFrowardServlet</code>里的company的值转发给<code>ResaultServlet</code>展示<br> <code>RequestFrowardServlet</code></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 重定向</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>response<span class="op">.</span><span class="fu">sendRedirect</span><span class="op">(</span><span class="st">"welcom"</span><span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><code>ResaultServlet</code></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 处理响应中文乱码</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>response<span class="op">.</span><span class="fu">setContentType</span><span class="op">(</span><span class="st">"text/html;charset=utf-8"</span><span class="op">);</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">// 获取转发过来的参数</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">String</span> usr <span class="op">=</span> request<span class="op">.</span><span class="fu">getParameter</span><span class="op">(</span><span class="st">"username"</span><span class="op">);</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">String</span> psd <span class="op">=</span> request<span class="op">.</span><span class="fu">getParameter</span><span class="op">(</span><span class="st">"password"</span><span class="op">);</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">// 打印参数</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>response<span class="op">.</span><span class="fu">getWriter</span><span class="op">().</span><span class="fu">write</span><span class="op">(</span>usr<span class="op">+</span><span class="st">"&lt;br&gt;"</span><span class="op">);</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>response<span class="op">.</span><span class="fu">getWriter</span><span class="op">().</span><span class="fu">write</span><span class="op">(</span>psd<span class="op">+</span><span class="st">"&lt;br&gt;"</span><span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="abstract" class="level1">
+<h1>Abstract</h1>
+<p>The conductivity sensor is vital for liquid analysis. Understanding its working principle is crucial for efficient measurement tools. It induces current through an electric field in the liquid, reflecting ion concentration and conductivity. This knowledge guides advanced sensor development, enhancing sensitivity and stability. By fusing electronics with physics, these sensors play a key role in environmental monitoring, water analysis, and industrial automation, boosting efficiency and quality.</p>
+</section>
+<section id="referance" class="level1">
+<h1>Referance</h1>
+<p>禹山,凯米斯 <a href="https://zhuanlan.zhihu.com/p/603956776">https://zhuanlan.zhihu.com/p/603956776</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/114602584">https://zhuanlan.zhihu.com/p/114602584</a></p>
+</section>
+<section id="电导率传感器" class="level1">
+<h1>电导率传感器</h1>
+<section id="标准溶液" class="level2">
+<h2 class="anchored" data-anchor-id="标准溶液">标准溶液</h2>
+<p>氯化钾溶液</p>
+<p><a href="https://wenku.baidu.com/view/e80187f5cebff121dd36a32d7375a417876fc128.html?_wkts_=1691989539111">配置方法</a></p>
+<p>配好的标准溶液: 雷磁: <a href="https://item.jd.com/34306782421.html">https://item.jd.com/34306782421.html</a> 梅特勒: <a href="https://i-item.jd.com/100040781043.html">https://i-item.jd.com/100040781043.html</a> ## 电导率传感器原理</p>
+<p>电导率表示物质导电的性能。电导率越大则导电性能越强，反之越小。</p>
+<p>电导的基本单位是西门子（S），原来被称为姆欧，取电阻单位欧姆倒数之意（电阻率的倒数为电导率）。</p>
+<blockquote class="blockquote">
+<p><code>电导率计算</code> 电导率常数 K= L/A 其中：A-测量电极的有效极板，L-两极板的距离。 这一值则被称为电极常数。在电极间存在均匀电场的情况下,电极常数可以通过几何尺寸算出。 当两个面积为1cm^2的方形极板，之间相隔1cm组成电极时，此电极的常数 K=1cm^-1。如果用此对电极测得电导值 G=1000μS，则被测溶液的电导率 K=1000 μS/cm。</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><code>标准溶液</code> 标准溶液一般都使用KCl（氯化钾）溶液，这是因为KCl的电导率的不同的温度和浓度情况下非常稳定，准确。0.1 mol/l的KCl溶液在25℃时电导率为12.88mS/CM。</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><code>工作原理</code> 当液体中存在离子（如溶解的盐、酸、碱等）时，这些离子会在电场的作用下移动。正离子会朝着负极移动，负离子会朝着正极移动。这种离子的移动导致了电流在液体中的流动。电导率仪测量在液体中产生的电流强度。电流的强度与液体中的离子浓度以及电场强度之间存在关系。通常，电导率仪会将测量到的电流转换为数字信号，以便进一步处理和显示。</p>
+<p>电子单元采用适当频率的交流信号的方法，将信号放大处理后换算成电导率。仪器中还配有与传器相匹配的温度测量系统，能补偿到标准温度电导率的温度补偿系统、温度系数调节系统以及电导池常数调节系统，以及自动换档功能等。</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><code>电导率仪的电导电极的种类</code> 由二个电极组成的测量电极被称为科尔劳施（Kohlrausch）电极。</p>
+</blockquote>
+</section>
+<section id="竞品对比" class="level2">
+<h2 class="anchored" data-anchor-id="竞品对比">竞品对比</h2>
+<p><strong><a href="https://www.qijuedz.com/productinfo/1967322.html">奇崛电子</a></strong></p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-14-09-13-19.png" class="img-fluid"></p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-14-09-12-03.png" class="img-fluid"></p>
+<p><strong><a href="https://www.bioon.com.cn/product/show_product.asp?id=367414">蛙视</a></strong></p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-14-09-14-50.png" class="img-fluid"></p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-14-09-16-09.png" class="img-fluid"></p>
+<p><strong><a href="http://www.chemins-tech.com/sz9/222.html">凯米斯</a></strong></p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-14-09-19-09.png" class="img-fluid"></p>
+<p><strong><a href="https://www.yosemitech.cn/technology/document/221.html">禹山</a></strong></p>
+<p><img src="https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-14-11-20-49.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="校准溶液" class="level1">
+<h1>校准溶液</h1>
+<p>如何校准</p>
 
 
 </section>
