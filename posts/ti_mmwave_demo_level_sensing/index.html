@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.554">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -24,7 +24,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -83,7 +83,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -92,6 +98,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -101,16 +108,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">TengFei’s Blog</span>
     </a>
@@ -122,24 +156,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../article.html" rel="" target="">
- <span class="menu-text">Article</span></a>
+    <a class="nav-link" href="../../article.html"> 
+<span class="menu-text">Article</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/fly-t" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/fly-t"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://raw.githubusercontent.com/fly-t/images/main/blog/wechat-2022-11-27-16-30-56.png" rel="" target=""><i class="bi bi-qr-code-scan" role="img">
+    <a class="nav-link" href="https://raw.githubusercontent.com/fly-t/images/main/blog/wechat-2022-11-27-16-30-56.png"> <i class="bi bi-qr-code-scan" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -182,6 +216,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
+
 
 
 
@@ -637,8 +672,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* fft大小:512, 这里根据限制的距离范围进一步限制处理数据, 提高数据处理的效率 */</span></span>
 <span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>        RangeBinfft1DSize           <span class="op">=</span>   handle<span class="op">-&gt;</span>fft1DSize<span class="op">;</span></span>
 <span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* 对计算出的rangebin进行四舍五入 */</span></span>
-<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>        RangeBinMin                 <span class="op">=</span> <span class="op">(</span><span class="dt">uint16_t</span><span class="op">)(</span>skipMin<span class="op">/</span>rangeResolution <span class="op">+</span> <span class="dv">0</span><span class="er">.5</span><span class="op">);</span></span>
-<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>        RangeBinMax                 <span class="op">=</span> <span class="op">(</span><span class="dt">uint16_t</span><span class="op">)(</span>skipMax<span class="op">/</span>rangeResolution <span class="op">+</span> <span class="dv">0</span><span class="er">.5</span><span class="op">);</span></span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>        RangeBinMin                 <span class="op">=</span> <span class="op">(</span><span class="dt">uint16_t</span><span class="op">)(</span>skipMin<span class="op">/</span>rangeResolution <span class="op">+</span> <span class="fl">0.5</span><span class="op">);</span></span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>        RangeBinMax                 <span class="op">=</span> <span class="op">(</span><span class="dt">uint16_t</span><span class="op">)(</span>skipMax<span class="op">/</span>rangeResolution <span class="op">+</span> <span class="fl">0.5</span><span class="op">);</span></span>
 <span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* 如果rangebin下溢就设置为0 */</span></span>
 <span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span><span class="op">(</span>RangeBinMin <span class="op">&gt;</span> RangeBinfft1DSize<span class="op">)</span></span>
@@ -924,7 +959,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a>                <span class="co">// 对多余部分进行填零操作</span></span>
 <span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span><span class="op">(</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="op">((</span><span class="dt">int32_t</span><span class="op">)</span>fftSize1D <span class="op">-</span> <span class="op">(</span><span class="dt">int32_t</span><span class="op">)</span>nSamplesPerChirp<span class="op">);</span> i<span class="op">++);</span></span>
 <span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a>                <span class="op">{</span></span>
-<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a>                    _amem8_f2<span class="op">(&amp;</span>outputPtr<span class="op">[</span><span class="dv">2</span><span class="op">*</span>nSamplesPerChirp <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>i<span class="op">])</span> <span class="op">=</span>   _ftof2<span class="op">(</span><span class="dv">0</span><span class="er">.f</span><span class="op">,</span> <span class="dv">0</span><span class="er">.f</span><span class="op">);</span></span>
+<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a>                    _amem8_f2<span class="op">(&amp;</span>outputPtr<span class="op">[</span><span class="dv">2</span><span class="op">*</span>nSamplesPerChirp <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>i<span class="op">])</span> <span class="op">=</span>   _ftof2<span class="op">(</span><span class="fl">0.</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.</span><span class="bu">f</span><span class="op">);</span></span>
 <span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a>                <span class="op">}</span></span>
 <span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
 <span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
@@ -995,16 +1030,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 排除的距离 */</span></span>
 <span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="op">(</span><span class="dt">int32_t</span><span class="op">)</span>highAccuRangeHandle<span class="op">-&gt;</span>skipLeft<span class="op">;</span>  i<span class="op">++</span> <span class="op">)</span></span>
 <span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a>        _amem8_f2<span class="op">(&amp;</span>highAccuRangeHandle<span class="op">-&gt;</span>fft1DOutSig<span class="op">[</span><span class="dv">2</span><span class="op">*</span>i<span class="op">])</span> <span class="op">=</span> _ftof2<span class="op">(</span><span class="dv">0</span><span class="er">.f</span><span class="op">,</span> <span class="dv">0</span><span class="er">.f</span><span class="op">);</span></span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a>        _amem8_f2<span class="op">(&amp;</span>highAccuRangeHandle<span class="op">-&gt;</span>fft1DOutSig<span class="op">[</span><span class="dv">2</span><span class="op">*</span>i<span class="op">])</span> <span class="op">=</span> _ftof2<span class="op">(</span><span class="fl">0.</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.</span><span class="bu">f</span><span class="op">);</span></span>
 <span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
 <span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span> i <span class="op">=</span> <span class="op">(</span><span class="dt">int32_t</span><span class="op">)</span>highAccuRangeHandle<span class="op">-&gt;</span>fft1DSize<span class="op">-</span> <span class="op">(</span><span class="dt">int32_t</span><span class="op">)</span>highAccuRangeHandle<span class="op">-&gt;</span>skipRight<span class="op">;</span> i <span class="op">&lt;</span> <span class="op">(</span><span class="dt">int32_t</span><span class="op">)</span>highAccuRangeHandle<span class="op">-&gt;</span>fft1DSize<span class="op">;</span> i<span class="op">++</span> <span class="op">)</span></span>
 <span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a>        _amem8_f2<span class="op">(&amp;</span>highAccuRangeHandle<span class="op">-&gt;</span>fft1DOutSig<span class="op">[</span><span class="dv">2</span><span class="op">*</span>i<span class="op">])</span> <span class="op">=</span> _ftof2<span class="op">(</span><span class="dv">0</span><span class="er">.f</span><span class="op">,</span> <span class="dv">0</span><span class="er">.f</span><span class="op">);</span></span>
+<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a>        _amem8_f2<span class="op">(&amp;</span>highAccuRangeHandle<span class="op">-&gt;</span>fft1DOutSig<span class="op">[</span><span class="dv">2</span><span class="op">*</span>i<span class="op">])</span> <span class="op">=</span> _ftof2<span class="op">(</span><span class="fl">0.</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.</span><span class="bu">f</span><span class="op">);</span></span>
 <span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
 <span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 存储最大距离和能量和 */</span></span>
-<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a>    max         <span class="op">=</span>   <span class="dv">0</span><span class="er">.f</span><span class="op">;</span></span>
-<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a>    totalPower  <span class="op">=</span>   <span class="dv">0</span><span class="er">.f</span><span class="op">;</span></span>
+<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a>    max         <span class="op">=</span>   <span class="fl">0.</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a>    totalPower  <span class="op">=</span>   <span class="fl">0.</span><span class="bu">f</span><span class="op">;</span></span>
 <span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a>    coarseRangeInd  <span class="op">=</span>   <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a>    inputPtr    <span class="op">=</span>   <span class="op">(</span>__float2_t <span class="op">*)</span>highAccuRangeHandle<span class="op">-&gt;</span>fft1DOutSig<span class="op">;</span></span>
 <span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a>    powerPtr    <span class="op">=</span>   <span class="op">(</span><span class="dt">float</span> <span class="op">*)</span>highAccuRangeHandle<span class="op">-&gt;</span>scratchPad<span class="op">;</span></span>
@@ -1041,18 +1076,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-105"><a href="#cb10-105" aria-hidden="true" tabindex="-1"></a>    inputPtr        <span class="op">=</span>   <span class="op">(</span>__float2_t <span class="op">*)</span>highAccuRangeHandle<span class="op">-&gt;</span>inputSig<span class="op">;</span></span>
 <span id="cb10-106"><a href="#cb10-106" aria-hidden="true" tabindex="-1"></a>    wncPtr          <span class="op">=</span>   <span class="op">(</span>__float2_t <span class="op">*)</span>highAccuRangeHandle<span class="op">-&gt;</span>wnCoarse<span class="op">;</span></span>
 <span id="cb10-107"><a href="#cb10-107" aria-hidden="true" tabindex="-1"></a>    wnfPtr          <span class="op">=</span>   <span class="op">(</span>__float2_t <span class="op">*)</span>highAccuRangeHandle<span class="op">-&gt;</span>wnFine<span class="op">;</span></span>
-<span id="cb10-108"><a href="#cb10-108" aria-hidden="true" tabindex="-1"></a>    max             <span class="op">=</span>   <span class="dv">0</span><span class="er">.f</span><span class="op">;</span></span>
+<span id="cb10-108"><a href="#cb10-108" aria-hidden="true" tabindex="-1"></a>    max             <span class="op">=</span>   <span class="fl">0.</span><span class="bu">f</span><span class="op">;</span></span>
 <span id="cb10-109"><a href="#cb10-109" aria-hidden="true" tabindex="-1"></a>    itemp           <span class="op">=</span>   <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb10-110"><a href="#cb10-110" aria-hidden="true" tabindex="-1"></a>    currP           <span class="op">=</span>   <span class="dv">0</span><span class="er">.f</span><span class="op">;</span></span>
-<span id="cb10-111"><a href="#cb10-111" aria-hidden="true" tabindex="-1"></a>    prevP           <span class="op">=</span>   <span class="dv">0</span><span class="er">.f</span><span class="op">;</span></span>
-<span id="cb10-112"><a href="#cb10-112" aria-hidden="true" tabindex="-1"></a>    maxNextP        <span class="op">=</span>   <span class="dv">0</span><span class="er">.f</span><span class="op">;</span></span>
-<span id="cb10-113"><a href="#cb10-113" aria-hidden="true" tabindex="-1"></a>    maxPrevP        <span class="op">=</span>   <span class="dv">0</span><span class="er">.f</span><span class="op">;</span></span>
+<span id="cb10-110"><a href="#cb10-110" aria-hidden="true" tabindex="-1"></a>    currP           <span class="op">=</span>   <span class="fl">0.</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb10-111"><a href="#cb10-111" aria-hidden="true" tabindex="-1"></a>    prevP           <span class="op">=</span>   <span class="fl">0.</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb10-112"><a href="#cb10-112" aria-hidden="true" tabindex="-1"></a>    maxNextP        <span class="op">=</span>   <span class="fl">0.</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb10-113"><a href="#cb10-113" aria-hidden="true" tabindex="-1"></a>    maxPrevP        <span class="op">=</span>   <span class="fl">0.</span><span class="bu">f</span><span class="op">;</span></span>
 <span id="cb10-114"><a href="#cb10-114" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span> i <span class="op">=</span> zoomStartInd<span class="op">;</span> i <span class="op">&lt;</span> zoomEndInd<span class="op">;</span> i<span class="op">++)</span></span>
 <span id="cb10-115"><a href="#cb10-115" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
 <span id="cb10-116"><a href="#cb10-116" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span><span class="op">(</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> <span class="op">(</span><span class="dt">int32_t</span><span class="op">)</span>highAccuRangeHandle<span class="op">-&gt;</span>fft1DSize<span class="op">;</span> j <span class="op">++)</span></span>
 <span id="cb10-117"><a href="#cb10-117" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
 <span id="cb10-118"><a href="#cb10-118" aria-hidden="true" tabindex="-1"></a>            tempFineSearchIdx   <span class="op">=</span>   j<span class="op">;</span></span>
-<span id="cb10-119"><a href="#cb10-119" aria-hidden="true" tabindex="-1"></a>            sigAcc  <span class="op">=</span>   _ftof2<span class="op">(</span><span class="dv">0</span><span class="er">.f</span><span class="op">,</span> <span class="dv">0</span><span class="er">.f</span><span class="op">);</span> </span>
+<span id="cb10-119"><a href="#cb10-119" aria-hidden="true" tabindex="-1"></a>            sigAcc  <span class="op">=</span>   _ftof2<span class="op">(</span><span class="fl">0.</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.</span><span class="bu">f</span><span class="op">);</span> </span>
 <span id="cb10-120"><a href="#cb10-120" aria-hidden="true" tabindex="-1"></a>            tempCoarseSearchIdx <span class="op">=</span>   <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb10-121"><a href="#cb10-121" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef _TMS320C6X</span></span>
 <span id="cb10-122"><a href="#cb10-122" aria-hidden="true" tabindex="-1"></a><span class="pp">#pragma UNROLL(2);</span></span>
@@ -1091,7 +1126,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-155"><a href="#cb10-155" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
 <span id="cb10-156"><a href="#cb10-156" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
 <span id="cb10-157"><a href="#cb10-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-158"><a href="#cb10-158" aria-hidden="true" tabindex="-1"></a>    interpIndx  <span class="op">=</span>   <span class="dv">0</span><span class="er">.5</span> <span class="op">*</span> divdp<span class="op">((</span><span class="dt">double</span><span class="op">)</span>maxPrevP <span class="op">-</span> <span class="op">(</span><span class="dt">double</span><span class="op">)</span>maxNextP<span class="op">,</span> <span class="op">(</span><span class="dt">double</span><span class="op">)</span>maxPrevP <span class="op">+</span> <span class="op">(</span><span class="dt">double</span><span class="op">)</span>maxNextP <span class="op">-</span><span class="fl">2.0</span> <span class="op">*</span> <span class="op">(</span><span class="dt">double</span><span class="op">)</span> max<span class="op">);</span></span>
+<span id="cb10-158"><a href="#cb10-158" aria-hidden="true" tabindex="-1"></a>    interpIndx  <span class="op">=</span>   <span class="fl">0.5</span> <span class="op">*</span> divdp<span class="op">((</span><span class="dt">double</span><span class="op">)</span>maxPrevP <span class="op">-</span> <span class="op">(</span><span class="dt">double</span><span class="op">)</span>maxNextP<span class="op">,</span> <span class="op">(</span><span class="dt">double</span><span class="op">)</span>maxPrevP <span class="op">+</span> <span class="op">(</span><span class="dt">double</span><span class="op">)</span>maxNextP <span class="op">-</span><span class="fl">2.0</span> <span class="op">*</span> <span class="op">(</span><span class="dt">double</span><span class="op">)</span> max<span class="op">);</span></span>
 <span id="cb10-159"><a href="#cb10-159" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-160"><a href="#cb10-160" aria-hidden="true" tabindex="-1"></a>    fdelta          <span class="op">=</span>   divdp<span class="op">((</span><span class="dt">double</span><span class="op">)</span>highAccuRangeHandle<span class="op">-&gt;</span>maxBeatFreq<span class="op">,</span> <span class="op">(</span><span class="dt">double</span><span class="op">)</span>highAccuRangeHandle<span class="op">-&gt;</span>fft1DSize <span class="op">*</span> <span class="op">(</span><span class="dt">double</span><span class="op">)</span>highAccuRangeHandle<span class="op">-&gt;</span>fft1DSize<span class="op">);</span></span>
 <span id="cb10-161"><a href="#cb10-161" aria-hidden="true" tabindex="-1"></a>    freqFineEst     <span class="op">=</span>   fdelta <span class="op">*</span> <span class="op">((</span><span class="dt">double</span><span class="op">)(</span>zoomStartInd <span class="op">*</span> highAccuRangeHandle<span class="op">-&gt;</span>fft1DSize <span class="op">+</span> fineRangeInd<span class="op">)</span> <span class="op">+</span> interpIndx<span class="op">);</span> </span>
@@ -1103,7 +1138,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-167"><a href="#cb10-167" aria-hidden="true" tabindex="-1"></a>        <span class="dt">float</span> phaseCoarseEst1<span class="op">,</span> phaseCoarseEst2<span class="op">,</span> phaseInitial<span class="op">;</span></span>
 <span id="cb10-168"><a href="#cb10-168" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> PI <span class="op">=</span> <span class="fl">3.14159265358979323846</span><span class="bu">f</span><span class="op">;</span></span>
 <span id="cb10-169"><a href="#cb10-169" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> real<span class="op">,</span> imag<span class="op">,</span> denom<span class="op">,</span> initReal<span class="op">,</span> initImag<span class="op">,</span> dtemp1<span class="op">,</span> dtemp2<span class="op">,</span> dtemp<span class="op">;</span></span>
-<span id="cb10-170"><a href="#cb10-170" aria-hidden="true" tabindex="-1"></a>        <span class="dt">float</span> phaseEst<span class="op">,</span> totalPhase <span class="op">=</span> <span class="dv">0</span><span class="er">.f</span><span class="op">,</span> phaseCorrection<span class="op">,</span> rangePhaseCorrection<span class="op">;</span></span>
+<span id="cb10-170"><a href="#cb10-170" aria-hidden="true" tabindex="-1"></a>        <span class="dt">float</span> phaseEst<span class="op">,</span> totalPhase <span class="op">=</span> <span class="fl">0.</span><span class="bu">f</span><span class="op">,</span> phaseCorrection<span class="op">,</span> rangePhaseCorrection<span class="op">;</span></span>
 <span id="cb10-171"><a href="#cb10-171" aria-hidden="true" tabindex="-1"></a>        __float2_t demodSig<span class="op">,</span> corrSig<span class="op">;</span></span>
 <span id="cb10-172"><a href="#cb10-172" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-173"><a href="#cb10-173" aria-hidden="true" tabindex="-1"></a>        inputPtr            <span class="op">=</span>   <span class="op">(</span>__float2_t <span class="op">*)</span>highAccuRangeHandle<span class="op">-&gt;</span>inputSig<span class="op">;</span></span>
@@ -1271,7 +1306,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int16_t</span>             frameTotalChirps<span class="op">;</span></span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int32_t</span>             errCode<span class="op">,</span> itemp<span class="op">;</span></span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="dt">uint32_t</span>            profileLoopIdx<span class="op">,</span> chirpLoopIdx<span class="op">;</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span>                foundValidProfile <span class="op">=</span> false<span class="op">;</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span>                foundValidProfile <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">/* 配置传递:传递给RSS(radar sub system) */</span></span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>MMWave_CtrlCfg<span class="op">*</span>     ptrCtrlCfg <span class="op">=</span> <span class="op">&amp;(</span>demoCfg<span class="op">-&gt;</span>ctrlCfg<span class="op">);</span></span>
@@ -1308,7 +1343,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span>   </span>
 <span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>        profileLoopIdx<span class="op">=</span><span class="dv">0</span><span class="op">;</span></span>
 <span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* 最大支持4中配置, 如果找到有效配置就停止, 提升效率 */</span></span>
-<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a>        <span class="op">((</span>profileLoopIdx<span class="op">&lt;</span>MMWAVE_MAX_PROFILE<span class="op">)&amp;&amp;(</span>foundValidProfile<span class="op">==</span>false<span class="op">));</span></span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a>        <span class="op">((</span>profileLoopIdx<span class="op">&lt;</span>MMWAVE_MAX_PROFILE<span class="op">)&amp;&amp;(</span>foundValidProfile<span class="op">==</span><span class="kw">false</span><span class="op">));</span></span>
 <span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a>        profileLoopIdx<span class="op">++</span></span>
 <span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>    <span class="op">)</span></span>
 <span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
@@ -1367,7 +1402,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-101"><a href="#cb13-101" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">for</span> <span class="op">(</span>idx<span class="op">=(</span>chirpCfg<span class="op">.</span>chirpStartIdx<span class="op">-</span>frameChirpStartIdx<span class="op">);</span>idx<span class="op">&lt;=(</span>chirpCfg<span class="op">.</span>chirpEndIdx<span class="op">-</span>frameChirpStartIdx<span class="op">);</span>idx<span class="op">++)</span></span>
 <span id="cb13-102"><a href="#cb13-102" aria-hidden="true" tabindex="-1"></a>                        <span class="op">{</span></span>
 <span id="cb13-103"><a href="#cb13-103" aria-hidden="true" tabindex="-1"></a>                            validChirpTxEnBits<span class="op">[</span>idx<span class="op">]</span> <span class="op">=</span> chirpTxEn<span class="op">;</span></span>
-<span id="cb13-104"><a href="#cb13-104" aria-hidden="true" tabindex="-1"></a>                            foundValidProfile <span class="op">=</span> true<span class="op">;</span></span>
+<span id="cb13-104"><a href="#cb13-104" aria-hidden="true" tabindex="-1"></a>                            foundValidProfile <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
 <span id="cb13-105"><a href="#cb13-105" aria-hidden="true" tabindex="-1"></a>                        <span class="op">}</span></span>
 <span id="cb13-106"><a href="#cb13-106" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-107"><a href="#cb13-107" aria-hidden="true" tabindex="-1"></a>                    <span class="op">}</span></span>
@@ -1394,7 +1429,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-128"><a href="#cb13-128" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
 <span id="cb13-129"><a href="#cb13-129" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-130"><a href="#cb13-130" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* found valid chirps for the frame; mark this profile valid */</span></span>
-<span id="cb13-131"><a href="#cb13-131" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>foundValidProfile<span class="op">==</span>true<span class="op">)</span></span>
+<span id="cb13-131"><a href="#cb13-131" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>foundValidProfile<span class="op">==</span><span class="kw">true</span><span class="op">)</span></span>
 <span id="cb13-132"><a href="#cb13-132" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
 <span id="cb13-133"><a href="#cb13-133" aria-hidden="true" tabindex="-1"></a>            rlProfileCfg_t  profileCfg<span class="op">;</span></span>
 <span id="cb13-134"><a href="#cb13-134" aria-hidden="true" tabindex="-1"></a></span>
@@ -1444,22 +1479,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-178"><a href="#cb13-178" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Range window parameters. */</span></span>
 <span id="cb13-179"><a href="#cb13-179" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 距离窗配置 */</span></span>
 <span id="cb13-180"><a href="#cb13-180" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>highAccuConfig<span class="op">.</span>win1DLength     <span class="op">=</span> <span class="dv">16</span><span class="op">;</span></span>
-<span id="cb13-181"><a href="#cb13-181" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">0</span><span class="op">]</span>  <span class="op">=</span> <span class="dv">0</span><span class="er">.0800f</span><span class="op">;</span></span>
-<span id="cb13-182"><a href="#cb13-182" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">1</span><span class="op">]</span>  <span class="op">=</span> <span class="dv">0</span><span class="er">.0894f</span><span class="op">;</span></span>
-<span id="cb13-183"><a href="#cb13-183" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">2</span><span class="op">]</span>  <span class="op">=</span> <span class="dv">0</span><span class="er">.1173f</span><span class="op">;</span></span>
-<span id="cb13-184"><a href="#cb13-184" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">3</span><span class="op">]</span>  <span class="op">=</span> <span class="dv">0</span><span class="er">.1624f</span><span class="op">;</span></span>
-<span id="cb13-185"><a href="#cb13-185" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">4</span><span class="op">]</span>  <span class="op">=</span> <span class="dv">0</span><span class="er">.2231f</span><span class="op">;</span></span>
-<span id="cb13-186"><a href="#cb13-186" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">5</span><span class="op">]</span>  <span class="op">=</span> <span class="dv">0</span><span class="er">.2967f</span><span class="op">;</span></span>
-<span id="cb13-187"><a href="#cb13-187" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">6</span><span class="op">]</span>  <span class="op">=</span> <span class="dv">0</span><span class="er">.3802f</span><span class="op">;</span></span>
-<span id="cb13-188"><a href="#cb13-188" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">7</span><span class="op">]</span>  <span class="op">=</span> <span class="dv">0</span><span class="er">.4703f</span><span class="op">;</span></span>
-<span id="cb13-189"><a href="#cb13-189" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">8</span><span class="op">]</span>  <span class="op">=</span> <span class="dv">0</span><span class="er">.5633f</span><span class="op">;</span></span>
-<span id="cb13-190"><a href="#cb13-190" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">9</span><span class="op">]</span>  <span class="op">=</span> <span class="dv">0</span><span class="er">.6553f</span><span class="op">;</span></span>
-<span id="cb13-191"><a href="#cb13-191" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">10</span><span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="er">.7426f</span><span class="op">;</span></span>
-<span id="cb13-192"><a href="#cb13-192" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">11</span><span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="er">.8216f</span><span class="op">;</span></span>
-<span id="cb13-193"><a href="#cb13-193" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">12</span><span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="er">.8890f</span><span class="op">;</span></span>
-<span id="cb13-194"><a href="#cb13-194" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">13</span><span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="er">.9422f</span><span class="op">;</span></span>
-<span id="cb13-195"><a href="#cb13-195" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">14</span><span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="er">.9789f</span><span class="op">;</span></span>
-<span id="cb13-196"><a href="#cb13-196" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">15</span><span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="er">.9976f</span><span class="op">;</span></span>
+<span id="cb13-181"><a href="#cb13-181" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">0</span><span class="op">]</span>  <span class="op">=</span> <span class="fl">0.0800</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb13-182"><a href="#cb13-182" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">1</span><span class="op">]</span>  <span class="op">=</span> <span class="fl">0.0894</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb13-183"><a href="#cb13-183" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">2</span><span class="op">]</span>  <span class="op">=</span> <span class="fl">0.1173</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb13-184"><a href="#cb13-184" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">3</span><span class="op">]</span>  <span class="op">=</span> <span class="fl">0.1624</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb13-185"><a href="#cb13-185" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">4</span><span class="op">]</span>  <span class="op">=</span> <span class="fl">0.2231</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb13-186"><a href="#cb13-186" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">5</span><span class="op">]</span>  <span class="op">=</span> <span class="fl">0.2967</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb13-187"><a href="#cb13-187" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">6</span><span class="op">]</span>  <span class="op">=</span> <span class="fl">0.3802</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb13-188"><a href="#cb13-188" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">7</span><span class="op">]</span>  <span class="op">=</span> <span class="fl">0.4703</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb13-189"><a href="#cb13-189" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">8</span><span class="op">]</span>  <span class="op">=</span> <span class="fl">0.5633</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb13-190"><a href="#cb13-190" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">9</span><span class="op">]</span>  <span class="op">=</span> <span class="fl">0.6553</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb13-191"><a href="#cb13-191" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">10</span><span class="op">]</span> <span class="op">=</span> <span class="fl">0.7426</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb13-192"><a href="#cb13-192" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">11</span><span class="op">]</span> <span class="op">=</span> <span class="fl">0.8216</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb13-193"><a href="#cb13-193" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">12</span><span class="op">]</span> <span class="op">=</span> <span class="fl">0.8890</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb13-194"><a href="#cb13-194" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">13</span><span class="op">]</span> <span class="op">=</span> <span class="fl">0.9422</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb13-195"><a href="#cb13-195" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">14</span><span class="op">]</span> <span class="op">=</span> <span class="fl">0.9789</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb13-196"><a href="#cb13-196" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">[</span><span class="dv">15</span><span class="op">]</span> <span class="op">=</span> <span class="fl">0.9976</span><span class="bu">f</span><span class="op">;</span></span>
 <span id="cb13-197"><a href="#cb13-197" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-198"><a href="#cb13-198" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* 将项目的窗也设置为相同的窗 */</span></span>
 <span id="cb13-199"><a href="#cb13-199" aria-hidden="true" tabindex="-1"></a>    radarProcConfig<span class="op">-&gt;</span>highAccuConfig<span class="op">.</span>win1D     <span class="op">=</span> radarProcConfig<span class="op">-&gt;</span>win1D<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1672,6 +1707,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
   }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
   const toggleColorMode = (alternate) => {
     // Switch the stylesheets
     const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
@@ -1738,13 +1800,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -1823,10 +1887,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/fly-t\.github\.io");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1836,8 +1917,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1849,7 +1939,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1893,6 +2106,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1918,6 +2132,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1978,6 +2218,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 

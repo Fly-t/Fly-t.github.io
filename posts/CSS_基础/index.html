@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.554">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -24,7 +24,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -83,7 +83,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -92,6 +98,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -105,10 +112,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">TengFei’s Blog</span>
     </a>
@@ -120,24 +127,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../article.html" rel="" target="">
- <span class="menu-text">Article</span></a>
+    <a class="nav-link" href="../../article.html"> 
+<span class="menu-text">Article</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/fly-t" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/fly-t"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://raw.githubusercontent.com/fly-t/images/main/blog/wechat-2022-11-27-16-30-56.png" rel="" target=""><i class="bi bi-qr-code-scan" role="img">
+    <a class="nav-link" href="https://raw.githubusercontent.com/fly-t/images/main/blog/wechat-2022-11-27-16-30-56.png"> <i class="bi bi-qr-code-scan" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -183,6 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+
 <p>lz也是从知乎上看到这个这个网站，很不错，边学边敲。 网址：<a href="https://www.freecodecamp.one/">https://www.freecodecamp.one/</a></p>
 <p>这个算是自己做个小笔记（cv大法）吧，看一点敲一点，cv一点。 ## 更改文本的颜色 现在让我们来修改一下文本的颜色。</p>
 <p>我们通过修改<code>h2</code>元素的<code>style</code>属性的<code>color</code>值来改变文本颜色。</p>
@@ -205,7 +213,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>一个 <code>CSSclass</code>声明示例，如下所示：</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>&lt;style<span class="op">&gt;</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.blue-text</span> {</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span>: <span class="cn">blue</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">blue</span><span class="op">;</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>&lt;/style<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>可以看到，我们在<code>&lt;style&gt;</code>样式声明区域里，创建了一个名为<code>blue-text</code>的<code>class选择器</code>。</p>
@@ -213,7 +221,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>h2 <span class="va">class</span><span class="op">=</span><span class="st">"blue-text"</span><span class="op">&gt;</span>CatPhotoApp<span class="op">&lt;</span>/h2<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>注意：在<code>style</code>样式区域声明里，<code>class</code>需以<code>.</code>开头。而在 HTML 元素里，<code>class</code>属性的前面<strong>不能</strong>添加<code>.</code>。 ## 使用 class 选择器设置多个元素的样式 <img src="https://img-blog.csdnimg.cn/20200504222340656.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70.png" class="img-fluid" alt="在这里插入图片描述"> ## 更改元素的字体大小 字体大小由<code>font-size</code>属性控制，如下所示：</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>h1 {</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-size</span>: <span class="dv">30</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">30</span><span class="dt">px</span><span class="op">;</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="设置元素的字体家族" class="level2">
@@ -221,7 +229,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>通过<code>font-family</code>属性，可以设置元素里面的字体样式。</p>
 <p>如果你想设置<code>h2</code>元素的字体为<code>sans-serif</code>，你可以用以下的 CSS 规则：</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>h2 {</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span>: <span class="dv">sans-serif</span><span class="op">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="dv">sans-serif</span><span class="op">;</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="引入谷歌字体" class="level2">
@@ -232,14 +240,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>引入<code>Google</code>字体，你需要复制<code>Google</code>字体的 <code>URL</code>，并粘贴到你的 HTML 里面。在这个挑战中，我们需要引入<code>Lobster</code>字体。因此，请复制以下代码段，并粘贴到代码编辑器顶部，即放到<code>style</code>标签之前。</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>link <span class="va">href</span><span class="op">=</span><span class="st">"https://fonts.googleapis.com/css?family=Lobster"</span> <span class="va">rel</span><span class="op">=</span><span class="st">"stylesheet"</span> <span class="va">type</span><span class="op">=</span><span class="st">"text/css"</span><span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>现在你可以设置<code>font-family</code>属性为<code>Lobster</code>，来使用<code>Lobster</code>字体。例子如下：</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>font-family<span class="in">: FAMILY</span>_NAME<span class="op">,</span> GENERIC_NAME;#第二个是备用字体</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>font-family<span class="in">:</span> FAMILY_NAME<span class="op">,</span> GENERIC_NAME;<span class="pp">#第二个是备用字体</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>GENERIC_NAME</code>是可选的，其他字体不可用时便作为后备字体，在下一个挑战中可以得到体现。</p>
 <p>字体名区分大小写，并且如果字体名含有空格，需要用引号括起来。例如，使用”<code>Open Sans</code>“字体需要添加引号，而<code>Lobster</code>字体则不需要。</p>
 <p>通过<code>id</code>属性，你可以做一些很酷的事情，例如，就像 <code>class</code> 一样，你可以使用 <code>CSS</code> 来设置他们的样式</p>
 <p>可是，<code>id</code>不可以重用，只应用于一个元素上。同时，在 <code>CSS</code> 里，<code>id</code>的优先级要高于<code>class</code>，如果一个元素同时应用了<code>class</code>和<code>id</code>，并设置样式有冲突，会优先应用<code>id</code>的样式。</p>
 <p>选择<code>id</code>为<code>cat-photo-element</code>的元素，并设置它的背景样式为<code>green</code>，可以在你的<code>style</code>标签里这样写：</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#cat-photo-element</span> {</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span>: <span class="cn">green</span><span class="op">;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">green</span><span class="op">;</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="css-基础调整元素的内边距" class="level2">
@@ -251,9 +259,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>在这里，我们可以看到蓝色盒子和红色盒子都在黄色盒子里面。可以发现，红色盒子比蓝色盒子有着更多的<code>padding</code>填充空间。</p>
 <p>当你增加蓝色盒子的<code>padding</code>值，文本内容与边框的距离会逐渐拉大。</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.red-box</span> {</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span>: <span class="cn">crimson</span><span class="op">;</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span>: <span class="cn">#fff</span><span class="op">;</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span>: <span class="dv">20</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">crimson</span><span class="op">;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">#fff</span><span class="op">;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="css-基础给元素添加负外边距" class="level2">
@@ -261,10 +269,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>可设置为负值</strong> 元素的<code>margin</code>（外边距）控制元素边框与其他周围元素之间的距离大小。</p>
 <p>如果你设置元素<code>margin</code>为负值，元素会变得更大。</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.blue-box</span> {</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span>: <span class="cn">blue</span><span class="op">;</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span>: <span class="cn">#fff</span><span class="op">;</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span>: <span class="dv">20</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin</span>: <span class="dv">-15</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">blue</span><span class="op">;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">#fff</span><span class="op">;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin</span><span class="ch">:</span> <span class="dv">-15</span><span class="dt">px</span><span class="op">;</span></span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="css-基础给元素的每一侧添加不同的内边距" class="level2">
@@ -272,12 +280,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>有时候，你会想给一个元素每个方向的padding都设置成一个特定的值</p>
 <p>CSS 允许你使用padding-top，padding-right， padding-bottom和padding-left属性来设置四个不同方向的padding值。</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.blue-box</span> {</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span>: <span class="cn">blue</span><span class="op">;</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span>: <span class="cn">#fff</span><span class="op">;</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding-top</span>:<span class="dv">40</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding-right</span>:<span class="dv">20</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding-left</span>:<span class="dv">40</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding-bottom</span>:<span class="dv">20</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">blue</span><span class="op">;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">#fff</span><span class="op">;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding-top</span><span class="ch">:</span><span class="dv">40</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding-right</span><span class="ch">:</span><span class="dv">20</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding-left</span><span class="ch">:</span><span class="dv">40</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding-bottom</span><span class="ch">:</span><span class="dv">20</span><span class="dt">px</span><span class="op">;</span></span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -287,35 +295,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>有时候，你会想给一个元素每个方向的<code>margin</code>都设置成一个特定的值。</p>
 <p><code>CSS</code> 允许你使用<code>margin-top</code>，<code>margin-right</code>，<code>margin-bottom</code>和<code>margin-left</code>属性来设置四个不同方向的<code>margin</code>值。</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.red-box</span> {</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span>: <span class="cn">crimson</span><span class="op">;</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span>: <span class="cn">#fff</span><span class="op">;</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin-top</span>: <span class="dv">40</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin-right</span>: <span class="dv">20</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin-bottom</span>: <span class="dv">20</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin-left</span>: <span class="dv">40</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">crimson</span><span class="op">;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">#fff</span><span class="op">;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin-top</span><span class="ch">:</span> <span class="dv">40</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin-right</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin-bottom</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin-left</span><span class="ch">:</span> <span class="dv">40</span><span class="dt">px</span><span class="op">;</span></span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="css-基础使用顺时针方向指定元素的内边距" class="level2">
 <h2 class="anchored" data-anchor-id="css-基础使用顺时针方向指定元素的内边距">CSS 基础：使用顺时针方向指定元素的内边距</h2>
 <p>如果不想每次都要分别声明<code>padding-top</code>，<code>padding-right</code>，<code>padding-bottom</code>和<code>padding-left</code>属性，可以把它们汇总在<code>padding</code>属性里面声明，如下：</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>padding<span class="in">: 10px 20px 10px 20px;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>padding<span class="in">:</span> 10px 20px 10px 20px;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>这四个值按顺时针排序：<code>上，右，下，左</code>，并且设置的效果等同于特定声明每一个方向的<code>padding</code>。</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.blue-box</span> {</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span>: <span class="cn">blue</span><span class="op">;</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span>: <span class="cn">#fff</span><span class="op">;</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin</span>: <span class="dv">40</span><span class="dt">px</span> <span class="dv">20</span><span class="dt">px</span> <span class="dv">20</span><span class="dt">px</span> <span class="dv">40</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">blue</span><span class="op">;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">#fff</span><span class="op">;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin</span><span class="ch">:</span> <span class="dv">40</span><span class="dt">px</span> <span class="dv">20</span><span class="dt">px</span> <span class="dv">20</span><span class="dt">px</span> <span class="dv">40</span><span class="dt">px</span><span class="op">;</span></span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="css-基础使用顺时针方向指定元素的外边距" class="level2">
 <h2 class="anchored" data-anchor-id="css-基础使用顺时针方向指定元素的外边距">CSS 基础：使用顺时针方向指定元素的外边距</h2>
 <p>让我们再试一次，不过这一次轮到<code>margin</code>了。</p>
 <p>同样，每个方向的外边距值可以在margin属性里面汇总声明，来代替分别声明<code>margin-top</code>，<code>margin-right</code>，<code>margin-bottom</code>和<code>margin-left</code>属性的方式，代码如下：</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>margin<span class="in">: 10px 20px 10px 20px;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>margin<span class="in">:</span> 10px 20px 10px 20px;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>这四个值按顺时针排序：上，右，下，左，并且设置的效果等同于特定声明每一个方向的<code>margin</code>。</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.blue-box</span> {</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span>: <span class="cn">blue</span><span class="op">;</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span>: <span class="cn">#fff</span><span class="op">;</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin</span>:<span class="dv">40</span><span class="dt">px</span> <span class="dv">20</span><span class="dt">px</span> <span class="dv">20</span><span class="dt">px</span> <span class="dv">40</span><span class="dt">px</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">blue</span><span class="op">;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">#fff</span><span class="op">;</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin</span><span class="ch">:</span><span class="dv">40</span><span class="dt">px</span> <span class="dv">20</span><span class="dt">px</span> <span class="dv">20</span><span class="dt">px</span> <span class="dv">40</span><span class="dt">px</span></span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="css-基础使用属性选择器来设置元素的样式" class="level2">
@@ -323,8 +331,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>你已经通过设置元素的<code>id</code>和<code>class</code>，来显示你想要的样式，而它们也被分别叫做 <code>ID</code> 选择器和 <code>Class</code> 选择器。另外，也还有其他的 <code>CSS</code> 选择器，可以让我们给特定的元素设置样式。</p>
 <p>让我们再次通过猫咪图片项目来练习 <code>CSS</code> 选择器。</p>
 <p>在这个挑战里，你会使用<code>[attr=value]</code>属性选择器修改复选框的样式。这个选择器使用特定的属性值来匹配和设置元素样式。例如，下面的代码会改变所有<code>type</code>为<code>radio</code>的元素的外边距。</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[type</span><span class="op">=</span><span class="st">'radio'</span><span class="ex">]</span> {</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin</span>: <span class="dv">20</span><span class="dt">px</span> <span class="dv">0</span><span class="dt">px</span> <span class="dv">20</span><span class="dt">px</span> <span class="dv">0</span><span class="dt">px</span><span class="op">;</span></span>
+<div class="sourceCode" id="cb19"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[</span><span class="ss">type</span><span class="op">=</span><span class="st">'radio'</span><span class="ex">]</span> {</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">px</span> <span class="dv">0</span><span class="dt">px</span> <span class="dv">20</span><span class="dt">px</span> <span class="dv">0</span><span class="dt">px</span><span class="op">;</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="css-基础理解绝对单位与相对单位" class="level2">
@@ -340,7 +348,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>我们可以通过设置<code>background-color</code>为<code>black</code>，来证明<code>body</code>元素的存在。</p>
 <p>添加以下的代码到<code>style</code>标签里面：</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>body {</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span>: <span class="cn">black</span><span class="op">;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">black</span><span class="op">;</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="css-基础从-body-元素继承样式" class="level2">
@@ -366,7 +374,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://img-blog.csdnimg.cn/20200527201801399.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">在这里插入图片描述</figcaption>
+<figcaption>在这里插入图片描述</figcaption>
 </figure>
 </div>
 </section>
@@ -376,16 +384,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>不过我们还没结束，还有其他方法来覆盖 <code>CSS</code> 样式。你还记得 <code>id</code> 属性吗？</p>
 <p>通过给<code>h1</code>元素添加 <code>id</code> 属性，来覆盖 <code>class</code> 属性定义的同名样式。</p>
 <p>给<code>h1</code>元素添加 <code>id</code> 属性，属性值为<code>orange-text</code>。设置方式如下：</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;h1</span> <span class="er">id</span><span class="ot">=</span><span class="st">"orange-text"</span><span class="kw">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h1</span><span class="ot"> id</span><span class="op">=</span><span class="st">"orange-text"</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>h1</code>元素继续保留<code>blue-text</code>和<code>pink-text</code>class。</p>
 <p>在<code>style</code>元素中创建名为<code>orange-text</code>的 <code>id</code> 选择器。例子如下：</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#orange-text</span> {</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span>: <span class="cn">orange</span><span class="op">;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">orange</span><span class="op">;</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>注意：无论在<code>pink-textclass</code> 的上面或者下面声明，<code>id</code> 选择器的优先级总是会<code>高于</code> <code>class</code> 选择器。 <img src="https://img-blog.csdnimg.cn/20200527202438784.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70.png" class="img-fluid" alt="在这里插入图片描述"> ## CSS 基础：内联样式的优先级高于 ID 选择器 我们刚刚证明了，<code>id</code> 选择器无论在<code>style</code>标签哪里声明，都会覆盖 <code>class</code> 声明的样式，</p>
 <p>其实还有其他方法可以覆盖重写 <code>CSS</code> 样式。你还记得行内样式吗？</p>
 <p>使用行内样式尝试让<code>h1</code>的字体颜色变白。像下面这样使用：</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;h1</span> <span class="er">style</span><span class="ot">=</span><span class="st">"color: green"</span><span class="kw">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h1</span><span class="ot"> style</span><span class="op">=</span><span class="st">"color: green"</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>你的<code>h1</code>元素需继续保留<code>blue-text</code>和<code>pink-text</code>class。 <img src="https://img-blog.csdnimg.cn/20200527202658532.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70.png" class="img-fluid" alt="在这里插入图片描述"> ## CSS 基础：Important 的优先级最高 我们刚刚又证明了行内样式会覆盖<code>style</code>标签里面所有的 <code>CSS</code> 声明。</p>
 <p>不过，还有一种方式可以覆盖重新 <code>CSS</code> 样式。这是所有方法里面最强大的一个。在此之前，我们要考虑清楚，为什么我们需要覆盖 <code>CSS</code> 样式。</p>
 <p>在很多时候，你使用 <code>CSS</code> 库，有时候它们声明的样式会意外的覆盖你的 <code>CSS</code> 样式。当你需要保证你的 <code>CSS</code> 样式不受影响，你可以使用<code>!important</code>。</p>
@@ -397,7 +405,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>我们日常使用最多的计数方法，基于十进制，使用 0 到 9 数字来表示。而十六进制编码（hex）基于 16 位数字，它含有 16 种不同字符。十六进制与十进制一样，0-9 表示着 0 到 9 的值，不同的是，<code>A，B，C，D，E，F</code> 表示着十六进制 10 到 15 的值。总的来说，0 到 F 在十六进制里代表着数字，提供了 16 种可能性。你可以在这里找到更多的相关信息。</p>
 <p>在 CSS 里面，我们可以用使用 6 个十六进制的数字来代表颜色，每两个数字控制一种颜色，分别是红（R），绿（G），蓝（B）。例如，<code>#000000代表着黑色</code>，同时也是最小的值。你可以在这里找到更多的相关信息。</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>body {</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span>: <span class="cn">#000000</span><span class="op">;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#000000</span><span class="op">;</span></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="css-基础使用十六进制编码混合颜色" class="level2">
@@ -423,21 +431,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>在数学的角度来看，如果将十六进制的一种颜色的两位数字相乘，16 乘以 16 也等于 256。所以，从 0 到 255 计算的 RGB 值的具有十六进制编码相同的颜色可能性。</p>
 <p>下面是通过使用 RGB 值设置背景颜色为橘色的例子：</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>body {</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span>: <span class="fu">rgb(</span><span class="dv">255</span><span class="op">,</span> <span class="dv">165</span><span class="op">,</span> <span class="dv">0</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="fu">rgb(</span><span class="dv">255</span><span class="op">,</span> <span class="dv">165</span><span class="op">,</span> <span class="dv">0</span><span class="fu">)</span><span class="op">;</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="css-基础使用-rgb-混合颜色" class="level2">
 <h2 class="anchored" data-anchor-id="css-基础使用-rgb-混合颜色">CSS 基础：使用 RGB 混合颜色</h2>
 <p>就像使用十六进制编码一样，你可以通过不同值的组合，来混合得到不同的 <code>RGB</code> 颜色。 <img src="https://img-blog.csdnimg.cn/20200527204426405.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70.png" class="img-fluid" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/20200527204529601.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNjE5NDYx,size_16,color_FFFFFF,t_70.png" class="img-fluid" alt="在这里插入图片描述"> ## CSS 基础：使用 CSS 变量一次更改多个元素 <code>CSS</code> 变量是一种仅更改一个值，来一次性更改多个 <code>CSS</code> 样式属性的强大方法。</p>
 <p>按照下面指示的来做，我们只需要改变三个值，多个样式将会同时被修改。 ## CSS 基础：创建一个自定义的 CSS 变量 创建一个 <code>CSS</code> 变量，你只需要在变量名前添加两个破折号，并为其赋值，例子如下：</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>--penguin-skin<span class="in">: gray</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>--penguin-skin<span class="in">:</span> gray;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>这样会创建一个<code>--penguin-skin</code>变量并赋值为<code>gray</code>（灰色）。</p>
 <p>现在，其他元素可通过该变量来设置为<code>gray</code>（灰色）。</p>
 </section>
 <section id="css-基础引用一个自定义的-css-变量" class="level2">
 <h2 class="anchored" data-anchor-id="css-基础引用一个自定义的-css-变量">CSS 基础：引用一个自定义的 CSS 变量</h2>
 <p>创建变量后，<code>CSS</code> 属性可以通过引用变量名来使用它的值。</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>background<span class="in">: var(--penguin-skin)</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>background<span class="in">:</span> var<span class="in">(</span>--penguin-skin<span class="in">)</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>因为引用了<code>--penguin-skin</code>变量的值，使用了这个样式的元素背景颜色会是灰色。</p>
 <p>注意：如果变量名不匹配，样式不会生效。</p>
 </section>
@@ -445,7 +453,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="css-基础给-css-变量附加回退值">CSS 基础：给 CSS 变量附加回退值</h2>
 <p>使用变量来作为 <code>CSS</code> 属性值的时候，可以设置一个备用值来防止由于某些原因导致变量不生效的情况。</p>
 <p>或许有些人正在使用着不支持 <code>CSS</code> 变量的旧浏览器，又或者，设备不支持你设置的变量值。为了防止这种情况出现，那么你可以这样写：</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>background<span class="in">: var(--penguin-skin, black)</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>background<span class="in">:</span> var<span class="in">(</span>--penguin-skin<span class="op">,</span> black<span class="in">)</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>这样，当你的变量有问题的时候，它会设置你的背景颜色为黑色。</p>
 <p>提示：这对调试会很有帮助。</p>
 <p>未完成，学习ing</p>
@@ -495,6 +503,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -563,13 +598,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -648,10 +685,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/fly-t\.github\.io");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -661,8 +715,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -674,7 +737,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -718,6 +904,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -743,6 +930,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -803,6 +1016,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 
