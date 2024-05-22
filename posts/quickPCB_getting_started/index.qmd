@@ -3,7 +3,7 @@ title: "getting started with QuickPcb"
 author: "dd21"
 date: "2023-08-16" 
 categories: [tutorial]
-image: https://raw.githubusercontent.com/fly-t/images/main/blog/index-2023-08-16-16-28-23.png
+image: image
 ---
 
 
